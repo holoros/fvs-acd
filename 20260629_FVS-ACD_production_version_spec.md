@@ -51,6 +51,23 @@ esi, ingrowth.thrshld = 0.95.
 4. Long-horizon BA carries first-order model-form uncertainty (the OSM divergence); driven by 1-3.
 5. The ESI surface is a placeholder pending the refined ESI; swapping it is a data change, no code.
 
+## Update (29 June, later): two release gates advanced
+
+- ESI dominant-height anchor (gate 2) solved. The fitted Chapman-Richards anchor (k = 0.0039,
+  p = 0.726, base age 50; ESI v8) is wired into `AcadianGY_12.6.2b_proto.r` and validated: site
+  curves pass through ESI at age 50 and stay cleanly separated and ordered at all ages (site 8/14/20
+  reach 7.8/14.4/20.2 m at 50, 13.7/24.4/34.5 m at 120). ESI matches measured site index for
+  dominant-height prediction (R^2 0.804 vs 0.174 no-site). The next production version should adopt
+  ESI as the site driver with this anchor; the placeholder caveat is retired for the anchor
+  relationship.
+- Regional mortality (gate 1) advanced and localized. A regional mortality multiplier works
+  two-directionally on the regional data (New Brunswick mult 0.5 nearly zeros its bias; Maine
+  improves with more mortality), but even Maine mult 3.0 leaves +7.3 percent: the residual is
+  structural, the stand-mortality probability cut zeros mortality on Maine stands that should
+  self-thin. The release fix is a regional refit of the stand-mortality probability, not a
+  multiplier. Interim: Maine mult about 1.5 to 2.0, New Brunswick about 0.5. See
+  `20260629_esi_anchor_and_regional_mortality.md`.
+
 ## Path to release
 
 12.6.1 is the documented production candidate now. The next production version should fold in the

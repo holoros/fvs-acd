@@ -37,9 +37,12 @@ for (k in seq_along(pids)){
   pid <- pids[k]; m <- MAN[MAN$pid==pid, , drop=FALSE][1, ]
   it <- INP[INP$pid==pid, , drop=FALSE]
   if (nrow(it)<5){ fail<-fail+1; next }
+  .mm <- c(ME=as.numeric(Sys.getenv("MORT_MULT_ME","1")), NB=as.numeric(Sys.getenv("MORT_MULT_NB","1")),
+           NS=as.numeric(Sys.getenv("MORT_MULT_NS","1")))[m$region]
+  if (!is.finite(.mm)) .mm <- 1
   cur <- data.frame(year=0, plot=1L, tree=seq_len(nrow(it)), sp=mapsp(it$sp),
     dbh=it$dbh_cm, ht=NA_real_, hcb=NA_real_, cr=NA_real_, expf=it$expf_tph,
-    form=NA_character_, risk=NA_character_, ddbh.mult=1, dht.mult=1, mort.mult=1,
+    form=NA_character_, risk=NA_character_, ddbh.mult=1, dht.mult=1, mort.mult=.mm,
     max.dbh=200, max.height=50, stringsAsFactors=FALSE)
   stand <<- make_stand(stand.id=pid, csi=m$csi, elev=m$elev, region="ME")
   ok <- TRUE
