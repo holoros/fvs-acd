@@ -29,6 +29,7 @@ ops <<- make_ops(verbose=FALSE, use.ingrowth=USE_ING, ingrowth.min.dbh=5.0,
 ops$use.sdimort <- USE_SDIMORT; ops$sdimort.onset <- 0.55; ops$sdimort.beta <- 0.10; ops$sdimort.max <- 1.0
 ops$sdimax.site.term <- SITE_TERM; ops$use.mortcal <- USE_MORTCAL; ops$mortcal.interval <- 5; ops$mortcal.lambda <- 1
 ops$ingrowth.mult <- ING_MULT
+ops$mort.cut.scale <- as.numeric(Sys.getenv("MORT_CUT_SCALE","1"))   # v12.6.4 regional stand-mortality cut scale
 bf <- function(x){ for(c in c("ddbh.mult","dht.mult","mort.mult")) x[[c]][is.na(x[[c]])]<-1; x$max.dbh[is.na(x$max.dbh)]<-200; x$max.height[is.na(x$max.height)]<-50; x }
 
 out <- list(); fail <- 0
