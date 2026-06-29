@@ -1,0 +1,3945 @@
+# $Id: AcadianGY.R 3968 2022-04-28 10:36:05Z nickcrookston $
+################################################################################
+# v12.3.0.r 
+#
+# Acadian Variant of the Forest Vegetation Simulator (FVS-ACD)                                                                                            #
+# Developed by Aaron Weiskittel, University of Maine, School of Forest Resources
+# aaron.weiskittel@maine.edu
+# 
+#
+# For commercial thinning modifiers, proportion of basal area removed 'pBArm', 
+# ratio of QMD before and after thinning 'QMDratio', stand basal area at the 
+# time of thinning 'BApre', and year of commercial thinning 'YEAR_CT' need to 
+# be defined
+#
+# For SBW modifiers, cumulative defoliation % 'CDEF', initial year of 
+# spruce budworm outbreak 'SBW.YR', and duration of spruce budworm
+# outbreak in years 'SBW.DUR'
+#
+#
+################################################################################
+
+library(plyr)  #needed for ddply
+library(dplyr) # added 12/21/2020 for dplyr::arrange, mutate, rowwise, left_join, tribble, select, group_by, summarise
+library(nlme)  #needed for groupedData and gsummary
+library(purrr) # needed for pmap_*
+
+AcadianVersionTag = "AcadianV12.3.0"
+
+##############################
+#### major update summary ####
+#
+
+# 12.3.0 
+  # Implemented plot basal area constraint from Chen et al (in review) applied to tree diameter increment
+    # new functions: dBA_plot_fun(); calc_plot_ba()
+  # AcadianGYOneStand function 
+    # Created code to catch tree records with DBH=0 and add 0.01
+    # Limit model execution to species defined in height and diameter increment parameters; others assigned species 99 
+
+# 12.2.0
+  # updated mortality calculation to Chen et al (in review) and updated mortality modifier function names
+    # new functions: mort_plot_prob(); mort_plot_ba(); surv_tree(); calc_mortality
+
+# 12.1.5
+  # ING.TreeList function
+    # Modified function in response to ingrowth calculation error; stand id dependency
+  # AcadianGYOneStand function 
+    # Run at one year cycle length only
+
+# 12.1.4
+  # Fixed diameter hardwood form and risk modifier 
+
+# 12.1.3
+  # AcadianGYOneStand function
+    # added default RD
+    # include form and risk 
+    # temp calculations include ELEV
+    # updated SDI/RD calculation
+ 
+# 12.1.1
+  # Weiskittel edits 12/1/2020
+  # Rice edits integrate new dHt and dDBH functions with FVS version 12/21/2020
+
+# 11.1 Aaron edits 6/6/2019 and several edits
+  # from Ben Rice and Jereme Frank to resolve errors
+  # Crookston edits for FVS 9/20/2020
+
+##############################
+
+                                                                                     
+#Define all functions below
+ # 12/21/2020 removed sort.data.frame <- function(form,dat) substitute dplyr::arrange
+
+
+#Species function
+SPP.func=function(SPP)
+{            
+  SPcodes = c( 
+    'AB',  # AB=American beech
+    'AS',  # AS=ash                  
+    'BA',  # BA=black ash
+    'BC',  # BC=black cherry
+    'BF',  # BF=balsam fir
+    'BP',  # BP=balsam poplar         
+    'BS',  # BS=black spruce
+    'BT',  # BT=bigtooth aspen
+    'EC',  # EC=eastern cottonwood
+    'EH',  # EH=eastern hemlock
+    'GA',  # GA=green ash
+    'GB',  # GB=gray birch
+    'HH',  # HH=eastern hophornbeam
+    'JP',  # JP=jack pine
+    'NS',  # NS=Norway spruce
+    'OH',  # OH=other hardwoods
+    'OS',  # OS=other softwoods
+    'PB',  # PB=paper birch
+    'PC',  # PC=pin cherry  
+    'PR',  # PR=pin cherry 
+    'QA',  # QA=quaking aspen
+    'RB',  # RB=river birch
+    'RM',  # RM=red maple
+    'RP',  # RP=red pine 
+    'RN',  # RN=red pine
+    'RO',  # RO=red oak
+    'RS',  # RS=red spruce
+    'SB',  # SB=Sweet birch
+    'SM',  # SM=sugar maple
+    'ST',  # ST=striped maple
+    'TA',  # TA=larch/tamarack
+    'WA',  # WA=white ash
+    'WC',  # WC=northern white cedar
+    'WP',  # WP=white pine
+    'WS',  # WS=white spruce
+    'YB',  # YB=yellow birch
+    '99')  # other
+   SPtype = c(
+    'HW', # AB=American beech
+    'HW', # AS=ash
+    'HW', # BA=black ash
+    'HW', # BC=black cherry
+    'SW', # BF=balsam fir
+    'HW', # BP=balsam poplar
+    'SW', # BS=black spruce
+    'HW', # BT=bigtooth aspen
+    'HW', # EC=eastern cottonwood
+    'SW', # EH=eastern hemlock
+    'HW', # GA=green ash
+    'HW', # GB=gray birch
+    'HW', # HH=eastern hophornbeam
+    'SW', # JP=jack pine
+    'SW', # NS=Norway spruce
+    'HW', # OH=other hardwoods
+    'SW', # OS=other softwoods
+    'SW', # PB=paper birch
+    'HW', # PC=pin cherry  
+    'HW', # PR=pin cherry 
+    'HW', # QA=quaking aspen
+    'HW', # RB=river birch
+    'HW', # RM=red maple
+    'SW', # RP=red pine 
+    'SW', # RN=red pine
+    'HW', # RO=red oak
+    'SW', # RS=red spruce
+    'HW', # SB=Sweet birch
+    'HW', # SM=sugar maple
+    'HW', # ST=striped maple
+    'SW', # TA=larch/tamarack
+    'HW', # WA=white ash
+    'SW', # WC=northern white cedar
+    'SW', # WP=white pine
+    'SW', # WS=white spruce
+    'HW', # YB=yellow birch
+    'HW') # other
+   attrs = matrix (c(
+    # sg      wd     shade drought  waterlog
+      0.64  ,0.56   , 4.75 , 1.5  , 1.5 ,    # AB=American beech
+      0.57  ,0.51   , 2.84 , 2.74 , 3.02,    # AS=ash                 
+      0.5   ,0.45   , 2.96 , 2    , 3.5 ,    # BA=black ash
+      0.5   ,0.47   , 2.46 , 3.02 , 1.06,    # BC=black cherry
+      0.35  ,0.33   , 5.01 , 1    , 2   ,    # BF=balsam fir
+      0.34  ,0.31   , 1.27 , 1.77 , 2.63,    # BP=balsam poplar
+      0.46  ,0.38   , 4.08 , 2.0  , 2.0 ,    # BS=black spruce
+      0.39  ,0.36   , 1.21 , 2.5  , 2   ,    # BT=bigtooth aspen
+      0.4   ,0.37   , 1.76 , 1.57 , 3.03,    # EC=eastern cottonwood
+      0.4   ,0.38   , 4.83 , 1    , 1.25,    # EH=eastern hemlock
+      0.56  ,0.53   , 3.11 , 3.85 , 2.98,    # GA=green ash
+      0.48  ,0.45   , 1.5  , 2.34 , 1   ,    # GB=gray birch
+      0.78  ,0.63   , 4.58 , 3.25 , 1.07,    # HH=eastern hophornbeam
+      0.43  ,0.4    , 1.36 , 4    , 1   ,    # JP=jack pine
+      0.43  ,0.37023, 4.45 , 1.75 , 1.22,    # NS=Norway spruce
+      0.5121,0      , 2.29 ,  0   , 0   ,    # OH=other hardwoods
+      0.445 ,0      , 2.27 , 0    , 0   ,    # OS=other softwoods
+      0.55  ,0.48   , 1.54 , 2.02 , 1.25,    # PB=paper birch
+      0.38  ,0.36   , 2.26 , 0    , 0   ,    # PC=pin cherry  
+      0.38  ,0.36   , 2.26 , 0    , 0   ,    # PR=pin cherry 
+      0.38  ,0.35   , 1.21 , 1.77 , 1.77,    # QA=quaking aspen
+      0.62  ,0.49   , 1.45 , 1.53 , 2.85,    # RB=river birch
+      0.54  ,0.49   , 3.44 , 1.84 , 3.08,    # RM=red maple
+      0.46  ,0.41   , 1.89 , 3    , 1   ,    # RP=red pine 
+      0.46  ,0.41   , 1.89 , 3    , 1   ,    # RN=red pine
+      0.63  ,0.56   , 2.75 , 2.88 , 1.12,    # RO=red oak
+      0.4   ,0.37   , 4.39 , 2.5  , 2   ,    # RS=red spruce
+      0.65  ,0.6    , 2.58 , 3    , 1   ,    # SB=Sweet birch
+      0.63  ,0.56   , 4.76 , 2.25 , 1.09,    # SM=sugar maple
+      0.46  ,0.44   , 3.56 , 2    , 1   ,    # ST=striped maple
+      0.53  ,0.49   , 0.98 , 2    , 3   ,    # TA=larch/tamarack
+      0.6   ,0.55   , 2.46 , 2.38 , 2.59,    # WA=white ash             
+      0.31  ,0.29   , 3.45 , 2.71 , 1.46,    # WC=northern white cedar
+      0.35  ,0.34   , 3.21 , 2.29 , 1.03,    # WP=white pine
+      0.4   ,0.33   , 4.15 , 2.88 , 1.02,    # WS=white spruce
+      0.62  ,0.55   , 3.17 , 3    , 2   ,    # YB=yellow birch
+      0.3   ,0.3    , 3.0  , 0    , 0   ),   # other
+        ncol=5,byrow=TRUE)
+  sprow = match(SPP,SPcodes)
+  sprow[is.na(sprow)] = length(SPcodes) 
+  #note that only SPtype, shade, and sg are used in the calling routines.
+  return(list(SPtype=SPtype[sprow],shade=attrs[sprow,3],sg=attrs[sprow,1]))
+}
+ 
+#### Crown prediction ####
+#Maximum crown width
+mcw=function(sp,dbh)
+{
+  SPcodes=c('BF','BS','EH','WP','NC','RS','WS','AB','GB','RB','RO','PB','QA',
+            'RM','SM','YB','OH','OS','99')       
+  coefs = matrix(c(
+   # a1           a2
+    1.37       , 0.572      ,    # BF
+    0.535      , 0.742      ,    # BS
+    2.44       , 0.408      ,    # EH   
+    1.24       , 0.585      ,    # WP
+    1.63       , 0.436      ,    # NC
+    1.80       , 0.461      ,    # RS
+    1.50       , 0.496      ,    # WS
+    2.93       , 0.434      ,    # AB
+    2.24       , 0.382      ,    # GB
+    2.24       , 0.382      ,    # RB
+    4.08       , 0.310      ,    # RO
+    1.48       , 0.623      ,    # PB
+    1.31       , 0.586      ,    # QA
+    2.17       , 0.491      ,    # RM
+    3.31       , 0.356      ,    # SM
+    4.04       , 0.308      ,    # YB
+    4.04       , 0.308      ,    # OH
+    1.597128571, 0.513957143,    # OS
+    2.24262    , 0.462653333),   # 99
+    ncol=2,byrow=TRUE)
+  sprow = match(sp,SPcodes)
+  sprow[is.na(sprow)] = length(SPcodes)  
+  mcw=coefs[sprow,1]*dbh**coefs[sprow,2]
+  return(mcw)
+}
+
+   
+#These are the parm ests for estimating largest crown width (lcw)
+lcw=function(sp,mcw,dbh){
+  SPcodes=c('BF','BS','EH','WP','NC','RS','WS','AB','GB','RB','RO','PB','QA',
+            'RM','SM','YB','OH','OS','99')
+  coefs = matrix(c(
+   # b1           b2            
+     1.49   , 0.105       ,   # BF     
+     1      , 0.174       ,   # BS
+     1.90   , -0.057      ,   # EH
+     1      , 0.147       ,   # WP
+     2.19   , -0.080      ,   # NC
+     4.33   , -0.264      ,   # RS
+     2.09   , -0.069      ,   # WS
+     1      , 0.194       ,   # AB
+     3.10   , -0.214      ,   # GB
+     3.10   , -0.214      ,   # RB
+     4.10   , -0.272      ,   # RO
+     2.10   , -0.035      ,   # PB
+     2.65   , 0.157       ,   # QA
+     2.63   , -0.132      ,   # RM
+     1      , 0.161       ,   # SM
+     4.23   , -0.264      ,   # YB
+     2.65   , 0.157       ,   # OH
+     2.3276 , 0.027842857 ,   # OS
+     2.79282, -0.090113333),  # 99
+    ncol=2,byrow=TRUE)     
+  sprow = match(sp,SPcodes)
+  sprow[is.na(sprow)] = length(SPcodes)  
+  lcw=mcw/(coefs[sprow,1]*dbh**coefs[sprow,2])      
+  return(lcw)
+}   
+
+
+#### Height prediction ####
+### Total height prediction function (updated 8/31/2012) using species as a random effect
+HTPred=function(SPP,DBH,CSI,CCF,BAL) 
+{     
+  c0=  12.44847305
+  c1=  0.801705832
+  c2=  0.043617034
+  c3=  1.048674338
+  c4=  0.011483716
+  c5=  -0.007550999
+  switch (SPP,
+    'AB' = {c0.spp=-1.63260226433876; c3.spp=-0.123848276720533}  ,
+    'AE' = {c0.spp=-0.692010776894357; c3.spp=0.0346080772461358} ,
+    'AH' = {c0.spp=-5.98009416964362; c3.spp=-0.032783189788012}  ,
+    'AI' = {c0.spp=-6.44978562263189; c3.spp=-0.0984022226851643} ,
+    'AP' = {c0.spp=-12.0735361325049; c3.spp=-0.475976304087567}  ,
+    'AS' = {c0.spp=6.69760483331092; c3.spp=-0.125318550191217}   ,
+    'BA' = {c0.spp=-1.61716890163543; c3.spp=-0.141587177559468}  ,
+    'BC' = {c0.spp=-4.52724204655813; c3.spp=-0.172605143041673}  ,
+    'BE' = {c0.spp=-1.60563943164767; c3.spp=-0.424565045666305}  ,
+    'BF' = {c0.spp=1.77471065080046; c3.spp=0.1571978021787}      ,                          
+    'BL' = {c0.spp=-9.82751389751524; c3.spp=-0.292624067773788}  ,
+    'BN' = {c0.spp=0.861243905640667; c3.spp=-0.103226577993538}  ,
+    'BO' = {c0.spp=1.17024253111731; c3.spp=-0.0431150821737857}  ,
+    'BP' = {c0.spp=2.52163661595498; c3.spp=-0.0633568443480465}  ,
+    'BR' = {c0.spp=5.44303876725562; c3.spp=0.354363882079203}    ,
+    'BS' = {c0.spp=3.88571664605334; c3.spp=0.1886808269048}      ,
+    'BT' = {c0.spp=5.2832906396451; c3.spp=-0.0670620453873463}   ,
+    'BW' = {c0.spp=2.52499880080404; c3.spp=0.153925181183304}    ,
+    'EC' = {c0.spp=7.0881673102164; c3.spp=0.182126907461261}     ,
+    'EH' = {c0.spp=0.0643545746867161; c3.spp=0.260671290553969}  ,
+    'EL' = {c0.spp=-0.460173779709119; c3.spp=0.194209222023289}  ,
+    'GA' = {c0.spp=-1.47263156202317; c3.spp=-0.0743884734979349} ,
+    'GB' = {c0.spp=-1.03938349314791; c3.spp=-0.238717166776341}  ,
+    'HH' = {c0.spp=-2.45397316779551; c3.spp=-0.17636502944365}   ,
+    'HK' = {c0.spp=-0.139225685811506; c3.spp=-0.107092112450714} ,
+    'HT' = {c0.spp=-0.498373011862981; c3.spp=0.000508524335021695},
+    'JP' = {c0.spp=12.2041796567474; c3.spp=0.507127061137884}    ,
+    'NC' = {c0.spp=-0.154777524407996; c3.spp=0.0506677142901254} ,
+    'NS' = {c0.spp=10.7572546403292; c3.spp=0.761510842024224}    ,
+    'OH' = {c0.spp=-0.152274609199728; c3.spp=-0.0773943323672784},
+    'OP' = {c0.spp=-1.25201364651662; c3.spp=0.19704750471505}    ,
+    'OS' = {c0.spp=6.64418468070433; c3.spp=0.154974733190601}    ,
+    'PB' = {c0.spp=2.85568786741337; c3.spp=-0.053133050063968}   ,
+    'PI' = {c0.spp=6.11926846598162; c3.spp=0.396180643433203}    ,
+    'PL' = {c0.spp=-12.5774578312843; c3.spp=-0.354402924932074}  ,
+    'PP' = {c0.spp=-2.03524755338192; c3.spp=0.0284495830511636}  ,
+    'PR' = {c0.spp=-5.27943940700261; c3.spp=-0.276675997378359}  ,
+    'PY' = {c0.spp=2.39961434182412; c3.spp=-0.0302798406740612}  ,
+    'QA' = {c0.spp=5.28547878831447; c3.spp=-0.0166932060459991}  ,
+    'RC' = {c0.spp=-13.3554875880232; c3.spp=-0.364956123989416}  ,
+    'RL' = {c0.spp=-13.464860796814; c3.spp=-0.373319415146871}   ,
+    'RM' = {c0.spp=1.13361861116141; c3.spp=-0.124923006598654}   ,
+    'RN' = {c0.spp=2.35424925615196; c3.spp=0.4332474439509}      ,
+    'RO' = {c0.spp=0.567158528857343; c3.spp=5.49241830858304E-05},
+    'RS' = {c0.spp=3.28913339723299; c3.spp=0.197832299388656}    ,
+    'SB' = {c0.spp=5.0591881231944; c3.spp=0.263270570106115}     ,
+    'SC' = {c0.spp=-1.77707771556552; c3.spp=0.272984904670842}   ,
+    'SE' = {c0.spp=-1.20436304154548; c3.spp=-0.217453987421684}  ,                       
+    'SH' = {c0.spp=3.42398432816088; c3.spp=0.00852401379505827}  ,
+    'SM' = {c0.spp=1.83135273162116; c3.spp=-0.1509017085778}     ,
+    'SO' = {c0.spp=-0.337608194904877; c3.spp=0.00266584203067429},
+    'ST' = {c0.spp=-4.21455499968947; c3.spp=-0.158534452384565}  ,
+    'SV' = {c0.spp=-1.66795214963112; c3.spp=-0.180378852473763}  ,
+    'SW' = {c0.spp=1.3081369384269; c3.spp=0.031660020193251}     ,
+    'TA' = {c0.spp=3.03898203229266; c3.spp=-0.070139469703331}   ,
+    'WA' = {c0.spp=1.58571626982993; c3.spp=-0.152599799179656}   ,
+    'WC' = {c0.spp=-2.63796730677436; c3.spp=0.157097825004126}   ,
+    'WO' = {c0.spp=-0.179572014160004; c3.spp=0.050014945223132}  ,
+    'WP' = {c0.spp=1.89177965275704; c3.spp=0.217933074706457}    ,
+    'WS' = {c0.spp=2.83053645408208; c3.spp=0.284913386127066}    ,
+    'YB' = {c0.spp=-1.13450171811265; c3.spp=-0.179629568670318}  ,            
+           {c0.spp=0; c3.spp=0}
+     )
+  ht=(1.37+((c0+c0.spp)+CSI^c1)*(1-exp(-c2*DBH))^(c3+c3.spp+c4*log(CCF+1)+c5*BAL))
+  #ht=(1.37+((c0)+CSI^c1)*(1-exp(-c2*DBH))^(c3+c4*log(CCF+1)+c5*BAL))
+  return(ht=ht)
+}
+
+### Height to crown base function (updated 9/11/12 using species as random effect)
+HCBPred=function(SPP,DBH,HT,CCF,BAL) 
+{     ## Respective parameters are in order
+  DHR=DBH/HT
+  a0=  0.29070
+  a1=  0.00636
+  a2=  -0.02288
+  a3=  0.08232
+  a4=  -0.03086
+  a5=  -0.01701 
+  a0.spp = switch (SPP,
+    'AB' = -0.218384027 ,
+    'AI' = 0.081713772  ,
+    'AP' = 0.177509753  ,
+    'BA' = 0.112652176  ,
+    'BC' = -0.198822609 ,
+    'BF' = 0.093585699  ,
+    'BP' = -0.136722421 ,
+    'BR' = 0.015598341  ,
+    'BS' = -0.227771445 ,
+    'BT' = 0.010040571  ,
+    'EC' = 0.507259999  ,
+    'EH' = 0.403937729  ,
+    'GB' = -0.181632328 ,
+    'HK' = 0.114597638  ,
+    'JP' = -0.270782917 ,
+    'NC' = -0.20514384  ,
+    'NS' = 0.955552766  ,
+    'OH' = -0.042894377 ,
+    'OP' = -0.718040335 ,
+    'PB' = -0.180946077 ,
+    'PI' = 0.548550524  ,
+    'PR' = -0.270887959 ,
+    'QA' = 0.060833757  ,
+    'RM' = -0.202478201 ,
+    'RN' = -0.150518738 ,
+    'RO' = -0.37021733  ,
+    'RS' = -0.121308265 ,
+    'SC' = 0.244204218  ,
+    'SE' = 0.24302215   ,
+    'SM' = -0.16382426  ,
+    'TA' = -0.304007105 ,
+    'WA' = -0.148338171 ,
+    'WC' = 0.419622685  ,
+    'WO' = 0.167213142  ,
+    'WP' = -0.146685117 ,
+    'WS' = 0.100275538  ,
+    'YB' = 0.003235064  ,
+           0)
+  #hcb=HT/(1+exp(-((a0+a0.spp)+a1*DBH+a2*HT+a3*DHR+a4*log(CCF+1)+a5*(BAL+1))))^(1/6)
+  hcb=HT/(1+exp((a0+a0.spp)+a1*DBH+a2*HT+a3*DHR+a4*log(CCF+1)+a5*(BAL+1)))
+  return(hcb=hcb)
+}
+
+#### Form and risk ####
+#Form Classification from Castle et al. (2017; CJFR 47: 1457-1467)
+#Returns the probability of single straight stem (STM), 
+#extensive sweep and lean (LSW), multiple stems (MST),
+#significant fork on first 5 m (LF)
+form.prob=function(SPP,DBH)
+{
+  if(SPP=='RO'){SPP.RO=1; SPP.SM=0; SPP.YB=0; SPP.RM=0}
+  else if(SPP=='SM'){SPP.SM=1; SPP.RO=0; SPP.YB=0; SPP.RM=0}
+  else if(SPP=='YB'){SPP.YB=1; SPP.RO=0; SPP.SM=0; SPP.RM=0}
+  else if(SPP=='RM'){SPP.RM=1; SPP.RO=0; SPP.SM=0; SPP.YB=0}
+  else{SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0}
+  STM=exp(-0.9491+0.0174*DBH-0.2826*SPP.RO+0.7541*SPP.SM-0.0208*SPP.YB)/(
+    1+exp(-0.9491+0.0174*DBH-0.2826*SPP.RO+0.7541*SPP.SM-0.0208*SPP.YB))
+  LSW=exp(-1.1143-0.0322*DBH+0.7910*SPP.RO-0.2325*SPP.SM+0.2980*SPP.YB)/(
+    1+exp(-1.1143-0.0322*DBH+0.7910*SPP.RO-0.2325*SPP.SM+0.2980*SPP.YB))  
+  MST=exp(-0.4110-0.5009*SPP.RO-1.1347*SPP.RO-0.7557*SPP.YB)/(1+
+    exp(-0.4110-0.5009*SPP.RO-1.1347*SPP.RO-0.7557*SPP.YB))
+  LF=exp(-4.0677+0.0322*DBH+0.1139*SPP.RO+0.6278*SPP.SM+1.0681*SPP.YB)/(1+
+    exp(-4.0677+0.0322*DBH+0.1139*SPP.RO+0.6278*SPP.SM+1.0681*SPP.YB))
+  xx=1/(STM+LSW+MST+LF)
+  STM=STM*xx
+  LSW=LSW*xx
+  MST=MST*xx
+  LF=LF*xx
+  STM=ifelse(SPP=='RO' | SPP=='SM' | SPP=='RM' | SPP=='YB',STM,0)
+  LSW=ifelse(SPP=='RO' | SPP=='SM' | SPP=='RM' | SPP=='YB',LSW,0)
+  MST=ifelse(SPP=='RO' | SPP=='SM' | SPP=='RM' | SPP=='YB',MST,0)
+  LF=ifelse(SPP=='RO' | SPP=='SM' | SPP=='RM' | SPP=='YB',LF,0)
+  return(list(STM=STM,LSW=LSW,MST=MST,LF=LF))
+}
+
+#Risk Classification from Castle et al. (2017; CJFR 47: 1457-1467)
+#returns the probability of a tree being high risk
+risk.prob=function(SPP,DBH)
+{
+  if(SPP=='RO'){SPP.RO=1; SPP.SM=0; SPP.YB=0; SPP.RM=0}
+  else if(SPP=='SM'){SPP.SM=1; SPP.RO=0; SPP.YB=0; SPP.RM=0}
+  else if(SPP=='YB'){SPP.YB=1; SPP.RO=0; SPP.SM=0; SPP.RM=0}
+  else if(SPP=='RM'){SPP.RM=1; SPP.RO=0; SPP.SM=0; SPP.YB=0}
+  else{SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0}
+  HR=exp(-0.6886-0.0001*DBH-0.0184*SPP.RO-0.1513*SPP.SM-0.9851*SPP.YB
+         -0.0393*(DBH*SPP.RO)-0.0164*(DBH*SPP.SM)+0.0196*(DBH*SPP.YB))/(1+
+    exp(-0.6886-0.0001*DBH-0.0184*SPP.RO-0.1513*SPP.SM-0.9851*SPP.YB
+    -0.0393*(DBH*SPP.RO)-0.0164*(DBH*SPP.SM)+0.0196*(DBH*SPP.YB)))
+  HR=ifelse(SPP=='RO' | SPP=='SM' | SPP=='RM' | SPP=='YB',HR,0)
+  return(HR=HR)
+}
+
+#### Diameter increment ####
+
+#species random effects
+ddbh.fun.spp=tribble(
+  ~Spp, ~ddbh.b0.spp, ~ddbh.b2.spp, ~ddbh.b3.spp, ~ddbh.b4.spp,
+  
+  #Spp-|----------ddbh.b0.spp-|----------ddbh.b2.spp-|----------ddbh.b3.spp-|----------ddbh.b4.spp-|
+  #----|----------------------|----------------------|----------------------|----------------------|
+  "AB",     -0.35229300349977,  -0.00320266087038405,   -0.280946863448189,    0.0224134774905559,
+  "AE",      0.525848414142466,  0.013991275456242,      0.412199430293274,    0.133837343770701, 
+  "AH",     -0.563196640320761, -0.01077075539195,       0.0670133879698583,   0.0411626357856011, 
+  "AI",      0.0206561707667808,-0.000133492112204404,   0.00604358781482393, -0.000290675616258897, 
+  "AL",     -1.39566897323315,  -0.000609093629818986,  -0.358275097112723,    0.0189886825701186, 
+  "AP",      0.274305700135926, -0.0102065952875863,     0.67051254435555,     0.0378917157417856, 
+  "AW",      0.274056500403582,  0.00332679657906075,    0.11176485808573,    -0.00233348958863975, 
+  "BA",     -0.438617439122267, -0.0022924817415948,    -0.226866504779093,    0.000647108990407897, 
+  "BC",     -0.279503150796968, -0.0165193146291975,    -0.448777856671972,    0.129218944771525, 
+  "BE",      0.757730775072063,  0.00184989739560478,   -0.145270886735823,   -0.079685465435807, 
+  "BF",      0.218141150555071, -0.00643400053014112,   -0.0262015176388915,  -0.0646867462894489, 
+  "BH",      0.0819668443898863, 0.000841343024792485,   0.0170397550545379,  -0.00382472350301523, 
+  "BN",      0.0589621277531259, 0.016876722904582,     -0.512634541103034,   -0.0856035985165029, 
+  "BO",      0.107935674233564,  0.0176564165685457,    -0.00544094948482233, -0.00616179384680487, 
+  "BP",      0.606188793076239, -0.00977183436369207,    0.214468436803594,   -0.0164368644086746, 
+  "BR",     -0.0664233470667451,-0.000131289490261372,  -0.0221300235777483,   0.00315273402640522, 
+  "BS",     -0.276634107961408, -0.0223933899622142,    -0.0621958644556339,  -0.0340210607126585, 
+  "BT",     -0.350923645391202,  0.00677617700565758,   -0.501315826210755,    0.000443327372257035, 
+  "BW",      0.852838875626812, -0.00749469682441489,    0.563426492847638,    0.0865682041795566, 
+  "CC",     -0.646060138282966,  0.0185634940525597,    -0.217332456059064,   -0.00468805063509814, 
+  "DW",     -0.28835019262561,   0.00226777705843645,   -0.0727887365452367,   0.00620864120347165, 
+  "EC",      1.58534419438753,   0.0221556233917705,     0.99011590136056,    -0.0316723426356603, 
+  "EH",      0.23832806753631,   0.00118716829863115,    0.119839150759218,   -0.0649429567847272, 
+  "GA",     -0.266610352981902,  0.0142439347090041,    -0.157160602427669,    0.0201046549950529, 
+  "GB",      0.569983699945702, -0.0664764747642257,     0.198468738812332,   -0.000182703428282641, 
+  "HH",     -0.501569825162518, -0.00670231905749689,   -0.019651784641892,    0.0906523218981392, 
+  "HT",     -0.0613234444247148,-0.000889502151334581,   0.0430025231765345,  -0.00278983116616843, 
+  "JP",     -0.420043432830034,  0.00403607564949984,   -0.187599015525425,   -0.0389091733228937, 
+  "MA",      0.468084314323129,  0.00958064279983111,    0.678223987792607,    0.0295813570930029, 
+  "MM",      0.0317209810222673,-0.0340400816174698,     0.168052731769139,    0.00882258268527404, 
+  "NM",      0.547337559525123,  0.00368970130406897,    0.192702714249798,   -0.0257238213929463, 
+  "NS",      0.920841840601976, -0.0105302018827745,     0.36415087893201,    -0.0694155463378462, 
+  "PB",     -0.385839297400118, -0.01555970103088,      -0.308091415912301,   -0.0187005222638015, 
+  "PP",      0.225132074554987,  0.00034883061835917,   -0.0492140542436018,  -0.0214534992754162, 
+  "PR",      0.300351370819549, -0.00518831177987846,    0.287346478205465,   -0.0129989659266202, 
+  "QA",     -0.15077181884078,   0.00539704035058058,   -0.340232559896089,    0.0199221562824125, 
+  "RM",     -0.298278566308469, -0.00498222690678925,   -0.265474647776576,    0.000258040319045941, 
+  "RN",      0.821039623095964, -0.0222637540954861,    -0.0705092414278761,  -0.0620751900997439, 
+  "RO",     -1.20176658090374,   0.020834595446663,     -0.650193065347603,    0.0138347896809763, 
+  "RS",      0.0618488755956072, 0.00202537566145879,    0.00991911205114839, -0.0471014659203857, 
+  "SB",      0.180027893811038,  0.00407646754964104,    0.294830204810925,    0.0456285448463209, 
+  "SC",      0.29168375283719,   0.00840462598363303,    0.103224327654649,   -0.0375172178406619, 
+  "SE",     -0.84474776429187,   0.0194048566748705,    -0.185320642808431,    0.00481365467481041, 
+  "SH",     -0.276495487332175, -0.00407826652188834,    0.0014859893481595,   0.0105292454393637, 
+  "SM",     -0.638439361494548,  0.010114858457283,     -0.449980116702653,    0.0359737559039904, 
+  "SO",      0.576833877897729,  0.0118108307007871,     0.0504539076473394,  -0.0238409166069867, 
+  "ST",     -0.0873041359161447, 0.00436311438537946,   -0.116019942616605,    0.00452898449176065, 
+  "SV",      1.95860936146763,  -0.0214431695728021,     1.32444277392846,    -0.0107689951306809, 
+  "SW",     -0.0393354836772844,-0.00134712871863332,   -0.0101392382579872,   0.00262020551416272, 
+  "SY",      0.118394684213857,  0.00110586034750494,    0.00666275043203567, -0.00950736753890871, 
+  "TA",     -0.897319686496974,  0.0258707228911306,    -0.196336997360169,    0.0289693031310198, 
+  "TM",     -0.108285936575492,  0.000104669900393849,   0.0210335148827363,   0.00194415039443045, 
+  "WA",     -0.590367228757044,  0.00605548042245326,   -0.606966608557039,   -0.0338602035136779, 
+  "WC",     -0.585163503410162,  0.0129733373547068,     0.0997296337920071,   0.0176629033621184, 
+  "WI",     -0.527848384033003, -0.00395736879810604,   -0.15209423465787,     0.0325890859068867, 
+  "WO",     -0.838565888443553,  0.0302991107570669,    -0.102629218123826,    0.0502891203363538, 
+  "WP",      0.789109370527834, -0.0027631019480008,     0.0685266140378779,  -0.0334226215626329, 
+  "WS",      0.237471389318614, -0.00805483001640084,   -0.0435582953989746,  -0.0628031955872689, 
+  "YB",     -0.209369611424538, -0.00157109828388873,   -0.237820855906853,    0.0044801516909863, 
+  "YP",     -0.113657528638608, -0.00042568172058744,   -0.0555107654593295,   0.00168118033975285,
+  "99",      0.0,                0.0,                    0.0,                  0.0,
+  "OH",      0.0,                0.0,                    0.0,                  0.0,
+  "OS",      0.0,                0.0,                    0.0,                  0.0
+)
+
+#Revised diameter increment function from Christian Kuehne (11/30/20)
+  dDBH_fun=function(SPP,DBH,CR,BAL.SW,BAL.HW,CSI, b0.SPP, 
+                    b2.SPP, b3.SPP, b4.SPP){
+    
+    SPP=ifelse(is.na(SPP),'ZZ',SPP)
+    
+    #fixed parameter estimates
+    b0=-1.64233500448509 
+    b1=0.37697814748048 
+    b2=-0.0256836602459228 
+    b3=0.713456068528815 
+    b4=-0.0657468647965586 
+    b5=-0.0177402942446082 
+    b8=0.135377049425137 
+    
+    #species random effects from ddbh.fun.spp
+    
+    #model form from Kuehne
+    dDBH=exp((b0+b0.SPP)+((b1)*log(DBH))+((b2+b2.SPP)*DBH)+((b3+b3.SPP)*log(CR))+((b4+b4.SPP)*log(BAL.SW+.1))+((b5)*(BAL.HW))+((b8)*log(CSI)))
+    
+    return(dDBH=dDBH)
+  }
+
+## Diameter increment HW form and risk modifier
+  dDBH.HW.mod=function(SPP,DBH,BAL,Form,Risk){
+    
+    # check for valid species, form and risk codes
+    if(is.na(Form) | !(gsub('[^0-9]', '', Form) %in% 1:8) |
+       is.na(Risk) | !(gsub('[^0-9]', '', Risk) %in% 1:4) |
+       !SPP %in% c('RO', 'SM', 'YB', 'RM', 'PB', 'QA')){
+      mod=1
+    }else{
+      #Convert NHRI form classes
+      if(Form == 'F1' | Form == 'F7' | Form == 'F3' | Form == 'F4'){new.Form = 'A'}
+      else{new.Form = 'B'} #We could have catch for other form types but probably not needed.
+      
+      #Convert NHRI risk classes
+      if(Risk == 'R1' | Risk == 'R2'){new.Risk = 'LR'}
+      else{new.Risk = 'HR'} #We could have catch for other risk types but probably not needed.
+      
+      if(SPP=='RO'){SPP.RO=1; SPP.SM=0; SPP.YB=0; SPP.RM=0; SPP.QA=0; SPP.PB=0}
+      else if(SPP=='SM'){SPP.SM=1; SPP.RO=0; SPP.YB=0; SPP.RM=0; SPP.QA=0; SPP.PB=0}
+      else if(SPP=='YB'){SPP.YB=1; SPP.RO=0; SPP.SM=0; SPP.RM=0; SPP.QA=0; SPP.PB=0}
+      else if(SPP=='RM'){SPP.RM=1; SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.QA=0; SPP.PB=0}
+      #else if(SPP=='PB'){SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0; SPP.QA=0; SPP.PB=1} I think we can remove this. PB wil default to intercept
+      else if(SPP=='QA'){SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0; SPP.QA=1; SPP.PB=0}
+      else{SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0; SPP.QA=0; SPP.PB=0} #PB will assume a value of 0.
+      if(new.Form=='A'){Form.A=1; Form.B=0}
+      else{Form.A=0; Form.B=1}
+      if(new.Risk=='HR'){HR=1; LR=0}
+      else{HR=0; LR=1}
+      
+      dDBH.a=exp(-2.9487-0.1090*DBH+1.2111*log(DBH)-0.0430*BAL-0.1059*SPP.QA
+                 -0.6377*SPP.RM-0.3453*SPP.RO-0.2494*SPP.YB+
+                   0.0476*(DBH*SPP.QA)+0.0477*(DBH*SPP.RM)+
+                   0.0511*(DBH*SPP.RO)+0.0251*(DBH*SPP.YB)+0.2176)
+      dDBH.b=exp(-2.9487-0.1090*DBH+1.2111*log(DBH)-0.0430*BAL-0.1059*SPP.QA
+                 -0.6377*SPP.RM-0.3453*SPP.RO-0.2494*SPP.YB-0.0250*Form.B+
+                   0.2176*LR+0.0476*(DBH*SPP.QA)+0.0477*(DBH*SPP.RM)+
+                   0.0511*(DBH*SPP.RO)+0.0251*(DBH*SPP.YB))
+      mod=dDBH.b/dDBH.a}
+    mod
+  }  
+    
+  
+## Diameter thinning modifier function (3/15/16 based on results by Christian Kuehne)
+dDBH.thin.mod = function(SPP, PERCBArm, BApre, QMDratio, YEAR_CT, YEAR)
+{
+  TST = ifelse(is.na(YEAR_CT),0,YEAR - YEAR_CT) # time since thinning
+  # balsam fir 
+  if(SPP=="BF"){
+    y0 = -0.2566
+    y1 = -22.7609
+    y2 =  0.7745
+    y3 =  1.0511
+  }
+  # red spruce 
+  else if(SPP=="RS"){
+    y0= -0.5010; 
+    y1=-20.1147; 
+    y2=0.8067; 
+    y3=1.1905}
+  
+  SP=ifelse(SPP=='BF' | SPP=='RS',1,0)
+  dDBH.mod = ifelse(!is.na(PERCBArm) & !is.na(QMDratio) & !is.na(BApre) & !is.na(YEAR_CT) & YEAR_CT <= YEAR & SP==1,
+                    1+(exp(y0+(y1/((100*PERCBArm*QMDratio)+0.01)))*y2^TST*TST^y3),1.0)
+  return(dDBH.mod = round(dDBH.mod,5))
+}        
+
+#Diameter increment modifier for SBW (Cen et al. 2016)
+dDBH.SBW.mod=function(Region,SPP,DBH,BAL.SW,BAL.HW,CR,avgDBH.SW,topht,CDEF=NA)
+{
+  BF=ifelse(SPP=='BF',1,0)
+  BS.RS=ifelse(SPP=='BS'|SPP=='RS',1,0)
+  WS=ifelse(SPP=='WS',1,0)
+  CDEF2=ifelse(is.na(CDEF),0,CDEF)
+  if(Region=='ME')
+  {
+    b1.BF=0.1187
+    b1.BS.RS=0.0675
+    b1.WS=0.0321
+    b2=0.0019
+    b3=-0.0327
+    b4=-0.0412
+    b5=0.3950
+    b6.BF=-1.2813
+    b6.BS.RS=-0.9477
+    b6.WS=-0.3715
+    b7.BF=-0.0016
+    b7.BS.RS=-0.0006
+    b7.WS=-0.0183 
+  }              
+  else if(Region=='NB')
+  {                                                                     
+    b1.BF=0.0701
+    b1.BS.RS=0.0320
+    b1.WS=0.0487
+    b2=-0.0190
+    b3=-0.0277
+    b4=-0.0027
+    b5=0.0  
+    b6.BF=-0.8200
+    b6.BS.RS= -0.6861
+    b6.WS=-0.7839
+    b7.BF= -0.0018
+    b7.BS.RS=-0.0012
+    b7.WS=-0.0006
+  }
+  dDBHa=(b1.BF*BF+b1.BS.RS*BS.RS+b1.WS*WS)*DBH*exp(b2*BAL.HW+b3*BAL.SW+b4*topht+b5*CR+
+                ((b6.BF*BF+b6.BS.RS*BS.RS+b6.WS*WS)*(DBH/avgDBH.SW))+(b7.BF*BF+b7.BS.RS*BS.RS+b7.WS*WS)*0)
+  dDBHb=(b1.BF*BF+b1.BS.RS*BS.RS+b1.WS*WS)*DBH*exp(b2*BAL.HW+b3*BAL.SW+b4*topht+b5*CR+
+                ((b6.BF*BF+b6.BS.RS*BS.RS+b6.WS*WS)*(DBH/avgDBH.SW))+(b7.BF*BF+b7.BS.RS*BS.RS+b7.WS*WS)*CDEF2)
+  dDBH.mod=ifelse(is.na(CDEF) | SPP!='BF' & SPP!='RS' & SPP!='BS' & SPP!='WS',1.0,dDBHb/dDBHa)
+  return(dDBH.mod)
+}
+
+#### Plot basal area increment ####
+#### 2/22/2023 version 12.3.0
+    #### Chen, Cen; Rijal, Baburam and Weiskittel, Aaron. Draft 
+    #### Comparative assessment of time-explicit, state-space and simultaneous
+    #### models for stand-level volume growth and yield predictions across 
+    #### complex forest stands in the Acadian region of North America
+
+### * required tree list variables ###
+    ## Existing ACD variables (trees df)
+    # BAPH = total plot basal area (m2 per ha)
+    # pHW.ba = plot percent HW basal area (calculated in the "temp" table- temp$pHW.ba)
+    # RD.mod = plot relative density SDI/SDImax (calculated in the "temp" table- temp$RD.mod using different calculation with stand stand qmd<10)
+
+###* Additional required variables ###
+    # CSI = climate site index global variable from .GlobalEnv$CSI --stand$CSI (default= 12)
+    # q0; q1; q2; q3; q4 and k parameter estimates (defined inside function)
+
+# Plot BA increment calculation
+    dBA_plot_fun=function(RD, CSI, pHW.ba, Ba){
+        
+        # State space model
+        #parameter estimates- Table 2
+        alpha=585.72
+        beta= 4.9084
+        p1= 0.0238
+        p2= 0.9236
+        p3= 0.0219
+        p4= -0.0010
+        q0= 0.0888
+        q1= -0.1059
+        q2= -0.0017
+        q3= 0.0001
+        k= 48.340 
+        
+        q0 = 0.04968 #0.0177817 45431   2.79366  0.0052
+        q1 =-0.15018 #0.0016082 45431 -93.38712  0.0000
+        q2 =-0.13355 #0.0063292 45431 -21.10104  0.0000
+        q3=  0.00010 #0.0000371 45431   2.65842  0.0079
+        q4 = 0.11753 #0.0013650 45431  86.10026  0.0000
+        k = 64.45952 #0.4284936 45431 150.43286  0.0000
+        ## Equation 3  
+            # dBa/dt=rt*Ba*(1-Ba/k)
+        ## assuming t=1
+        
+        #rt=q0+q1*RD+q2*CSI+q3*pHW.ba   
+        rt = (q0+q1*log(RD+1e-6)+q2*log(CSI)+q3*log(pHW.ba+1e-6)+q4*log(CSI*RD+1e-6))
+        dBa= rt*Ba*(1-Ba/k)
+        
+        dBa
+        
+    }
+
+# wrapper function executes  dBA_plot_fun() and sets dDBH if plot dBA is less than sum of tree level BA increment
+    calc_plot_ba= function(tree.list, plot.smry){
+        
+        # calculate plot level basal area increment)
+        plot.smry = plot.smry %>% 
+            dplyr::group_by(PLOT) %>% 
+            dplyr::summarise(dBA = dBA_plot_fun(RD=RD.mod, 
+                                                CSI=CSI, 
+                                                pHW.ba=pHW.ba, 
+                                                Ba=BAPH)) %>% 
+            ungroup() %>% 
+            dplyr::mutate(dBA=ifelse(dBA<0, 0, dBA)) # constrain to minimum zero
+        
+        
+        tree.list=tree.list %>% 
+            dplyr::mutate(dBA.tree=(dDBH^2*0.00007854)*EXPF) %>%  # tree level diameter increment equation ba
+            # sum tree level BA increment
+            dplyr::group_by(PLOT) %>% 
+            dplyr::mutate(dBA.tree.sum=sum(dBA.tree, na.rm=T)) %>% 
+            dplyr::ungroup() %>% 
+            # allocate plot level BA increment using tree level BA increment as percent of plot total tree level BA increment 
+            dplyr::left_join(plot.smry,
+                             by='PLOT') %>% 
+            dplyr::mutate(dBA.tree.plot=dBA*(dBA.tree/dBA.tree.sum), 
+                          dDBH=ifelse(dBA.tree.sum>dBA, sqrt(dBA.tree.plot/0.00007854/EXPF), dDBH)) %>% 
+            dplyr::select(-dBA.tree,
+                          -dBA.tree.sum,
+                          -dBA.tree.plot,
+                          -dBA)
+        
+        tree.list
+    }
+
+
+
+#### Height increment ####
+# 12/21/2020 removed Htincr(); not called in code Height increment (10/8/14) (Russell et al. 2014 EJFR)
+# Htincr=function(SPP,HT,CR,BAL.SW,BAL.HW,BAPH,CSI)                 
+# 12/21/2020 replaced dHT;  Height increment (2/12/16) 
+
+#species random effects
+dht.fun.spp=tribble(
+  ~Spp, ~dht.b0.spp, ~dht.b2.spp,
+  
+  #Spp-|--------dht.b0.spp-|----------dht.b2.spp-|
+  #----|-------------------|---------------------|
+  "AB",   -1.02612824864817,   0.0346037998631002,
+  "AE",    1.43819563280052,  -0.0959572257517136,
+  "AH",   -0.673062037647421,  0.0230922230586148, 
+  "AL",   -0.664943978541551,  0.0286370517640571,
+  "AP",   -0.513076210579854,  0.00891799842172517,
+  "BA",   -0.37524267342808,   0.0337185642193777,
+  "BC",   -1.81264792042519,   0.116681975139121,
+  "BE",    1.27871255671255,  -0.0341088659665619,
+  "BF",   -0.776163565611841,  0.0555897206492342,
+  "BN",    1.28974293813166,  -0.0334592748349059,
+  "BO",    1.12645061757292,  -0.0195368383363507,
+  "BP",    0.694662181613901, -0.00698754776147194,
+  "BR",    0.0755027423746021,-0.0030668208065367,
+  "BS",   -0.733121933923716,  0.00145780711570331,
+  "BT",   -0.942478265169676,  0.0643943510361381,
+  "BW",    0.911461811693869, -0.0365763276923436,
+  "CC",   -0.122848430751689,  0.00498902131642062,
+  "EC",    0.0851004082247269,-0.000531040757535847,
+  "EH",   -0.422651876464928,  0.0138065741083889,
+  "GA",   -0.0592752775633811, 0.023337209338204,
+  "GB",   -0.239196056043342, -0.0115777571712358,
+  "HH",    0.150921901545459, -0.0473114443545307,
+  "HT",   -0.235863310157905,  0.0106140505063283,
+  "JP",   -0.972249355786984,  0.0819895541291093,
+  "MA",    0.339439898941425, -0.0325361018497775,
+  "MM",   -0.391994717500281,  0.0228089427348761,
+  "NM",   -0.0866372995869185, 0.00270418941934147,
+  "NS",   -0.204644855590905,  0.00916747349731601,
+  "PB",   -0.672325144256529,  0.0128071971875175,
+  "PP",    1.3093846110868,   -0.0602079922258899,
+  "PR",    0.631536576687535, -0.0244522671812604,
+  "PY",    0.0858081585771575,-0.000595774933743924,
+  "QA",   -0.0529031586151793, 0.00999107750243689,
+  "RM",   -0.551409784285385,  0.00747419687193155,
+  "RN",    0.961225210142485, -0.0624506295445526,
+  "RO",   -1.40760436773568,   0.0774545447566624,
+  "RS",   -0.0191386094616815,-0.0123820721821638,
+  "SB",    0.864845030207318, -0.0248496144856717,
+  "SE",    1.01998129466649,  -0.0773472411859139,
+  "SH",    0.118342580501145, -0.00302871180770913,
+  "SM",   -0.281974719368835,  0.00337387843817102,
+  "SO",    0.987461924599635, -0.0229812512122912,
+  "ST",    0.667822504069366, -0.0402936551456072,
+  "SV",    0.396177483707355, -0.0246358074186711,
+  "TA",   -1.07442965846633,   0.0480678095800713,
+  "TM",   -0.0963179446297929, 0.00440059570180893,
+  "WA",   -0.84083502294648,   0.0362928969955831,
+  "WC",   -0.128783409980557, -0.0105127926817691,
+  "WI",   -0.0377792893971838, 0.0143055161878269,
+  "WO",    0.914075944622758, -0.0395966442560029,
+  "WP",    0.573492987883601, -0.0251861980929384,
+  "WS",   -0.0343185671955406,-0.000954809895131117,
+  "YB",   -0.456836103602571, -0.000189742778138818,
+  "YP",   -0.0134632029990978, 0.000636230771304117,
+  "99",    0.0,                0.0, 
+  "OH",    0.0,                0.0,
+  "OS",    0.0,                0.0)
+
+#Revised dHT equation from Christian Kuehne (11/30/20)
+  dHT_fun=function(SPP,HT,CR,CCFL,CSI, b0.SPP, b2.SPP) {
+    
+    SPP=ifelse(is.na(SPP),'ZZ',SPP)
+    
+    #fixed parameter estimates
+    b0=-2.19445331289132 
+    b1=0.42640409105239 
+    b2=-0.0647071404836054 
+    b3=0.394836682501739 
+    b4=-0.0114287748735248 
+    b7=0.00029415038133825
+    
+    #species random effects from dht.fun.spp
+    
+    #model form from Kuehne
+    dHT=exp((b0+b0.SPP)+(b1)*log(HT)+(b2+b2.SPP)*HT+(b3)*(CR)+(b4)*(CCFL/100)+b7*(CSI^2))
+    
+    return(dHT=dHT)
+  }
+
+#thinning height modifier (Kuehne et al. 2016)
+dHT.thin.mod = function(SPP, PERCBArm, BApre, QMDratio, YEAR_CT, YEAR){
+  TST = ifelse(is.na(YEAR_CT),0,YEAR - YEAR_CT) # time since thinning
+  dHT.mod=ifelse(is.na(YEAR_CT),1,0)
+  # balsam fir 
+  if(SPP=="BF"){
+    y0 = -1.8443
+    y1 = 5.2969
+    y2 =  1.0532
+    y3 =  0.0#00001
+    dHT.mod=1-(exp(y0+y1/((100*PERCBArm)+0.01))*y2^TST*TST^y3)
+  }
+  # red spruce 
+  else if(SPP=="RS"){
+    y0 = -1.8426
+    y1 = 6.2781
+    y2 = 1.1596
+    y3 = 0.0#00001
+    dHT.mod=1-(exp(y0+y1/((100*PERCBArm)+0.01))*y2^TST*TST^y3)}
+  SP=ifelse(SPP=='BF' | SPP=='RS',1,0)
+  dHT.mod = ifelse(!is.na(YEAR_CT) & YEAR_CT <= YEAR & SP==1 | TST<5,max(0.75,min(dHT.mod,1.25)),1)
+  dHT.mod = ifelse(is.na(dHT.mod),1,dHT.mod)
+  return(dHT.mod = dHT.mod)
+}
+
+
+#SBW Height modifier (Cen et al. 2016)
+dHT.SBW.mod=function(SPP,DBH,topht,CR,avg.DBH.SW,CDEF='NA')
+{
+  BF=ifelse(SPP=='BF',1,0)
+  BS.RS=ifelse(SPP=='BS'|SPP=='RS',1,0)
+  WS=ifelse(SPP=='WS',1,0)
+  CDEF2=ifelse(is.na(CDEF),0,CDEF)
+  b1.BF=0.0013
+  b1.BS.RS=0.0009
+  b1.WS=0.0005
+  b2=-0.0011
+  b3=0.0316
+  b4=2.4512
+  b5.BF=0.3676
+  b5.BS.RS=0.2881
+  b5.WS=0.6800
+  b6.BF=-0.0017
+  b6.BS.RS=-0.0014
+  b6.WS=0.0001
+  dHTa=(b1.BF*BF+b1.BS.RS*BS.RS+b1.WS*WS)*DBH*exp(b2*DBH^2+b3*topht+b4*CR+(b5.BF*BF+b5.BS.RS*BS.RS+b5.WS*WS)*(DBH/avg.DBH.SW)
+                                                  +(b6.BF*BF+b6.BS.RS*BS.RS+b6.WS*WS)*0)
+  dHTb=(b1.BF*BF+b1.BS.RS*BS.RS+b1.WS*WS)*DBH*exp(b2*DBH^2+b3*topht+b4*CR+(b5.BF*BF+b5.BS.RS*BS.RS+b5.WS*WS)*(DBH/avg.DBH.SW)
+                                                  +(b6.BF*BF+b6.BS.RS*BS.RS+b6.WS*WS)*CDEF2)
+  dHT.mod=ifelse(is.na(CDEF) | SPP!='BF' & SPP!='RS' & SPP!='BS' & SPP!='WS',1.0,dHTb/dHTa)
+  return(dHT.mod)
+}
+
+### Crown recession ####
+#dynamic crown recession equation (Russell et al. 2014; EJFR)
+dHCB=function(dHT,DBH,HT,HCB,CCF,shade)
+{
+  CL=HT-HCB
+  CR=CL/HT
+  b1=4.000
+  b2=-0.8395
+  b3=-0.2196
+  b4=-0.3059
+  b5=-0.00553
+  b6=0.09821  
+  dHCB=(CL+dHT)/(1+exp(b1+b2*log(CR+0.01)+b3*log(CCF+1)+ b4*log(1.01-CR)
+                       +b5*(shade^2)+b6*log(shade*CR)))
+  return(dHCB=dHCB)
+}
+
+
+#crown recession thinning modifier
+dHCB.thin.mod = function(SPP, PERCBArm, BApre, QMDratio, YEAR_CT, YEAR){
+  TST = ifelse(is.na(YEAR_CT),0,YEAR - YEAR_CT) # time since thinning
+  # balsam fir 
+  if(SPP=="BF"){
+    y0 = -0.4208
+    y1 = -17.0998
+    y2 =  0.7986
+    y3 =  0.0521
+    dHCB.mod=1-(exp(y0+y1/((100*PERCBArm*QMDratio)+0.01))*y2^TST*TST^y3)
+  }
+  # red spruce 
+  else if(SPP=="RS"){
+    y0 = -1.0778
+    y1 = -14.7694
+    y2 = 0.7758
+    y3 = 1.1164
+    dHCB.mod=1-(exp(y0+y1/((100*PERCBArm*QMDratio)+0.01))*y2^TST*TST^y3)}
+  SP=ifelse(SPP=='BF' | SPP=='RS',1,0)
+  dHCB.mod = ifelse((!is.na(YEAR_CT) & YEAR_CT <= YEAR) & SP==1,min(abs(dHCB.mod),1),1)
+  return(dHCB.mod = dHCB.mod)
+}
+
+#### Mortality ####
+# Cen Chen, John Kershaw Jr, Aaron Weiskittel, Elizabeth McGarrigle, Mike Lavigne.
+# Can a multistage approach improve individual tree mortality predictions across the complex 
+# mixed-species and managed forests of eastern North America?
+
+# Application of multistage approach: 
+  # 1) Calculate the annual probability that a plot will experience mortality (p)  
+  # 2) Assign value to (I) where I = 0 if p < v and I = 1 otherwise, where v is a plot mortality threshold value
+  # 3) Calculate the per ha basal area mortality (m) for each plot (m2 ha-1 yr-1) 
+  # 4) Multiply (m) by (I)
+  # 5) Calculate annual tree survival probabilities (s) each tree record 
+  # 6) In the Acadian framework calculate tree and stand level mortality and survival modifiers, applying to the (p) and (m) values 
+  # 7) Stand level mortality disaggregation using ratio approach using the stand mortality (m) / sum(tree mortality (p) * tree BA)
+  # 8) Calculate mortality trees per ha (dEXPF) 
+
+  
+
+### * required tree list variables ###
+  ## Existing ACD variables (trees df)
+  # DBH = tree record diameter at breast height (cm)
+  # BAPH = total plot basal area (m2 per ha)
+  # ba = plot basal area (m2 per ha) for each tree record
+  # pBF.ba = plot percent BF basal area
+  # pIHW.ba = plot percent intolerant hardwood basal area tree$SPtype=='HW' & tree$shade<2.0)
+  # qmd = plot QMD
+  # BAL = plot basal area in larger trees
+  # SP = species (FVS Alpha)
+
+###* Additional variables ###
+  # Region = ACD region (default ME)
+  # CSI = climate site index global variable from stand$CSI (default= 12)
+
+
+###* Parameter estimates ###
+
+  ##** fixed parameter estimates ###
+    # p and s by model type 
+    mort.modtype.fixed=tribble(
+      ~model.type, ~p.p1, ~p.p2, ~p.p3, ~p.p4, ~p.p5, ~s.p0, ~s.p1, ~s.p2, ~s.p3, ~s.p4, ~s.p5,
+      #model.type-|--p.p1-|--p.p2-|--p.p3-|--p.p4-|--p.p5-|---s.p0-|---s.p1-|---s.p2-|---s.p3-|---s.p4-|---s.p5-
+      'logistic',  -0.054,  -0.047,  0.065,  0.230, -0.811, -3.4250, -0.1358,  0.0035,  0.0400,  -0.0530,  0.0319,
+      'gompit',     0.036,   0.031, -0.044, -0.115,  0.474,  1.2171,  0.0417, -0.0008, -0.0092,   0.0118, -0.0071
+    )
+
+    # m 
+    mort.fixed=tribble(
+      ~m.p0, ~m.p1, ~m.p2, ~m.p3, ~m.p4,
+      #--m.p0--|--m.p1--|--m.p2--|--m.p3--|--m.p4--|
+      84.2843,  -1.1754, 83.4725, 13.3258,  0.0005)
+
+  ##** random parameter estimates ###
+    # region random effects 
+    mort.region.random=tribble(
+      ~Region,  ~m.p0.region, ~m.p4.region, 
+      #-Region-|--m.p0---|--m.p4---|
+      'ME',     44.8462,  0.0009,  # Maine
+      'NB',     -8.2982,  0.0012,  # New Brunswick
+      'NS',    -17.6687, -0.0018,  # Nova Scotia
+      'QC',    -11.9457,  0.0028   # Quebec
+    )
+
+    # region * model type random effects 
+    mort.modtype.region.random=tribble(
+      ~model.type, ~Region, ~p.p0.region, ~s.p0.region,
+      #model.type-|-Region-|--p.p0--|-s.p0------|
+      'logistic',  'ME',     1.441,   -0.2134,  # Maine
+      'logistic',  'NB',    -0.135,   -0.6260,  # New Brunswick
+      'logistic',  'NS',    -0.170,    0.0845,  # Nova Scotia
+      'logistic',  'QC',    -0.839,    0.5464,  # Quebec
+      'gompit',    'ME',    -1.352,    0.0080,  # Maine
+      'gompit',    'NB',    -0.331,    0.1018,  # New Brunswick
+      'gompit',    'NS',    -0.225,   -0.0550,  # Nova Scotia
+      'gompit',    'QC',     0.151,   -0.1702   # Quebec
+    )
+
+    # s intercept: species random effects
+    mort.s.p0.species.random=tribble(
+      ~Species, ~SpeciesCommon, ~s.p0.species.logistic, ~s.p0.species.gompit,
+      #Sp-|--SpeciesCommon-|--p0.species.logistic-|--p0.species.gompit-| 
+      'AB', 'American beech', -0.5126, 0.1978, 
+      'AE', 'American elm', -0.1830, 0.1019, 
+      'AH', 'American hornbeam', -0.5147, -0.0384, 
+      'AI', 'ailanthus', 0.0733, -0.0256,
+      'AP', 'apple spp.', 0.3698, -0.0642, 
+      'AS', 'ash spp.', -0.0114, 0.0068, 
+      'AW', 'Atlantic white-cedar', 0.0633, -0.2002, 
+      'BA', 'black ash', -0.6276, 0.2264,
+      'BC', 'black cherry', 0.7312, -0.1545, 
+      'BE', 'boxelder', 0.0487, -0.0948, 
+      'BF', 'balsam fir', -0.8591, 0.2917, 
+      'BH', 'bitternut hickory', 0.0539, -0.1552,
+      'BL', 'black willow', -0.0004, 0.0002, 
+      'BN', 'butternut', 0.1814, -0.3538,  
+      'BO', 'black oak', 0.0571, -0.3270, 
+      'BP', 'balsam poplar', 1.2689, -0.3614, 
+      'BR', 'bur oak', 0.0808, -0.1058,  
+      'BS', 'black spruce', -1.3679, 0.4029, 
+      'BT', 'bigtooth aspen', 0.2714, 0.0608, 
+      'BW', 'American basswood', 0.3338, -0.1117,
+      'CC', 'chokecherry', 0.3558, -0.0700, 
+      'DW', 'flowering dogwood', 0.0592, 0.0824, 
+      'EC', 'eastern cottonwood', -0.1708, 0.0278, 
+      'EH', 'eastern hemlock', 0.1427, -0.0060,
+      'EL', 'elm spp.', 0.1841, -0.3584, 
+      'GA', 'green ash', -0.3557, 0.2509, 
+      'GB', 'grey birch', -0.1300, 0.0936, 
+      'HH', 'eastern hophornbeam', -0.1873, 0.1366,
+      'HT', 'hawthorn', 0.2525, -0.2235, 
+      'JP', 'jack pine', 0.1891, 0.0279, 
+      'MA', 'American mountain ash', 0.2257, -0.0339, 
+      'MM', 'mountain maple', 0.6884, -0.1776,
+      'NS', 'Norway spruce', 0.0418, -0.1410, 
+      'OH', 'other hardwood', 0.08667083, -0.03098542, # unweighted average of all hardwood species
+      'OS', 'other softwood', -0.278, 0.084175, # unweighted average of all softwood species
+      'PB', 'paper birch', -0.2767, 0.1684, 
+      'PP', 'pitch pine', 0.7480, -0.3463, 
+      'PR', 'pin cherry', 0.6134, -0.1367,
+      'PY', 'swamp cottonwood', 0.1014, -0.2156, 
+      'QA', 'quaking aspen', 0.4572, -0.0414,
+      'RM', 'red maple',	0.3908,	-0.0215, 
+      'RN', 'red pine1', 0.2174, -0.0012,
+      'RO', 'red oak', 0.0622, 0.0711, 
+      'RP', 'red pine2', -0.0171, 0.0059, 
+      'RS', 'red spruce', -0.7487, 0.2653, 
+      'SB', 'sweet birch', -0.1131, 0.0134,
+      'SC', 'Scotch pine', -0.0132, 0.0048, 
+      'SE', 'serviceberry', 0.8156, -0.3270, 
+      'SH', 'shagbark hickory', -0.0144, 0.0096, 
+      'SM', 'sugar maple', -0.2952, 0.1547,
+      'SO', 'scarlet oak', -0.0033, 0.0012,  
+      'ST', 'stripe maple', -0.8613, 0.3145, 
+      'SV', 'silver maple', 0.0481, 0.0345, 
+      'SW', 'swamp white oak', -0.0011, 0.0002,
+      'SY', 'sycamore', 0.0179, -0.0036,  
+      'TA', 'tamarack', -1.1673, 0.3719,
+      'TM', 'Table-mountain pine', -0.0148, 0.0097,
+      'WA', 'white ash', -0.0627, 0.0918,
+      'WC', 'northern whitecedar', -1.1750, 0.3678, 
+      'WK', 'willow spp.', 1.4078, -0.5225, 
+      'WL', 'willow oak', 0.0000, -0.0148,
+      'WO', 'white oak', -0.0910, 0.1999,
+      'WP', 'eastern white pine', 0.0147, 0.0695, 
+      'WS', 'white spruce', -0.5019, 0.2241, 
+      'YB', 'yellow birch', -0.5763, 0.2065, 
+      'YP', 'yellow poplar', -0.0016, 0.0006,
+      '99', 'other', -0.004496875, 	-0.002195312 # unweighted average of all species
+    )   
+
+    # s species random effects
+    mort.s.p1.species.random=tribble(
+      ~Species, ~SpeciesCommon, ~s.p1.species.logistic, ~s.p1.species.gompit,
+      
+      #Sp-|--SpeciesCommon-|--p1.species.logistic-|--p1.species.gompit-| 
+      'AB', 'American beech', 0.0044, -0.0123, 
+      'AE', 'American elm', 0.0606, -0.0238, 
+      'AH', 'American hornbeam', 0.0481, 0.0617, 
+      'AI', 'ailanthus', 0.3325,-0.1170,
+      'AP', 'apple spp.', 0.0315, -0.0163, 
+      'AS', 'ash spp.', -0.0856, 0.0521, 
+      'AW', 'Atlantic white-cedar', 0.0047, 0.0049, 
+      'BA', 'black ash', 0.0197, -0.0160,
+      'BC', 'black cherry', -0.0257, 0.0000, 
+      'BE', 'boxelder', -0.0095, -0.3420,
+      'BF', 'balsam fir', 0.0765, -0.0290, 
+      'BH', 'bitternut hickory', 0.0408, -0.0090,
+      'BL', 'black willow', -0.0076, 0.0040, 
+      'BN', 'butternut', 0.0470, -0.0046, 
+      'BO', 'black oak', -0.0569, 0.0250, 
+      'BP', 'balsam poplar', -0.0768, 0.0191,
+      'BR', 'bur oak', 0.0979, -0.3485,
+      'BS', 'black spruce', 0.0659, -0.0264,
+      'BT', 'bigtooth aspen', -0.0562, -0.0014, 
+      'BW', 'American basswood', -0.0611, 0.0126,
+      'CC', 'chokecherry', 0.1986, -0.0664, 
+      'DW', 'flowering dogwood', 0.3401, -0.1520, 
+      'EC', 'eastern cottonwood', 0.0849, 0.1089,
+      'EH', 'eastern hemlock', -0.1919, 0.0427, 
+      'EL', 'elm spp.', 0.1031, -0.0087, 
+      'GA', 'green ash', -0.0271, -0.0103, 
+      'GB', 'grey birch', 0.0712, -0.0269,
+      'HH', 'eastern hophornbeam', -0.0581, 0.0009, 
+      'HT', 'hawthorn', 0.0594, 0.0120, 
+      'JP', 'jack pine', -0.0273, -0.0042,
+      'MA', 'American mountain ash', -0.0091, -0.0044,
+      'MM', 'mountain maple', 0.1151, -0.0365,
+      'NS', 'Norway spruce', -0.1011, 0.0401,
+      'OH', 'other hardwood',  0.01402083, -0.01949375, # unweighted average of all hardwood species
+      'OS', 'other softwood', -0.05584375, 0.0128,  # unweighted average of all softwood species
+      'PB', 'paper birch', -0.0202, -0.0085,
+      'PP', 'pitch pine', -0.0149, 0.0012,
+      'PR', 'pin cherry', 0.0604, -0.0241, 
+      'PY', 'swamp cottonwood', 0.0584, -0.0010, 
+      'QA', 'quaking aspen', -0.0242, -0.0041, 
+      'RM', 'red maple', -0.1478, 0.0241,
+      'RN', 'red pine1', -0.1021, 0.0128, 
+      'RO', 'red oak', -0.0742, 0.0046, 
+      'RP', 'red pine2', -0.1781, 0.0639, 
+      'RS', 'red spruce', -0.0200, -0.0081,
+      'SB', 'sweet birch', -0.0302, 0.0888,
+      'SC', 'Scotch pine', -0.1566, 0.0572,
+      'SE', 'serviceberry', -0.1200, 0.0458, 
+      'SH', 'shagbark hickory', -0.1068, 0.0652, 
+      'SM', 'sugar maple', -0.0824, 0.0063,
+      'SO', 'scarlet oak', -0.0533, 0.0214, 
+      'ST', 'stripe maple', 0.1915, -0.0633,
+      'SV', 'silver maple', -0.0834, 0.0118, 
+      'SW', 'swamp white oak', -0.0311, 0.0072,
+      'SY', 'sycamore', 0.2760, -0.0597, 
+      'TA', 'tamarack', 0.0360, -0.0210, 
+      'TM', 'Table-mountain pine', -0.0982, 0.0658, 
+      'WA', 'white ash', -0.1029, 0.0126,
+      'WC', 'northern whitecedar', -0.0367, -0.0050, 
+      'WK', 'willow spp.', 0.0053, 0.0010,
+      'WL', 'willow oak', 0.0000, -0.1873, 
+      'WO', 'white oak', -0.1078, 0.0017,
+      'WP', 'eastern white pine', -0.1529, 0.0233, 
+      'WS', 'white spruce', 0.0032, -0.0134, 
+      'YB', 'yellow birch', -0.0868, 0.0091, 
+      'YP', 'yellow poplar', -0.0287, 0.0125,
+      '99', 'other', -0.003445312, -0.01142031 # unweighted average of all species
+    )
+
+####* plot level mortality probability ####
+  mort_plot_prob=function(BAPH, # total plot basal area (m2 per ha)
+                          pBF.ba, # plot percent BF basal area
+                          pIHW.ba, # plot percent intolerant hardwood basal area tree$SPtype=='HW' & tree$shade<2.0)
+                          qmd, # plot QMD
+                          Region='ME',  # ACD region (default ME)              
+                          CSI=12,     # climate site index global variable from stand$CSI (default= 12) 
+                          model.type='logistic', # model type logistic or gompit  (default='logistic') 
+                          # mortality model parameter estimates
+                          p.p0.region, # random parameter estimate
+                          p.p1, 
+                          p.p2, 
+                          p.p3, 
+                          p.p4, 
+                          p.p5){
+    
+    ### Data management
+    # validate region
+    if(!Region %in% c('ME', 'NB', 'NS', 'QC')) Region='ME'
+    
+    # validate model type
+    if(!model.type %in% c('logistic', 'gompit')) model.type='logistic'
+    
+    
+    ### Step 1: Calculate p - plot mortality probability ###
+    p.fx=p.p0.region+p.p1*BAPH+p.p2*CSI+p.p3*qmd+p.p4*pBF.ba+p.p5*pIHW.ba
+    
+    #logistic
+    if(model.type=='logistic'){
+      p=1/(1+exp(p.fx))
+      # gompit
+    }else if(model.type=='gompit'){
+      p=1-exp(-exp(p.fx))
+    } 
+    
+    p
+  }  
+
+####* plot level basal area mortality ### 
+  mort_plot_ba=function(BAPH, # total plot basal area (m2 per ha)
+                        pBF.ba, # plot percent BF basal area
+                        pIHW.ba, # plot percent intolerant hardwood basal area tree$SPtype=='HW' & tree$shade<2.0)
+                        qmd, # plot QMD
+                        Region='ME',  # ACD region (default ME)              
+                        CSI=12,     # climate site index global variable from stand$CSI (default= 12) 
+                        model.type='logistic', # model type logistic or gompit  (default='logistic') 
+                        p,
+                        v=0.72, # Cen Chen 5/31/2022 threshold value "optimized across regions"  
+                        # mortality model parameter estimates
+                        m.p0,
+                        m.p0.region, # random parameter estimate
+                        m.p1,
+                        m.p2, 
+                        m.p3,
+                        m.p4,
+                        m.p4.region ) # random parameter estimate
+  {
+    
+    ### Data management
+    # validate region
+    if(!Region %in% c('ME', 'NB', 'NS', 'QC')) Region='ME'
+    
+    # validate model type
+    if(!model.type %in% c('logistic', 'gompit')) model.type='logistic'
+    
+    ### Step 2: Calculate m - plot level basal area mortality ##
+    
+    k= m.p0 + m.p0.region + m.p1*CSI + m.p2*pBF.ba + m.p3*pIHW.ba
+    r= m.p4 + m.p4.region + m.p4*qmd # draft typo of m.p5*qmd
+    t= 1 # assumes cycle length is always 1 year
+    m= (BAPH*k)/(BAPH+(k-BAPH)*exp(-r*t) )
+    m= r*m*(1-(m/k)) # assuming dt=1
+    
+    ### Step 3: Define and apply I - indicator variable using threshold (cut point) value ##
+    
+    # v=0.72 # Cen Chen 5/31/2022 threshold value "optimized across regions"  
+    
+    I= case_when(p<v ~0,
+                 TRUE ~ 1)
+    m= m*I
+    
+    m
+  }
+
+####* tree level survival probability ####
+  surv_tree=function(DBH,  # DBH= DBH (cm)
+                     BAL,  # BAL= basal area of trees larger than the subject tree (m2 ha-1)
+                     qmd, # plot QMD
+                     Region='ME',  # ACD region (default ME)              
+                     CSI=12,     # climate site index global variable from stand$CSI (default= 12) 
+                     model.type='logistic', # model type logistic or gompit  (default='logistic') 
+                     # mortality model parameter estimates
+                     s.p0, 
+                     s.p0.region,
+                     s.p0.species,
+                     s.p1, 
+                     s.p1.species,
+                     s.p2, 
+                     s.p3, 
+                     s.p4, 
+                     s.p5){
+    
+    ### Data management
+    # validate region
+    if(!Region %in% c('ME', 'NB', 'NS', 'QC')) Region='ME'
+    
+    # validate model type
+    if(!model.type %in% c('logistic', 'gompit')) model.type='logistic'
+    
+    
+    ### Step 4: calculate probability of survival- s ##
+    
+    # s.p0: intercept		  
+    s.p0=s.p0+s.p0.region+s.p0.species
+    
+    # s.p1: fixed and random effects slope- DBH (cm)	
+    s.p1=s.p1+s.p1.species
+    
+    
+    # s  
+    s.fx=s.p0 + s.p1*DBH + s.p2*DBH^2 + s.p3*BAL + s.p4*qmd + s.p5*CSI
+    
+    #logistic
+    if(model.type=='logistic'){
+      s=1/(1+exp(s.fx))
+      # gompit
+    }else if(model.type=='gompit'){
+      s=1-exp(-exp(s.fx))
+    } 
+    
+    s
+  }  
+
+
+####* apply mortality functions ####
+  # helper function to complete the Chen et al mortality calculations and disaggregate plot level mortality
+  calc_mortality=function(tree.list, 
+                          plot.smry,
+                          model.type='logistic',
+                          Region=plot.smry$Region,
+                          v=0.72, # Cen Chen 5/31/2022 threshold value "optimized across regions"  
+                          CSI= plot.smry$CSI[1],
+                          mort.modtype.fixed = .GlobalEnv$mort.modtype.fixed, # mortality function fixed parameter estimates by model type
+                          mort.fixed = .GlobalEnv$mort.fixed, # mortality function fixed parameter estimates
+                          mort.region.random = .GlobalEnv$mort.region.random, # mortality function random parameter estimates by region
+                          mort.modtype.region.random =  .GlobalEnv$mort.modtype.region.random, # mortality function random parameter estimates by model type and region
+                          mort.s.p0.species.random = .GlobalEnv$mort.s.p0.species.random, # mortality function random parameter estimates
+                          mort.s.p1.species.random = .GlobalEnv$mort.s.p1.species.random ){ # mortality function random parameter estimates
+      
+      # plot level mortality 
+      plot.mort=plot.smry %>% 
+          dplyr::select(PLOT, BAPH, qmd,
+                 pBF.ba, 
+                 pIHW.ba,
+                 use.sbwmod,
+                 topht,
+                 avgHT.SW,
+                 CDEF, 
+                 use.thinmod,
+                 use.hwmod,
+                 rdMod.dMORT_RDmod,
+                 YEAR_CT, 
+                 QMDratio, 
+                 YEAR, 
+                 pBArm, 
+                 BApre) %>% 
+          dplyr::mutate(model.type=model.type, 
+                 Region=Region,
+                 v=v) %>% 
+          dplyr::left_join(mort.modtype.fixed, # join with fixed parameter estimates
+                    by=c('model.type')) %>%
+          dplyr::left_join(mort.fixed,
+                    by=character()) %>%
+          dplyr::left_join(mort.region.random, # join with random parameter estimates
+                    by='Region') %>%
+          dplyr::left_join(mort.modtype.region.random,
+                    by=c('Region', 'model.type')) %>%
+          dplyr::mutate(p.mort=pmap_dbl(list(BAPH= BAPH,  # calculate plot mortality probability (p)
+                                      pBF.ba= pBF.ba,
+                                      pIHW.ba= pIHW.ba,
+                                      qmd= qmd,
+                                      Region= Region,
+                                      CSI= CSI,
+                                      model.type= model.type,
+                                      # mortality model parameter estimates
+                                      p.p0.region= p.p0.region,
+                                      p.p1= p.p1,
+                                      p.p2= p.p2,
+                                      p.p3= p.p3,
+                                      p.p4= p.p4,
+                                      p.p5= p.p5),
+                                 mort_plot_prob),
+                 m.mort=pmap_dbl(list(BAPH=BAPH, # calculate plot mortality basal area (m)
+                                      pBF.ba=pBF.ba,
+                                      pIHW.ba=pIHW.ba,
+                                      qmd=qmd,
+                                      Region=Region,
+                                      CSI=CSI,
+                                      model.type=model.type,
+                                      v=v,
+                                      p=p.mort,
+                                      # mortality model parameter estimates
+                                      m.p0=m.p0,
+                                      m.p0.region=m.p0.region,
+                                      m.p1=m.p1,
+                                      m.p2=m.p2,
+                                      m.p3=m.p3,
+                                      m.p4=m.p4,
+                                      m.p4.region=m.p4.region),
+                                 mort_plot_ba))
+      
+      # calculate plot level modifier values
+      plot.mort=plot.mort %>% 
+          #Spruce budworm plot mortality modifier
+          dplyr::mutate(smort.sbw.mod=ifelse(use.sbwmod==F, 1, 
+                                      pmap_dbl(list(Region=Region,
+                                                    BA=BAPH,
+                                                    BA.BF=pBF.ba*BAPH,
+                                                    topht=topht,
+                                                    CDEF=CDEF),
+                                               smort_sbw_mod)),
+                 # thinning plot modifier
+                 ssurv.thin.mod=ifelse(use.thinmod==F, 1, 
+                                       pmap_dbl(list(YEAR_CT= YEAR_CT, 
+                                                     YEAR= YEAR, 
+                                                     PERCBArm= pBArm, 
+                                                     BApre= BApre),
+                                                ssurv_thin_mod)),
+                 # apply modifiers & Bruce's relative density modifier
+                 m.mort= m.mort * smort.sbw.mod * (1/ssurv.thin.mod) * rdMod.dMORT_RDmod)
+      
+      # tree level survival
+      tree.list=tree.list %>%  #
+          dplyr::mutate(rec.id=seq(1:n())) # add record id; # could also use fvs.tree.index
+      
+      tree.mort=tree.list %>%  #
+          dplyr::transmute(rec.id,   
+                    Region=Region,
+                    PLOT,
+                    TREE, 
+                    SP, 
+                    DBH,
+                    EXPF,
+                    CR,
+                    HT,
+                    ba,
+                    BAL,
+                    BAL.HW,
+                    BAL.SW,
+                    model.type=model.type, 
+                    CSI=CSI,
+                    YEAR, 
+                    Form) %>% 
+          dplyr::left_join(plot.mort %>%  # join with plot level mortality 
+                               dplyr::select(PLOT, 
+                               m.mort, s.p0, s.p1, s.p2, s.p3, s.p4, s.p5, s.p0.region,
+                               BAPH,
+                               qmd,
+                               pBF.ba, 
+                               pIHW.ba, 
+                               CDEF, 
+                               avgHT.SW, 
+                               pBArm, 
+                               BApre,
+                               QMDratio,
+                               YEAR_CT,
+                               use.sbwmod,
+                               use.thinmod,
+                               use.hwmod),
+                    by='PLOT') %>% 
+          dplyr::left_join(mort.s.p0.species.random %>% # join with random parameter estimates 
+                        transmute(Species, 
+                                  s.p0.species=case_when(model.type=='logistic' ~s.p0.species.logistic, 
+                                                         model.type=='gompit' ~s.p0.species.gompit)), 
+                    by=c('SP'='Species')) %>% 
+          dplyr::left_join(mort.s.p1.species.random %>% 
+                        transmute(Species,
+                                  s.p1.species=case_when(model.type=='logistic' ~s.p1.species.logistic, 
+                                                         model.type=='gompit' ~s.p1.species.gompit)), 
+                    by=c('SP'='Species')) %>%
+          dplyr::mutate(s.surv = pmap_dbl(list(DBH=DBH,  # calculate tree level survival probability (s)
+                                        BAL=BAL,  
+                                        qmd=qmd, 
+                                        Region=Region,             
+                                        CSI=CSI,      
+                                        model.type=model.type,  
+                                        # mortality model parameter estimates
+                                        s.p0=s.p0, 
+                                        s.p0.region=s.p0.region,
+                                        s.p0.species=s.p0.species,
+                                        s.p1=s.p1, 
+                                        s.p1.species=s.p1.species,
+                                        s.p2=s.p2, 
+                                        s.p3=s.p3, 
+                                        s.p4=s.p4, 
+                                        s.p5=s.p5),
+                                   surv_tree)) 
+      
+      # calculate tree level mortality modifiers
+      
+      tree.mort= tree.mort %>% 
+          #spruce budworm tree mortality modifier
+          dplyr::mutate(tsurv.sbw.mod=ifelse(use.sbwmod==F, 1, 
+                                      pmap_dbl(list(Region=Region,
+                                                    SPP=SP,
+                                                    DBH=DBH,
+                                                    CR=CR,
+                                                    HT=HT,
+                                                    BAL.HW=BAL.HW,
+                                                    BAL.SW=BAL.SW,
+                                                    avgHT.SW=avgHT.SW,
+                                                    CDEF=CDEF),
+                                               tsurv_sbw_mod)),
+                 # thinning tree mortality modifier
+                 tsurv.thin.mod=ifelse(use.thinmod==F, 1, 
+                                       pmap_dbl(list(SPP = SP, 
+                                                     PERCBArm = pBArm, 
+                                                     BApre = BApre, 
+                                                     QMDratio = QMDratio, 
+                                                     YEAR_CT = YEAR_CT, 
+                                                     YEAR = YEAR),
+                                                tsurv_thin_mod)), 
+                 # hardwood tree mortality modifier (survival probability)
+                 tsurv.hw.mod=ifelse(use.hwmod==F |
+                                         is.null(Form)|
+                                         is.na(Form),
+                                     1,
+                                     pmap_dbl(list(SPP=SP,
+                                                   DBH=DBH,
+                                                   Form=Form,
+                                                   BAL=BAL,
+                                                   BA=BAPH),
+                                              tsurv_hw_mod)),
+                 #apply modifiers
+                 s.surv=s.surv*tsurv.sbw.mod*(1/tsurv.thin.mod)*tsurv.hw.mod,
+                 s.surv=case_when(s.surv>1 ~1, # constrain to range of zero to one
+                                  s.surv<0 ~0,
+                                  TRUE ~s.surv))%>% 
+          dplyr::group_by(PLOT) %>% 
+          dplyr::arrange(s.surv, by.group=T)  # s ranked lowest to highest
+      
+      # stand level mortality disaggregation using ratio approach
+      tree.mort=tree.mort %>%  # grouped tree list
+          dplyr::mutate(s.mort.ba = ba * (1-s.surv),
+                 r.mort=case_when(m.mort>0 ~m.mort/sum(s.mort.ba, na.rm=T),
+                                  TRUE ~0),
+                 dBa=r.mort*s.mort.ba,
+                 dEXPF=dBa/ba*EXPF,
+                 dEXPF=case_when(dEXPF>EXPF ~EXPF, # constrain dEXPF to range of zero to EXPF
+                                 dEXPF<0 | is.na(dEXPF) ~0,
+                                 TRUE ~dEXPF)) %>% 
+          dplyr::ungroup()
+      
+      tree.list=tree.list %>%
+          dplyr::left_join(tree.mort %>%
+                               dplyr::select(rec.id, dEXPF),
+                    by='rec.id')
+      
+      tree.list
+  }
+  
+
+#### mortality modifiers ###
+  # SBW mortality modifier: stand level
+    smort_sbw_mod=function(Region, BA, BA.BF, topht, CDEF)
+    {
+      if(Region=='ME')
+      {
+        b1=-2.6380
+        b2=0.0114
+        b3=-0.0076
+        b4=0.0074
+      }
+      else if(Region=='NB')
+      {
+        b1=-3.0893
+        b2=0.0071
+        b3=-0.0037
+        b4=0.0
+      }
+      else
+      {
+        b1=-2.6380
+        b2=0.0114
+        b3=-0.0076
+        b4=0.0074
+      }
+      VOL=(topht/2)*BA
+      pBF=BA.BF/BA
+      aa=(1/(1+exp(-b1)))*(1/(1+exp(-(b2*0*BA.BF+b3*VOL+b4*0))))
+      bb=(1/(1+exp(-b1)))*(1/(1+exp(-(b2*CDEF*BA.BF+b3*VOL+b4*CDEF))))
+      rat=ifelse(is.na(CDEF),1,bb/aa)
+      
+      # result is mortality probability multiplier value >=1
+      return(rat=rat)
+    }
+
+  
+  # SBW survival modifier: tree record (Cen et al. 2016) 
+    # ? Cen Chen, Aaron Weiskittel, Mohammad Bataineh, and David A. MacLean. 2017. Even low levels of spruce budworm defoliation affect mortality and ingrowth but net growth is more driven by competition. Canadian Journal of Forest Research. 47(11): 1546-1556. https://doi.org/10.1139/cjfr-2017-0012
+    # C Chen, A Weiskittel, M Bataineh, DA MacLean. 2017. Evaluating the influence of varying levels of spruce budworm defoliation on annualized individual tree growth and mortality in Maine, USA and New Brunswick, Canada
+    #  Forest Ecology and Management 396:184-194. https://doi.org/10.1016/j.foreco.2017.03.026 . 
+    tsurv_sbw_mod=function(Region,SPP,DBH,CR,HT,BAL.HW,BAL.SW,avgHT.SW,CDEF=NA)
+    {
+      BF=ifelse(SPP=='BF',1,0)
+      BS.RS=ifelse(SPP=='BS'|SPP=='RS',1,0)
+      WS=ifelse(SPP=='WS',1,0)
+      CDEF2=ifelse(is.na(CDEF),0,CDEF)
+      if(Region=='ME')
+      {
+        b1=-6.5208
+        b2=-0.4866
+        b3.BF=-0.0355
+        b3.BS.RS=-0.1231
+        b3.WS=-0.1755                        
+        b4=0.0316
+        b5.BF=1.5087
+        b5.BS.RS=1.5087
+        b5.WS=1.5087
+        b6=-0.0175
+        b7=0.0274
+        b8.BF=0.0040
+        b8.BS.RS=0.0056
+        b8.WS=0.0207
+      }
+      else if(Region=='NB')
+      {
+        b1=-6.8310
+        b2=0.0
+        b3.BF=-0.2285
+        b3.BS.RS=-0.2285
+        b3.WS=-0.2285
+        b4=0.2025
+        b5.BF=2.1703
+        b5.BS.RS=2.0809
+        b5.WS=1.5802
+        b6=0.0
+        b7=0.0
+        b8.BF=0.0029
+        b8.BS.RS=0.0101
+        b8.WS=0.0021
+      }
+      tmorta=(1-exp(-exp(b1+b2*CR+(b3.BF*BF+b3.BS.RS*BS.RS+b3.WS*WS)*DBH+b4*avgHT.SW+
+                           (b5.BF*BF+b5.BS.RS*BS.RS+b5.WS*WS)*(HT/avgHT.SW)+b6*BAL.SW+b7*BAL.HW+
+                           (b8.BF*BF+b8.BS.RS*BS.RS+b8.WS*WS)*0)))
+      tmortb=(1-exp(-exp(b1+b2*CR+(b3.BF*BF+b3.BS.RS*BS.RS+b3.WS*WS)*DBH+b4*avgHT.SW+
+                           (b5.BF*BF+b5.BS.RS*BS.RS+b5.WS*WS)*(HT/avgHT.SW)+b6*BAL.SW+b7*BAL.HW+
+                           (b8.BF*BF+b8.BS.RS*BS.RS+b8.WS*WS)*CDEF2)))
+      tmort.mod=ifelse(is.na(CDEF) | SPP!='BF' & SPP!='RS' & SPP!='BS' & SPP!='WS',1.0,(1-tmortb)/(1-tmorta))
+      
+      # result is survival probability (range zero to one)
+      return(tmort.mod)  
+    }
+    
+  # HW survival modifier: tree record from Castle et al. (2017)
+    tsurv_hw_mod=function(SPP,DBH,BAL,BA,Form){
+      
+      # check for valid species and form codes
+      if(is.na(Form) | !(gsub('[^0-9]', '', Form) %in% 1:8) |
+         !SPP %in% c('RO', 'SM', 'YB', 'RM', 'PB', 'QA')){
+        mod=1
+      }else{
+        #Convert NHRI form classes
+        if(Form == 'F1'){new.Form = 'STM'}
+        else if(Form == 'F2'){new.Form = 'SWP'}
+        else if(Form == 'F5' | Form == 'F8'){new.Form = 'MST'}
+        else{new.Form = 'OTHER'}
+        
+        if(SPP=='RO'){SPP.RO=1; SPP.SM=0; SPP.YB=0; SPP.RM=0; SPP.QA=0; SPP.PB=0}
+        else if(SPP=='SM'){SPP.SM=1; SPP.RO=0; SPP.YB=0; SPP.RM=0; SPP.QA=0; SPP.PB=0}
+        else if(SPP=='YB'){SPP.YB=1; SPP.RO=0; SPP.SM=0; SPP.RM=0; SPP.QA=0; SPP.PB=0}
+        else if(SPP=='RM'){SPP.RM=1; SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.QA=0; SPP.PB=0}
+        #else if(SPP=='PB'){SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0; SPP.QA=0; SPP.PB=1} I think this can be removed since PB is baseline species (intercept term)
+        else if(SPP=='QA'){SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0; SPP.QA=1; SPP.PB=0}
+        else{SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0; SPP.QA=0; SPP.PB=0} #PB will take on a value of 0
+        if(new.Form=='STM'){STM=1; SWP=0; MST=0}
+        else if(new.Form =='SWP'){STM=0; SWP=1; MST=0}
+        else{STM=0; SWP=0; MST=0}
+        
+        mort.a=exp(15.1991-0.1509*DBH-0.1232*BAL-1.4053*sqrt(BA)-2.7907*SPP.QA-3.9809*SPP.RM-0.7937*SPP.RO+
+                     5.2531*SPP.YB+0.0791*(DBH*SPP.QA)+0.8343*(DBH*SPP.RM) +
+                     0.8944*(DBH*SPP.RO)+0.1528*(DBH*SPP.YB)+3.3082)/(1+exp(15.1991-0.1509*DBH-0.1232*BAL-1.4053*sqrt(BA)-2.7907*SPP.QA-3.9809*SPP.RM-0.7937*SPP.RO+
+                                                                              5.2531*SPP.YB+0.0791*(DBH*SPP.QA)+0.8343*(DBH*SPP.RM) +
+                                                                              0.8944*(DBH*SPP.RO)+0.1528*(DBH*SPP.YB)+3.3082))
+        
+        mort.b=exp(15.1991-0.1509*DBH-0.1232*BAL-1.4053*sqrt(BA)-2.7907*SPP.QA-3.9809*SPP.RM-0.7937*SPP.RO+
+                     5.2531*SPP.YB+0.0791*(DBH*SPP.QA)+0.8343*(DBH*SPP.RM) +
+                     0.8944*(DBH*SPP.RO)+0.1528*(DBH*SPP.YB)+3.3082*STM+2.2518*SWP)/(1 + exp(15.1991-0.1509*DBH-0.1232*BAL-1.4053*sqrt(BA)-2.7907*SPP.QA-3.9809*SPP.RM-0.7937*SPP.RO+
+                                                                                               5.2531*SPP.YB+0.0791*(DBH*SPP.QA)+0.8343*(DBH*SPP.RM) + 0.8944*(DBH*SPP.RO)+0.1528*(DBH*SPP.YB)+3.3082*STM+2.2518*SWP))
+        
+        mod=mort.b/mort.a}
+      # result is survival probability (range zero to one)
+      mod
+    }
+
+  # Thinning survival modifier: stand level
+    ssurv_thin_mod=function(YEAR_CT, YEAR, PERCBArm, BApre){
+        
+        # time since thinning
+      TST = ifelse(is.na(YEAR_CT),0,YEAR - YEAR_CT) 
+      
+      # parameter estimates 
+      b30=-1.2402
+      b31=-24.5202
+      b32=-1.1302
+      b33=1.5884
+      y30=8.3385
+      y31=-601.3096
+      y32=0.5507
+      y33=1.5798
+      
+      #BAmort=exp(b30+(b31/BA)+b32*PCT+b33*pBA.BF)
+      mod=ifelse(!is.na(YEAR_CT) & YEAR_CT <= YEAR, 
+                 1.0+exp(y30+(y31/((100*(PERCBArm)+BApre)+0.01)))*y32^TST*TST^y33,
+                 1.0)
+      #BAmort=BAmort*mod
+      
+      # result is survival probability multiplier value >=1
+      mod
+    }  
+    
+  # Thinning survival modifier: tree record
+    tsurv_thin_mod = function(SPP, PERCBArm, BApre, QMDratio, YEAR_CT, YEAR){
+        # time since thinning
+      TST = ifelse(is.na(YEAR_CT),0,YEAR - YEAR_CT) 
+      
+      # balsam fir 
+      if(SPP=="BF"){
+        y0=1.7414
+        y1=7.0805;
+        y2=0.6677; 
+        y3=0.8474
+        tmod=1+(exp(y0+(y1/(((100*PERCBArm+BApre)*QMDratio)+0.01)))*y2^TST*TST^y3)
+      }
+      
+      # red spruce 
+      else if(SPP=="RS"){
+        y0=10.5057;
+        y1=-650.8260;
+        y2=0.6948; 
+        y3=0.6429
+        tmod=1+(exp(y0+(y1/(((100*PERCBArm)+BApre)+0.01)))*y2^TST*TST^y3)}
+      
+      tmod = ifelse((!is.na(YEAR_CT) & YEAR_CT <= YEAR) & SPP %in% c('BF', 'RS'),
+                         tmod,
+                         1)
+      # result is survival probability multiplier value >=1
+      
+       tmod
+    }
+
+#### Ingrowth ####
+  ##INGROWTH FUNCTION of Li et al. (2011; CJFR 41, 2077-2089)
+  # PARMS is GNLS (generalized least squares) or NLME (mixed effects), 
+  # CutPoint is the probability threshold where ingrowth will occur
+  # BA is total basal area,
+  # TPH is trees per ha, 
+  # PHW is percent hardwood basal area, 
+  # MinDBH is the minimum threshold diameter (cm)
+  # ClimateSI is the climate site index (m)
+Ingrowth.FUN=function(PARMS,CutPoint,BA,TPH,QMD,PHW,MinDBH,ClimateSI,cyclen=1)
+{    
+  if(PARMS=="GNLS"){
+    a0=-0.2116   #-4.7867
+    a1=-0.0255   #0.0469
+    a2=-0.1396   #-0.8623
+    a3=-0.0054   #2.3E-5
+    a4=0.0433    #0.1541
+    a5=0.0409    #0.1508
+    a6=0.0
+    b0=3.8982    #3.9018
+    b1=-0.0257   #-0.0257
+    b2=-0.3668   #-0.3694
+    b3=0.0002    #0.0002
+    b4=0.0216    #0.0216
+    b5=-0.0514   #-0.0516
+    b6=0.0
+  } 
+  else if(PARMS=='NLME'){
+    b0 =          2.8466  #  0.1255  19E3    22.68    <.0001    0.05    2.6006    3.0926  -181.263
+    b1 =        -0.03114  #0.001039  19E3   -29.99    <.0001    0.05  -0.03318  -0.02911  -1243.77
+    b2 =         -0.2891  # 0.03785  19E3    -7.64    <.0001    0.05   -0.3633   -0.2149   -70.309
+    b3 =        0.003350  #0.000496  19E3     6.76    <.0001    0.05  0.002378  0.004321  -20015.9
+    a0 =        -0.08217  #  0.1536  19E3    -0.53    0.5927    0.05   -0.3833    0.2189  35.61166
+    a1 =          0.1113  #0.003037  19E3    36.64    <.0001    0.05    0.1053    0.1172  322.2762
+    a2 =         -1.2405  #  0.1100  19E3   -11.27    <.0001    0.05   -1.4562   -1.0248  -75.4676
+    a3 =         -0.2319  #       .  19E3      .       .        0.05         .         .  -1119.36
+    a4 =         0.03673  #       .  19E3      .       .        0.05         .         .  733.5435
+    b4 =          0.2248  #0.007891  19E3    28.49    <.0001    0.05    0.2093    0.2402  -801.094
+    a5 =         -0.7745  # 0.01281  19E3   -60.48    <.0001    0.05   -0.7996   -0.7494  944.4319
+    b5 =        -0.08223  #0.005889  19E3   -13.96    <.0001    0.05  -0.09378  -0.07069   74.8579
+    b6 =        -0.03548  #0.002736  19E3   -12.97    <.0001    0.05  -0.04084  -0.03011  1111.637
+    a6 =         -0.1301  # 0.009078  19E3   -14.33    <.0001    0.05   -0.1479   -0.1123  115.6522
+  } 
+  link1 = a0+a1*BA+a2*PHW+a3*(TPH/1000)+a4*ClimateSI+a5*(MinDBH)+a6*QMD #+a6*log(BA+0.1)#+a6*QMD*BA
+  PI  = (1/(1+exp(-link1)))
+  eta   = b0+b1*BA+ b2*PHW+b3*(TPH/1000)+b4*ClimateSI+b5*(MinDBH)+b6*QMD #+b6*log(BA+0.1)#+b6*QMD*BA
+  IPH  = exp(eta)
+  if (cyclen>1) 
+  {
+    PI = 1-((1-PI)^(1/cyclen))
+    IPH = IPH*cyclen
+  }
+  if(missing(CutPoint)) CutPoint=0.9995 #JAK added missing conditional
+  IPH = if(CutPoint == 0) IPH*PI else ifelse(PI>=CutPoint,IPH,0)
+  return(list(IPH=IPH))
+}
+  
+Ingrowth.Comp=function(SPP,BA,PBA,ClimateSI,MinDBH)
+{
+  b10 =-2.5645#            -2.73758   #   0.0901     -30.39       <.0001
+  b11 =0.0020#            0.002377   #  0.00107       2.23       0.0258
+  b12 =2.6624#            2.686944   #   0.0333      80.57       <.0001
+  b13 =-0.0010 #           0.002534   #  0.00606       0.42       0.6759
+  b14 =-0.0127  #          0.004319   #  0.00393       1.10       0.2722
+  b20 = -3.0291#           -2.99285   #   0.0836     -35.80       <.0001
+  b21 = 0.0027#       #    0.002577   #  0.00102       2.52       0.0118
+  b22 = 2.7779     #     2.786347   #   0.0342      81.49       <.0001
+  b23 = 0.0211  #    0.018084   #  0.00522       3.46       0.0005
+  b24 = 0.0221 #            0.020181   #  0.00397       5.09       <.0001
+  b30 = -0.6566#            -0.5514   #   0.0658      -8.38       <.0001
+  b31 = 0.0123#           0.011912   # 0.000725      16.43       <.0001
+  b32 =1.7669#            1.772014   #   0.0174     102.07       <.0001
+  b33 =-0.0421#            -0.04203   #  0.00442      -9.52       <.0001
+  b34 =-0.0283#           -0.03874   #  0.00292     -13.25       <.0001
+  b40 =-1.2500#            -1.19912   #   0.0687     -17.44       <.0001
+  b41 =-0.0132 #          -0.01296    #0.000715     -18.12       <.0001
+  b42 = 2.0470#           2.056631   #   0.0193     106.43       <.0001
+  b43 = -0.0514 #          -0.05463   #  0.00478     -11.42       <.0001
+  b44 =  0.0351#          0.029222   #  0.00301       9.71       <.0001
+  b50 = -5.1074#           -5.08361   #   0.0912     -55.77       <.0001
+  b51 = -0.0117#          -0.01191   #  0.00135      -8.79       <.0001
+  b52 =  3.8817#          3.902292   #   0.0560      69.63       <.0001
+  b53 =  0.0501#          0.046106   #  0.00620       7.44       <.0001
+  b54 =  0.0726#          0.070207   #  0.00556      12.63       <.0001
+  b60 =  -2.9832#          -3.10838   #   0.0667     -46.63       <.0001
+  b61 =  -0.0020#          -0.00164   # 0.000830      -1.97       0.0485
+  b62 =  2.4837#          2.496484   #   0.0228     109.58       <.0001
+  b63 =  0.0673#          0.069919   #  0.00439      15.92       <.0001
+  b64 =  -0.0167#          -0.00386   #  0.00293      -1.32       0.1868
+  b70 = -4.7182#           -4.73521   #   0.0778     -60.90       <.0001
+  b71 = 0.0070#           0.007145   # 0.000776       9.20       <.0001
+  b72  = 3.2269#          3.234359    #  0.0340      95.04       <.0001
+  b73  = 0.1000#          0.098841    # 0.00484      20.41       <.0001
+  b74  = 0.0188#          0.020639    # 0.00295       6.99       <.0001
+  if(SPP=='BCH')                   
+  {perc =b10+b11*BA+b12*PBA+b13*ClimateSI+b14*MinDBH}
+  else if(SPP=='BF')
+  {perc =b20+b21*BA+b22*PBA+b23*ClimateSI+b24*MinDBH}
+  else if(SPP=='RM')
+  {perc =b30+b31*BA+b32*PBA+b33*ClimateSI+b34*MinDBH}
+  else if (SPP=='SPR')
+  {perc =b40+b41*BA+b42*PBA+b43*ClimateSI+b44*MinDBH}
+  else if (SPP=='WP')
+  {perc =b50+b51*BA+b52*PBA+b53*ClimateSI+b54*MinDBH}
+  else if (SPP=='OH')
+  {perc =b60+b61*BA+b62*PBA+b63*ClimateSI+b64*MinDBH}
+  else if(SPP=='OS')
+  {perc =b70+b71*BA+b72*PBA+b73*ClimateSI+b74*MinDBH}
+  perc=1/(1+exp(-(perc)))
+  return(perc=perc)
+}
+
+## Ingrowth function                                                                                       
+ING.TreeList=function(Sum.temp,INGROWTH,MinDBH)
+{
+  TreeCon=Sum.temp[Sum.temp$IPH>0,]
+  if(nrow(TreeCon)==0 || toupper(substring(INGROWTH,1,1)) == "N") return(NULL)
+  for(i in 1:nrow(TreeCon))
+  {
+    STAND.c=ifelse(is.null(TreeCon$STAND[i]),
+                   1,
+                   as.character(unique(TreeCon$STAND[i])))
+    PLOT.c=TreeCon$PLOT[i]
+    YEAR.c=ifelse(is.null(TreeCon$YEAR[i]),
+                  1,
+                  as.numeric(TreeCon$YEAR[i]+1))
+    TREENum=TreeCon$maxTREE[i]
+    #SPP=c('BF','RM','WP','OH','OS','GB','PB','YB','RS','BS','WS')
+    #SPPn=c(TreeCon$BF.ING[i],TreeCon$RM.ING[i],TreeCon$WP.ING[i],TreeCon$OH.ING[i],TreeCon$OS.ING[i],TreeCon$GB.ING[i],TreeCon$PB.ING[i],
+    #  TreeCon$YB.ING[i],TreeCon$RS.ING[i],TreeCon$BS.ING[i],TreeCon$WS.ING[i])
+    # BLC - deal explicitly with AB, QA, SM, WC
+    SPP=c('BF','RM','WP','OH','OS','GB','PB','YB','RS','BS','WS','AB','QA','SM','WC')
+    SPPn=c(TreeCon$BF.ING[i],TreeCon$RM.ING[i],TreeCon$WP.ING[i],TreeCon$OH.ING[i],TreeCon$OS.ING[i],TreeCon$GB.ING[i],TreeCon$PB.ING[i],
+           TreeCon$YB.ING[i],TreeCon$RS.ING[i],TreeCon$BS.ING[i],TreeCon$WS.ING[i],
+           TreeCon$AB.ING[i],TreeCon$QA.ING[i],TreeCon$SM.ING[i],TreeCon$WC.ING[i])
+    nING=nrow(TreeCon)*length(SPP)
+    Sxx=ifelse(is.numeric(TreeCon$STAND),'numeric','character')
+    STANDx=vector(Sxx,nING)
+    PLOTx=vector('numeric',nING)
+    YEARx=vector('numeric',nING)
+    TREEx=vector('numeric',nING)
+    SPx=vector('character',nING)
+    DBHx=vector('numeric',nING)
+    HTx=vector('numeric',nING)
+    HCBx=vector('numeric',nING)
+    EXPFx=vector('numeric',nING)
+    pHTx=vector('numeric',nING)
+    pHCBx=vector('numeric',nING)      
+    Formx=vector('character',nING)      # JAK added
+    Riskx=vector('character',nING)      # JAK added
+    k=1
+    for(j in 1:length(SPP))
+    {
+      STANDx[k]=STAND.c
+      PLOTx[k]=PLOT.c
+      YEARx[k]=YEAR.c
+      TREEx[k]=TREENum+j
+      SPx[k]=SPP[j]
+      DBHx[k]=MinDBH
+      HTx[k]=NA
+      HCBx[k]=NA
+      EXPFx[k]=SPPn[j]
+      pHTx[k]=NA
+      pHCBx[k]=NA
+      Formx[k]<-'NA'  #JAK Added
+      Riskx[k]<-'NA'   #JAK Added
+      k=k+1
+    }
+    if(i==1)
+    {
+      InTree1 = data.frame(STAND=STANDx,PLOT=PLOTx,YEAR=YEARx,TREE=TREEx,SP=SPx,
+                          DBH=DBHx,HT=HTx,HCB=HCBx,EXPF=EXPFx,pHT=pHTx,pHCB=pHCBx,
+                          Form=Formx,Risk=Riskx) # JAK added Form and Risk
+      InTree1 = InTree1[InTree1$DBH>0 & InTree1$EXPF>0,]        
+    }
+    else if(i!=1)
+    {
+      InTree2 = data.frame(STAND=STANDx,PLOT=PLOTx,YEAR=YEARx,TREE=TREEx,SP=SPx,
+                          DBH=DBHx,HT=HTx,HCB=HCBx,EXPF=EXPFx,pHT=pHTx,pHCB=pHCBx,
+                          Form=Formx,Risk=Riskx) # JAK added Form and Risk
+      InTree2 = InTree2[InTree2$DBH>0 & InTree2$EXPF>0,]
+      InTree1 = rbind(InTree1,InTree2)
+    }  
+  }
+  InTree1
+}
+
+# the.includer.func<-function(EXPF,cum.EXPF){
+#   if(cum.EXPF<=100) tree.inc <-EXPF
+#   else if((cum.EXPF+EXPF)>100 & 100-cum.EXPF>0) tree.inc <- 100-cum.EXPF
+#   else tree.inc <-0
+#   return(tree.inc)}
+
+
+
+#### Model execution ####       
+###Acadian growth and yield model
+Acadian.GY=function(tree,stand,ops=NULL)
+{
+  ops=as.list(ops)
+  ans = ddply(tree,.(STAND), function (x,stand,ops) 
+    {
+      stand = as.list(subset(stand,STAND == x[1,"STAND"]))
+      AcadianGYOneStand(tree,stand=stand,ops=ops)
+    }, stand, ops)                
+   tree<-dplyr::arrange(ans, YEAR,STAND,PLOT,TREE) # 12/21/2020 replaced tree<-sort.data.frame(ans,~+YEAR+STAND+PLOT+TREE)
+  tree
+}
+
+  
+###Acadian growth and yield model called for one stand at time
+AcadianGYOneStand <- function(tree,stand=NULL,ops=NULL)
+{
+  if (is.null(ops)) return(tree)
+  verbose            = if (is.null(ops$verbose))            FALSE else ops$verbose
+  INGROWTH           = if (is.null(ops$INGROWTH))           "Y"   else ops$INGROWTH
+  MinDBH             = if (is.null(ops$MinDBH))             10    else ops$MinDBH
+  #cyclen            = if (is.null(ops$cyclen))             1     else ops$cyclen
+  cyclen             = 1 # 2022-09-01 set cycle length to 1 
+  CutPoint           = if (is.null(ops$CutPoint))           0.95  else ops$CutPoint
+  mortType           = if (is.null(ops$mortType))      "discrete" else ops$mortType
+  maxRD              = if (is.null(ops$maxRD))              1.0   else ops$maxRD
+  useDBH_RDmodifier  = if (is.null(ops$useDBH_RDmodifier )) TRUE  else ops$useDBH_RDmodifier
+  useHT_RDmodifier   = if (is.null(ops$useHT_RDmodifier  )) TRUE  else ops$useHT_RDmodifier  
+  useMORT_RDmodifier = if (is.null(ops$useMORT_RDmodifier)) FALSE  else ops$useMORT_RDmodifier 
+  usedHTCap          = if (is.null(ops$usedHTCap))          TRUE  else ops$usedHTCap
+  SBW                = if (is.null(ops$SBW))                TRUE  else ops$SBW                           
+  rtnVars            = if (is.null(ops$rtnVars))  c("STAND","YEAR","PLOT","TREE","SP",
+   "DBH","HT","HCB","EXPF",'pHT','pHCB','Form','Risk') else ops$rtnVars
+
+  CSI      = if (is.null(stand) || is.null(stand$CSI) || is.na(stand$CSI))   12 else stand$CSI
+  ELEV     = if (is.null(stand) || is.null(stand$ELEV) || is.na(stand$ELEV)) 350 else stand$ELEV
+ 
+  if (verbose) cat ("AcadianGYOneStand: nrow(tree)=",nrow(tree)," CSI=",CSI," ELEV=",ELEV,
+    " INGROWTH=",INGROWTH," CutPoint=",CutPoint,"\n           cyclen=",cyclen,
+    " MinDBH=",MinDBH," SBW=",SBW," useDBH_RDmodifier=",useDBH_RDmodifier,
+    " useHT_RDmodifier=",useHT_RDmodifier,"\n           useMORT_RDmodifier=",
+    useMORT_RDmodifier," usedHTCap=",usedHTCap,"\n")                                               
+  if (exists("AcadianVersionTag") && verbose) 
+    cat("AcadianVersionTag=",AcadianVersionTag,"\n")
+
+  # define model species
+  acd.species=ddbh.fun.spp %>% 
+      dplyr::inner_join(dht.fun.spp, by='Spp') %>% 
+      dplyr::select(Spp)
+  
+  
+  # tree list management
+  tree=tree %>% 
+      # set species code to 99 if not in model species
+      mutate(SP=ifelse(SP %in% acd.species$Spp, SP, '99'),
+             # add nominal amount to DBH if zero
+             DBH=ifelse(DBH==0, 0.01, DBH))
+         
+  temp = SPP.func(tree$SP)  
+  tree$SPtype=temp$SPtype
+  tree$shade=temp$shade
+  tree$SG=temp$sg
+  
+  #set SBW  factors 
+  # this approach can cause SBW and CDEF to be NA
+  if (is.null(tree$CDEF))    tree$CDEF   =NA
+  if (is.null(tree$SBW.YR))  tree$SBW.YR =NA
+  if (is.null(tree$SBW.DUR)) tree$SBW.DUR=NA
+  tree$SBW=ifelse(tree$SBW.YR>0 & tree$SBW.YR<=tree$YEAR & (tree$SBW.YR+tree$SBW.DUR)>=tree$YEAR,1,0)
+  tree$SBW=ifelse(is.na(tree$SBW), 0, tree$SBW) #resolves SBW value of NA
+  tree$CDEF=tree$CDEF*tree$SBW  
+  
+  #set thinning factors   
+  if (is.null(tree$pBArm))    tree$pBArm    = NA
+  if (is.null(tree$BApre))    tree$BApre    = NA
+  if (is.null(tree$QMDratio)) tree$QMDratio = NA
+  if (is.null(tree$YEAR_CT))  tree$YEAR_CT  = NA
+  ops$use.thinmod=ifelse(is.na(tree$YEAR_CT[1]), F, T) # would be better to update the customRun_fvsRunAcadian ops definition
+  
+  #hardwood modifiers
+  if (is.null(ops$use.hwmod)) ops$use.hwmod=T #default hw modifier set to TRUE 
+  
+ # ingrowth
+  ops$MinDBH= if (is.null( ops$MinDBH) || is.na( ops$MinDBH) || !is.numeric(ops$MinDBH))  3.0 else  ops$MinDBH
+  #set Form & Risk
+  if (is.null(tree$Form) || is.null(tree$Risk))   
+  {
+    tree$Form = NA
+    tree$Risk = NA
+  }
+  toNA = !is.na(tree$Form) & tree$Form == " " |
+         !is.na(tree$Risk) & tree$Risk == " "
+  tree$Form[toNA] = NA
+  tree$Risk[toNA] = NA
+  
+  #set region
+  if (is.null(tree$Region))   tree$Region = 'ME'
+  
+  #set elev                                      
+  if (is.null(tree$ELEV))     tree$ELEV   = ELEV
+  tree$ELEV=ifelse(is.na(tree$ELEV), ELEV, tree$ELEV)
+  
+ 
+  # need to catch tree records without valid species code
+  tree$ba=(tree$DBH^2*0.00007854)*tree$EXPF
+  tree$ba.SW=ifelse(tree$SPtype=='SW',tree$ba,0)
+  tree$ba.WP=ifelse(tree$SP=='WP',tree$ba,0)
+  tree$ba.BF=ifelse(tree$SP=='BF',tree$ba,0)
+  tree$ba.RM=ifelse(tree$SP=='RM',tree$ba,0)
+  tree$ba.SPR=ifelse(tree$SP=='RS' | tree$SP=='WS' | tree$SP=='BS',tree$ba,0)
+  tree$ba.BRH=ifelse(tree$SP=='GB' | tree$SP=='PB' | tree$SP=='RB' | tree$SP=='YB', tree$ba,0)
+  
+  # BLC - comment out so we can account for more species below
+  #tree$ba.OH=ifelse(tree$SPtype=='HW' & tree$ba.RM==0 & tree$ba.BRH==0,tree$ba,0)
+  #tree$ba.OS=ifelse(tree$SPtype=='SW' & tree$ba.WP==0 & tree$ba.BF==0 & tree$ba.SPR==0,tree$ba,0)
+  tree$ba.RS=ifelse(tree$SP=='RS',tree$ba,0)
+  tree$ba.BS=ifelse(tree$SP=='BS',tree$ba,0)
+  tree$ba.PB=ifelse(tree$SP=='PB',tree$ba,0)
+  tree$ba.YB=ifelse(tree$SP=='YB',tree$ba,0)
+  
+  # Add AB, QA, SM, WC
+  tree$ba.AB=ifelse(tree$SP=='AB',tree$ba,0)
+  tree$ba.QA=ifelse(tree$SP=='QA',tree$ba,0)
+  tree$ba.SM=ifelse(tree$SP=='SM',tree$ba,0)
+  tree$ba.WC=ifelse(tree$SP=='WC',tree$ba,0)
+  
+  # Add AB, QA, SM, WC                                                                          
+  tree$ba.OH=ifelse(tree$SPtype=='HW' & tree$ba.RM==0 & tree$ba.BRH==0 & 
+                    tree$ba.AB==0 & tree$ba.QA==0 & tree$ba.SM==0,tree$ba,0)
+  tree$ba.OS=ifelse(tree$SPtype=='SW' & tree$ba.WP==0 & tree$ba.BF==0 & 
+                    tree$ba.SPR==0 & tree$ba.WC==0,tree$ba,0)
+  
+  tree$ba.IHW=ifelse(tree$SPtype=='HW' & tree$shade<2.0,tree$ba,0)
+  tree$tph.BF=ifelse(tree$SP=='BF',tree$EXPF,0)
+
+  temp <- subset(tree,select=c("PLOT",'TREE','DBH','EXPF','ELEV','ba',
+    'ba.SW','ba.WP','ba.BF','ba.RM','ba.SPR','ba.BRH','ba.OH','ba.OS','ba.RS',
+    'ba.AB','ba.QA','ba.SM','ba.WC','ba.BS','ba.PB','ba.YB','ba.IHW','tph.BF'))
+
+  if (verbose) cat("process temp, make maxtree, nrow=",nrow(temp),"\n") 
+  temp = ddply(temp,.(PLOT),
+    function(x)
+    {
+      rtn = as.data.frame(t(colSums(x[,c(-1,-2,-3)])))
+      rtn$PLOT = x$PLOT[1]
+      rtn$ELEV = x$ELEV[1]
+      rtn$maxTREE = max(x$TREE) # used to generate ingrowth tree numbers
+      rtn
+    })                                
+  temp$BAPH<-temp$ba
+  tree$SG.wt=tree$SG*tree$ba
+  tree$DBH.SW=ifelse(tree$SPtype=='SW',tree$DBH,NA)
+  tree$DBH.10=ifelse(tree$DBH>=10,tree$DBH,NA)
+  tree$SDIadd=(tree$DBH.10/25.4)^1.6*tree$EXPF
+  tree$SDIadd=(tree$DBH.10/25.4)^1.6*tree$EXPF
+  tree$SDIadd.all=(tree$DBH/25.4)^1.6*tree$EXPF
+  
+  if (verbose) cat("making temp2, nrow(trees)=",nrow(trees),"\n") 															  
+  temp2=ddply(tree,.(PLOT),plyr::summarize,
+              tph=sum(EXPF),
+              meanSG=sum(SG.wt)/sum(ba),
+              SDI=sum(SDIadd,na.rm=T),
+              SDI.all=sum(SDIadd.all, na.rm=T),
+              avgDBH.SW=mean(DBH.SW,na.rm=T),
+              avgDBH=mean(DBH.10,na.rm=T),
+              sdDBH=sd(DBH.10,na.rm=T),
+              SPP.DIV=length(unique(SP)),
+              minDBH=min(DBH.10,na.rm=T),
+              maxDBH=max(DBH.10,na.rm=T), # should DBH.10 be default=0 to prevent function returning NA and Inf 
+              DBH.RANGE.all=max(DBH,na.rm=T)-min(DBH,na.rm=T)) 
+  
+  temp=merge(temp,temp2,by=c('PLOT'))
+	if (verbose) cat("after temp2, nrow(temp2)=",nrow(temp2)," nrow(temp)=",nrow(temp))
+  
+  temp$avgDBH.SW=ifelse(is.na(temp$avgDBH.SW),0,temp$avgDBH.SW)
+  temp$qmd<-ifelse(temp$tph==0,0,sqrt(temp$BAPH/(0.00007854*temp$tph)))
+  temp$qmd.BF=ifelse(temp$tph.BF==0,0,sqrt(temp$ba.BF/(0.00007854*temp$tph.BF)))
+  temp$pHW.ba=ifelse(temp$BAPH==0,0,1-(temp$ba.SW/temp$BAPH))
+  temp$pWP.ba=ifelse(temp$BAPH==0,0,temp$ba.WP/temp$BAPH)
+  temp$pBF.ba=ifelse(temp$BAPH==0,0,temp$ba.BF/temp$BAPH)
+  temp$pRM.ba=ifelse(temp$BAPH==0,0,temp$ba.RM/temp$BAPH)
+  temp$pSPR.ba=ifelse(temp$BAPH==0,0,temp$ba.SPR/temp$BAPH)
+  temp$pBRH.ba=ifelse(temp$BAPH==0,0,temp$ba.BRH/temp$BAPH)
+  temp$pOH.ba=ifelse(temp$BAPH==0,0,temp$ba.OH/temp$BAPH)
+  temp$pOS.ba=ifelse(temp$BAPH==0,0,temp$ba.OS/temp$BAPH)
+  temp$pIHW.ba=ifelse(temp$BAPH==0,0,temp$ba.IHW/temp$BAPH)
+  temp$pRS.ba=ifelse(temp$pSPR.ba==0,0,temp$ba.RS/temp$ba.SPR)
+  temp$pBS.ba=ifelse(temp$pSPR.ba==0,0,temp$ba.BS/temp$ba.SPR)
+  temp$pWS.ba=ifelse(temp$pSPR.ba==0,0,1-(temp$pRS.ba+temp$pBS.ba))
+  temp$pPB.ba=ifelse(temp$pBRH==0,0,temp$ba.PB/temp$ba.BRH)
+  temp$pYB.ba=ifelse(temp$pBRH==0,0,temp$ba.YB/temp$ba.BRH)
+  temp$pGB.ba=ifelse(temp$pBRH==0,0,1-(temp$pPB.ba+temp$pYB.ba))
+  temp$pAB.ba=ifelse(temp$BAPH==0,0,temp$ba.AB/temp$BAPH)
+  temp$pQA.ba=ifelse(temp$BAPH==0,0,temp$ba.QA/temp$BAPH)
+  temp$pSM.ba=ifelse(temp$BAPH==0,0,temp$ba.SM/temp$BAPH)
+  temp$pWC.ba=ifelse(temp$BAPH==0,0,temp$ba.WC/temp$BAPH)
+  temp$qmd.BF=ifelse(is.na(temp$qmd.BF),0,temp$qmd.BF)
+  temp$DBH.RANGE=temp$maxDBH-temp$minDBH
+  temp$DBH.CV=temp$sdDBH/temp$avgDBH
+  temp$DBH.R=temp$avgDBH*(1+(((1.6064-1.0)*1.6064)/2)*temp$DBH.CV)^1.6064
+  temp$meanSG=ifelse(temp$meanSG>.80,.8,temp$meanSG)
+  # temp$SDImax=(483.2448-1.4563*temp$pHW.ba-212.705*log(temp$meanSG)+45.351*
+  #   sqrt(temp$DBH.RANGE)+14.811*temp$SPP.DIV-0.0848*temp$ELEV+0.0001*
+  #   temp$ELEV^2+331.3714*(1/CSI))
+  temp$SDImax=475.2079-1.5908*temp$pHW.ba-236.9051*log(temp$meanSG)+50.3299*sqrt(temp$DBH.RANGE)+ #Weiskittel & Kuehne 2019
+   13.5202*temp$SPP.DIV+0.0685*temp$ELEV-2.8537*sqrt(temp$ELEV)+222.7836*(1/CSI)
+  temp$SDImax2= 1347.445-1003.870*temp$meanSG #Weiskittel and Kuehne (2019)
+  #temp$SDImax2=-6017.3*temp$meanSG+4156.3
+  temp$SDImax=ifelse(is.na(temp$SDImax),temp$SDImax2,temp$SDImax)
+  temp$RD=temp$SDI/temp$SDImax
+  
+  # RD all DBH
+  temp$SDImax.all=475.2079-1.5908*temp$pHW.ba-236.9051* log(temp$meanSG)+ 50.3299* sqrt(temp$DBH.RANGE.all)+
+    13.5202*temp$SPP.DIV+0.0685*temp$ELEV-2.8537* sqrt(temp$ELEV)+222.7836*(1/CSI) #Weiskittel & Kuehne 2019
+  temp$SDImax.all=ifelse(is.na(temp$SDImax.all),temp$SDImax2,temp$SDImax.all)
+  temp$RD.all=temp$SDI.all/temp$SDImax.all
+  temp$RD.mod=case_when(temp$qmd<10 & !is.na(temp$RD.all) ~ temp$RD.all, # 11/12/21 added logic for RD
+                        temp$qmd>=10 & !is.na(temp$RD) ~temp$RD,
+                        TRUE ~0)
+  
+  temp=subset(temp,select=c("PLOT",'BAPH','tph','qmd','pHW.ba',
+    'pWP.ba','pBF.ba','pRM.ba','pSPR.ba','pBRH.ba','pOH.ba','pOS.ba','pRS.ba',
+    'pBS.ba','pWS.ba','pPB.ba','pYB.ba','pGB.ba','qmd.BF','pIHW.ba','SDI',
+    'SDImax','meanSG','RD','RD.all', 'RD.mod', 'avgDBH.SW','maxTREE','pAB.ba','pQA.ba','pSM.ba','pWC.ba'))
+    #BLC - add AB, QA, SM, WC
+
+  Sum.temp=temp
+  temp$maxTREE = NULL
+  tree=merge(tree,Sum.temp,by="PLOT")
+
+  #Compute basal area in larger trees
+  tree<-dplyr::arrange(tree, PLOT, desc(DBH)) #12/21/2020 replaced tree<-sort.data.frame(tree,~+PLOT-DBH)
+  temp = unlist(by(tree$ba,INDICES=tree$PLOT,FUN=cumsum))
+  tree$BAL = temp-tree$ba
+  temp = unlist(by(tree$ba.SW,INDICES=tree$PLOT,FUN=cumsum))
+  tree$BAL.SW = temp-tree$ba.SW
+  tree$BAL.HW = tree$BAL-tree$BAL.SW
+  
+  #compute tree-level crown width-related metrics
+  tree$mcw=mcw(sp=tree$SP,dbh=tree$DBH)
+  tree$lcw=lcw(sp=tree$SP,mcw=tree$mcw,dbh=tree$DBH)
+  tree$MCA=100*((pi*(tree$mcw/2)^2)/10000)*tree$EXPF
+  tree$MCA.SW<-ifelse(tree$SPtype=='SW',tree$MCA,0)
+  temp = unlist(by(tree$MCA,INDICES=tree$PLOT,FUN=cumsum))
+  tree$CCFL = temp-tree$MCA
+  temp = unlist(by(tree$MCA.SW,INDICES=tree$PLOT,FUN=cumsum))
+  tree$CCFL.SW = temp-tree$MCA.SW
+  tree$CCFL.HW=tree$CCFL-tree$CCFL.SW  
+  #calculate plot CCF
+  temp = ddply(tree[,c('PLOT','MCA')],.(PLOT),function (x) sum(x$MCA))
+  colnames(temp)[2] = "CCF"
+  tree=merge(tree,temp,by=c('PLOT'))
+  #save the plot CCF's in Sum.temp for use with ingrowth
+  Sum.temp = merge(Sum.temp,temp,by="PLOT")
+  
+  # BLC - calculate RD modifiers
+  rdMod.dDBHmod_start = 0.55
+  rdMod.dDBHmod_end = 2
+  rdMod.dHTmod_start = 0.55
+  rdMod.dHTmod_end = 2
+  rdMod.MORTmod_start = 0.55
+  rdMod.lamda = 1.5
+  
+  # give some initial values to the multipliers
+  rdMod.dDBH_RDmod <- rdMod.dHT_RDmod <- rdMod.dMORT_RDmod <- 1.
+  tree=tree %>%  
+    # BLC RD DBH mods - straight line
+    dplyr::mutate(rdMod.pctInRangeDbh =(RD.mod - rdMod.dDBHmod_start) / (rdMod.dDBHmod_end - rdMod.dDBHmod_start),
+                  rdMod.dDBH_RDmod = case_when(useDBH_RDmodifier==T & 
+                                                 RD.mod>rdMod.dDBHmod_start &
+                                                 between(1 - rdMod.pctInRangeDbh, 0 , 1) ~ 1 - rdMod.pctInRangeDbh,
+                                               TRUE ~1),
+                  # BLC RD HT mods - straight line
+                  rdMod.pctInRangeHt =(RD.mod - rdMod.dHTmod_start) / (rdMod.dHTmod_end - rdMod.dHTmod_start),
+                  rdMod.dHT_RDmod = case_when(useHT_RDmodifier==T & 
+                                                RD.mod>rdMod.dHTmod_start &
+                                                between(1 - rdMod.pctInRangeHt, 0 , 1) ~ 1 - rdMod.pctInRangeHt,
+                                              TRUE ~1))
+  
+  # mortality RD modifier add to plot summary table
+  Sum.temp=Sum.temp %>% 
+      dplyr::mutate(
+                  # BLC RD MORT mods - exponential decay as it rises above rdMod.MORTmod_start (default RD > 0.55)                                                                 
+                  rdMod.dMORT_RDmod = case_when(useMORT_RDmodifier==T &
+                                                  RD.mod>rdMod.MORTmod_start ~exp(rdMod.lamda * (RD.mod - rdMod.MORTmod_start)),
+                                                TRUE ~1))                                                                   
+  
+  if (verbose)
+  {
+    cat("In RDmods, Num trees where tree$RD>.9 = ",sum(tree$RD>0.9),"\n")
+    cat("in RDmods - mean(rdMod.dDBH_RDmod) = ",mean(tree$rdMod.dDBH_RDmod),"\n")
+    cat("in RDmods - mean(rdMod.dHT_RDmod) = ",mean(tree$rdMod.dHT_RDmod),"\n")
+    cat("in RDmods - mean(rdMod.dMORT_RDmod) = ",mean(Sum.temp$rdMod.dMORT_RDmod),"\n")
+  }
+  
+  #form and risk
+  #tree$LSW=mapply(form.prob,tree$SPP,tree$DBH)
+  
+  #calculate heights of any with missing values.
+  #generally, none will be missing when function is used with FVS, but some or
+  #all would be missing when code us used to grow tree lists from other sources. 
+
+  tree$pHT = is.na(tree$HT) | tree$HT>900 | tree$HT==0 # throws an error
+  if (any(tree$pHT)) 
+  {
+    pHT.m=mapply(HTPred,SPP=tree$SP,DBH=tree$DBH,CSI=CSI,                                
+                 CCF=tree$CCF,BAL=tree$BAL)
+    tree$HT=ifelse(tree$pHT,pHT.m,tree$HT)
+  }
+  tree$pHT = as.numeric(tree$pHT)
+  #compute plot top height
+  
+  # plyr::ddply sometimes throws error; replaced with dplyr 8/18/2021
+  # topht = ddply(tree,.(PLOT), function (x)
+  #   {
+  #     cum.EXPF = cumsum(x$EXPF)
+  #     tree.inc = mapply(the.includer.func,x$EXPF,cum.EXPF)
+  #     wt.HT=tree.inc*x$HT
+  #     meanHT = mean(x$HT)
+  #     topht = plyr::summarize(x,wt.HT=sum(wt.HT),tree.inc=sum(tree.inc))
+  #     topht = ifelse(topht$tree.inc > 0, topht$wt.HT/topht$tree.inc, meanHT)
+  #   })                                                                                
+  # names(topht)[2] = "topht"
+ 
+  
+  topht=tree %>% 
+    dplyr::group_by(PLOT) %>% 
+    dplyr::mutate(cum.EXPF = cumsum(EXPF), # incorporate tree inc conditional assignment in mutate call
+                  tree.inc = case_when(cum.EXPF<=100 ~EXPF,
+                                       (cum.EXPF+EXPF)>100 & 100-cum.EXPF>0 ~ 100-cum.EXPF,
+                                       TRUE ~0),
+                  wt.HT=tree.inc*HT) %>% 
+    dplyr::summarise(meanHT = mean(HT),
+                     wt.HT=sum(wt.HT),
+                     tree.inc=sum(tree.inc, na.rm=T), # na.rm=T resolves issue with NA tree.inc values 
+                     .groups='keep') %>% 
+    dplyr::ungroup() %>% 
+    dplyr::mutate(topht = ifelse(tree.inc > 0, wt.HT/tree.inc, meanHT))
+   
+  
+  tree=merge(tree,topht,by=c('PLOT'))
+  
+ 
+  
+  #compute average height of softwood and hardwood species
+  tree$HT.SW=ifelse(tree$SPtype=='SW',tree$HT,NA)
+  tree$HT.HW=ifelse(tree$SPtype=='HW',tree$HT,NA)
+  
+  avgHT=ddply(tree,.(PLOT),plyr::summarize,avgHT.SW=mean(HT.SW,na.rm=T),
+              avgHT.HW=mean(HT.HW,na.rm=T)) # avgHT.HW used where?
+  tree=merge(tree,avgHT,by=c('PLOT'))
+  tree$avgHT.SW=ifelse(is.na(tree$avgHT.SW),0,tree$avgHT.SW)
+  tree$avgHT.HW=ifelse(is.na(tree$avgHT.HW),0,tree$avgHT.HW)
+
+  # Add top ht value and avgHT values to plot summary table
+  Sum.temp=Sum.temp %>% 
+    dplyr::left_join(topht %>% 
+                       select(PLOT, 
+                              topht),
+                     by='PLOT') %>% 
+    dplyr::left_join(avgHT, 
+                     by='PLOT')
+  
+  tree$pHCB=FALSE
+  if (is.null(tree$CR) || any(is.na(tree$CR)))
+  {
+    if (is.null(tree$CR)) tree$CR = NA
+    # compute crown ratio from base height, compute if missing
+    if (is.null(tree$HCB)) tree$HCB = NA    
+    tree$pHCB = is.na(tree$HCB) | tree$HCB=='NA' | tree$HCB==0
+    {      
+      # Height to crown base
+      pHCB.m=mapply(HCBPred,SPP=tree$SP,DBH=tree$DBH,HT=tree$HT,
+                  CCF=tree$CCF,BAL=tree$BAL)
+      tree$HCB=ifelse(tree$pHCB,pHCB.m,tree$HCB)
+    }
+    tree$CR=ifelse(is.na(tree$CR),1-(tree$HCB/tree$HT),tree$CR)
+  }
+  tree$pHCB = as.numeric(tree$pHCB)
+  # maybe CR is defined on input and HCB is not, at this point CR will be defined.
+  if (is.null(tree$HCB)) tree$HCB = tree$HT*tree$CR
+
+  #diameter increment ####
+
+  tree= tree %>% #mutate(Form=NA, Risk=NA) %>% 
+    dplyr::left_join(ddbh.fun.spp,
+                     by=c('SP'='Spp')) %>%
+    dplyr::mutate(ddbh.b0.spp=ifelse(is.na(ddbh.b0.spp), 0, ddbh.b0.spp), 
+                  ddbh.b2.spp=ifelse(is.na(ddbh.b2.spp), 0, ddbh.b2.spp), 
+                  ddbh.b3.spp=ifelse(is.na(ddbh.b3.spp), 0, ddbh.b3.spp), 
+                  ddbh.b4.spp=ifelse(is.na(ddbh.b4.spp), 0, ddbh.b4.spp)) %>% 
+    dplyr::rowwise() %>% 
+    dplyr::mutate(dDBH=dDBH_fun(SPP=SP, DBH = DBH, CR=CR, BAL.SW=BAL.SW, 
+                                BAL.HW=BAL.HW, CSI=CSI, b0.SPP=ddbh.b0.spp, 
+                                b2.SPP=ddbh.b2.spp, b3.SPP=ddbh.b3.spp, b4.SPP=ddbh.b4.spp)*cyclen,
+                  dDBH.form.risk.mod=ifelse(!is.na(Form) & !is.na(Risk),
+                                            dDBH.HW.mod(SPP=SP, DBH=DBH, BAL=BAL, 
+                                                        Form=Form, Risk=Risk),
+                                            1)) %>% 
+    dplyr::ungroup()
+  
+  # create plot summary dataframe for use in the calc_plot_ba() function
+  plot.smry.ba.incr=Sum.temp %>% 
+      transmute(PLOT, 
+                RD.mod, 
+                pHW.ba, 
+                BAPH, 
+                CSI=CSI)
+  
+  #CSI=.GlobalEnv$CSI
+  # call wrapper function for dBA_plot_fun() and set dDBH if plot dBA is less than sum of tree level BA increment
+  tree=calc_plot_ba(tree.list=tree,
+                    plot.smry = plot.smry.ba.incr)
+      
+  
+  tree$dDBH.thin.mod=mapply(dDBH.thin.mod,SPP=tree$SP, PERCBArm = tree$pBArm, 
+    BApre=tree$BApre, QMDratio=tree$QMDratio, 
+    YEAR_CT=tree$YEAR_CT, YEAR=tree$YEAR)
+  
+  tree$dDBH.SBW.mod=mapply(dDBH.SBW.mod,Region=tree$Region,
+    SPP=tree$SP,DBH=tree$DBH,BAL.SW=tree$BAL.SW,BAL.HW=tree$BAL.HW,
+    CR=tree$CR,avgDBH.SW=tree$avgDBH.SW,topht=tree$topht,CDEF=tree$CDEF)
+
+ 
+  tree$dDBH=tree$dDBH*tree$dDBH.thin.mod*tree$dDBH.SBW.mod*tree$dDBH.form.risk.mod*
+    tree$rdMod.dDBH_RDmod
+  
+ 
+  #height increment  
+  tree= tree %>%
+    dplyr::left_join(dht.fun.spp, 
+              by=c('SP'='Spp')) %>% 
+    dplyr::mutate(dht.b0.spp=ifelse(is.na(dht.b0.spp), 0, dht.b0.spp), 
+           dht.b2.spp=ifelse(is.na(dht.b2.spp), 0, dht.b2.spp)) %>% 
+    dplyr::rowwise() %>% 
+    dplyr::mutate(dHT=dHT_fun(SPP=SP, HT=HT, CR=CR, 
+                       CCFL=CCFL, CSI=CSI, b0.SPP=dht.b0.spp, b2.SPP=dht.b2.spp)*cyclen) %>% 
+    dplyr::ungroup()
+  
+
+  tree$dHT.thin.mod=mapply(dHT.thin.mod,SPP=tree$SP, PERCBArm = tree$pBArm, 
+    BApre=tree$BApre, QMDratio=tree$QMDratio, YEAR_CT=tree$YEAR_CT, YEAR=tree$YEAR)
+  
+  tree$dHT.SBW.mod=mapply(dHT.SBW.mod,SPP=tree$SP,DBH=tree$DBH,topht=tree$topht,
+    CR=tree$CR, avg.DBH.SW=tree$avgDBH.SW, CDEF=tree$CDEF)
+
+  tree$dHT=tree$dHT*tree$dHT.SBW.mod*tree$dHT.thin.mod*tree$rdMod.dHT_RDmod
+
+  # cap height growth
+  dHTmult = approxfun(c(CSI*2,CSI*2.5),c(1,0),rule=2)(tree$dHT+tree$HT)
+  if (verbose) cat ("mean dHTmult=",mean(dHTmult),if (usedHTCap) " applied\n" else " not applied\n")
+  ifelse(is.na(dHTmult), 1, dHTmult) # NA values halt execution 8/19/21
+  if (usedHTCap) tree$dHT=tree$dHT*dHTmult
+  
+  #crown recession
+  tree$dHCB=mapply(dHCB,dHT=tree$dHT,DBH=tree$DBH,HT=tree$HT,
+    HCB=tree$HCB,CCF=tree$CCF,shade=tree$shade)*cyclen
+
+  tree$dHCB.thin.mod=mapply(dHCB.thin.mod,SPP=tree$SP, PERCBArm = tree$pBArm, 
+    BApre=tree$BApre, QMDratio=tree$QMDratio, YEAR_CT=tree$YEAR_CT, YEAR=tree$YEAR)
+  if (verbose) cat ("mean tree$dHCB.thin.mod=",mean(tree$dHCB.thin.mod),"\n")  
+
+  tree$dHCB=tree$dHCB*tree$dHCB.thin.mod
+  
+  # cat ("na DBH values=", sum(is.na(tree$DBH)), "\n")
+  # cat ("mean DBH=",mean(tree$DBH),"\n")
+  # cat ("mean EXPF=",mean(tree$EXPF),"\n")
+  # cat ("na EXPF values=", sum(is.na(tree$EXPF)), "\n")
+  
+ ## Mortality ####
+  # add values to plot summary (Sum.temp) table
+  Sum.temp=Sum.temp %>% 
+    dplyr::mutate(CDEF=tree$CDEF[1],
+                  Region=tree$Region[1],
+                  use.sbwmod=as.logical(tree$SBW[1]),
+                  SBW.YR=tree$SBW.YR[1],
+                  SBW.DUR=tree$SBW.DUR[1],
+                  use.thinmod=ops$use.thinmod[1],
+                  use.hwmod=ops$use.hwmod[1],
+                  use.rdmod=useMORT_RDmodifier,
+                  YEAR_CT= tree$YEAR_CT[1], 
+                  QMDratio= tree$QMDratio[1], 
+                  YEAR=tree$YEAR[1],
+                  pBArm= tree$pBArm[1], 
+                  BApre= tree$BApre[1],
+                  CSI=CSI)
+  
+  # in future updates these values should probably not be included in the tree table
+  
+  tree=calc_mortality(tree.list=tree, 
+                      plot.smry=Sum.temp,
+                      model.type='gompit',
+                      v=0.4)  # trial reduced value
+  #                       model.type='gompit',
+  #                       model.type='logistic',
+  #                     v=0.72,  Cen Chen 5/31/2022 threshold value "optimized across regions"  )  
+  
+  # tree %>% dplyr::group_by(PLOT) %>% dplyr::summarise(tph=sum(EXPF), d.tph=sum(dEXPF))
+  
+ 
+ # if (verbose) cat ("mean tree$smort.SBW.mod=",mean(tree$smort.SBW.mod),"\n")
+  
+  
+  
+
+  ##INGROWTH
+  ingrow = NULL
+  if (toupper(substr(INGROWTH,1,1)) == "Y")
+  {
+    # JAK added CutPoint=CutPoint
+
+    Sum.temp$IPH=as.numeric(mapply(Ingrowth.FUN,PARMS='GNLS',CutPoint=CutPoint,
+           BA=Sum.temp$BAPH,TPH=Sum.temp$tph,QMD=Sum.temp$qmd,PHW=Sum.temp$pHW.ba,
+           MinDBH=ops$MinDBH,ClimateSI=CSI,cyclen))
+    
+    Sum.temp$pBCH.ING=mapply(Ingrowth.Comp,SPP='BCH',BA=Sum.temp$BAPH,PBA=Sum.temp$pBRH.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pBF.ING=mapply(Ingrowth.Comp,SPP='BF',BA=Sum.temp$BAPH,PBA=Sum.temp$pBF.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pRM.ING=mapply(Ingrowth.Comp,SPP='RM',BA=Sum.temp$BAPH,PBA=Sum.temp$pRM.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pSPR.ING=mapply(Ingrowth.Comp,SPP='SPR',BA=Sum.temp$BAPH,PBA=Sum.temp$pSPR.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pWP.ING=mapply(Ingrowth.Comp,SPP='WP',BA=Sum.temp$BAPH,PBA=Sum.temp$pWP.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pOH.ING=mapply(Ingrowth.Comp,SPP='OH',BA=Sum.temp$BAPH,PBA=Sum.temp$pOH.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pOS.ING=mapply(Ingrowth.Comp,SPP='OS',BA=Sum.temp$BAPH,PBA=Sum.temp$pOS.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pAB.ING=mapply(Ingrowth.Comp,SPP='OH',BA=Sum.temp$BAPH,PBA=Sum.temp$pAB.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pQA.ING=mapply(Ingrowth.Comp,SPP='OH',BA=Sum.temp$BAPH,PBA=Sum.temp$pQA.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pSM.ING=mapply(Ingrowth.Comp,SPP='OH',BA=Sum.temp$BAPH,PBA=Sum.temp$pSM.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pWC.ING=mapply(Ingrowth.Comp,SPP='OS',BA=Sum.temp$BAPH,PBA=Sum.temp$pWC.ba,ClimateSI=CSI,MinDBH=ops$MinDBH)
+    Sum.temp$pSP=Sum.temp$pBCH.ING+Sum.temp$pBF.ING+Sum.temp$pRM.ING+Sum.temp$pSPR.ING+Sum.temp$pWP.ING+Sum.temp$pOH.ING+Sum.temp$pOS.ING +
+                 Sum.temp$pAB.ING+Sum.temp$pQA.ING+Sum.temp$pSM.ING+Sum.temp$pWC.ING
+    
+    Sum.temp$pSPx=1/Sum.temp$pSP
+    Sum.temp$pBCH.ING=Sum.temp$pBCH.ING*Sum.temp$pSPx
+    Sum.temp$pBF.ING=Sum.temp$pBF.ING*Sum.temp$pSPx
+    Sum.temp$pRM.ING=Sum.temp$pRM.ING*Sum.temp$pSPx
+    Sum.temp$pSPR.ING=Sum.temp$pSPR.ING*Sum.temp$pSPx
+    Sum.temp$pWP.ING=Sum.temp$pWP.ING*Sum.temp$pSPx
+    Sum.temp$pOH.ING=Sum.temp$pOH.ING*Sum.temp$pSPx
+    Sum.temp$pOS.ING=Sum.temp$pOS.ING*Sum.temp$pSPx
+    Sum.temp$BCH.ING=Sum.temp$pBCH.ING*Sum.temp$IPH
+    Sum.temp$BF.ING=Sum.temp$pBF.ING*Sum.temp$IPH
+    Sum.temp$RM.ING=Sum.temp$pRM.ING*Sum.temp$IPH
+    Sum.temp$SPR.ING=Sum.temp$pSPR.ING*Sum.temp$IPH
+    Sum.temp$WP.ING=Sum.temp$pWP.ING*Sum.temp$IPH
+    Sum.temp$OH.ING=Sum.temp$pOH.ING*Sum.temp$IPH
+    Sum.temp$OS.ING=Sum.temp$pOS.ING*Sum.temp$IPH
+    Sum.temp$GB.ING=Sum.temp$BCH.ING*Sum.temp$pGB.ba
+    Sum.temp$PB.ING=Sum.temp$BCH.ING*Sum.temp$pPB.ba
+    Sum.temp$YB.ING=Sum.temp$BCH.ING*Sum.temp$pYB.ba
+    Sum.temp$RS.ING=Sum.temp$SPR.ING*Sum.temp$pRS.ba
+    Sum.temp$BS.ING=Sum.temp$SPR.ING*Sum.temp$pBS.ba
+    Sum.temp$WS.ING=Sum.temp$SPR.ING*Sum.temp$pWS.ba
+    
+    Sum.temp$pAB.ING=Sum.temp$pAB.ING*Sum.temp$pSPx
+    Sum.temp$pQA.ING=Sum.temp$pQA.ING*Sum.temp$pSPx
+    Sum.temp$pSM.ING=Sum.temp$pSM.ING*Sum.temp$pSPx
+    Sum.temp$pWC.ING=Sum.temp$pWC.ING*Sum.temp$pSPx
+    Sum.temp$AB.ING=Sum.temp$pAB.ING*Sum.temp$IPH
+    Sum.temp$QA.ING=Sum.temp$pQA.ING*Sum.temp$IPH
+    Sum.temp$SM.ING=Sum.temp$pSM.ING*Sum.temp$IPH
+    Sum.temp$WC.ING=Sum.temp$pWC.ING*Sum.temp$IPH
+    Sum.temp$YEAR=tree$YEAR[1]
+    ingrow = ING.TreeList(Sum.temp,INGROWTH,MinDBH=MinDBH)
+    
+    if (!is.null(ingrow))
+    {
+      # get predicted heights and HCB, use plot CCF and BA as BAL.
+      CCF =Sum.temp[ingrow[,"PLOT"],"CCF"]
+      BAPH=Sum.temp[ingrow[,"PLOT"],"BAPH"]
+      ingrow$HT=mapply(HTPred,SPP=ingrow$SP,DBH=ingrow$DBH,CSI=CSI,
+                       CCF=CCF,BAL=BAPH)                     
+      ingrow$HCB=mapply(HCBPred,SPP=ingrow$SP,DBH=ingrow$DBH,HT=ingrow$HT,
+                        CCF=CCF,BAL=BAPH)
+    }
+  }
+
+  #Update tree values
+  tree$YEAR <- tree$YEAR+cyclen
+  tree$DBH <- tree$DBH+tree$dDBH
+  tree$HT <- tree$HT+tree$dHT
+  tree$HCB <- tree$HCB + tree$dHCB
+  if (any(is.na(tree$EXPF)))  tree$EXPF [is.na(tree$EXPF)]  = 0
+  if (any(is.na(tree$dEXPF))) tree$dEXPF[is.na(tree$dEXPF)] = 0
+  tree$EXPF <- tree$EXPF-tree$dEXPF
+  tree$EXPF[tree$EXPF<.00001] = .00001
+  tree$CR=(tree$HT-tree$HCB)/tree$HT
+  tree=dplyr::bind_rows(tree,ingrow)        
+ 
+  #tree$DBH.10=ifelse(tree$DBH>=10,tree$DBH,0)
+  #tree$SDIadd=(tree$DBH.10/25.4)^1.605*tree$EXPF
+  # 
+  # temp = SPP.func(tree$SP)  
+  # tree$SPtype=temp$SPtype
+  # tree$shade=temp$shade
+  # tree$SG=temp$sg
+  # 
+  # tree$ba=(tree$DBH^2*0.00007854)*tree$EXPF
+  # tree$ba.SW=ifelse(tree$SPtype=='SW',tree$ba,0)
+  # tree$SG.wt=tree$SG*tree$ba
+  # tree$DBH.SW=ifelse(tree$SPtype=='SW',tree$DBH,0)
+  # 
+  # temp=ddply(tree,.(PLOT),plyr::summarize,ELEV=mean(ELEV,na.rm=T),BAPH=sum(ba,na.rm=T),tph=sum(EXPF),meanSG=sum(SG.wt)/sum(ba),ba.SW=sum(ba.SW,na.rm=T),
+  #            SDI=sum(SDIadd,na.rm=T),avgDBH.SW=mean(DBH.SW,na.rm=T),avgDBH=mean(DBH.10,na.rm=T),sdDBH=sd(DBH.10,na.rm=T),
+  #            SPP.DIV=length(unique(SP)),minDBH=min(DBH.10,na.rm=T),maxDBH=max(DBH.10,na.rm=T))
+  # 
+  # temp$pSW.ba=temp$ba.SW/temp$BAPH
+  # temp$pHW.ba=1-temp$pSW.ba
+  # temp$avgDBH.SW=ifelse(is.na(temp$avgDBH.SW),0,temp$avgDBH.SW)
+  # temp$DBH.RANGE=temp$maxDBH-temp$minDBH
+  # temp$DBH.CV=temp$sdDBH/temp$avgDBH
+  # temp$DBH.R=temp$avgDBH*(1+(((1.6064-1.0)*1.6064)/2)*temp$DBH.CV)^1.6064
+  # temp$meanSG=ifelse(temp$meanSG>.80,.8,temp$meanSG)
+  # temp$SDImax=483.2448-1.4563*temp$pHW.ba-212.705*log(temp$meanSG)+45.351*
+  #   sqrt(temp$DBH.RANGE)+14.811*temp$SPP.DIV-0.0848*temp$ELEV+0.0001*
+  #   temp$ELEV^2+331.3714*(1/CSI)
+  # temp$SDImax2= 1347.445-1003.870*temp$meanSG #Weiskittel and Kuehne (2019)
+  # #temp$SDImax2=-6017.3*temp$meanSG+4156.3
+  # temp$SDImax=ifelse(is.na(temp$SDImax),temp$SDImax2,temp$SDImax)
+  # temp$RD=temp$SDI/temp$SDImax
+  # temp$RD.flag=ifelse(temp$RD>=maxRD,1,0)
+  # temp$SDI2=temp$SDImax*maxRD*temp$RD.flag
+  # temp$SDIrat=temp$SDI2/temp$SDI
+  # 
+  # Sum.temp=temp
+  # rtnVars=intersect(rtnVars,colnames(tree))
+  # tree<-subset(tree,select=rtnVars)                    
+  # tree=merge(tree,Sum.temp,by="PLOT")
+  # tree$DBH.10=ifelse(tree$DBH>=10,tree$DBH,0)
+  # tree$SDIadd=(tree$DBH.10/25.4)^1.6*tree$EXPF
+  # tree$SDI.new=ifelse(tree$RD.flag==1,tree$SDIadd*tree$SDIrat,tree$SDIadd)
+  # tree$EXPF=ifelse(tree$RD.flag==1,(25.4^1.605*tree$SDI.new)/(tree$DBH^1.605),tree$EXPF)
+  
+  rtnVars=intersect(rtnVars,colnames(tree))
+  tree<-subset(tree,select=rtnVars)                    
+
+}         
+
+
+#### Taper ####
+##Li et al. (2012) taper equations
+KozakTaper=function(Bark,SPP,DHT,DBH,HT,Planted){
+    if(Bark=='ob' & SPP=='AB'){
+        a0_tap=1.0693567631
+        a1_tap=0.9975021951
+        a2_tap=-0.01282775
+        b1_tap=0.3921013594
+        b2_tap=-1.054622304
+        b3_tap=0.7758393514
+        b4_tap=4.1034897617
+        b5_tap=0.1185960455
+        b6_tap=-1.080697381
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='BC'){
+        a0_tap=0.9802172591
+        a1_tap=0.9900811022
+        a2_tap=0.0215023934
+        b1_tap=0.6092829761
+        b2_tap=-0.54627086
+        b3_tap=0.5221909952
+        b4_tap=1.6561496035
+        b5_tap=0.040879378
+        b6_tap=-0.302807393
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='BF'){
+        a0_tap=0.88075316
+        a1_tap=1.01488665
+        a2_tap=0.01958804
+        b1_tap=0.41951756
+        b2_tap=-0.67232564
+        b3_tap=0.54329725
+        b4_tap=1.48181152
+        b5_tap=0.06470371
+        b6_tap=-0.34684837
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='BF'){
+        a0_tap=0.7909
+        a1_tap=0.9745
+        a2_tap=0.1198
+        b1_tap=0.2688
+        b2_tap=-0.55134
+        b3_tap=0.5612
+        b4_tap=0.9007
+        b5_tap=0.1257
+        b6_tap=-0.6708
+        b7_tap=0
+        #parms w/ FIA data
+        a0_tap=0.87045800178728
+        a1_tap=0.998148536293802
+        a2_tap=0.0584816955042306
+        b1_tap=0.302539012401385
+        b2_tap=-0.605787065734974
+        b3_tap=0.588861845770261
+        b4_tap=0.8826608914125
+        b5_tap=0.103280103524893
+        b6_tap=-0.57432603217401
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='BP' | SPP=='BA'){
+        a0_tap=1.0036248405
+        a1_tap=0.744246238
+        a2_tap=0.2876417207
+        b1_tap=0.6634046516
+        b2_tap=-2.004812235
+        b3_tap=0.7507983401
+        b4_tap=3.9248261105
+        b5_tap=0.0276793767
+        b6_tap=-0.130928845
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='BS'){
+        a0_tap=0.80472902
+        a1_tap=1.00804553
+        a2_tap=0.05601099
+        b1_tap=0.35533529
+        b2_tap=-0.41320046
+        b3_tap=0.41527304
+        b4_tap=1.11652424
+        b5_tap=0.0990167
+        b6_tap=-0.40992056
+        b7_tap=0.11394943
+    }
+    else if(Bark=='ob' & SPP=='BS'){
+        a0_tap=0.858
+        a1_tap=0.9611
+        a2_tap=0.105
+        b1_tap=0.2604
+        b2_tap=-0.3409
+        b3_tap=0.4797
+        b4_tap=0.5008
+        b5_tap=0.1097
+        b6_tap=-0.4952
+        b7_tap=0.0969
+        #parms w/ FIA data
+        a0_tap=0.896382313496267
+        a1_tap=0.979157280469517
+        a2_tap=0.07070415827334
+        b1_tap=0.288205614793081
+        b2_tap=-0.303580327062765
+        b3_tap=0.435229599780184
+        b4_tap=0.287092390832665
+        b5_tap=0.0861036484421037
+        b6_tap=-0.407747649433411
+        b7_tap=0.371113950891855
+    }
+    else if(Bark=='ob' & SPP=='BT'){
+        a0_tap=1.0200889056
+        a1_tap=1.0054957243
+        a2_tap=-0.011030907
+        b1_tap=0.5104511725
+        b2_tap=-1.326415929
+        b3_tap=0.5568665797
+        b4_tap=7.2108347873
+        b5_tap=0.071149738
+        b6_tap=-0.571844802
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='EH'){
+        a0_tap=0.960235102
+        a1_tap=1.00821143
+        a2_tap=-0.025167937
+        b1_tap=0.825260258
+        b2_tap=1.962520834
+        b3_tap=0.415234319
+        b4_tap=-5.061571874
+        b5_tap=0.009839526
+        b6_tap=-0.095533007
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='EH'){
+        a0_tap=0.8681
+        a1_tap=0.916
+        a2_tap=0.1558
+        b1_tap=0.4067
+        b2_tap=-0.6163
+        b3_tap=0.4177
+        b4_tap=3.6257
+        b5_tap=0.1686
+        b6_tap=-0.8829
+        b7_tap=0
+        #parms w/ FIA data
+        a0_tap=0.846409603849866
+        a1_tap=0.984317716125905
+        a2_tap=0.0807523481457474
+        b1_tap=0.445438700558324
+        b2_tap=-0.671467572085628
+        b3_tap=0.504954501484816
+        b4_tap=2.48940465528
+        b5_tap=0.124152912027385
+        b6_tap=-0.722954836646604
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='GA'){
+        a0_tap=1.0852385488
+        a1_tap=1.1861877395
+        a2_tap=-0.226193745
+        b1_tap=0.5198788065
+        b2_tap=1.4303205202
+        b3_tap=-0.349453901
+        b4_tap=3.1952591271
+        b5_tap=0.1391694941
+        b6_tap=-0.296716822
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='GB'){
+        a0_tap=1.0263926931
+        a1_tap=0.8835623138
+        a2_tap=0.1307522645
+        b1_tap=0.6113533288
+        b2_tap=-0.114188076
+        b3_tap=0.2883217076
+        b4_tap=2.657433495
+        b5_tap=0.0590046356
+        b6_tap=-0.175127606
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='JP'){
+        a0_tap=0.931552701
+        a1_tap=1.008192708
+        a2_tap=-0.004177373
+        b1_tap=0.431297353
+        b2_tap=-0.863672736
+        b3_tap=0.511698303
+        b4_tap=2.232484834
+        b5_tap=0.059865263
+        b6_tap=-0.331897255
+        b7_tap=0.039630786
+    }
+    else if(Bark=='ob' & SPP=='JP'){
+        a0_tap=1.0214
+        a1_tap=0.9817
+        a2_tap=0.0147
+        b1_tap=0.3753
+        b2_tap=-0.7954
+        b3_tap=0.499
+        b4_tap=2.0407
+        b5_tap=0.0768
+        b6_tap=-0.3335
+        b7_tap=0.0408
+        #parms w/ FIA data
+        a0_tap=0.842483072142665
+        a1_tap=0.99279768524928
+        a2_tap=0.0739425827838225
+        b1_tap=0.37221919371203
+        b2_tap=-0.723225866494174
+        b3_tap=0.453434142074953
+        b4_tap=1.33754275322832
+        b5_tap=0.073372838152118
+        b6_tap=-0.3105255908992
+        b7_tap=0.396398949039286
+    }
+    else if(Bark=='ib' & SPP=='NS'){
+        a0_tap=0.9308817
+        a1_tap=0.97360573
+        a2_tap=0.03522864
+        b1_tap=0.65078104
+        b2_tap=-0.30355787
+        b3_tap=0.37832812
+        b4_tap=1.18815216
+        b5_tap=0.03111631
+        b6_tap=-0.03172809
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='NS'){
+        a0_tap=1.0513
+        a1_tap=0.9487
+        a2_tap=0.0374
+        b1_tap=0.611
+        b2_tap=-0.3001
+        b3_tap=0.3731
+        b4_tap=1.1255
+        b5_tap=0.0318
+        b6_tap=-0.0297
+        b7_tap=0
+        #parms w/ FIA data
+        a0_tap=0.950952303433305
+        a1_tap=0.99162401049595
+        a2_tap=0.0357175689757522
+        b1_tap=0.507484658718266
+        b2_tap=-0.44046929698967
+        b3_tap=0.405856745795155
+        b4_tap=1.2849978191539
+        b5_tap=0.0143964536822362
+        b6_tap=-0.0785889411281423
+        b7_tap=0.169725200257675
+    }
+    else if(Bark=='ib' & SPP=='PB'){
+        a0_tap=0.7161229027
+        a1_tap=0.9811224473
+        a2_tap=0.1382539493
+        b1_tap=0.4782152412
+        b2_tap=0.3091537448
+        b3_tap=0.3266307618
+        b4_tap=-0.302056097
+        b5_tap=0.0858585241
+        b6_tap=-0.278661048
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='PB'){
+        a0_tap=0.7161229027
+        a1_tap=0.9811224473
+        a2_tap=0.1382539493
+        b1_tap=0.4782152412
+        b2_tap=0.3091537448
+        b3_tap=0.3266307618
+        b4_tap=-0.302056097
+        b5_tap=0.0858585241
+        b6_tap=-0.278661048
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='QA'){
+        a0_tap=0.5586975794
+        a1_tap=0.9047841359
+        a2_tap=0.3075094544
+        b1_tap=0.7131251715
+        b2_tap=-0.588345303
+        b3_tap=0.4292045831
+        b4_tap=2.8516108932
+        b5_tap=0.0381609362
+        b6_tap=-0.13426388
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='RM'){
+        a0_tap=0.745826994
+        a1_tap=1.0092251371
+        a2_tap=0.0890931039
+        b1_tap=0.5861620841
+        b2_tap=-0.865905462
+        b3_tap=0.6539243149
+        b4_tap=3.0603989176
+        b5_tap=0.0827619274
+        b6_tap=-0.64859681
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='RM'){
+        a0_tap=0.745826994
+        a1_tap=1.0092251371
+        a2_tap=0.0890931039
+        b1_tap=0.5861620841
+        b2_tap=-0.865905462
+        b3_tap=0.6539243149
+        b4_tap=3.0603989176
+        b5_tap=0.0827619274
+        b6_tap=-0.64859681
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='RO'){
+        a0_tap=1.1751352376
+        a1_tap=1.02249704
+        a2_tap=-0.069888591
+        b1_tap=0.4505675893
+        b2_tap=-0.902884964
+        b3_tap=0.5812519636
+        b4_tap=3.6267479819
+        b5_tap=0.1656137742
+        b6_tap=-1.114281314
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='RP'){
+        a0_tap=0.9717883
+        a1_tap=1.00113806
+        a2_tap=-0.01597933
+        b1_tap=0.51143292
+        b2_tap=-0.9739954
+        b3_tap=0.25844201
+        b4_tap=4.75315518
+        b5_tap=0.05846224
+        b6_tap=-0.12372176
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='RP'){
+        a0_tap=1.0962
+        a1_tap=1.006
+        a2_tap=-0.0352
+        b1_tap=0.5
+        b2_tap=-0.9959
+        b3_tap=0.3007
+        b4_tap=4.6358
+        b5_tap=0.0473
+        b6_tap=-0.05
+        b7_tap=0
+        #parms w/ FIA data
+        a0_tap=1.06470820904747
+        a1_tap=0.994899036827748
+        a2_tap=-0.0123828485987216
+        b1_tap=0.458957297467137
+        b2_tap=-1.04575412640177
+        b3_tap=0.361452014890273
+        b4_tap=4.00047777431758
+        b5_tap=0.0543368451581955
+        b6_tap=-0.128025447306836
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='RS'){
+        a0_tap=0.89797987
+        a1_tap=1.00579742
+        a2_tap=0.01667313
+        b1_tap=0.49500865
+        b2_tap=-0.63375155
+        b3_tap=0.3836274
+        b4_tap=1.41380994
+        b5_tap=0.08866994
+        b6_tap=-0.29753964
+        b7_tap=0.15192029
+    }
+    else if(Bark=='ob' & SPP=='RS'){
+        a0_tap=0.8758
+        a1_tap=0.992
+        a2_tap=0.0633
+        b1_tap=0.4128
+        b2_tap=-0.6877
+        b3_tap=0.4413
+        b4_tap=1.1818
+        b5_tap=0.1131
+        b6_tap=-0.4356
+        b7_tap=0.1042
+        #parms w/ FIA data
+        a0_tap=0.886886241411388
+        a1_tap=0.995431239145283
+        a2_tap=0.0541365481351767
+        b1_tap=0.411160410244944
+        b2_tap=-0.658022227353248
+        b3_tap=0.418213595349517
+        b4_tap=1.09113756405639
+        b5_tap=0.102379812299201
+        b6_tap=-0.40367256147942
+        b7_tap=0.104842994095004
+    }
+    #Sweet birch
+    else if(Bark=='ob' & SPP=='SB'){
+        a0_tap=0.8471057131
+        a1_tap=0.9875376729
+        a2_tap=0.0769690406
+        b1_tap=0.9322599144
+        b2_tap=-0.954580316
+        b3_tap=0.48553875
+        b4_tap=3.0294545606
+        b5_tap=0.0767610836
+        b6_tap=-0.238398236
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='SM'){
+        a0_tap=1.0517056747
+        a1_tap=0.96129896
+        a2_tap=0.0386037512
+        b1_tap=0.8556437779
+        b2_tap=-0.249723079
+        b3_tap=0.4149367053
+        b4_tap=1.2548340569
+        b5_tap=0.0412998707
+        b6_tap=-0.113500099
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='TL'  | SPP=='TA'){
+        a0_tap=0.7387
+        a1_tap=0.9716
+        a2_tap=0.1431
+        b1_tap=0.271
+        b2_tap=-0.4958
+        b3_tap=0.6508
+        b4_tap=-0.3887
+        b5_tap=0.1324
+        b6_tap=-0.7035
+        b7_tap=0
+        #parms w/ FIA data
+        a0_tap=0.762977580507808
+        a1_tap=0.979320525735404
+        a2_tap=0.122788251183516
+        b1_tap=0.245935863173793
+        b2_tap=-0.564901857800367
+        b3_tap=0.666790795105499
+        b4_tap=-0.0728778930339496
+        b5_tap=0.143651487515151
+        b6_tap=-0.791188036888163
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='WA'){
+        a0_tap=0.8550736297
+        a1_tap=0.9768941226
+        a2_tap=0.0770356694
+        b1_tap=0.7819090026
+        b2_tap=-0.791762733
+        b3_tap=0.476698925
+        b4_tap=3.5003928402
+        b5_tap=0.0859040469
+        b6_tap=-0.487974342
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='WC'  | SPP=='NC'){
+        a0_tap=0.86118766
+        a1_tap=0.98152118
+        a2_tap=0.0568203
+        b1_tap=0.40717678
+        b2_tap=-0.05482572
+        b3_tap=0.47809459
+        b4_tap=-1.32512447
+        b5_tap=0.1538487
+        b6_tap=-0.53687808
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='WC' | SPP=='NC'){
+        a0_tap=0.902
+        a1_tap=0.9676
+        a2_tap=0.085
+        b1_tap=0.3204
+        b2_tap=-0.4336
+        b3_tap=0.5212
+        b4_tap=0.0157
+        b5_tap=0.137
+        b6_tap=-0.4585
+        b7_tap=0
+        #parms w/ FIA data
+        a0_tap=0.876976728762079
+        a1_tap=0.972187200775237
+        a2_tap=0.0905032843727524
+        b1_tap=0.319643790061659
+        b2_tap=-0.495778605215774
+        b3_tap=0.546605647382787
+        b4_tap=-0.0540118375921429
+        b5_tap=0.131666046721139
+        b6_tap=-0.454765563250266
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='WP'){
+        a0_tap=1.04881379
+        a1_tap=1.00779696
+        a2_tap=-0.04595353
+        b1_tap=0.38085445
+        b2_tap=-0.85956463
+        b3_tap=0.34380669
+        b4_tap=4.60836993
+        b5_tap=0.111855
+        b6_tap=-0.5523203
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='WP'){
+        a0_tap=1.0202
+        a1_tap=0.985
+        a2_tap=0.0149
+        b1_tap=0.3697
+        b2_tap=-0.7512
+        b3_tap=0.3536
+        b4_tap=3.8496
+        b5_tap=0.1074
+        b6_tap=-0.5131
+        b7_tap=0
+        #parms w/ FIA data
+        a0_tap=0.961977278802905
+        a1_tap=0.985977453808376
+        a2_tap=0.0333180987707418
+        b1_tap=0.383416881614619
+        b2_tap=-0.753661988626837
+        b3_tap=0.392529765236197
+        b4_tap=3.4224381734935
+        b5_tap=0.100601541094101
+        b6_tap=-0.485617012177084
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='WS'){
+        a0_tap=1.0202
+        a1_tap=0.985
+        a2_tap=0.0149
+        b1_tap=0.3697
+        b2_tap=-0.7512
+        b3_tap=0.3536
+        b4_tap=3.8496
+        b5_tap=0.1074
+        b6_tap=-0.5131
+        b7_tap=0
+        #parms w/ FIA data
+        a0_tap=0.75826241
+        a1_tap=0.98481863
+        a2_tap=0.09956165
+        b1_tap=0.36505143
+        b2_tap=-0.51501314
+        b3_tap=0.55913869
+        b4_tap=0.75846281
+        b5_tap=0.07011851
+        b6_tap=-0.44928376
+        b7_tap=0.07830011
+    }
+    else if(Bark=='ob' & SPP=='WS'){
+        a0_tap=0.7317
+        a1_tap=0.9577
+        a2_tap=0.1593
+        b1_tap=0.2638
+        b2_tap=-0.4246
+        b3_tap=0.5505
+        b4_tap=-0.1269
+        b5_tap=0.1145
+        b6_tap=-0.6249
+        b7_tap=0.088
+        #parms w/ FIA data
+        a0_tap=0.725059647049259
+        a1_tap=0.999930744977476
+        a2_tap=0.11890841412387
+        b1_tap=0.286031149725587
+        b2_tap=-0.417052954651359
+        b3_tap=0.581226449067082
+        b4_tap=-0.562751307358532
+        b5_tap=0.101380520664108
+        b6_tap=-0.563774194060357
+        b7_tap=0.096121529684134
+    }
+    else if(Bark=='ob' & SPP=='YB'){
+        a0_tap=1.1263776728
+        a1_tap=0.9485083275
+        a2_tap=0.0371321602
+        b1_tap=0.7662525552
+        b2_tap=-0.028147685
+        b3_tap=0.2334044323
+        b4_tap=4.8569609081
+        b5_tap=0.0753180483
+        b6_tap=-0.205052535
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='OH'){
+        a0_tap=0.947211744
+        a1_tap=0.971353083
+        a2_tap=0.063182322
+        b1_tap=0.633614831
+        b2_tap=-0.549156049
+        b3_tap=0.439010965
+        b4_tap=3.187595496
+        b5_tap=0.079154063
+        b6_tap=-0.41277508
+        b7_tap=0
+    }
+    else if(Bark=='ob' & SPP=='OS'){
+        a0_tap=0.88047918
+        a1_tap=0.988526494
+        a2_tap=0.0660791
+        b1_tap=0.365548416
+        b2_tap=-0.607245626
+        b3_tap=0.486832282
+        b4_tap=1.282373726
+        b5_tap=0.094120201
+        b6_tap=-0.447380533
+        b7_tap=0
+    }
+    else if(Bark=='ib' & SPP=='OS'){
+        a0_tap=0.896475601
+        a1_tap=1.001886257
+        a2_tap=0.020707494
+        b1_tap=0.391516469
+        b2_tap=-0.395638544
+        b3_tap=-0.011787171
+        b4_tap=1.335110611
+        b5_tap=0.076311559
+        b6_tap=-0.286988273
+        b7_tap=0
+    }
+    else{
+        a0_tap=0.896475601
+        a1_tap=1.001886257
+        a2_tap=0.020707494
+        b1_tap=0.391516469
+        b2_tap=-0.395638544
+        b3_tap=-0.011787171
+        b4_tap=1.335110611
+        b5_tap=0.076311559
+        b6_tap=-0.286988273
+        b7_tap=0
+    }
+    p = 1.3/HT
+    z = DHT/HT
+    Xi = (1 - z^(1/3))/(1 - p^(1/3))
+    Qi = 1 - z^(1/3)
+    y = (a0_tap * (DBH^a1_tap) * (HT^a2_tap)) * Xi^(b1_tap * z^4 + b2_tap * (exp(-DBH/HT)) +
+                                                        b3_tap * Xi^0.1 + b4_tap * (1/DBH) + b5_tap * HT^Qi + b6_tap * Xi + b7_tap*Planted)
+    Diam=ifelse(Bark=='ob' & DHT==1.37,DBH,y)
+    return(Diam=round(Diam,4))
+}
+
+DOBtoDIB=function(SPP,dob){
+    if(SPP=='AB'){
+        pcntbark=7
+        b0_bark=1
+        b1_bark=1}
+    else if(SPP=='BC'){
+        pcntbark=10
+        b0_bark=1
+        b1_bark=1}
+    else if(SPP=='BF'){
+        pcntbark=0
+        b0_bark=0.878
+        b1_bark=1.025}
+    # else if(SPP=='BP' | SPP=='BA'){            # BLC 09/10/2018 - implement new parameters from J.Frank 09/12/2016
+    #   pcntbark=18
+    #   b0_bark=1
+    #  b1_bark=1}
+    else if(SPP=='BP'){            # BLC 09/10/2018 - implement new parameters from J.Frank 09/12/2016
+        pcntbark=0
+        b0_bark=0.8737
+        b1_bark=1.012}
+    else if(SPP=='BA'){            # BLC 09/10/2018 - implement new parameters from J.Frank 09/12/2016
+        pcntbark=0
+        b0_bark=0.8499
+        b1_bark=1.041}
+    else if(SPP=='BS'){
+        pcntbark=0
+        b0_bark=0.871
+        b1_bark=1.026}
+    else if(SPP=='BT'){
+        pcntbark=15
+        b0_bark=1
+        b1_bark=1}
+    else if(SPP=='EH'){
+        pcntbark=0
+        b0_bark=0.8916
+        b1_bark=1.0121}
+    else if(SPP=='GA'){
+        pcntbark=13
+        b0_bark=1
+        b1_bark=1}
+    else if(SPP=='GB'){
+        pcntbark=12
+        b0_bark=1
+        b1_bark=1}
+    else if(SPP=='JP'){
+        pcntbark=0
+        b0_bark=0.916
+        b1_bark=1.01}
+    else if(SPP=='NS'){
+        pcntbark=0
+        b0_bark=0.8558
+        b1_bark=1.0363}
+    else if(SPP=='PB'){
+        pcntbark=0
+        b0_bark=0.8969
+        b1_bark=1.0179}
+    else if(SPP=='QA'){
+        pcntbark=0
+        b0_bark=0.8449
+        b1_bark=1.0332}
+    else if(SPP=='RM'){
+        pcntbark=0
+        b0_bark=0.9214
+        b1_bark=1.0117}
+    else if(SPP=='RO'){
+        pcntbark=11
+        b0_bark=1
+        b1_bark=1}
+    else if(SPP=='RP'){
+        pcntbark=0
+        b0_bark=0.928
+        b1_bark=0.999}
+    else if(SPP=='RS'){
+        pcntbark=0
+        b0_bark=0.864
+        b1_bark=1.029}
+    else if(SPP=='SB'){
+        pcntbark=12
+        b0_bark=1
+        b1_bark=1}
+    else if(SPP=='SM'){
+        pcntbark=0
+        b0_bark=0.9383
+        b1_bark=1.0064}
+    else if(SPP=='TL' | SPP=='TA'){
+        pcntbark=0
+        b0_bark=1.5106
+        b1_bark=0.8134}
+    else if(SPP=='WA'){
+        pcntbark=0
+        b0_bark=0.8834
+        b1_bark=1.0188}
+    else if(SPP=='WC' | SPP=='NC'){
+        pcntbark=0
+        b0_bark=0.7797
+        b1_bark=1.0569}
+    else if(SPP=='WP'){
+        pcntbark=0
+        b0_bark=0.926
+        b1_bark=1}
+    else if(SPP=='WS'){
+        pcntbark=0
+        b0_bark=0.886
+        b1_bark=1.022}
+    else if(SPP=='YB'){
+        pcntbark=0
+        b0_bark=0.8688
+        b1_bark=1.0275}
+    else if(SPP=='OH'){
+        pcntbark=0
+        b0_bark=0.892283333
+        b1_bark=1.01925} 
+    else if(SPP=='OS'){
+        pcntbark=0
+        b0_bark=0.887333009
+        b1_bark=1.019266336} 
+    else{
+        pcntbark=0
+        b0_bark=0.889808171
+        b1_bark=1.019266336}     
+    dib=ifelse(pcntbark==0,b0_bark*dob^b1_bark,dob*(1-(pcntbark/100)))
+    return(dib=round(dib,4))
+}
+
+smalians<-function(r1,r2,len){
+    L=(r1/2)^2*pi
+    S=(r2/2)^2*pi
+    vol=((L+S)/2)*len
+    return(round(vol,4))
+}
+
+
+KozakTreeVol=function(Bark,SPP,DBH,HT,Planted,stump=NA,topHT=NA,topD=NA)
+{
+    sgmts = 100
+    stump=ifelse(is.na(stump),as.numeric(0.0),stump)
+    topHT=ifelse(is.na(topHT),as.numeric(HT),topHT)
+    topHT=ifelse(topHT>HT,as.numeric(HT),topHT)
+    topD=(ifelse(is.na(topD),as.numeric(0.001),topD))
+    L = (topHT - stump)/sgmts
+    i = 0
+    treeVolume = 0
+    while (i < sgmts) 
+    {
+        H1 = L * i + stump
+        H2 = L * (i + 1) + stump
+        if (HT - H1 < 1e-04){
+            dob1 = 0
+            dib1 = 0
+        }
+        else {
+            if (H1 == 0) 
+                H1 = 0.001
+            Esty1 = KozakTaper(Bark='ob',SPP=SPP,DHT=H1,DBH=DBH,HT=HT,Planted=Planted)
+            dob1 = as.numeric(Esty1)
+            dob1 = ifelse(dob1<topD,0,dob1)
+            dib1 = DOBtoDIB(SPP=SPP,dob=dob1)
+            dib1= ifelse(dob1<topD,0,dib1)
+        }
+        if (HT - H2 < 1e-04){
+            dob2 = 0
+            dib2 = 0
+        }
+        else {
+            if (H2 == 0)
+                H2 = 0.001
+            Esty2 = KozakTaper(Bark='ob',SPP=SPP,DHT=H2,DBH=DBH,HT=HT,Planted=Planted)
+            dob2 = as.numeric(Esty2)
+            dob2 = ifelse(dob2<topD,0,dob2)
+            dib2 = DOBtoDIB(SPP=SPP,dob=dob2)
+            dib2= ifelse(dob1<topD,0,dib2)
+        }
+        treeVolume <- ifelse(Bark=='ob',treeVolume + smalians(dob1, dob2, L * 100),
+                             treeVolume + smalians(dib1, dib2, L * 100))
+        i <- i + 1
+    }
+    treeVolume <- round(treeVolume/1e+06, 6)
+    return(treeVolume=treeVolume) 
+}
+
+###################################################################################
+## Westfall & Scott 2010 Forest Science (56, 515-582)  FIA taper equations       #
+##################################################################################
+WestfallScott  <-  function(SPP,h,H,dbh){
+    if(SPP=='SM'){         #sugar maple
+        th1  =  6.5790
+        th2  =  0.0111
+        a1    =  1.0682
+        a2    =  1.1833
+        gm1  =  0.1031
+        gm2  =  0.2624
+        phi  =  0.1516
+        lmd  =  1.1482
+        bet1  =  0.6637
+        bet2  =  3.0996
+    }
+    else if(SPP=='YB' | SPP=='PB' | SPP=='GB' | SPP=='SB'){ #birches
+        th1 =  7.5437
+        th2 =  0.0103
+        a1 =  0.9961
+        a2  =  1.1042
+        gm1  =  0.1313
+        gm2  =  0.3539
+        phi  =  0.2091
+        lmd  =  0.9478
+        bet1  =  0.5995
+        bet2  =  3.4205
+    }
+    else if(SPP=='RM'){ #red maple
+        th1  =  7.5707                                           
+        th2  =  0.0105
+        a1    =  1.5273
+        a2    =  0.7684
+        gm1  =  0.0931
+        gm2  =  0.4223
+        phi  =  0.1441
+        lmd  =  1.3910
+        bet1  =  0.6453
+        bet2  =  4.0737
+    }
+    else if(SPP=='GA' | SPP=='WA' | SPP=='BT' | SPP=='QA' | SPP=='BP'){ #ash, quaking aspen, balsam poplar
+        th1  =  3.3085
+        th2  =  0.0276
+        a1    =  1.2634
+        a2    =  0.9088
+        gm1   =  0.1098
+        gm2  =  0.5198
+        phi  =  0.1840
+        lmd  =  1.7842
+        bet1  =  0.6719
+        bet2  =  5.1178
+    }
+    else if(SPP=='AB'){ #American beech
+        th1  =  8.9843
+        th2  =  0.0107
+        a1    =  0.7621
+        a2    =  1.3734
+        gm1  =  0.0956
+        gm2  =  0.1650
+        phi  =  0.1924
+        lmd  =  1.2237
+        bet1  =  0.4626                                                                         
+        bet2  =  1.0954
+    }
+    else if(SPP=='RO'){ #red oak
+        th1  =  12.8336
+        th2  =  0.0125
+        a1    =  0.9038
+        a2    =  1.0950
+        gm1  =  0.0935
+        gm2  =  0.3971
+        phi  =  0.2038
+        lmd  =  1.0457
+        bet1  =  0.5508
+        bet2  =  3.4681
+    }
+    else if(SPP=='BC'){           #black cherry
+        th1  =  3.2042
+        th2  =  0.0479
+        a1    =  1.2507
+        a2    =  0.8075
+        gm1  =  0.0800
+        gm2  =  0.4170
+        phi  =  0.2227
+        lmd  =  2.7226
+        bet1  =  0.7065
+        bet2  =  4.6476
+    }
+    else if(SPP=='BF'){                        #balsam fir
+        th1  =  5.3693
+        th2  =  0.0171
+        a1    =  1.4212
+        a2    =  0.3003
+        gm1  =  0.0890
+        gm2  =  0.6485
+        phi  =  0.1916
+        lmd  =  1.8873
+        bet1  =  0.4764
+        bet2  =  2.6383
+    }
+    else if(SPP=='RS' | SPP=='BS' | SPP=='WS'){           #spruces
+        th1  =  6.8745
+        th2  =  0.0110
+        a1    =  1.1241
+        a2    =  0.4107
+        gm1  =  0.1376
+        gm2  =  0.4842
+        phi  =  0.2038
+        lmd  =  1.2598
+        bet1  =  0.4986
+        bet2  =  2.7865
+    }
+    else if(SPP=='WP'){ #white pine
+        th1  =  7.1438
+        th2  =  0.0123
+        a1    =  0.8978
+        a2    =  0.7872
+        gm1  =  0.0989
+        gm2  =  0.4985
+        phi  =  0.2049
+        lmd  =  0.9247
+        bet1  =  0.5715
+        bet2  =  2.0482
+    }
+    else if(SPP=='TA' || SPP=='NS' || SPP=='JP'){ #larch, Norway spruce, jack pine
+        th1  =  5.2913
+        th2  =  0.0411
+        a1    =  1.1291
+        a2    =  0.6831
+        gm1  =  0.0745
+        gm2  =  0.5798
+        phi  =  0.1896
+        lmd  =  1.5776
+        bet1  =  0.6616
+        bet2  =  6.0645
+    }
+    else if(SPP=='WC'){ #northern white cedar
+        th1  =  5.400
+        th2  =  0.0256
+        a1    =  1.9295
+        a2    =  0.8142
+        gm1  =  0.0943
+        gm2  =  0.9642
+        phi  =  0.2761
+        lmd  =  1.8605
+        bet1  =  1.3432
+        bet2  =  1.3438
+    }
+    else if(SPP=='RP'){ #red pine
+        th1  =  7.6044
+        th2  =  0.0148
+        a1    =  1.2379
+        a2    =  0.3304
+        gm1  =  0.0759
+        gm2  =  0.6611
+        phi  =  0.3008
+        lmd  =  1.1569
+        bet1  =  0.5462
+        bet2  =  3.0627
+    }
+    else if(SPP=='EH'){ #eastern hemlock
+        th1  =  7.2442
+        th2  =  0.0152
+        a1    =  1.4008
+        a2    =  0.8306
+        gm1  =  0.0856
+        gm2  =  0.4724
+        phi  =  0.2011
+        lmd  =  1.5776
+        bet1  =  0.6616
+        bet2  =  6.0645
+    }
+    else if(SPP=='OH'){
+        th1  =  9.0505
+        th2  =  0.0241
+        a1   =  1.298
+        a2    =  0.7684
+        gm1  =  0.0684
+        gm2  =  0.4555
+        phi  =  0.1769
+        lmd  =  1.6684
+        bet1  =  0.5408
+        bet2  =  4.1821}
+    else if(SPP=='OS'){ #composite of all conifers
+        th1  =  6.418214286
+        th2  =  0.019585714
+        a1    =  1.305771429
+        a2    =  0.593785714
+        gm1  =  0.093685714
+        gm2  =  0.615528571
+        phi  =  0.223985714
+        lmd  =  1.462628571
+        bet1  =  0.685271429
+        bet2  =  2.842342857}  
+    else { #composite of all species
+        th1  =  7.114957895
+        th2  =  0.016836842
+        a1    =  1.148384211
+        a2    =  0.857194737
+        gm1  =  0.101226316
+        gm2  =  0.460905263
+        phi  =  0.195610526
+        lmd  =  1.351415789
+        bet1  =  0.634036842
+        bet2  =  3.302584211
+    }
+    x=dbh/H
+    z=h/H
+    S1=th1/(1+(z/th2)^lmd)
+    S2=(z/bet1)^(bet2*x)/(1+(z/bet1)^(bet2*x))
+    d=sqrt(dbh^2*(1.37/H/gm1)^phi*((1-z)/(1-gm1))^(a1+S1)*((1-z)/(1-gm2))^(a2*S2))
+    return (d)
+}
+
+Vol.WestFall <- function (SPP,HT,DBHO,stump=NA,topHT=NA,topD=NA)
+{
+    ## stump, and top are two points, we integrate between them
+    ### numerical integration using integrate function in R
+    #fdiameter<-function(x) (KozakExp02(x, HT, DBHO, a0, a1, a2, b1, b2, b3, b4, b5, b6))^2
+    #volInteg<-0.25*0.0001*pi*integrate(fdiameter, stump, top)$value
+    
+    ### smalian's volume
+    sgmts = 100   # divide into 100 sections, the more sections, the closer to the numerical integration result
+    stump=ifelse(is.na(stump),as.numeric(0.0),stump)
+    topHT=ifelse(is.na(topHT),as.numeric(HT),topHT)
+    topHT=ifelse(topHT>HT,as.numeric(HT),topHT)
+    topD=(ifelse(is.na(topD),as.numeric(0.001),topD))
+    L  = (topHT-stump) / sgmts
+    i = 0
+    treeVolume = 0
+    while(i<sgmts)
+    {
+        H1  = L * i+stump
+        H2  = L * (i+1)+stump
+        
+        if (HT-H1<0.0001) dob1=0 # the diameter for the tip of the tree should be 0 instead of an estimated value
+        else
+        {
+            #if (H1==0) H1=0.001   # when x1==0, the estimate will give werid number, optional, see reasons below
+            dob1=WestfallScott(SPP,H1,HT,DBHO)
+            
+        }
+        if (HT-H2<0.0001) dob2=0 # the diameter for the tip of the tree should be 0 instead of an estimated value
+        else
+        {
+            #if (H2==0) H2=0.001   # when x2==0, the estimate will give werid number, optional, see reasons below
+            dob2=WestfallScott(SPP,H2,HT,DBHO)
+            
+        }
+        treeVolume <-treeVolume+smalians(dob1,dob2,L*100)
+        i <- i+1
+    }
+    treeVolume<-round(treeVolume/1E6,6)
+    #vol.pred<-list(numInteg=volInteg, smalians=treeVolume)
+    return(treeVolume)
+}
+
+
+Honer.Vol=function(SPP,HT,DBHO,topD=NA,topHT=NA)
+{
+    if(SPP=='WP'){
+        a=0.691
+        b=363.676
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='RP'){
+        a=0.710
+        b=355.623
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='JP' | SPP=='TA'){
+        a=0.897
+        b=348.520
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='LP'){
+        a=0.694
+        b=343.896
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='BS'){
+        a=1.588
+        b=333.364
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='RS'){
+        a=1.226
+        b=315.832
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='WS'){
+        a=1.440
+        b=342.175
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='BF'){
+        a=2.139
+        b=301.634
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='NC' | SPP=='WC'){
+        a=4.167
+        b=244.906
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736}
+    else if(SPP=='EH'){
+        a=1.112
+        b=350.092
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='QA'){
+        a=-0.312
+        b=436.683
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='BP' | SPP=='BT'){
+        a=0.420
+        b=394.644
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='PB' | SPP=='GB' | SPP=='SB'  ){
+        a=2.222
+        b=300.373
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='YB'){
+        a=1.449
+        b=344.754
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='RM' | SPP=='SM'){
+        a=1.046
+        b=383.972
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='BW'){
+        a=0.948
+        b=401.456
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='AB' | SPP=='WA'){                                      
+        a=0.959
+        b=334.829
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='BC'){
+        a=0.033
+        b=393.336
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='RO'){
+        a=1.512
+        b=336.509
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    else if(SPP=='OH'){
+        a=1.512
+        b=336.509
+        b2=0.184
+        p1.ht=0.0145
+        p2.ht=2.1164
+        p3.ht=-1.1387
+        p1.d=1.0180
+        p2.d=-0.2323
+        p3.d=-0.7736
+    }
+    DBHin=DBHO/2.54
+    HTft=HT/.3048
+    Vtcf=DBHin^2/(a+(b/HTft))
+    Vtm3=Vtcf* 0.02831685
+    MR.ht=topHT/HT
+    MR.dib=(topD^2/DBHO^2)*(1-0.04365*b2)^-2
+    return(Vtm3)
+}  
+
+#sawlog proportion
+hw.saw.prop=function(SPP,DBH,Form,Risk){
+    
+    #Convert NHRI form classes
+    if(Form == 'F1'){new.Form = 'GF'}
+    else if(Form == 'F2' | Form == 'F6' | Form == 'F5' | Form == 'F8'){new.Form = 'AF'}
+    else{new.Form = 'PF'} #We could have catch for other form types but may not be needed
+    
+    #Convert NHRI risk classes
+    if(Risk == 'R1' | Risk == 'R2'){new.Risk = 'LR'}
+    else{new.Risk = 'HR'} #We could have catch for other risk types but probably not needed.
+    
+    if(SPP=='RO'){SPP.RO=1; SPP.SM=0; SPP.YB=0; SPP.RM=0}
+    else if(SPP=='SM'){SPP.SM=1; SPP.RO=0; SPP.YB=0; SPP.RM=0}
+    else if(SPP=='YB'){SPP.YB=1; SPP.RO=0; SPP.SM=0; SPP.RM=0}
+    else if(SPP=='RM'){SPP.RM=1; SPP.RO=0; SPP.SM=0; SPP.YB=0}
+    else{SPP.RO=0; SPP.SM=0; SPP.YB=0; SPP.RM=0}
+    if(new.Form=='GF'){GF=1; PF=0}
+    else if(new.Form=='PF'){GF=0; PF=1}
+    else{GF = 0; PF = 0}
+    if(new.Risk=='HR'){HR=1; LR=0}
+    else{HR=0; LR=1}
+    saw=exp(-33.2222 -0.2249*DBH + 11.3953*log(DBH)+ 0.7994*SPP.RM-0.4849*SPP.RO+0.9174*SPP.SM+1.2707*SPP.YB+
+                0.3393*GF-0.6922*PF+0.9062*LR-0.0441*(DBH*SPP.RM) +0.0015*(DBH*SPP.RO)-0.0412*(DBH*SPP.SM)-0.0548*(DBH*SPP.YB))/
+        (1+exp(-33.2222 -0.2249*DBH + 11.3953*log(DBH)+ 0.7994*SPP.RM-0.4849*SPP.RO+0.9174*SPP.SM+1.2707*SPP.YB+
+                   0.3393*GF-0.6922*PF+0.9062*LR-0.0441*(DBH*SPP.RM) +0.0015*(DBH*SPP.RO)-0.0412*(DBH*SPP.SM)-0.0548*(DBH*SPP.YB)))
+    saw=ifelse(SPP=='RO' | SPP=='SM' | SPP=='YB' | SPP=='RM' | SPP == 'PB',saw,1)
+    return(saw=saw)}
+
+#hw.saw.prop('RM',20,'LSW','LR')
+
+#### Summary ####
+Summary.GY=function(tree){
+    library(nlme)
+    tree$SPtype=as.vector(mapply(SPP.func,tree$SP)[1,])
+    tree$shade=as.numeric(as.character(as.vector(mapply(SPP.func,tree$SP)[2,])))
+    tree$SG=as.numeric(as.character(as.vector(mapply(SPP.func,tree$SP)[3,])))
+    #aa=sapply(tree$SP,SPP.func)
+    #tree$SPtype=t(aa)[,1]
+    #tree$shade=as.numeric(t(aa)[,2])
+    #tree$SG=as.numeric(t(aa)[,3])
+    tree$ba<-round((tree$DBH^2*0.00007854)*tree$EXPF,2)
+    tree$sdi=(tree$DBH/25.4)^1.605*tree$EXPF
+    tree$SG.wt=tree$SG*tree$EXPF
+    tree$ba.WP=ifelse(tree$SP=='WP',tree$ba,0)
+    tree$ba.BF=ifelse(tree$SP=='BF',tree$ba,0)
+    tree$ba.RM=ifelse(tree$SP=='RM',tree$ba,0)
+    tree$ba.RS=ifelse(tree$SP=='RS',tree$ba,0)
+    tree$ba.BS=ifelse(tree$SP=='BS',tree$ba,0)
+    tree$ba.WS=ifelse(tree$SP=='WS',tree$ba,0)
+    tree$ba.PB=ifelse(tree$SP=='PB',tree$ba,0)
+    tree$ba.YB=ifelse(tree$SP=='YB',tree$ba,0)
+    tree$ba.GB=ifelse(tree$SP=='GB',tree$ba,0)
+    
+    # Add AB, QA, SM, WC
+    tree$ba.AB=ifelse(tree$SP=='AB',tree$ba,0)
+    tree$ba.QA=ifelse(tree$SP=='QA',tree$ba,0)
+    tree$ba.SM=ifelse(tree$SP=='SM',tree$ba,0)
+    tree$ba.WC=ifelse(tree$SP=='WC',tree$ba,0)
+    
+    tree$ba.HW=ifelse(tree$SPtype=='HW',tree$ba,0)
+    tree$ba.SW=ifelse(tree$SPtype!='HW',tree$ba,0)
+    tree$CR=((tree$HT-tree$HCB)/tree$HT)*tree$EXPF
+    tree$HT=tree$HT*tree$EXPF
+    temp <- subset(tree,select=c("YEAR","STAND","PLOT",'TREE','DBH','HT','CR',
+                                 'EXPF',"ba",'ba.WP','ba.BF','ba.RM','ba.RS','ba.BS','ba.PB','ba.YB',
+                                 'ba.AB','ba.QA','ba.SM','ba.WC',                                       # Add AB, QA, SM, WC
+                                 'ba.GB','ba.WS','sdi','ba.HW','ba.SW','SG.wt'))
+    temp<-groupedData(ba~ba|STAND/PLOT/YEAR,data=temp)
+    temp <- gsummary(temp,sum,na.rm=TRUE)
+    temp$BA<-temp$ba
+    temp$BAPH<-temp$ba
+    temp$tph<-temp$EXPF 
+    temp$qmd<-sqrt(temp$BAPH/(0.00007854*temp$tph))
+    temp$pHW.ba=temp$ba.HW/temp$BAPH
+    temp$pSW.ba=temp$ba.SW/temp$BAPH
+    temp$pWP.ba=temp$ba.WP/temp$BAPH
+    temp$pBF.ba=temp$ba.BF/temp$BAPH
+    temp$pRM.ba=temp$ba.RM/temp$BAPH
+    temp$pRS.ba=temp$ba.RS/temp$BAPH
+    temp$pBS.ba=temp$ba.BS/temp$BAPH
+    temp$pWS.ba=temp$ba.WS/temp$BAPH
+    temp$pPB.ba=temp$ba.PB/temp$BAPH
+    temp$pYB.ba=temp$ba.YB/temp$BAPH
+    temp$pGB.ba=temp$ba.GB/temp$BAPH
+    
+    # Add AB, QA, SM, WC
+    temp$pAB.ba=temp$ba.AB/temp$BAPH
+    temp$pQA.ba=temp$ba.QA/temp$BAPH
+    temp$pSM.ba=temp$ba.SM/temp$BAPH
+    temp$pWC.ba=temp$ba.WC/temp$BAPH
+    
+    temp$Avg.HT=temp$HT/temp$EXPF
+    temp$Avg.LCR=temp$CR/temp$EXPF
+    temp$Avg.SG=temp$SG.wt/temp$EXPF
+    temp$Avg.SG=ifelse(temp$Avg.SG>.68,.68,temp$Avg.SG)
+    temp$SDImax=-6017.3*temp$Avg.SG+4156.3
+    temp$RD=temp$sdi/temp$SDImax
+    temp=subset(temp,select=c("YEAR","STAND","PLOT",'BA','tph',
+                              'qmd','sdi','Avg.HT','Avg.LCR','pWP.ba','pBF.ba','pRM.ba',
+                              'pRS.ba','pBS.ba','pWS.ba','pPB.ba','pYB.ba','pGB.ba','RD',
+                              'pAB.ba','pQA.ba','pSM.ba','pWC.ba','pHW.ba','pSW.ba'))
+    temp
+}        
