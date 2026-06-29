@@ -1,0 +1,6 @@
+si<-read.csv("~/silc_cfi/silc_plot_si2.csv")
+cat("rows",nrow(si)," uniq plots",length(unique(si$PLOT)),"\n")
+for(c in c("legacyCSI","ESI","CSI2030","CSI2060","CSI2090")) if(c %in% names(si)) cat(sprintf("  %-9s mean %5.2f sd %4.2f range %5.2f-%5.2f NA %d\n",c,mean(si[[c]],na.rm=TRUE),sd(si[[c]],na.rm=TRUE),min(si[[c]],na.rm=TRUE),max(si[[c]],na.rm=TRUE),sum(is.na(si[[c]]))))
+cat("cor(legacy,ESI)",round(cor(si$legacyCSI,si$ESI,use=\"complete.obs\"),3)," cor(ESI,CSI2030)",round(cor(si$ESI,si$CSI2030,use=\"complete.obs\"),3)," cor(legacy,CSI2030)",round(cor(si$legacyCSI,si$CSI2030,use=\"complete.obs\"),3),"\n")
+cat("2030==2090 all:",all(abs(si$CSI2030-si$CSI2090)<1e-6,na.rm=TRUE)," 2030==2060:",all(abs(si$CSI2030-si$CSI2060)<1e-6,na.rm=TRUE),"\n")
+cat("mean ratio CSI2030/ESI",round(mean(si$CSI2030/si$ESI,na.rm=TRUE),3),"\n")

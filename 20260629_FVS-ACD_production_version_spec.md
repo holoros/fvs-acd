@@ -14,7 +14,7 @@ isolated and individually validated.
 
 | setting | value | rationale |
 |---|---|---|
-| Site input | ESI via make_stand(esi=) | tracks measured site index far better than legacy CSI (R^2 0.91 vs 0.52); drop-in, no equation change. Current ESI is a placeholder pending the refined ESI |
+| Site input | validated ESI (Final_SI_Output.tif) via make_stand | matches measured site index (R^2 0.91) and anchors dominant height (R^2 0.804). On a controlled full-set test it matches legacy climate SI on regional volume and value (so the gain is in dominant height and biological realism, not bias); drop-in, no equation change |
 | SDImax | site-independent (ops$sdimax.site.term = FALSE) | brms re-estimation shows SDImax is independent of site (r near 0); composition-driven |
 | Self-thinning | ops$use.sdimort = TRUE, onset 0.55, beta 0.10, max 1.0 | SDImax-ceiling density-dependent mortality; inert below the frontier, steepens self-thinning toward Reineke where it binds |
 | Ingrowth | ops$use.ingrowth = TRUE, ingrowth.thrshld = 0 (expected value), mult 1.0 | the statistically correct hurdle mean; fixes the recruitment deficit |
@@ -32,7 +32,7 @@ esi, ingrowth.thrshld = 0.95.
 |---|---|
 | Seven Islands CFI (65 long-horizon pairs) | BA bias +11% (MORTCAL off) to -1% (on); self-thinning slope -1.08 to -1.24 |
 | Maine FIA (694 pairs, 5-7 yr) | site a weak BA lever (legacy = ESI); stem-count deficit (TPA -8%, QMD +7%) |
-| NB / NS / ME regional (270 plots) | all-region BA +3.3%, value +4.1%; 12.5.0 to 12.6.0 halved the over-prediction |
+| NB / NS / ME regional (full 682-plot set) | all-region BA +1.4%, value +1.5%; Maine +4.9 / +7.6; NB -1.7 / -3.3; NS +3.0 / +2.3. ESI and legacy site index identical here (controlled). The earlier +11% Maine BA was a 90/region subsample, not representative |
 | Global sensitivity (N=240) | value dominated by site (SRC 0.80); ingrowth drives stems/QMD not value; self-thinning params globally minor |
 | Bakuzis matrix | Eichhorn PASS (CV 5.1%); self-thinning improved but short of Reineke; height site-curves weakly separated |
 | Version evolution | v9.6 +17% -> v12 line +11% -> v12.6 +3% (regional): monotone improvement |
@@ -60,13 +60,40 @@ esi, ingrowth.thrshld = 0.95.
   dominant-height prediction (R^2 0.804 vs 0.174 no-site). The next production version should adopt
   ESI as the site driver with this anchor; the placeholder caveat is retired for the anchor
   relationship.
-- Regional mortality (gate 1) advanced and localized. A regional mortality multiplier works
-  two-directionally on the regional data (New Brunswick mult 0.5 nearly zeros its bias; Maine
-  improves with more mortality), but even Maine mult 3.0 leaves +7.3 percent: the residual is
-  structural, the stand-mortality probability cut zeros mortality on Maine stands that should
-  self-thin. The release fix is a regional refit of the stand-mortality probability, not a
-  multiplier. Interim: Maine mult about 1.5 to 2.0, New Brunswick about 0.5. See
-  `20260629_esi_anchor_and_regional_mortality.md`.
+- Regional mortality (gate 1) advanced and fully localized. Two independent regional levers were
+  swept on the 270-plot data: the tree-level mortality multiplier (Maine +11.1 at 1.0 to +7.3 at 3.0)
+  and a new gated stand-mortality cut scale (`ops$mort.cut.scale` in `AcadianGY_12.6.4.r`; Maine +11.1
+  at 1.0 to +7.9 at 0.4). Both saturate at about +7 to +8 percent Maine BA bias and both push New
+  Brunswick the wrong way. The saturation proves each lever alone cannot reach the stand basal-area
+  loss Maine needs. But the levers are complementary: combining them (Maine stand cut 0.5 plus
+  multiplier about 2.0) brings Maine BA from +11.1 to +2.6 and stems from +10.0 to ~0, while New
+  Brunswick (mult 0.5) sits at -1.0 and Nova Scotia at baseline, so a region-specific two-lever setting
+  holds all three regions within a few percent on BA and TPA at once. The gated levers (v12.6.4)
+  deliver this as an interim, in-sample calibration; the release-grade fix is a cross-validated
+  regional refit of the Weiskittel (2012) stand-mortality coefficients carrying the same
+  admit-plus-magnitude behavior. Both levers ship gated (default off / scale 1.0 reproduces 12.6.1).
+  See `20260629_esi_anchor_and_regional_mortality.md` and
+  `figures/acadgy_mortality_lever_saturation.png`.
+
+## Update (29 June, later still): validated-ESI rerun and full-set validation
+
+Two corrections from wiring the validated ESI (`Final_SI_Output.tif`) in as the driver and running the
+full 682-plot set instead of a 90-per-region subsample (see `20260629_ESI_rerun_and_fullset_validation.md`):
+
+- ESI equals legacy climate SI on regional volume and value (controlled, identical plots: all-region
+  BA +1.4 percent under both; Maine +4.9 under both). The ESI is adopted as the production driver for
+  its dominant-height and biological-realism gains, not for any volume or value improvement.
+- The full-set production bias is well-calibrated: all-region BA +1.4 percent, value +1.5 percent;
+  Maine +4.9 / +7.6, NB -1.7 / -3.3, NS +3.0 / +2.3. The +11 percent Maine BA that drove the mortality
+  investigation was an unrepresentative subsample; the stable Maine residual is +4.9 percent. The
+  aggressive interim mortality setting (Maine cut 0.5 + multiplier 2.0) over-corrects on the full set
+  and is withdrawn; Maine needs at most a mild multiplier (about 1.3 to 1.5), and the principled
+  coefficient refit is now a modest +5 percent target. The larger Maine value residual (+7.6 percent
+  vs +4.9 percent BA) is the diameter size-form bias, which is the higher-leverage remaining item.
+
+The data-quality note `20260629_ESI_raster_data_quality_note.md` records that the AcadianSIm climate
+surfaces (a separate future-climate product, not the driver) have a render bug: the 2090 file is a
+byte-identical duplicate of 2030.
 
 ## Path to release
 

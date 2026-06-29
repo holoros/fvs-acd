@@ -18,7 +18,7 @@ sw_set <- c("WP","RP","PP","JP","RN","RS","BF","BS","WS","NS","EH","WC","TA","HM
 acadgy <- c("AB","AS","BA","BC","BF","BP","BS","BT","EC","EH","GA","GB","HH","JP","NS","OH","OS","PB","PC","PR","QA","RB","RM","RN","RO","RP","RS","SB","SM","ST","TA","WA","WC","WP","WS","YB")
 mapsp <- function(sp){ sp <- toupper(sp); ifelse(sp %in% acadgy, sp, ifelse(sp %in% sw_set,"OS","OH")) }
 
-INP <- fread("region_input_trees.csv"); MAN <- fread("region_manifest.csv")
+INP <- fread("region_input_trees.csv"); MAN <- fread(Sys.getenv("MANIFEST","region_manifest.csv"))
 MAXPR <- as.integer(Sys.getenv("MAXPLOTS_PER_REGION","90"))
 set.seed(3); MAN <- MAN[, .SD[sample(.N, min(.N, MAXPR))], by=region]
 cat(sprintf("capped to %d plots (per-region max %d)\n", nrow(MAN), MAXPR))

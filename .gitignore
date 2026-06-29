@@ -7,3 +7,4 @@ results/seven_islands/silc_plot_si2.csv
 *.RData
 *.rds
 .Rhistory
+results/seven_islands/pid_coords.csv
