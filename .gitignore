@@ -1,0 +1,9 @@
+# Coordinate data and raw inputs stay on Cardinal/Zenodo (not in git)
+results/seven_islands/silc_plot_coords.csv
+results/seven_islands/silc_plot_si.csv
+results/seven_islands/silc_plot_si2.csv
+*.sqlite
+*.tif
+*.RData
+*.rds
+.Rhistory

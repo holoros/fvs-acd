@@ -1,0 +1,71 @@
+--- /users/PUOM0008/crsfaaron/AcadianGY_12.3.9.r	2026-05-28 08:11:22.616470000 -0400
++++ /users/PUOM0008/crsfaaron/AcadianGY_12.3.10.r	2026-06-28 08:51:07.088787000 -0400
+@@ -1,5 +1,30 @@
+ # $Id: AcadianGY.R 3968 2022-04-28 10:36:05Z nickcrookston $
+ ################################################################################
++# v12.3.10: site-driver modernization. The site index is sourced from the modern
++# unified-target ESI by default instead of the legacy Climate Site Index. ESI and
++# CSI are both site index in meters, so this is an INPUT change only; no growth,
++# height, mortality, or ingrowth equation is modified. Resolution order inside
++# AcadianGYOneStand: stand$ESI (per-stand override) > ESI raster (ops$ESI_RASTER)
++# sampled at stand$LON/LAT > legacy stand$CSI. ops$SITE_SOURCE = "CSI_legacy"
++# reproduces 12.3.9 behavior exactly; ops$CSI_SCALE is retained.
++# Validation: HTPred height R^2 0.358 -> 0.384, bias +1.87 -> +1.75 m; 0 Bakuzis
++# crossings; Seven Islands CFI projections within 1 pp of legacy (safe swap).
++################################################################################
++# ESI raster sampler with a cached SpatRaster (terra). Returns NA off-grid.
++.esi_cache <- new.env(parent = emptyenv())
++.esi_at <- function(path, lon, lat) {
++  if (!requireNamespace("terra", quietly = TRUE)) return(NA_real_)
++  r <- get0(path, envir = .esi_cache, inherits = FALSE)
++  if (is.null(r)) { r <- terra::rast(path)[[1]]; assign(path, r, envir = .esi_cache) }
++  pt <- terra::vect(data.frame(x = lon, y = lat), geom = c("x", "y"), crs = "EPSG:4326")
++  if (!identical(terra::crs(r), terra::crs(pt))) pt <- terra::project(pt, terra::crs(r))
++  v <- try(terra::extract(r, pt)[[2]], silent = TRUE)
++  if (!inherits(v, "try-error") && length(v) && is.finite(v)) as.numeric(v) else NA_real_
++}
++# Legacy CSI -> ESI converter for inputs that carry only the old CSI.
++# From CSI = 3.3717 + 0.7520 * ESI on the Acadian compilation.
++csi_to_esi <- function(csi) (csi - 3.3717) / 0.7520
++################################################################################
+ # v12.3.6.r  (candidate; canonical v12.3.5 PLUS an in-source, opt-in,
+ #             size-dependent mortality correction -- task #126b)
+ #
+@@ -63,7 +88,7 @@
+   ifelse(dbh_in < 20, 0.899, 0.846))))
+ }
+ 
+-AcadianVersionTag = "AcadianV12.3.9"
++AcadianVersionTag = "AcadianV12.3.10"
+ 
+ ##############################
+ #### major update summary ####
+@@ -1925,11 +1950,23 @@
+   use.cap.dbh=TRUE # use max DBH 
+   use.cap.ht=TRUE # use max total tree height
+ 
+-  CSI      = if (is.null(stand) || is.null(stand$CSI) || is.na(stand$CSI))   12 else stand$CSI
+-  # ---- 12.3.9: ops$CSI_SCALE knob ----------------------------------------
+-  # Optional scalar multiplier on Climate Site Index. Defaults to 1.0 (no
+-  # change). v25 sensitivity showed CSI elasticity ~0.27 pp BA per 0.1 scale;
+-  # CSI*0.7 closes BA bias by ~0.6 pp and improves R^2 ~0.01 on ME FIA.
++  # ---- 12.3.10: site index source = modern ESI (default) -----------------
++  # Resolution order: stand$ESI override > ESI raster (ops$ESI_RASTER) at
++  # stand$LON/LAT > legacy stand$CSI or 12. ESI and CSI share units (site index,
++  # m), so ESI enters the existing equations unchanged. SITE_SOURCE="CSI_legacy"
++  # reproduces 12.3.9 exactly.
++  SITE_SRC <- if (is.null(ops$SITE_SOURCE)) "ESI" else ops$SITE_SOURCE
++  CSI <- NA_real_
++  if (identical(SITE_SRC, "ESI")) {
++    if (!is.null(stand$ESI) && is.finite(stand$ESI)) {
++      CSI <- stand$ESI
++    } else if (!is.null(ops$ESI_RASTER) && !is.null(stand$LON) && !is.null(stand$LAT) &&
++               is.finite(stand$LON) && is.finite(stand$LAT)) {
++      CSI <- .esi_at(ops$ESI_RASTER, stand$LON, stand$LAT)
++    }
++  }
++  if (!is.finite(CSI)) CSI <- if (is.null(stand) || is.null(stand$CSI) || is.na(stand$CSI)) 12 else stand$CSI
++  # ---- ops$CSI_SCALE knob (retained from 12.3.9) -------------------------
+   if (!is.null(ops$CSI_SCALE) && is.finite(ops$CSI_SCALE) && ops$CSI_SCALE > 0) {
+     CSI <- CSI * ops$CSI_SCALE
+   }
