@@ -37,6 +37,17 @@ FVS-ACD -2.6%) and FVS-ACD has the better diameter. The large FVS-ACD vs OSM div
 Seven Islands long-horizon run (35% by age 60) is confined to the unobserved 40 to 60 year horizon and
 is a self-thinning-assumption difference, not a short-term accuracy gap.
 
+Three-way benchmark, head to head with current production and OSM. On the same MAGPlot NB plots, current
+production (12.5.0), the new operational 12.7.0, and OSM v2.26.1, all vs observed basal area: 12.5.0
++1.8%, 12.7.0 -2.6%, OSM -2.3%. All three are within 3% of observed and within 4 points of each other,
+so on short-interval independent data they are statistically comparable and all near-unbiased. I want to
+be straight that 12.7.0 does not beat 12.5.0 on short-interval basal area; what it buys is the
+biological realism and the full-metric calibration, the dominant-height site ordering fix, the
+self-thinning, the recruitment term, and the validated ESI with its anchor. Those are the properties
+that matter for long-horizon projection and for the variant standing, not the short-interval bias
+contest, which is already a wash. I also have a bias-by-attribute diagnostic (SDI, QMD, BA, volume) if
+useful for the writeup.
+
 Biological realism. The Bakuzis matrix on 12.7.0 projections passes the relations that matter: site
 ordering is clean, 0 of 125 height and volume inversions, which is the anchor fixing the old
 height-diameter site-ordering flaw outright; Reineke self-thinning slopes are -1.28 to -1.35. The one
