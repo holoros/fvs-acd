@@ -18,7 +18,7 @@ sw_set <- c("WP","RP","PP","JP","RN","RS","BF","BS","WS","NS","EH","WC","TA","HM
 acadgy <- c("AB","AS","BA","BC","BF","BP","BS","BT","EC","EH","GA","GB","HH","JP","NS","OH","OS","PB","PC","PR","QA","RB","RM","RN","RO","RP","RS","SB","SM","ST","TA","WA","WC","WP","WS","YB")
 mapsp <- function(sp){ sp <- toupper(sp); ifelse(sp %in% acadgy, sp, ifelse(sp %in% sw_set,"OS","OH")) }
 
-INP <- fread("region_input_trees.csv"); MAN <- fread(Sys.getenv("MANIFEST","region_manifest.csv"))
+INP <- fread("region_input_trees.csv"); MAN <- fread("region_manifest.csv")
 MAXPR <- as.integer(Sys.getenv("MAXPLOTS_PER_REGION","90"))
 set.seed(3); MAN <- MAN[, .SD[sample(.N, min(.N, MAXPR))], by=region]
 cat(sprintf("capped to %d plots (per-region max %d)\n", nrow(MAN), MAXPR))
@@ -30,6 +30,8 @@ ops$use.sdimort <- USE_SDIMORT; ops$sdimort.onset <- 0.55; ops$sdimort.beta <- 0
 ops$sdimax.site.term <- SITE_TERM; ops$use.mortcal <- USE_MORTCAL; ops$mortcal.interval <- 5; ops$mortcal.lambda <- 1
 ops$ingrowth.mult <- ING_MULT
 ops$mort.cut.scale <- as.numeric(Sys.getenv("MORT_CUT_SCALE","1"))   # v12.6.4 regional stand-mortality cut scale
+ops$use.ddbh.sizeform <- toupper(Sys.getenv("USE_DDBH_SIZEFORM","FALSE")) %in% c("TRUE","T","1","YES")  # v12.6.5
+ops$ddbh.sf.a <- as.numeric(Sys.getenv("DDBH_SF_A","1")); ops$ddbh.sf.b <- as.numeric(Sys.getenv("DDBH_SF_B","0"))
 bf <- function(x){ for(c in c("ddbh.mult","dht.mult","mort.mult")) x[[c]][is.na(x[[c]])]<-1; x$max.dbh[is.na(x$max.dbh)]<-200; x$max.height[is.na(x$max.height)]<-50; x }
 
 out <- list(); fail <- 0
