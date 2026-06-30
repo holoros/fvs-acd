@@ -9,6 +9,16 @@ TAG <- Sys.getenv("CONFIG_TAG", "magplot_v1270")
 
 ti  <- fread("magplot_tree_init.csv"); prs <- fread("magplot_pairs.csv")
 ti[, STAND := as.character(STAND)]; prs[, STAND := as.character(STAND)]
+# Optional: use the proper ESI v8 per site (CSI_SOURCE=esi8), join by SITE; else CSI_DEFAULT
+CSI_SOURCE <- Sys.getenv("CSI_SOURCE", "default")
+if (CSI_SOURCE == "esi8" && file.exists("magp_site_esi8.csv")) {
+  e8 <- fread("magp_site_esi8.csv"); e8[, esi8 := as.numeric(esi8)]
+  prs <- merge(prs, e8, by.x="SITE", by.y="SITE", all.x=TRUE)
+  prs[, csi_site := ifelse(is.finite(esi8) & esi8 > 2, esi8, CSI_DEFAULT)]
+  cat(sprintf("ESI v8 join: %d/%d stands with ESI8 (mean %.2f)\n", sum(is.finite(prs$esi8)), nrow(prs), mean(prs$esi8, na.rm=TRUE)))
+} else {
+  prs[, csi_site := CSI_DEFAULT]
+}
 acadgy <- c("AB","AS","BA","BC","BF","BP","BS","BT","EC","EH","GA","GB","HH","JP","NS","OH","OS","PB","PC","PR","QA","RB","RM","RN","RO","RP","RS","SB","SM","ST","TA","WA","WC","WP","WS","YB")
 sw <- c("WP","RP","PP","JP","RN","RS","BF","BS","WS","NS","EH","WC","TA","HM","CE","SPR","OS")
 mapsp <- function(s){ s<-toupper(s); ifelse(s %in% acadgy, s, ifelse(s %in% sw,"OS","OH")) }
@@ -30,7 +40,8 @@ for (k in seq_along(sids)){
     dbh=it$DBH, ht=ifelse(is.finite(it$HT)&it$HT>0, it$HT, NA_real_), hcb=NA_real_, cr=NA_real_, expf=it$EXPF,
     form=NA_character_, risk=NA_character_, ddbh.mult=1, dht.mult=1, mort.mult=1,
     max.dbh=200, max.height=50, stringsAsFactors=FALSE)
-  stand <<- make_stand(stand.id=sid, csi=CSI_DEFAULT, elev=elev, region="NB")
+  csi_use <- if (is.finite(p$csi_site) && p$csi_site>2) p$csi_site else CSI_DEFAULT
+  stand <<- make_stand(stand.id=sid, csi=csi_use, elev=elev, region="NB")
   ok <- TRUE
   for (yr in seq_len(iv)){
     nx <- tryCatch(AcadianGYOneStand(tree=cur, stand=stand, ops=ops), error=function(e) NULL)

@@ -52,6 +52,31 @@ mixed-species empirical model and is a refinement target, not a falsification. A
 Bakuzis relations means the projection is not obviously broken, not that it is accurate; it complements
 the statistical validation above.
 
+## Update (30 June, later): proper ESI v8 on MAGPlot, and OSM on the same plots
+
+Two refinements to the MAGPlot benchmark. First, the proper site index: ESI v8 (30m) was extracted at
+the MAGPlot site coordinates (`magp_sites_nb_ns.csv`, all 262 stands matched, mean 18.4) and used as
+the site driver in place of the default 14. It improves the fit modestly: basal-area bias -3.5 to -2.6
+percent, stems -8.1 to -6.3 percent, QMD +4.6 to +4.2, R2 0.87 throughout. The higher ESI nudges growth
+up slightly, reducing the small under-prediction, consistent with the model's mild site sensitivity for
+volume.
+
+Second, OSM v2.26.1 was run on the same 262 MAGPlot stands and compared to observed at each stand's
+remeasurement interval, the three-way observed/FVS-ACD/OSM benchmark on independent Canadian data:
+
+| model | BA bias | QMD bias |
+|---|---|---|
+| FVS-ACD 12.7.0 (ESI v8) | -2.6 percent | +4.2 percent |
+| OSM v2.26.1 | -2.3 percent | -8.9 percent |
+
+Both models are near-unbiased on basal area at the observed intervals (within 3 percent of each other
+and of observed), and FVS-ACD has the better diameter (QMD) bias. This is the important counterpoint to
+the Seven Islands long-horizon comparison: where remeasurement data exist (5 to 15 year intervals), the
+two models agree closely with observed and with each other; the 35 percent divergence seen at Seven
+Islands is confined to the unobserved 40 to 60 year horizon and is driven by differing self-thinning
+assumptions, not by short-term accuracy. Files: `magplot_osm_v_obs.csv`, `osm_magp_run.py`,
+`magplot_v1270_esi8_results.csv`, `extract_esi8_magp.py` (all on Cardinal).
+
 ## Files
 
 - MAGPlot harness: `scripts/magplot_v1270.R`; result `~/magplot/verify/magplot_v1270_results.csv` (Cardinal).
