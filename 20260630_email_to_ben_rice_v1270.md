@@ -69,6 +69,20 @@ the record: the Maine residual still wants a regional stand-mortality coefficien
 effort, not blocking), and the ESI v8 surface is a bit compressed in spatial variance at the plot scale,
 which I have flagged to the ESI team; neither changes the operational picture.
 
+A few additions from the latest pass. I extended the assessment to total volume as the integrating
+metric (it folds in basal area, height, and density): all-region 12.5.0 +6.4 percent versus 12.7.0
++1.8 percent, so the operational version roughly halves the volume over-prediction, consistent with the
+basal-area result. I also triple-checked OSM: on the regional remeasurement set OSM over-predicts basal
+area by about 20 percent because it under-applies self-thinning on dense mature stands (I confirmed this
+is real by re-running with model-consistent heights), whereas it is near-unbiased on the younger MAGPlot
+New Brunswick stands; FVS-ACD 12.7.0 tracks the observed plateau at +2 percent. And I built continuous,
+land-masked bias and RMSE surface maps with legends for both versions and OSM, which localize the
+residual to southwestern Maine and the PEF.
+
+I am attaching two Word documents: a full benchmark and validation report (FVS-ACD_12.7.0_benchmark_report.docx)
+with the figures, and the variant overview GTR draft (FVS-ACD_variant_overview_GTR.docx). The model code
+and everything else is in the holoros/fvs-acd repository, tag v12.7.0-operational.
+
 Happy to walk through any of it.
 
 Aaron
