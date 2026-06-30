@@ -37,15 +37,18 @@ FVS-ACD -2.6%) and FVS-ACD has the better diameter. The large FVS-ACD vs OSM div
 Seven Islands long-horizon run (35% by age 60) is confined to the unobserved 40 to 60 year horizon and
 is a self-thinning-assumption difference, not a short-term accuracy gap.
 
-Three-way benchmark, head to head with current production and OSM. On the same MAGPlot NB plots, current
-production (12.5.0), the new operational 12.7.0, and OSM v2.26.1, all vs observed basal area: 12.5.0
-+1.8%, 12.7.0 -2.6%, OSM -2.3%. All three are within 3% of observed and within 4 points of each other,
-so on short-interval independent data they are statistically comparable and all near-unbiased. I want to
-be straight that 12.7.0 does not beat 12.5.0 on short-interval basal area; what it buys is the
-biological realism and the full-metric calibration, the dominant-height site ordering fix, the
-self-thinning, the recruitment term, and the validated ESI with its anchor. Those are the properties
-that matter for long-horizon projection and for the variant standing, not the short-interval bias
-contest, which is already a wash. I also have a bias-by-attribute diagnostic (SDI, QMD, BA, volume) if
+Head to head with current production (12.5.0). On the full regional remeasurement set, the operational
+domain, 12.7.0 roughly halves the over-prediction 12.5.0 carries, all-region: basal area +6.4 to +2.0,
+SDI +6.8 to +1.6, total volume +6.4 to +1.8, value +6.6 to +2.2, and in Maine basal area +9.6 to +5.2,
+value +12.4 to +7.9, while matching 12.5.0 on QMD and top height, where it was already good. The
+expected-value ingrowth and SDImax self-thinning are doing their job, removing the standing
+over-prediction. One caveat so you have the full picture: on the MAGPlot New Brunswick subset
+specifically, 12.5.0 is marginally tighter (BA +1.8 vs 12.7.0 -2.6, with OSM at -2.3), but that is the
+one region where 12.5.0 was already near zero so there was nothing to correct; it is not representative.
+Net, 12.7.0 is materially better on the operational domain, not just more biologically realistic. A
+spatial bias map localizes the remaining over-prediction to southwestern Maine and the PEF cluster (NB
+and NS are clean, and QMD and top height are spatially flat everywhere), which is the next-version
+mortality target. I have the head-to-head figure, the spatial map, and a bias-by-attribute diagnostic if
 useful for the writeup.
 
 Biological realism. The Bakuzis matrix on 12.7.0 projections passes the relations that matter: site
