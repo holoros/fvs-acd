@@ -98,10 +98,15 @@ surfaces for current and future (2030, 2060, 2090) climate normals. CSI enters t
 diameter increment, stand basal-area increment, height increment, mortality, ingrowth, and maximum
 SDI.
 
-Version 12.6.x note: the model accepts a modern unified site index (ESI) through the same input slot
-(make_stand esi argument flows into the csi slot), validated as a drop-in that tracks measured site
-index better than legacy CSI (R^2 0.91 vs 0.52) and improves the height equation at no basal-area
-cost. A refined ESI is in development; see section 10.
+Operational note (12.7.0): the production model uses the validated modern Ecological Site Index (ESI)
+as the site driver, supplied through the same input slot. ESI tracks measured site index well
+(R^2 0.91). A controlled full-set test showed ESI and the legacy climate site index give the same
+regional volume and value (all-region basal-area bias +1.4 percent under both), so the ESI gain is not
+in volume or value bias but in dominant-height behavior and biological realism: ESI anchors the stand
+dominant height onto a fitted Chapman-Richards curve (k = 0.0039, p = 0.726, base age 50; section 4.1
+note), which removes the Bakuzis height site-ordering inversions. The ESI surface is supplied as a
+raster (Acadian ESI v8). The earlier AcadianSIm climate surfaces are a separate future-climate product,
+not the operational site driver.
 
 ### 3.5 Maximum density (maximum SDI)
 
@@ -171,7 +176,14 @@ dDBH, Kuehne et al. (2022), species as a random effect, fit on > 2.5 million obs
     dDBH = exp((b0+b0.SPP) + b1*log(DBH) + (b2+b2.SPP)*DBH + (b3+b3.SPP)*log(CR)
            + (b4+b4.SPP)*log(BAL.SW+0.1) + b5*BAL.HW + b8*log(CSI))
 
-Tree diameter increment is constrained by the stand basal-area increment (4.8). [POPULATE: params.]
+Fixed-effect coefficients (Kuehne et al. 2022, Table 6): b0 = -1.64234, b1 (ln DBH) = 0.376978,
+b2 (DBH) = -0.025684, b3 (ln CR) = 0.713456, b4 (ln BAL.SW+0.1) = -0.065750, b5 (BAL.HW) = -0.017740,
+b8 (ln CSI) = 0.135377. Species random effects apply to the intercept, DBH, ln(CR), and ln(BAL.SW+0.1).
+Competition is one-sided and asymmetric (basal area in larger softwoods and hardwoods); two-sided
+metrics (SDI, relative density) were no more effective. On independent FIA data the equation is nearly
+unbiased (mean bias -1.2 percent) and improves on the prior FVS-ACD diameter and basal-area increment
+submodels by 11 to 13 percent in mean absolute bias. Tree diameter increment is constrained by the
+stand basal-area increment (4.8). Full species random-effect tables in Kuehne et al. (2022) Table S3.
 
 ### 4.7 Height increment
 
@@ -180,7 +192,11 @@ the FVS-NE over-prediction expectation):
 
     dHT = exp((b0+b0.SPP) + b1*log(HT) + (b2+b2.SPP)*HT + b3*CR + b4*(CCFL/100) + b7*CSI^2)
 
-[POPULATE: parameter table.]
+Fixed-effect coefficients (Kuehne et al. 2022, Table 8): b0 = -2.19445, b1 (ln HT) = 0.426404,
+b2 (HT) = -0.064710, b3 (CR) = 0.394837, b4 (CCFL/100) = -0.011430, b7 (CSI^2) = 0.000294. Species
+random effects apply to the intercept and HT. The new dHT improves on the prior Russell et al. (2014)
+submodel substantially (mean absolute bias down 41 to 74 percent), the largest accuracy gain of the
+two increment refits. Full species random-effect tables in Kuehne et al. (2022) Table S5.
 
 ### 4.8 Stand basal-area increment
 
@@ -206,13 +222,16 @@ b4*BAG); BF.mort = b5*BA.BF^b6 + b7*(QMD.BF/QMD). Tree survival: logistic in DBH
 mortality is distributed across trees in proportion to tree mortality probability. Region-specific
 parameters (ME, NB, NS, QC). [POPULATE: regional parameter tables.]
 
-Version 12.6.x note: two in-source additions target the documented long-horizon basal-area
-over-prediction without replacing the 2012 equations. (1) MORTCAL, a size-dependent survivor
-correction (ops$use.mortcal), removes the long-horizon over-prediction on Seven Islands CFI (+11
-percent to near 0) at the cost of deepening the stem-count deficit. (2) An SDImax-ceiling
-self-thinning (ops$use.sdimort), a standard density-frontier mortality that holds post-step SDI at or
-below SDImax; it improves the Bakuzis self-thinning slope (-1.08 to -1.24) but is inert on
-operational stands below the frontier. Both are off by default and individually validated.
+Operational note: the production model uses the 2012 stand and tree mortality with SDImax-ceiling
+self-thinning (ops$use.sdimort) active, a standard density-frontier mortality that holds post-step SDI
+at or below SDImax and improves the Bakuzis self-thinning slope (-1.08 to -1.24). On the full regional
+set Maine basal area is over-predicted by about +5 percent, a modest residual. Two gated interim
+correctors target it, off by default: a regional stand-mortality cut scale (ops$mort.cut.scale) and a
+tree-level multiplier; sweeps show each saturates near +7 to +8 percent alone but the two are
+complementary, and a mild combination removes most of the Maine residual. A size-dependent MORTCAL
+corrector (ops$use.mortcal) is also available but trades stem-count accuracy. The principled
+next-version fix is a regional refit of the 2012 stand-mortality coefficients; the interim correctors
+bound rather than close the gap.
 
 ## 6. Regeneration and Ingrowth
 
@@ -249,21 +268,44 @@ normals); recent testing finds the 2030 surface reasonable. Cycle length is one 
 run from a tree list through the FVS interface or the AcadianGY R driver (make_stand, make_acd_tree,
 make_ops, AcadianGYOneStand). [POPULATE: keyword and database usage, analogous to Essential FVS.]
 
-## 10. Version 12.6.x Refinements (this development cycle)
+## 10. Operational version (12.7.0) and validation
 
-1. ESI as a first-class site input (12.6.0), drop-in through the CSI slot; refined ESI in
-   development. A prototype that uses ESI to anchor dominant height (rather than nudge individual
-   heights) removed the Bakuzis height site-ordering inversions (25 to 0), addressing the finding
-   that the current site variable barely separates the height site-curves.
+The operational release is AcadianGY 12.7.0, which integrates this development cycle's refinements into
+one file. The recommended configuration is: the Kuehne et al. (2022) diameter and height increment
+equations (4.6, 4.7) as the growth base; the validated ESI as the site driver with the fitted
+ESI-anchored dominant height (3.4, 4.1); expected-value ingrowth (6); and SDImax-ceiling self-thinning
+(5). Every refinement is gated, and with the flags in their legacy position the build reproduces
+12.5.0 bit for bit, so each is individually isolated and validated.
+
+Refinements, in order of development:
+1. ESI site input (12.6.0), drop-in through the site slot.
 2. Site-independent SDImax (12.6.0), from the brms re-estimation.
 3. SDImax-ceiling self-thinning (12.6.0), the principled density-frontier mortality.
 4. Expected-value ingrowth (12.6.1), fixing the under-recruitment stem-count deficit.
-5. MORTCAL retained as an optional long-horizon basal-area corrector, off by default.
+5. ESI-anchored dominant height (12.7.0), fitted Chapman-Richards anchor (k 0.0039, p 0.726, base 50),
+   which removes the Bakuzis height site-ordering inversions (25 to 0).
+6. Gated interim correctors, off by default: a regional stand-mortality cut scale, a size-form diameter
+   modifier (tested and not adopted, see below), and MORTCAL.
 
-All gated; with the flags in legacy position the build reproduces 12.5.0 bit for bit. Validation:
-Seven Islands CFI, Maine FIA, New Brunswick and Nova Scotia PSP, the full Bakuzis matrix, and a
-global sensitivity analysis (value is dominated by the site variable; ingrowth drives structure not
-value; self-thinning parameters are globally minor). See the v12.6.0 and v12.6.1 reports.
+Validation, full regional remeasurement set (682 NB/NS/ME intervals, 5 to 15 years): all-region basal
+area bias +1.4 percent, volume and value +1.5 percent; Maine +4.9 percent basal area and +7.6 percent
+value, New Brunswick -1.7 and -3.3, Nova Scotia +3.0 and +2.3. The model is well calibrated overall,
+with Maine the largest residual at about +5 percent basal area. Supporting analyses: the full Bakuzis
+matrix (Eichhorn passes; self-thinning slope improved; site ordering fixed by the dominant-height
+anchor), and a global sensitivity analysis (value dominated by the site variable; ingrowth drives
+structure not value; self-thinning parameters globally minor).
+
+Two findings bound the next development cycle. First, the diameter increment: the Kuehne (2022) base is
+robust and nearly unbiased in the mean, with a residual size-form attenuation (over-predicts small
+trees, under-predicts large, and under-predicts at high density). An interim size-form multiplier was
+built and tested; it worsens projection bias in every region because increment compounds over the
+horizon and the Maine residual is mortality-driven, so it is not adopted. A full diameter-increment
+refit with a density term and attenuation-aware fitting, needing new data, is the eventual path.
+Second, the long-horizon comparison against the Open Stand Model (OSM v2.26.1) on the same Seven
+Islands stands: the two agree at the start (basal area 31.4 versus 31.9 m2/ha) and then diverge, with
+FVS-ACD self-thinning (basal area 33 to 27 m2/ha by age 60) and OSM accumulating (32 to 42), a
+35-percent gap by age 60. This is first-order model-form uncertainty with no observed truth at that
+horizon, and it localizes to stand mortality, the component flagged for the regional coefficient refit.
 
 ## 11. Literature Cited
 
