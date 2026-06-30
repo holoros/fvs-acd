@@ -95,6 +95,17 @@ The data-quality note `20260629_ESI_raster_data_quality_note.md` records that th
 surfaces (a separate future-climate product, not the driver) have a render bug: the 2090 file is a
 byte-identical duplicate of 2030.
 
+## Update (30 June): full-metric validation of 12.7.0 (ESI v8)
+
+Predicted vs observed on the full 682-plot regional set, all-region percent bias: basal area +2.0,
+SDI +1.6, QMD +1.0, top height +0.5, total volume +1.8, merch volume +2.2, sawlog +2.5, value +2.2.
+Every operationally relevant metric is within a few percent; top height and SDI are the tightest (the
+ESI anchor and self-thinning). Maine is the residual (+5 to +8, amplifying along the product chain),
+New Brunswick near zero, Nova Scotia +1 to +4. Independent MAGPlot NB CFI (262 pairs): BA -2.6, R2 0.87.
+OSM on the same MAGPlot plots: both near-unbiased at observed intervals (FVS-ACD -2.6, OSM -2.3). Bakuzis
+on 12.7.0 projections: site ordering 0/125 inversions, Reineke -1.28 to -1.35 OK, Eichhorn moderate flag.
+See `20260630_v1270_full_metric_validation.md`, `20260630_v1270_magplot_and_bakuzis.md`.
+
 ## Path to release
 
 12.6.1 is the documented production candidate now. The next production version should fold in the
