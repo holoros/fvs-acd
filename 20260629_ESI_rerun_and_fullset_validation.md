@@ -78,6 +78,26 @@ large-tree diameter and therefore sawlog value; that is now the higher-leverage 
   residual), (2) regional stand-mortality coefficient refit (now a modest +5 percent target, not +11),
   (3) finalize ESI v8 surface adoption and the dominant-height anchor in the production code.
 
+## Update (30 June): ESI v8 30m landed; v12.7.0 stress test
+
+The ESI v8 30m surface (`Acadian_ESI_v8_30m.tif`, 43200 by 19800, WGS84) rendered and is valid (the
+240m sibling was all nodata). Extracted at the regional plots it is elevated and compressed relative to
+the legacy climate site index: mean about 18 versus 13, standard deviation 0.88 versus 2.33 (one third
+the spatial variance), pooled correlation 0.41 (a 1 km neighborhood mean gives the same 0.42, so this
+is the surface, not a fuzzed-coordinate artifact). The concern was that a site value 30 to 40 percent
+higher would over-drive the increment equations, whose CSI term was calibrated near 14.
+
+It does not. Running v12.7.0 on the full 682-plot set with ESI v8 in the site slot gives all-region
+BA +1.4 percent, value +1.6; Maine +4.9 / +7.6; NB -1.7 / -3.3; NS +3.3 / +2.5: essentially identical
+to the legacy and Final_SI baselines. The model is insensitive to the absolute site level for volume
+and value because the stand basal-area-increment cap (the density brake) and SDImax self-thinning
+regulate total growth regardless of the tree-level site boost. So v12.7.0 passes the stress test and is
+robust to the ESI v8 scale. As before, the site surface barely moves volume and value; ESI's
+contribution is the dominant-height anchor (fit on the ESI v8 scale, so internally consistent). ESI v8
+is therefore safe to adopt as the operational site driver. One open item for whoever owns the surface:
+the compressed variance (sd 0.88) is worth a look, a site index that barely varies across NB, NS, and
+ME is biologically surprising, though it does not affect this validation.
+
 ## Files
 
 - ESI extraction: `scripts/esi_coords.R` (coords, on Cardinal), `scripts/extract_esi.py` (gdalz),
