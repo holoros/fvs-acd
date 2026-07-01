@@ -176,12 +176,60 @@ complete qualitative matrix.
 ![Modeling efficiency (NSE) by metric, pooled](figures/four_model_scorecard_radar.png)
 
 **Verdict.** v12.5.0 should be retired from mature-stand and long-horizon use (it fails the Bakuzis
-self-thinning check outright). v12.7.1 is the best model overall: green on volume, merch, sawlog, and
-biomass pooled, and the only model that plateaus at the biologically correct maximum, at the cost of a
-deeper New Brunswick under-prediction that matters most for short-rotation inventory on growing stands.
-OSM's favorable aggregate bias is offset by negative modeling efficiency on every metric and a failed
-long-horizon self-thinning check on real data; it is not recommended over v12.7.1 for either short-rotation
-inventory or long-horizon carbon and old-growth work.
+self-thinning check outright). v12.9 (below) is the best model overall for short-to-mid rotation
+inventory: it inherits v12.7.1's long-horizon realism and adds a targeted fix for the one metric v12.7.1
+still had wrong (the Quebec hardwood volume over-prediction), with a validated independent cross-check
+showing zero cost to New Brunswick or Maine. v12.7.1 remains the recommended choice specifically for
+carbon and old-growth work until v12.9's long-horizon caveat (below) is resolved. OSM's favorable
+aggregate bias is offset by negative modeling efficiency on every metric and a failed long-horizon
+self-thinning check on real data; it is not recommended over either v12.7.1 or v12.9.
+
+![Five-model scorecard: model by dimension](figures/five_model_scorecard_heatmap.png)
+
+![Modeling efficiency (NSE) by metric, pooled, v12.9 added](figures/five_model_scorecard_radar.png)
+
+# v12.9: a targeted SDImax gate for the Quebec hardwood edge (added 1 July 2026, later)
+
+The four-model scorecard identified that Quebec's mature-stand over-prediction (total volume +14.4
+percent for v12.7.1) is concentrated specifically in hardwood-dominated stands outside the Acadian-core
+ecoregion (Acadian Plains and Hills, Maritime Lowlands, per the CEC North American Level III scheme);
+softwood-dominated Quebec stands and all of New Brunswick were already close to unbiased. v12.9 adds a
+gated correction to AcadianGY's published max-SDI equation (Weiskittel and Kuehne 2019), active only when
+a stand is simultaneously province Quebec, ecoregion outside the Acadian core, and hardwood-dominated
+(sugar maple, birch, aspen, other hardwood, by BA-weighted dominant species group). Everywhere else in
+the domain is untouched by construction.
+
+Pooled level bias, v12.9 versus v12.7.1 (in-domain, n = 733):
+
+| metric | v12.7.1 | v12.9 | v12.7.1 NB | v12.9 NB | v12.7.1 QC | v12.9 QC |
+|---|---|---|---|---|---|---|
+| basal area | -9.0% | -14.2% | -8.5% | -8.5% | -9.3% | -18.1% |
+| total volume (NSVB) | +3.9% | -3.2% | -9.8% | -9.8% | +14.4% | +1.9% |
+| aboveground biomass (NSVB) | +3.0% | -4.3% | -7.3% | -7.3% | +10.2% | -2.3% |
+| stand value | +5.9% | -1.9% | -10.2% | -10.2% | +18.3% | +4.4% |
+
+New Brunswick is identical to v12.7.1 in every metric, confirming the gate excludes it by construction.
+Quebec's volume, biomass, and value all move from meaningfully over-predicted to close to unbiased, at
+the cost of a deeper basal-area under-prediction on the same already-under-predicted metric.
+
+An earlier, broader version of this correction (gated on ecoregion alone, no province) looked equally
+good on the MagPlot target but silently damaged the independent recent Maine FIA growing-stand check,
+because many of Maine's own hardwood stands share the same ecoregion as Quebec's problem stands. Adding
+province back as a third gate dimension fixed this: recent Maine FIA (n = 788) now reproduces the v12.7.1
+baseline exactly (BA level -2.2 percent, annual increment -0.085 m2/ha/yr), since no Maine plot can ever
+satisfy a Quebec-only gate. This independent cross-check is the reason the final v12.9 design uses all
+three dimensions rather than ecoregion alone.
+
+A stand-level split-half robustness check (163 target-cell stands split into two random halves) confirms
+the correction is not driven by a handful of outlier stands: both halves show consistent baseline bias
+(+54.9 and +62.2 percent) closing to a consistent corrected level (+11.5 and +15.8 percent).
+
+**Scope.** v12.9 is validated and recommended for short-to-mid rotation inventory projection. A seeded
+long-horizon trajectory found the corrected hardwood population's basal-area plateau drops to about 21
+m2/ha, below the realistic 28 to 32 m2/ha target (the same composition uncorrected plateaus at 31 to 32).
+The short-interval correction, carried through a full rotation, under-shoots. v12.9 is not yet recommended
+unqualified for carbon or old-growth work on this specific population; a tapered version of the multiplier
+is the flagged next step for that use case.
 
 # Conclusion
 

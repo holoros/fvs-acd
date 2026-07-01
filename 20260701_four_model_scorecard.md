@@ -209,6 +209,56 @@ v12.5.0's AcadianGYOneStand(), so they are inert for this model. The cb_v125_res
 therefore already reflects v12.5.0 running under its own native mortality mechanism, unmodified by the
 harness. No re-run is needed; the earlier caveat is closed.
 
+## Addendum: v12.9 added as a fifth model (same day, later)
+
+Following this scorecard, a targeted refinement was developed and fully validated: v12.9 adds a gated
+SDImax correction to v12.7.1, active only for stands that are simultaneously Quebec, outside the
+Acadian-core ecoregion (Acadian Plains and Hills, Maritime Lowlands), and hardwood-dominated
+(sugar maple, birch, aspen, other hardwood, BA-weighted dominant species group). This is a genuinely
+different kind of change from v12.5.0 through v12.7.1: it is not a global parameter shift, it is a
+surgical patch that leaves the rest of the domain, including all of New Brunswick and the independent
+recent Maine FIA growing-stand stratum, byte-for-bias identical to v12.7.1.
+
+Full development history: `20260701_v128_next_steps.md` (superseded), `20260701_v129_brms_sdimax_proposal.md`,
+`20260701_v129_test_results_interim.md` (ESI cluster ruled out), `20260701_v129_region_multiplier_result.md`
+(region-only, superseded), `20260701_v129_ecoregion_fortype_result.md` (ecoregion-only, superseded after
+it failed the FIA cross-check), `20260701_v129_full_validation.md` (the final 3-way gate, all checks
+passed), `20260701_v129_ooda_stress_test.md` (red-team review, split-half robustness confirmed).
+
+Pooled level bias (percent), v12.9 versus v12.7.1, all in-domain (n = 733):
+
+| metric | v12.7.1 pooled | v12.9 pooled | v12.7.1 NB | v12.9 NB | v12.7.1 QC | v12.9 QC |
+|---|---|---|---|---|---|---|
+| basal area | -9.0 | -14.2 | -8.5 | -8.5 | -9.3 | -18.1 |
+| stand density index | -8.7 | -13.5 | -5.0 | -5.0 | -11.4 | -19.6 |
+| quadratic mean diameter | +1.4 | +1.6 | +4.9 | +4.9 | -0.8 | -0.5 |
+| top height | +10.2 | +9.8 | +6.8 | +6.8 | +12.5 | +11.8 |
+| total volume (NSVB) | +3.9 | -3.2 | -9.8 | -9.8 | +14.4 | +1.9 |
+| merch volume (NSVB) | +2.8 | -3.9 | -9.6 | -9.6 | +12.1 | +0.3 |
+| sawlog volume (NSVB) | +2.6 | -4.0 | -10.8 | -10.8 | +13.1 | +1.3 |
+| aboveground biomass (NSVB) | +3.0 | -4.3 | -7.3 | -7.3 | +10.2 | -2.3 |
+| stand value | +5.9 | -1.9 | -10.2 | -10.2 | +18.3 | +4.4 |
+
+NB is identical to v12.7.1 in every metric (confirms the gate excludes NB by construction). QC's volume,
+merch volume, sawlog volume, biomass, and value all move from meaningfully over-predicted (+10 to +18
+percent) to close to unbiased (-2 to +4 percent), the best result on those metrics anywhere in this
+benchmarking arc for the Quebec mature edge. The cost is QC basal area and SDI, already under-predicted
+in v12.7.1, deepening further (BA -9.3 to -18.1, SDI -11.4 to -19.6), the same self-thinning trade-off
+seen throughout this arc, now confined to exactly the population that needed it.
+
+Independent recent Maine FIA (n = 788): v12.9 reproduces the v12.7.1 baseline exactly (BA level -2.2
+percent, annual increment -0.085 m2/ha/yr, -52 percent), because the gate structurally cannot match any
+Maine plot. This was not automatic; an earlier ecoregion-only version of the gate (no province term)
+failed this exact check, worsening the annual increment to -83 to -93 percent, before the province term
+was added back. See figures/five_model_scorecard_heatmap.png and five_model_scorecard_radar.png for the
+five-model display.
+
+**Scope note for v12.9**: validated and recommended for inventory-horizon use (the population and horizon
+this correction was built and tested against). A seeded long-horizon check found the corrected hardwood
+population's basal-area plateau drops to about 21 m2/ha, below the realistic 28 to 32 m2/ha target (the
+same composition uncorrected plateaus at 31 to 32); v12.9 is not yet recommended unqualified for carbon or
+old-growth work on that specific population until a tapered version of the correction is fit.
+
 ## Reproducibility check (same day, rerun on fresh SLURM jobs)
 
 v12.5.0 and v12.7.1 (config B) reproduce byte-identical results on rerun: fully deterministic, no drift.
