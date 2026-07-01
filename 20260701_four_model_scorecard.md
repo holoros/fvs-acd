@@ -195,6 +195,16 @@ v12.8 is not ready in time for a given application.
 - Uncertainty characterization is a gap shared by all four models; a bootstrap or Bayesian wrapper around
   AcadianGY's parameters would be a genuine differentiator and is worth scoping as separate future work.
 
+## Reproducibility check (same day, rerun on fresh SLURM jobs)
+
+v12.5.0 and v12.7.1 (config B) reproduce byte-identical results on rerun: fully deterministic, no drift.
+OSM reproduces within floating-point noise only (about 1 part in 10,000 on individual tree volumes, no
+effect on any reported statistic). The original cb_v1270_results.csv on Cardinal predates the in-domain
+filtering feature in comprehensive_bench.R (it holds all 2,555 MagPlot pairs, not just the 733 in-domain
+ones); this does not affect any number reported above, since four_way_scorecard.R always intersects stand
+IDs across all four models before scoring, which already restricted v12.7.0 to the correct common in-domain
+set. Noted here so a future direct diff of that file is not mistaken for a reproducibility problem.
+
 ## Files (Cardinal)
 
 - Comprehensive harness: ~/magplot/verify/comprehensive_bench.R; results cb_v1270_results.csv,
