@@ -3357,8 +3357,37 @@ AcadianGYOneStand = function(tree, stand, ops)
       if (is.null(rv) || is.null(stand$region) || is.na(stand$region) ||
           !(stand$region %in% names(rv))) 1 else as.numeric(rv[[stand$region]])
     }) %>%
-    dplyr::mutate(sdi.max = sdi.max * .rmult, sdi.max.all = sdi.max.all * .rmult) %>%
-    dplyr::select(-.rmult) %>%
+    # v12.9b: forest-type (region x dominant species group) multiplier, layered on top of the
+    # region multiplier. Dominant group = BA-weighted mode of sp.attr$sp.grp.ingrowth for the
+    # plot's tree list (already joined onto `tree` earlier in AcadianGYOneStand). Gated via
+    # ops$sdimax.fortype.tight.mult (scalar, default 1) and ops$sdimax.fortype.tight.groups
+    # (character vector of sp.grp.ingrowth codes to tighten, default none) and
+    # ops$sdimax.fortype.region (character vector of regions the correction applies in,
+    # default all). Unset => no change from v12.9 (region-only).
+    dplyr::mutate(.fmult = {
+      tm <- tryCatch(as.numeric(ops$sdimax.fortype.tight.mult), error = function(e) NA_real_)
+      tg <- tryCatch(ops$sdimax.fortype.tight.groups, error = function(e) NULL)
+      tr <- tryCatch(ops$sdimax.fortype.region, error = function(e) NULL)
+      if (is.list(tg) && length(tg) >= 1) tg <- tg[[1]]
+      if (is.list(tr) && length(tr) >= 1) tr <- tr[[1]]
+      if (is.na(tm) || is.null(tg) || length(tg) == 0) {
+        rep(1, nrow(.))
+      } else if (!is.null(tr) && length(tr) > 0 &&
+                 !((if (exists("ops") && !is.null(tryCatch(ops$active_ecobucket, error=function(e) NULL)))
+                     ops$active_ecobucket else stand$region) %in% tr)) {
+        rep(1, nrow(.))
+      } else {
+        dom <- tree %>% dplyr::filter(!is.na(sp.grp.ingrowth)) %>%
+          dplyr::group_by(plot, sp.grp.ingrowth) %>%
+          dplyr::summarise(ba.grp = sum(ba, na.rm = TRUE), .groups = "drop") %>%
+          dplyr::arrange(plot, dplyr::desc(ba.grp)) %>%
+          dplyr::group_by(plot) %>% dplyr::slice(1) %>% dplyr::ungroup()
+        dg <- dom$sp.grp.ingrowth[match(.$plot, dom$plot)]
+        ifelse(!is.na(dg) & dg %in% tg, tm, 1)
+      }
+    }) %>%
+    dplyr::mutate(sdi.max = sdi.max * .rmult * .fmult, sdi.max.all = sdi.max.all * .rmult * .fmult) %>%
+    dplyr::select(-.rmult, -.fmult) %>%
     # Relative density
     dplyr::mutate(rd.mod = calc_relative_density(sdi, 
                                           sdi.all, 
