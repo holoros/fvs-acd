@@ -4,7 +4,7 @@
 
 *Structured after the USDA Forest Service Northeast (NE) Variant Overview (FVS Staff 2008, rev.
 August 2023) so it can become the official FVS-ACD variant documentation. Equation content is drawn
-from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY 12.6.x
+from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY 12.7.1
 source. Sections marked [POPULATE] need the full parameter tables or team text before publication.
 Plaintext math, no em dashes; this draft will be rendered to a formatted Word/PDF GTR.*
 
@@ -223,15 +223,29 @@ mortality is distributed across trees in proportion to tree mortality probabilit
 parameters (ME, NB, NS, QC). [POPULATE: regional parameter tables.]
 
 Operational note: the production model uses the 2012 stand and tree mortality with SDImax-ceiling
-self-thinning (ops$use.sdimort) active, a standard density-frontier mortality that holds post-step SDI
-at or below SDImax and improves the Bakuzis self-thinning slope (-1.08 to -1.24). On the full regional
-set Maine basal area is over-predicted by about +5 percent, a modest residual. Two gated interim
-correctors target it, off by default: a regional stand-mortality cut scale (ops$mort.cut.scale) and a
-tree-level multiplier; sweeps show each saturates near +7 to +8 percent alone but the two are
-complementary, and a mild combination removes most of the Maine residual. A size-dependent MORTCAL
-corrector (ops$use.mortcal) is also available but trades stem-count accuracy. The principled
-next-version fix is a regional refit of the 2012 stand-mortality coefficients; the interim correctors
-bound rather than close the gap.
+self-thinning (ops$use.sdimort) active, a density-frontier mortality that holds post-step SDI at or
+below SDImax and improves the Bakuzis self-thinning slope. A size-dependent MORTCAL corrector
+(ops$use.mortcal) is available but trades stem-count accuracy and ships off. The principled
+next-version fix is a regional refit of the 2012 stand-mortality coefficients.
+
+Coupled self-thinning and density-released ingrowth (12.7.1). The 12.7.0 self-thinning used a single
+slope above a relative-density onset, which on long-horizon projection never plateaued (basal area
+climbed past 36 m2/ha and was still rising at age 120). Version 12.7.1 replaces it with a coupled
+two-segment relative-density mortality. Let RD = SDI/SDImax. Mortality is zero below RD 0.30, rises on
+a gentle slope from 0.30 to a break at 0.62 (ops$sdimort.onset, ops$sdimort.break, ops$sdimort.beta.gentle),
+and rises on a steep slope above the break (ops$sdimort.beta.steep), so a fully stocked stand self-thins
+along the SDImax line. It is coupled with a density-released ingrowth (section 6): recruitment is
+suppressed at high RD and released below about RD 0.58, through a logistic in RD. The biological rationale
+is the build, self-thin, and rebound dynamic of a stand that grows to its maximum, self-thins along the
+density frontier, and rebounds as ingrowth releases when density falls, the process underlying a
+shifting-mosaic steady state. On a 160-year projection of a young dense spruce-fir stand across the site
+gradient, basal area builds and plateaus at about 33 to 34 m2/ha by mid-rotation and then levels, inside
+the realistic fully-stocked Acadian spruce-fir range (about 28 to 34), replacing the 12.7.0 runaway
+climb. The decline-and-rebound is critically damped at the single-stand deterministic scale. Because
+mature Quebec-edge stands and moderately dense New Brunswick stands overlap in relative density, this
+relative-density lever reduces the mature-stand over-prediction while modestly deepening the
+growing-stand under-prediction; separating the two is the next-version regional and composition-aware
+mortality target.
 
 ## 6. Regeneration and Ingrowth
 
@@ -246,12 +260,27 @@ correct expected-value recruitment the default, E[ingrowth] = P(occur) * E[count
 0), with a calibration multiplier. This is the dominant lever on stem count and QMD but, by global
 sensitivity analysis, does not materially change stand value (the recruits are small).
 
+Version 12.7.1 note (density-released ingrowth): observed recruitment, tree-ID matched on the raw
+MagPlot records, is about 40 stems per ha per year in New Brunswick and about 20 in Quebec. v12.7.1
+couples the expected-value recruitment to relative density through a logistic in RD (ops$use.ingrowth.release,
+ops$ingrowth.rd.center 0.58, ops$ingrowth.rd.k): recruitment is suppressed at high relative density and
+released below about RD 0.58. Coupled with the two-segment self-thinning mortality (section 5), this
+produces the build, self-thin, and rebound stand dynamic.
+
 ## 7. Volume and Taper
 
 Stem taper: Kozak variable-exponent taper and Westfall and Scott (Li et al. 2012, Weiskittel and Li
 2012). Bark thickness via DOBtoDIB. Merchantable volume and product specifications follow the FVS
 volume framework; for value work, sawlog (International 1/4-inch board feet) and pulp (cords) are
 split by species and size. [POPULATE: taper parameters and volume specification table.]
+
+Operational note (12.7.x): all volume and biomass in the benchmarking and validation are reported on
+the FIA National Scale Volume and Biomass (NSVB) system, applied through an emulator that predicts the
+NSVB responses (gross cubic volume, net merchantable volume, net sawlog volume, and aboveground dry
+biomass) from log(DIA squared times HT) by species group with Duan smearing, with R-squared 0.96 to
+0.99 against the FIA NSVB outputs. This puts observed and predicted tree lists on a single, current
+volume-and-biomass currency and replaces the earlier single form-factor merchantable volume used for
+increment scoring.
 
 ## 8. Modifiers
 
@@ -268,44 +297,61 @@ normals); recent testing finds the 2030 surface reasonable. Cycle length is one 
 run from a tree list through the FVS interface or the AcadianGY R driver (make_stand, make_acd_tree,
 make_ops, AcadianGYOneStand). [POPULATE: keyword and database usage, analogous to Essential FVS.]
 
-## 10. Operational version (12.7.0) and validation
+## 10. Operational version (12.7.1) and validation
 
-The operational release is AcadianGY 12.7.0, which integrates this development cycle's refinements into
+The operational release is AcadianGY 12.7.1, which integrates this development cycle's refinements into
 one file. The recommended configuration is: the Kuehne et al. (2022) diameter and height increment
-equations (4.6, 4.7) as the growth base; the validated ESI as the site driver with the fitted
-ESI-anchored dominant height (3.4, 4.1); expected-value ingrowth (6); and SDImax-ceiling self-thinning
-(5). Every refinement is gated, and with the flags in their legacy position the build reproduces
-12.5.0 bit for bit, so each is individually isolated and validated.
+equations (4.6, 4.7) as the growth base; the validated ESI v8 as the site driver with the fitted
+ESI-anchored dominant height (3.4, 4.1); FIA NSVB volume and biomass (7); expected-value ingrowth,
+density-released (6); and the coupled two-segment SDImax self-thinning (5). Every refinement is gated,
+and with the flags in their legacy position the build reproduces 12.5.0 bit for bit, so each is
+individually isolated and validated.
 
 Refinements, in order of development:
-1. ESI site input (12.6.0), drop-in through the site slot.
+1. ESI site input (12.6.0), drop-in through the site slot; ESI v8 30 m surface adopted (12.7.0).
 2. Site-independent SDImax (12.6.0), from the brms re-estimation.
-3. SDImax-ceiling self-thinning (12.6.0), the principled density-frontier mortality.
+3. SDImax-ceiling self-thinning (12.6.0), the density-frontier mortality.
 4. Expected-value ingrowth (12.6.1), fixing the under-recruitment stem-count deficit.
 5. ESI-anchored dominant height (12.7.0), fitted Chapman-Richards anchor (k 0.0039, p 0.726, base 50),
    which removes the Bakuzis height site-ordering inversions (25 to 0).
-6. Gated interim correctors, off by default: a regional stand-mortality cut scale, a size-form diameter
-   modifier (tested and not adopted, see below), and MORTCAL.
+6. FIA NSVB volume and biomass through the emulator (12.7.x), R-squared 0.96 to 0.99 against FIA NSVB.
+7. Coupled two-segment relative-density self-thinning and density-released ingrowth (12.7.1), which
+   makes the long-horizon basal-area trajectory plateau at the biologically correct Acadian maximum
+   (about 33 m2/ha) instead of running away, and reduces the mature-stand volume and biomass
+   over-prediction.
 
-Validation, full regional remeasurement set (682 NB/NS/ME intervals, 5 to 15 years): all-region basal
-area bias +1.4 percent, volume and value +1.5 percent; Maine +4.9 percent basal area and +7.6 percent
-value, New Brunswick -1.7 and -3.3, Nova Scotia +3.0 and +2.3. The model is well calibrated overall,
-with Maine the largest residual at about +5 percent basal area. Supporting analyses: the full Bakuzis
-matrix (Eichhorn passes; self-thinning slope improved; site ordering fixed by the dominant-height
-anchor), and a global sensitivity analysis (value dominated by the site variable; ingrowth drives
-structure not value; self-thinning parameters globally minor).
+Independent validation. On genuinely independent, in-domain data, the full FIA NSVB metric set,
+predicted versus observed t2 level bias, New Brunswick (n=355) and the ESI-covered Quebec edge (n=378),
+12.7.0 to 12.7.1:
 
-Two findings bound the next development cycle. First, the diameter increment: the Kuehne (2022) base is
-robust and nearly unbiased in the mean, with a residual size-form attenuation (over-predicts small
-trees, under-predicts large, and under-predicts at high density). An interim size-form multiplier was
-built and tested; it worsens projection bias in every region because increment compounds over the
-horizon and the Maine residual is mortality-driven, so it is not adopted. A full diameter-increment
-refit with a density term and attenuation-aware fitting, needing new data, is the eventual path.
-Second, the long-horizon comparison against the Open Stand Model (OSM v2.26.1) on the same Seven
-Islands stands: the two agree at the start (basal area 31.4 versus 31.9 m2/ha) and then diverge, with
-FVS-ACD self-thinning (basal area 33 to 27 m2/ha by age 60) and OSM accumulating (32 to 42), a
-35-percent gap by age 60. This is first-order model-form uncertainty with no observed truth at that
-horizon, and it localizes to stand mortality, the component flagged for the regional coefficient refit.
+- New Brunswick total volume -3.9 to -9.8 percent, biomass -1.4 to -7.3, value -4.5 to -10.2; basal
+  area -3.5 to -8.5, top height +6.9 to +6.8.
+- Quebec edge total volume +23.3 to +14.4 percent, biomass +19.1 to +10.2, value +27.3 to +18.3; basal
+  area -2.1 to -9.3, top height +12.9 to +12.5.
+
+The coupled self-thinning reduces the mature-stand Quebec-edge volume and biomass over-prediction by
+roughly a third to a half. New Brunswick and Quebec stands overlap in relative density, so the same
+relative-density mortality that self-thins the dense Quebec stands also deepens the moderately dense New
+Brunswick under-prediction; the two are ends of one lever and are the next-version regional and
+composition-aware mortality target.
+
+Recent Maine FIA (post-2010, independent in time, n=788): basal-area level bias +0.7 percent in 12.7.0
+to -2.2 percent in 12.7.1 (still near-unbiased); annual basal-area increment +11 percent (over) in
+12.7.0 to 52 percent under (still positive net growth) in 12.7.1. On independent New Brunswick MagPlot,
+the v12.7 generation is +0.05 m3/ha/yr on a shared form-factor volume harness, near zero and at least as
+good as the 2018 OSM-ACD (-0.23) and FVS-ACD v10.6 (-0.18); the 2018 conclusion that OSM clearly beat
+FVS-ACD does not hold for v12.7 on independent New Brunswick data.
+
+Biological realism (Bakuzis matrix): site ordering clean (0 of 125 inversions, the dominant-height
+anchor), Reineke self-thinning slopes -1.28 to -1.35, one moderate Eichhorn flag. Observed ingrowth
+about 40 stems per ha per year in New Brunswick and 20 in Quebec, matched by the density-released form.
+
+Two items bound the next development cycle. First, a regional and composition-aware stand-mortality
+refit to close both tails at once (the Quebec over-prediction and the New Brunswick under-prediction),
+with an SDImax re-estimation to set the exact plateau level. Second, the long-horizon OSM comparison:
+on the Seven Islands stands the two agree at the start and then diverge, FVS-ACD self-thinning and OSM
+accumulating, first-order model-form uncertainty with no observed truth at that horizon, which localizes
+to stand mortality.
 
 ## 11. Literature Cited
 
