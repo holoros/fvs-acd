@@ -170,7 +170,8 @@ transparency, data-requirement, and platform costs of a closed-source, Windows-p
 recommended over v12.7.1 for either short-rotation inventory or long-horizon carbon and old-growth work,
 despite its favorable aggregate bias.
 
-**Recommendation**: adopt v12.7.1 as the forward operational version for stand projection generally, and for
+**Recommendation**: adopt v12.7.1 as the forward recommended version for stand projection generally (v12.5.0
+remains the current operational version pending adoption), and for
 long-horizon carbon and old-growth applications specifically, where the plateau-versus-runaway distinction is
 decisive. For short-rotation inventory on growing, managed stands where v12.7.1's basal-area under-prediction
 matters most, hold the v12.8 regional and composition-aware mortality refit as the fix that should let a

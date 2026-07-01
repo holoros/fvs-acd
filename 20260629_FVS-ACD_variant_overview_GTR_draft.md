@@ -5,9 +5,11 @@
 *Structured after the USDA Forest Service Northeast (NE) Variant Overview (FVS Staff 2008, rev.
 August 2023) so it can become the official FVS-ACD variant documentation. Equation content is drawn
 from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY 12.9.0
-source, built on the 12.7.1 operational line. Sections marked [POPULATE] need the full parameter tables
-or team text before publication. Plaintext math, no em dashes; this draft will be rendered to a formatted
-Word/PDF GTR. Updated 1 July 2026 with the four-model independent scorecard and the v12.9.0 refinement.*
+source, built on the 12.7.1 development line. AcadianGY 12.5.0 remains the current operational and
+production version; 12.9.0 is the recommended forward version documented here, pending adoption.
+Sections marked [POPULATE] need the full parameter tables or team text before publication. Plaintext
+math, no em dashes; this draft will be rendered to a formatted Word/PDF GTR. Updated 1 July 2026 with
+the three-model independent scorecard (v12.5.0, v12.9.0, OSM-ACD) and the v12.9.0 refinement.*
 
 ## Authors and Contributors
 
@@ -321,10 +323,11 @@ normals); recent testing finds the 2030 surface reasonable. Cycle length is one 
 run from a tree list through the FVS interface or the AcadianGY R driver (make_stand, make_acd_tree,
 make_ops, AcadianGYOneStand). [POPULATE: keyword and database usage, analogous to Essential FVS.]
 
-## 10. Operational version (12.9.0) and validation
+## 10. Recommended version (12.9.0) and validation
 
-The operational release is AcadianGY 12.9.0, which integrates this development cycle's refinements into
-one file, built directly on 12.7.1. The recommended configuration is: the Kuehne et al. (2022) diameter
+AcadianGY 12.5.0 is the current operational and production version. AcadianGY 12.9.0 is the recommended
+forward version, which integrates this development cycle's refinements into one file, built directly on
+12.7.1, and is documented here as the candidate to replace 12.5.0. The recommended configuration is: the Kuehne et al. (2022) diameter
 and height increment equations (4.6, 4.7) as the growth base; the validated ESI v8 as the site driver
 with the fitted ESI-anchored dominant height (3.4, 4.1); FIA NSVB volume and biomass (7); expected-value
 ingrowth, density-released (6); the coupled two-segment SDImax self-thinning (5); and the regional and

@@ -155,6 +155,11 @@ toward the true asymptote rather than a flat multiplier) is fit.
 
 ## Path to release
 
-12.9.0 is the current recommended version for inventory-horizon use; 12.7.1 remains recommended for
-long-horizon carbon and old-growth work pending the tapered correction. Documentation triad: benchmarking
-report, variant GTR, and the August Hennigar deck, all now updated and referencing this spec.
+AcadianGY 12.5.0 remains the current operational and production version; nothing past 12.5.0 has been
+adopted yet. 12.9.0 is the recommended forward version for inventory-horizon use pending adoption; 12.7.1
+remains the better choice for long-horizon carbon and old-growth work until the tapered correction is fit.
+For the August Hennigar presentation the comparison is simplified to three versions: v12.5.0 (current
+operational), v12.9.0 (recommended), and OSM-ACD v2.26.1 (external benchmark); the 12.7.0/12.7.1
+intermediate development versions are retained here and in the GTR as background but are not presented
+separately. Documentation triad: benchmarking report, variant GTR, and the August Hennigar deck, all now
+updated and referencing this spec.
