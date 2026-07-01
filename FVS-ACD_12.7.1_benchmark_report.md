@@ -123,6 +123,66 @@ New Brunswick and about 20 in Quebec. 12.7.1 couples recruitment to relative den
 RD, released below about 0.58), which together with the two-segment mortality produces the build,
 self-thin, and rebound dynamic that underlies a shifting-mosaic steady state.
 
+# Four-model scorecard: v12.5.0, v12.7.0, v12.7.1, and OSM v2.26.1 (added 1 July 2026)
+
+The multi-dimensional scorecard framework (GY_model_evaluation_scorecard.md, after Weiskittel, Hann,
+Kershaw and Vanclay 2011) was applied to all four candidate Acadian models on the identical independent
+in-domain data used above (MagPlot NB and ESI-covered QC, all volume and biomass on FIA NSVB), plus recent
+Maine FIA as a growing-stand stratum. OSM v2.26.1 was confirmed as the current release (checked against
+the OSM-Contributors GitHub org and forusresearch.com/downloads/osm; no newer version exists).
+
+Pooled level bias, RMSE, and modeling efficiency (Nash-Sutcliffe EF), n = 705:
+
+| metric | v12.5.0 bias% (NSE) | v12.7.0 bias% (NSE) | v12.7.1 bias% (NSE) | OSM bias% (NSE) |
+|---|---|---|---|---|
+| basal area | +4.8 (0.72) | -2.7 (0.70) | -9.0 (0.62) | -5.5 (-0.64) |
+| total volume (NSVB) | +19.2 (0.61) | +11.3 (0.67) | +3.9 (0.66) | -1.6 (-0.82) |
+| aboveground biomass (NSVB) | +18.8 (0.55) | +10.4 (0.63) | +3.0 (0.62) | -2.6 (-0.76) |
+| stand value | +21.4 (0.55) | +13.4 (0.63) | +5.9 (0.63) | -0.6 (-0.86) |
+
+The single most important finding: OSM has the lowest pooled bias on every metric, but its modeling
+efficiency is **negative on every metric**, meaning its stand-level predictions are less accurate than
+simply predicting the observed mean. OSM's low aggregate bias is a population-level cancellation (it
+over-predicts some stands and under-predicts others by large amounts that average out), not per-stand
+skill. All three FVS-ACD versions explain 55 to 78 percent of out-of-sample variance on every metric.
+
+By-stratum consistency (spread between NB and QC total-volume bias): v12.5.0 32.9 points, v12.7.0 27.7,
+v12.7.1 24.2, OSM 12.5. OSM is the most directionally consistent model across jurisdictions even though
+its per-stand precision is the worst of the four; the FVS-ACD generation is improving consistency version
+over version but has not yet matched OSM's spread. The v12.8 regional and composition-aware mortality
+refit targets exactly this gap.
+
+Qualitative scorecard (pass, flag, or fail):
+
+| dimension | v12.5.0 | v12.7.0 | v12.7.1 | OSM v2.26.1 |
+|---|---|---|---|---|
+| Bakuzis self-thinning | FAIL (BA to 62-64 m2/ha, 4500+ stems/ha at age 120) | PASS (slope -1.28 to -1.35) | PASS in the validated run | FAIL (Seven Islands 60-yr trajectory keeps climbing, no plateau) |
+| Long-horizon trajectory | FAIL (runaway) | FLAG (still slowly rising past age 120) | PASS (plateaus at 33-34 m2/ha, the correct Acadian maximum) | FAIL |
+| Transparency | PASS (open R) | PASS | PASS | FLAG (closed-source binary, LGPL, external API) |
+| Usability | FLAG (can hang without a time-limit guard) | PASS | PASS | FLAG (Windows-primary, needs a wrapper) |
+| Uncertainty characterization | FAIL | FAIL | FAIL | FAIL (none of the four propagate parameter uncertainty) |
+
+On the recent Maine FIA growing-stand stratum (n = 788, independent in time), the annual basal-area
+increment bias is +56 percent for v12.5.0 (no self-thinning mechanism at all), +11 percent for v12.7.0,
+and -52 percent for v12.7.1 (the coupled self-thinning now under-predicts growing-stand increment, the
+mirror image of v12.5.0's problem). v12.5.0's growing-stand over-prediction is consistent with its
+long-horizon runaway documented below.
+
+See the companion memo 20260701_four_model_scorecard.md for the full by-stratum tables, PAI bias, and the
+complete qualitative matrix.
+
+![Four-model scorecard: model by dimension](figures/four_model_scorecard_heatmap.png)
+
+![Modeling efficiency (NSE) by metric, pooled](figures/four_model_scorecard_radar.png)
+
+**Verdict.** v12.5.0 should be retired from mature-stand and long-horizon use (it fails the Bakuzis
+self-thinning check outright). v12.7.1 is the best model overall: green on volume, merch, sawlog, and
+biomass pooled, and the only model that plateaus at the biologically correct maximum, at the cost of a
+deeper New Brunswick under-prediction that matters most for short-rotation inventory on growing stands.
+OSM's favorable aggregate bias is offset by negative modeling efficiency on every metric and a failed
+long-horizon self-thinning check on real data; it is not recommended over v12.7.1 for either short-rotation
+inventory or long-horizon carbon and old-growth work.
+
 # Conclusion
 
 12.7.1 is the operational FVS-ACD. It keeps the Kuehne increment base, the validated ESI v8 site driver
@@ -132,4 +192,6 @@ running away, and (2) reduces the Quebec mature-stand volume and biomass over-pr
 third to a half. The bounded costs are a deepened New Brunswick under-prediction and a modest recent
 Maine FIA increment under-prediction, the two ends of the single relative-density lever, both flagged as
 the next-version target: a regional and composition-aware mortality refit and an SDImax re-estimation,
-validated out of sample on both tails.
+validated out of sample on both tails. The four-model scorecard (above) confirms this ranking holds
+against OSM v2.26.1 and the incumbent v12.5.0 on the same independent data, once modeling efficiency and
+long-horizon realism are scored alongside level bias.
