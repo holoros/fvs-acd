@@ -106,9 +106,55 @@ OSM on the same MAGPlot plots: both near-unbiased at observed intervals (FVS-ACD
 on 12.7.0 projections: site ordering 0/125 inversions, Reineke -1.28 to -1.35 OK, Eichhorn moderate flag.
 See `20260630_v1270_full_metric_validation.md`, `20260630_v1270_magplot_and_bakuzis.md`.
 
+## Update (1 July): v12.9, a targeted SDImax gate for the Quebec hardwood edge
+
+The four-model scorecard (v12.5.0, v12.7.0, v12.7.1, OSM v2.26.1, `20260701_four_model_scorecard.md`)
+localized 12.7.1's one remaining structural gap: hardwood-dominated stands outside the Acadian-core
+ecoregion, concentrated in Quebec. AcadianGY 12.9.0 (`scripts/AcadianGY_12.9.0.r`, built on 12.7.1) adds
+a gated multiplier to the Weiskittel and Kuehne (2019) SDImax equation (section 3.5), active only when a
+stand is simultaneously:
+
+1. Province Quebec (`stand$region == "QC"`).
+2. Ecoregion outside the Acadian core. Acadian core is defined as the CEC North American Level III
+   ecoregions Acadian Plains and Hills and Maritime Lowlands; outside includes Northern Appalachian and
+   Atlantic Maritime Highlands, Algonquin and Southern Laurentians, Central Laurentians and Mecatina
+   Plateau, and Eastern Great Lakes Lowlands.
+3. Forest type hardwood-dominated, by BA-weighted dominant `sp.attr$sp.grp.ingrowth` group (sugar maple,
+   birch, aspen, other hardwood, American beech).
+
+Implementation: `ops$sdimax.region.mult` (named vector by province, default all 1.0) and
+`ops$sdimax.fortype.tight.mult` / `ops$sdimax.fortype.tight.groups` / `ops$sdimax.fortype.region`
+(the gate, keyed on a combined province-ecobucket string, e.g. `"QC_OTHER_ECO"`). With every flag unset
+or at its default, 12.9.0 reproduces 12.7.1 exactly; this is a gated, isolated refinement in the same
+convention as every prior version. Recommended setting: `sdimax.fortype.tight.mult` 0.65 to 0.70,
+gated on `"QC_OTHER_ECO"` for the hardwood group above.
+
+Validation (in-domain, n = 733; independent recent Maine FIA, n = 788; full detail
+`20260701_v129_full_validation.md`, `20260701_v129_ooda_stress_test.md`):
+
+- Target cell (Quebec, outside Acadian core, hardwood-dominated, n = 163): total volume bias closes from
+  +56.7 to +10.4 percent, stand value from a similar magnitude to +4.4 percent. Basal area, already
+  under-predicted, deepens further (-9.3 to -18.1 percent), the same relative-density trade-off seen
+  throughout this development line, now confined to exactly the population that needed correcting.
+- New Brunswick: unchanged from 12.7.1 in every metric, to the decimal, since the gate structurally
+  excludes it.
+- Recent Maine FIA growing-stand stratum: unchanged from 12.7.1 (BA level -2.2 percent, annual increment
+  -0.085 m2/ha/yr), since no Maine plot can satisfy a Quebec-only gate. This was not automatic; an
+  earlier, broader gate (ecoregion alone, no province term) passed the Quebec target but measurably
+  worsened this independent check (annual increment to -0.135 to -0.151 m2/ha/yr, -83 to -93 percent)
+  before the province term was restored. The independent FIA cross-check is what caught this.
+- Split-half robustness (163-stand target cell, two random halves): consistent correction magnitude in
+  both halves, not driven by a handful of stands.
+
+Known residual: a seeded 160-year trajectory of the corrected hardwood population plateaus at about 21
+m2/ha, below the realistic 28 to 32 m2/ha target for that composition (the same composition uncorrected
+plateaus at 31 to 32). A correction calibrated on a 5 to 15 year window, carried through a full rotation,
+under-shoots. v12.9 is recommended for short-to-mid rotation inventory projection; 12.7.1 remains the
+recommended version for carbon and old-growth work until a tapered version of the correction (relaxing
+toward the true asymptote rather than a flat multiplier) is fit.
+
 ## Path to release
 
-12.6.1 is the documented production candidate now. The next production version should fold in the
-refined ESI (with ESI-anchored dominant height) and the regional mortality recalibration, then re-run
-this same validation suite (the harnesses are in `scripts/`). Documentation triad: benchmarking HTML,
-user guide, variant GTR, all referencing this spec.
+12.9.0 is the current recommended version for inventory-horizon use; 12.7.1 remains recommended for
+long-horizon carbon and old-growth work pending the tapered correction. Documentation triad: benchmarking
+report, variant GTR, and the August Hennigar deck, all now updated and referencing this spec.

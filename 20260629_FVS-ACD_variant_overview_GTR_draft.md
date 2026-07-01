@@ -4,9 +4,10 @@
 
 *Structured after the USDA Forest Service Northeast (NE) Variant Overview (FVS Staff 2008, rev.
 August 2023) so it can become the official FVS-ACD variant documentation. Equation content is drawn
-from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY 12.7.1
-source. Sections marked [POPULATE] need the full parameter tables or team text before publication.
-Plaintext math, no em dashes; this draft will be rendered to a formatted Word/PDF GTR.*
+from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY 12.9.0
+source, built on the 12.7.1 operational line. Sections marked [POPULATE] need the full parameter tables
+or team text before publication. Plaintext math, no em dashes; this draft will be rendered to a formatted
+Word/PDF GTR. Updated 1 July 2026 with the four-model independent scorecard and the v12.9.0 refinement.*
 
 ## Authors and Contributors
 
@@ -14,7 +15,7 @@ Aaron Weiskittel and the University of Maine Cooperative Forestry Research Unit 
 Acadian growth-and-yield model. Ben Rice (Midgard Natural Resources) maintains the FVS-ACD
 implementation and benchmarking. Component equations are credited to their authors throughout
 (Kuehne, Russell, Rijal, Li, Chen, Castle, Cen, and others; see Literature Cited). This overview
-documents the FVS-ACD variant as implemented in AcadianGY 12.6.x.
+documents the FVS-ACD variant as implemented in AcadianGY 12.9.0.
 
 Suggested citation: Weiskittel, A., Rice, B., and contributors. 2026. Acadian (ACD) Variant Overview
 - Forest Vegetation Simulator. CFRU / University of Maine, Orono, ME. [pages].
@@ -128,6 +129,18 @@ primarily a function of forest type (softwood ceilings near 1050 to 1100, northe
 900, wet hardwood near 750), which the composition terms above already approximate through mean
 specific gravity. A site-independent SDImax (dropping the 222.78/CSI term, recentred) is available
 behind a flag.
+
+Version 12.9.0 note: a CONUS-scale brms re-estimation (independent of the northern New England one
+above) confirmed forest type dominates the variance in plot-level maximum SDI (R-squared 0.21) far more
+than site index alone (R-squared 0.02), and that a localized, forest-type-and-ecoregion-aware maximum
+predicts observed self-thinning roughly twice as well as a generic species-table constant. Applied to
+AcadianGY, the diagnostic finding was that the Weiskittel-Kuehne SDImax equation above already handles
+composition well through the percent-hardwood and specific-gravity terms, but under-corrects specifically
+for hardwood-dominated stands in Quebec outside the Acadian-core ecoregion (CEC North American Level III:
+Acadian Plains and Hills, Maritime Lowlands). v12.9.0 adds a gated multiplier to SDImax
+(`ops$sdimax.fortype.tight.mult`, default 0.65 to 0.70), active only when a stand is simultaneously
+Quebec, outside the Acadian core, and hardwood-dominated by BA-weighted dominant species group. See
+section 10 and `20260701_v129_full_validation.md` for the full derivation and validation.
 
 ## 4. Growth Relationships
 
@@ -247,6 +260,17 @@ relative-density lever reduces the mature-stand over-prediction while modestly d
 growing-stand under-prediction; separating the two is the next-version regional and composition-aware
 mortality target.
 
+Regional and composition-aware SDImax gate (12.9.0). The 12.7.1 mature-stand residual, on closer
+diagnosis, is not a Quebec-wide phenomenon but is concentrated in hardwood-dominated Quebec stands
+outside the Acadian-core ecoregion; softwood-dominated Quebec stands and all of New Brunswick were
+already close to unbiased. v12.9.0 adds a gated multiplier to the SDImax term used by this self-thinning
+mechanism (section 3.5), active only when a stand is simultaneously province Quebec, ecoregion outside
+the Acadian core, and hardwood-dominated. This raises the effective self-thinning intensity for that
+specific population, closing the target cell's total-volume bias from +56.7 to +10.4 percent with no
+effect on New Brunswick or on the independent recent Maine FIA growing-stand check (see section 10). The
+mechanism is additive to, not a replacement for, the coupled self-thinning above: it scales SDImax before
+the RD = SDI/SDImax ratio that drives the two-segment mortality curve.
+
 ## 6. Regeneration and Ingrowth
 
 Full ingrowth model, Li et al. (2011), for ten species groups (BCH birch, BF, RM, SPR spruce, WP,
@@ -297,15 +321,16 @@ normals); recent testing finds the 2030 surface reasonable. Cycle length is one 
 run from a tree list through the FVS interface or the AcadianGY R driver (make_stand, make_acd_tree,
 make_ops, AcadianGYOneStand). [POPULATE: keyword and database usage, analogous to Essential FVS.]
 
-## 10. Operational version (12.7.1) and validation
+## 10. Operational version (12.9.0) and validation
 
-The operational release is AcadianGY 12.7.1, which integrates this development cycle's refinements into
-one file. The recommended configuration is: the Kuehne et al. (2022) diameter and height increment
-equations (4.6, 4.7) as the growth base; the validated ESI v8 as the site driver with the fitted
-ESI-anchored dominant height (3.4, 4.1); FIA NSVB volume and biomass (7); expected-value ingrowth,
-density-released (6); and the coupled two-segment SDImax self-thinning (5). Every refinement is gated,
-and with the flags in their legacy position the build reproduces 12.5.0 bit for bit, so each is
-individually isolated and validated.
+The operational release is AcadianGY 12.9.0, which integrates this development cycle's refinements into
+one file, built directly on 12.7.1. The recommended configuration is: the Kuehne et al. (2022) diameter
+and height increment equations (4.6, 4.7) as the growth base; the validated ESI v8 as the site driver
+with the fitted ESI-anchored dominant height (3.4, 4.1); FIA NSVB volume and biomass (7); expected-value
+ingrowth, density-released (6); the coupled two-segment SDImax self-thinning (5); and the regional and
+composition-aware SDImax gate for the Quebec hardwood edge (5, 3.5). Every refinement is gated, and with
+the flags in their legacy position the build reproduces 12.5.0 bit for bit, so each is individually
+isolated and validated. 12.9.0 with its own gate unset reproduces 12.7.1 exactly.
 
 Refinements, in order of development:
 1. ESI site input (12.6.0), drop-in through the site slot; ESI v8 30 m surface adopted (12.7.0).
@@ -319,6 +344,72 @@ Refinements, in order of development:
    makes the long-horizon basal-area trajectory plateau at the biologically correct Acadian maximum
    (about 33 m2/ha) instead of running away, and reduces the mature-stand volume and biomass
    over-prediction.
+8. Regional and composition-aware SDImax gate (12.9.0), which closes the remaining mature-stand
+   over-prediction specifically in hardwood-dominated Quebec stands outside the Acadian-core ecoregion,
+   with an independent recent-FIA cross-check confirming zero effect on New Brunswick or Maine.
+
+### 10.1 Four-model independent scorecard (1 July 2026)
+
+A multi-dimensional scorecard (quantitative bias, RMSE, modeling efficiency, and periodic annual
+increment; qualitative Bakuzis biological realism, long-horizon trajectory shape, transparency, data
+requirements, usability, and uncertainty characterization) was run on AcadianGY 12.5.0, 12.7.0, 12.7.1,
+and the current OSM-ACD release (v2.26.1, confirmed current against the OSM-Contributors GitHub
+organization and the Forus Research download page), on identical independent in-domain data. The full
+scorecard is `20260701_four_model_scorecard.md`; figures `five_model_scorecard_heatmap.png` and
+`five_model_scorecard_radar.png` (v12.9.0 added as a fifth model, section 10.2).
+
+Headline finding: OSM-ACD has the lowest pooled level bias of the four models on every metric, but
+negative Nash-Sutcliffe modeling efficiency on every metric, meaning its stand-level predictions are less
+accurate than simply predicting the observed mean; its favorable aggregate bias is population-level
+cancellation of large individual over- and under-predictions, not per-stand skill. All three AcadianGY
+versions explain 55 to 78 percent of out-of-sample variance on every metric. AcadianGY 12.5.0 fails the
+Bakuzis self-thinning check outright (long-horizon basal area still climbing past 62 m2/ha at age 120
+with several thousand stems per hectare still alive) and is not recommended for mature-stand or
+long-horizon use. AcadianGY 12.7.1 is the best FVS-ACD version on the combined quantitative and
+qualitative profile prior to the 12.9.0 refinement below.
+
+### 10.2 v12.9.0: a targeted SDImax correction for the Quebec hardwood edge
+
+The scorecard in 10.1 localized 12.7.1's remaining structural gap to a specific population: stands that
+are simultaneously Quebec (province), outside the Acadian-core ecoregion (CEC North American Level III:
+Acadian Plains and Hills, Maritime Lowlands are the core; Northern Appalachian and Atlantic Maritime
+Highlands, Algonquin and Southern Laurentians, Central Laurentians and Mecatina Plateau, and Eastern
+Great Lakes Lowlands are outside it), and hardwood-dominated (BA-weighted dominant species group sugar
+maple, birch, aspen, other hardwood, or American beech). Softwood-dominated Quebec stands, and every New
+Brunswick stand regardless of composition, were already close to unbiased and are untouched by the
+v12.9.0 gate.
+
+Development process, briefly (full derivation `20260701_v129_full_validation.md`,
+`20260701_v129_ooda_stress_test.md`): a region-only multiplier was tried first and found to be a pure
+trade-off (fixing basal area worsened volume and vice versa, with no setting fixing both). An ESI-based
+spatial cluster was tried and found weak, because ESI v8 coverage of Quebec is patchy. Forest type
+(BA-weighted dominant species group) located the real signal. True ecoregion sharpened it further. An
+ecoregion-only gate (no province term) closed the Quebec target as well as the final version, but an
+independent cross-check against the recent Maine FIA growing-stand stratum caught a real regression: the
+correction leaked onto Maine's own hardwood stands sharing the same ecoregion as the Quebec problem
+stands, worsening the FIA annual-increment check from -52 to -83 to -93 percent. Restoring province as a
+third gate dimension eliminated this by construction, since no Maine plot can ever satisfy a Quebec-only
+gate.
+
+Validation, in-domain MagPlot (n = 733) and independent recent Maine FIA (n = 788), predicted versus
+observed t2 level bias:
+
+- Target cell (Quebec, outside Acadian core, hardwood-dominated, n = 163): total volume +56.7 to +10.4
+  percent, stand value to +4.4 percent. Basal area, already under-predicted in 12.7.1, deepens further
+  (-9.3 to -18.1 percent), the SDImax-driven trade-off confined now to exactly the population needing it.
+- New Brunswick: unchanged from 12.7.1 in every metric.
+- Recent Maine FIA: unchanged from 12.7.1 (basal-area level -2.2 percent, annual increment -0.085
+  m2/ha/yr), confirming the gate cannot affect Maine plots.
+- A stand-level split-half robustness check (163 target-cell stands, two random halves) confirmed the
+  correction is not driven by a handful of outlier stands.
+
+Known residual: a seeded 160-year trajectory of the corrected hardwood population plateaus at about 21
+m2/ha, below the realistic 28 to 32 m2/ha target for that composition (the same composition, uncorrected,
+plateaus at 31 to 32). A correction calibrated on a 5 to 15 year remeasurement window, carried through a
+full rotation, under-shoots the long-horizon asymptote. v12.9.0 is recommended for short-to-mid rotation
+inventory projection; v12.7.1 remains the recommended version for carbon and old-growth applications on
+this specific population until a tapered version of the correction, relaxing toward the true asymptote
+rather than applying a flat multiplier throughout the rotation, is fit.
 
 Independent validation. On genuinely independent, in-domain data, the full FIA NSVB metric set,
 predicted versus observed t2 level bias, New Brunswick (n=355) and the ESI-covered Quebec edge (n=378),
@@ -346,12 +437,17 @@ Biological realism (Bakuzis matrix): site ordering clean (0 of 125 inversions, t
 anchor), Reineke self-thinning slopes -1.28 to -1.35, one moderate Eichhorn flag. Observed ingrowth
 about 40 stems per ha per year in New Brunswick and 20 in Quebec, matched by the density-released form.
 
-Two items bound the next development cycle. First, a regional and composition-aware stand-mortality
-refit to close both tails at once (the Quebec over-prediction and the New Brunswick under-prediction),
-with an SDImax re-estimation to set the exact plateau level. Second, the long-horizon OSM comparison:
-on the Seven Islands stands the two agree at the start and then diverge, FVS-ACD self-thinning and OSM
-accumulating, first-order model-form uncertainty with no observed truth at that horizon, which localizes
-to stand mortality.
+The regional and composition-aware stand-mortality refit called for here is v12.9.0 (section 10.2): it
+closes the Quebec mature-stand over-prediction for the specific hardwood-dominated, outside-Acadian-core
+population, without reopening the New Brunswick under-prediction, since the gate excludes New Brunswick
+by construction. Two items bound the next development cycle. First, a tapered version of the v12.9.0
+correction for long-horizon carbon and old-growth work, since the current flat multiplier under-shoots
+the realistic basal-area plateau for the corrected population when run past the short-interval calibration
+window (section 10.2). Second, the long-horizon OSM comparison: on the Seven Islands stands the two agree
+at the start and then diverge, FVS-ACD self-thinning and OSM accumulating, first-order model-form
+uncertainty with no observed truth at that horizon, which localizes to stand mortality; the four-model
+scorecard (10.1) confirms this pattern holds on independent data at shorter, observed intervals as well
+(OSM's negative modeling efficiency versus AcadianGY's positive efficiency on every metric).
 
 ## 11. Literature Cited
 
