@@ -195,6 +195,20 @@ v12.8 is not ready in time for a given application.
 - Uncertainty characterization is a gap shared by all four models; a bootstrap or Bayesian wrapper around
   AcadianGY's parameters would be a genuine differentiator and is worth scoping as separate future work.
 
+## v12.5.0 harness-config check (resolves an earlier flagged caveat)
+
+A prior session note flagged that the v12.5.0 run above used "the harness common ops (use.sdimort on,
+use.mortcal off)" rather than v12.5.0's "native MORTCAL operational config," and queued a re-run with
+native settings as a to-do for this task. Source inspection of AcadianGY_12.5.0.r resolves this: the
+model's own make_ops() has no use.sdimort, sdimort.onset/beta, or use.mortcal parameters at all (zero
+occurrences in the file); those fields do not exist in v12.5.0's engine. v12.5.0 instead uses its own
+native region-level plot mortality equations (calc_mortality, mort_plot_prob, mort_plot_ba, the Chen et
+al. plot mortality probability and basal-area functions). When comprehensive_bench.R bolts ops$use.sdimort
+and ops$use.mortcal onto the ops data frame for every model, those two fields are simply never read by
+v12.5.0's AcadianGYOneStand(), so they are inert for this model. The cb_v125_results.csv used above
+therefore already reflects v12.5.0 running under its own native mortality mechanism, unmodified by the
+harness. No re-run is needed; the earlier caveat is closed.
+
 ## Reproducibility check (same day, rerun on fresh SLURM jobs)
 
 v12.5.0 and v12.7.1 (config B) reproduce byte-identical results on rerun: fully deterministic, no drift.
