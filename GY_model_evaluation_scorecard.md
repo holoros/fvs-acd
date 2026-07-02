@@ -85,6 +85,40 @@ one scorecard that answers not just which model has the lowest volume-increment 
 the best overall growth-and-yield tool for the Acadian region, and for which application (short-rotation
 inventory projection versus long-horizon carbon and old-growth).
 
+## Standard additions (2026): equivalence testing and explicit Bakuzis relations
+
+Two elements are now standard in every FVS-ACD scorecard, added after the Acadian OSM comparison.
+
+Equivalence testing (TOST). Bias tests can only fail to reject a difference; they cannot affirm adequacy.
+The two one-sided tests (Schuirmann TOST; Robinson and Froese 2004; Reynolds 1984) test the opposite null
+and let a model earn a positive equivalence claim. Procedure: on the paired differences d = predicted minus
+observed, state a region of equivalence (default plus or minus 10 percent of the observed mean for level
+metrics, plus or minus 25 percent for increment or PAI), and declare equivalence when the (1 minus 2 alpha)
+confidence interval of mean(d) lies entirely inside the region (equivalently, when both one-sided t tests
+reject at alpha, so the TOST p is the larger of the two one-sided p values). Report the equivalence result
+(yes or no) and the TOST p alongside bias, RMSE, and modeling efficiency, per model and per stratum (by
+jurisdiction and by forest type). Equivalence is the rigorous way to make the "is it good enough" claim.
+
+Explicit Bakuzis relations. Report the named law-like relationships individually per model, each with a
+quantitative criterion and a pass or flag, from seeded long-horizon projections across a site gradient (not
+just a single pass or flag summary): Eichhorn (volume a near-unique function of dominant or mean height;
+criterion, coefficient of variation of volume at matched height across site classes, pass if under about 15
+percent), Reineke self-thinning slope (log stems on log quadratic mean diameter over the self-thinning
+phase; target near -1.6, pass in about -1.8 to -1.4), site ordering (higher site never overtaken in height
+or volume at equal age; pass if zero inversions), yield-density and the plateau (basal area levels at the
+realistic regional maximum rather than running away; pass if the plateau is in range and the last-decades
+trajectory is stable), and Sukachev (mean size rises as density falls along the self-thinning line; pass if
+the slope is negative and consistent). Present as a model-by-relation table.
+
+Two lessons from the Acadian application worth carrying forward. First, always compute the scorecard from a
+single wide table keyed by stand (one merge), not from index joins across per-model files: a misaligned
+join silently inflates RMSE and drives modeling efficiency negative for the affected model. An interim
+Acadian scorecard reported OSM with negative NSE for exactly this reason; on a clean aligned merge OSM's NSE
+is positive (about 0.70 to 0.75). Verify alignment with a per-model correlation of observed on predicted
+(expect about 0.85 to 0.90) before scoring. Second, break every metric out by forest type (softwood,
+mixedwood, hardwood) as well as by jurisdiction: in the Acadian data the over-prediction is composition
+driven and concentrated in hardwood stands, which a jurisdiction-only cut hides.
+
 ## Note on the skill
 
 This framework should be added to the forestry-modeling skill as the standard model-evaluation reference

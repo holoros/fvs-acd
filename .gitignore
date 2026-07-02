@@ -8,3 +8,4 @@ results/seven_islands/silc_plot_si2.csv
 *.rds
 .Rhistory
 results/seven_islands/pid_coords.csv
+node_modules/
