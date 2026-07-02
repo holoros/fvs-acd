@@ -57,6 +57,33 @@ stronger claim than a non-significant bias. Within plus or minus 10 percent on t
 is equivalent on 8, v12.9.x and v12.7.1 on 6, and the older versions on 3. And the Bakuzis relations are now
 reported individually per model with a quantitative pass or flag, not just a summary.
 
+## 1b. The Chapter-11 management modifiers (the lever to close the operational gap)
+
+A source-level comparison this week made the reason for OSM's residual edge concrete. OSM ships as a
+compiled binary, but its diameter-growth model is exposed on disk as a table whose own input columns are
+Species, Age, BA, BAL, DBH, IsManaged, IsGoodSite. That IsManaged column is verified at the source level:
+OSM carries an explicit management covariate in diameter growth, and FVS-ACD v12 has no management term
+anywhere (only the gated commercial-thinning and budworm modifiers, off in the benchmark). The independent
+benchmark is heavily managed, so that one term is the specific reason OSM is competitive there.
+
+I built the FVS analogue as a principled modifier, not a black-box dummy, following the framework in our own
+book chapter (Weiskittel, Hann, Kershaw and Vanclay 2011, Ch 11, Modeling Silvicultural Treatments). The
+base untreated equations already carry the indirect structural effect of a treatment (lower BAL, RD and BA),
+so the modifier isolates only the direct effect, by the multi-step method (Wang 1990): predict the untreated
+increment from each managed stand's own predictors and calibrate on observed minus predicted. Planted origin
+is a Type 2 sustained response (a sustained diameter-growth multiplier); precommercial thinning is a Type 1
+transient response (a multiplicative boost that decays with time since treatment). Mortality deliberately
+does not get a multiplicative modifier, which would distort the logistic asymptote.
+
+Scored by management class on the independent MagPlot set, the modifiers (v12.10) close the managed-stand
+gap to OSM. Managed total-volume level bias goes from -9.9 percent (v12.9.x) to -1.6 percent (OSM -7.4), and
+mean absolute bias across nine metrics from 10.2 to 4.8 (OSM 8.3). On planted stands v12.10 clearly beats
+OSM (total volume -4 vs OSM -20). Unmanaged stands are untouched, so this is a targeted lever, not a global
+mortality bump. The modifier is gated and default off, so v12.10 with the gate off is identical to v12.9.x.
+Caveat for the group: the managed calibration data are thin (planted n=51, PCT n=95) and the PCT decay rate
+is a nominal Type-1 value rather than a cleanly fitted one, so this is a defensible near-term lever that a
+shared managed-remeasurement set (FIA TRTCD and STDORGCD, the provincial PSPs) would let us firm up.
+
 ## 2. Site productivity (agenda item 1)
 
 I ran a site-variable bake-off, ESI vs BGI vs CPSI vs legacy CSI, isolating the site term with identical data
