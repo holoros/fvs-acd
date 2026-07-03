@@ -86,3 +86,31 @@ guard clamp, an effective capped constant) is fixed in AcadianGY_12.10.1.r.
   coordinates never left the node.
 - Open item for v13: pin the exact per-tree engine amplitude that reproduces the additive net release via a
   full engine re-projection, inside the hierarchical mortality/ingrowth refit with management as a predictor.
+
+---
+
+## Update 2026-07-03 (v13 kickoff: v13.0 height + v13.1 hierarchical mortality/management)
+
+Autonomous OODA run executing the first two v13 workstreams. v12.10 stays shipped; nothing adopted.
+
+v13.0 height. Domain mask defined (finite ESI AND EPA L3 in {5.3.1, 8.1.7, 8.1.8, 8.1.1}); US in-domain
+13,894 of 14,206 pairs. Base-age-invariant increment anchors (M1 linear, M2 monomolecular) fit unbiased in
+domain (US spatial-CV increment ratio 1.00) but do NOT transfer to the MagPlot edge: NB 1.89 -> 2.6, QC 6.99
+-> 6.1. Matched-state diagnosis: at equal topht1 and ESI, QC increment is negative while ESI reads 18-19
+(implied asymptote ~36 m vs stands topping ~22 m). Cause is ESI over-reading productivity at the QC edge
+plus an unidentified asymptote on US-only data, not functional form. Verdict: mask GO, refit NO-GO on
+current data; next step is the mature-Acadian data refit (NB/NS PSP, MagPlot managed, SILC) = the August
+ask.
+
+v13.1 hierarchical mortality/management. Design matrix built: 208,846 fit stands (MagPlot + recent-FIA proxy
+held out), 48 regions, 84 ecoregions, 150 forest types; planted 25,194 / treated 18,393 / none 195,900. Fast
+glmer cloglog hierarchical fit: forest-type RE sd 0.60 and ecoregion RE sd 0.35 separate the mortality tails;
+region management random-slope sd 1.21 shows the management effect is strongly heterogeneous, so a capped
+constant is structurally wrong. Leave-one-region-out: the partially pooled management effect beats the capped
+constant in 5 of 5 held-out regions. Verdict: hierarchical structure GO; NB/QC province verification pending
+provincial data. Next step: full brms/Stan fit with SDImax asymptote prior + ingrowth, exact recent-FIA
+holdout, then provincial transfer test.
+
+Deliverable: 20260703_v13_kickoff_results.md. Scripts scripts/v130_height_anchor.R, v131_hier_assembly.R,
+v131_hier_fit.R. Results results/v13_kickoff/. Fitted objects on Cardinal ~/v13_kickoff/. Coordinates never
+left the node.

@@ -1,0 +1,5 @@
+grp,var1,sdcor
+fortype,(Intercept),0.599735835028532
+eco,(Intercept),0.347648720384055
+region,mgd,1.21033442808742
+region.1,(Intercept),0.23027215204328
