@@ -54,8 +54,9 @@ I also added two rigor upgrades the group may find useful as a shared standard. 
 one-sided tests, Robinson and Froese 2004) asks whether predictions are statistically equivalent to observed
 within a stated region (level plus or minus 10 percent, increment plus or minus 25 percent), which is a
 stronger claim than a non-significant bias. Within plus or minus 10 percent on the nine level metrics, OSM
-is equivalent on 8, v12.9.x and v12.7.1 on 6, and the older versions on 3. And the Bakuzis relations are now
-reported individually per model with a quantitative pass or flag, not just a summary.
+is equivalent on 8, v12.9.x and v12.7.1 on 6, and the older versions on 3 (pooled scorecard and equivalence
+on n=733; the by-management-class breakdown is on the ESI-covered in-domain n=705). And the Bakuzis
+relations are now reported individually per model with a quantitative pass or flag, not just a summary.
 
 ## 1b. The Chapter-11 management modifiers (the lever to close the operational gap)
 
@@ -80,9 +81,19 @@ gap to OSM. Managed total-volume level bias goes from -9.9 percent (v12.9.x) to 
 mean absolute bias across nine metrics from 10.2 to 4.8 (OSM 8.3). On planted stands v12.10 clearly beats
 OSM (total volume -4 vs OSM -20). Unmanaged stands are untouched, so this is a targeted lever, not a global
 mortality bump. The modifier is gated and default off, so v12.10 with the gate off is identical to v12.9.x.
-Caveat for the group: the managed calibration data are thin (planted n=51, PCT n=95) and the PCT decay rate
-is a nominal Type-1 value rather than a cleanly fitted one, so this is a defensible near-term lever that a
-shared managed-remeasurement set (FIA TRTCD and STDORGCD, the provincial PSPs) would let us firm up.
+
+I red-teamed this before bringing it to you, because the managed cells are small and the calibration is on
+the same stands. Two honest points. First, both class multipliers sit at the 1.6 guard clamp (the raw
+increment ratios are 5 to 10 times, unstable on these mature stands), so the modifier is a capped constant,
+not a tuned fit, which is why it is hard to overfit. Second, it holds out of sample: under
+leave-one-installation-out cross validation the managed mean absolute bias is 4.4 (versus OSM 8.3 and
+v12.9.x 10.2), and a 200-fold managed split-half gives 6.7, improving over v12.9.x in 94 percent of splits.
+Planted is a robust win over OSM in every scheme and transfers across the New Brunswick to Quebec border.
+The one real limit: under a leave-one-province-out block the PCT effect does not transfer (it reverts to
+about the untreated level and falls behind OSM), so PCT is a within-Acadian-core improvement, not a general
+one, which is a further reason to report the Quebec edge as out of domain. The managed calibration data are
+thin (planted n=51, PCT n=95), so a shared managed-remeasurement set (FIA TRTCD and STDORGCD, the provincial
+PSPs) would let us firm it up and carry the effect into a mortality and ingrowth refit in v13.
 
 ## 2. Site productivity (agenda item 1)
 

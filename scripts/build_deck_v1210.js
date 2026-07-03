@@ -57,7 +57,7 @@ s.addText("His five agenda topics, and what we bring to each", { x:6.95, y:yy+0.
 // ---------- 3 DATA ----------
 s = p.addSlide(); s.background = { color: CREAM };
 titleBar(s, "Data harmonized onto one currency", "Data harmonization");
-const stats = [["705","independent in-domain stands\nMagPlot NB + QC, ESI-covered"],
+const stats = [["705","ESI-covered in-domain stands for the\nmanaged breakdown (733 pooled scorecard)"],
   ["NSVB","FIA volume and biomass as the\ncommon currency for every model"],
   ["ESI v8","30 m climate-and-terrain site\ndriver, cross-border coverage"],
   ["5","models scored head to head\nv12.5.0, v12.7.0, v12.9.x, v12.10, OSM"]];
@@ -147,14 +147,36 @@ s.addText([
   { text:"Direct effect only (Ch 11).\n", options:{bold:true, color:GREEN, fontSize:15} },
   { text:"The base equations already carry the indirect structural effect. The modifier isolates the direct effect by the multi-step method (Wang 1990).\n\n", options:{fontSize:12.5} },
   { text:"Planted = Type 2, sustained.\nPCT = Type 1, transient, decaying.\n\n", options:{bold:true, color:GREEN, fontSize:13.5} },
-  { text:"Result: managed total-volume bias -9.9 to -1.6 percent; v12.10 now matches OSM on managed stands and beats it on planted.", options:{fontSize:12.5} }
+  { text:"Result: managed total-volume bias -9.9 to -1.6 percent. v12.10 clearly beats OSM on planted; on managed overall it edges OSM out of sample. Both class multipliers sit at the 1.6 clamp, so this is a capped, principled lever, not a tuned fit.", options:{fontSize:12.5} }
 ], { x:9.0, y:1.8, w:3.8, h:5.0, fontFace:BODY, color:INK, valign:"top", lineSpacingMultiple:1.05 });
 
 // ---------- 11 MODIFIER FORM + GAP ----------
 s = p.addSlide(); s.background = { color: WHITE };
 titleBar(s, "Modifier form and gap closure", "New calibration approaches");
 fig(s, "F3_mgmt_concept_gap.png", { x:0.7, y:1.75, w:11.9, h:4.7 });
-caption(s, "Planted x1.6 sustained; PCT 1 + 0.6 exp(-0.05 t), a transient release that fades. Mean absolute bias across nine metrics on managed stands: v12.9.x 10.2 to v12.10 4.8 (OSM 8.3). Gated, default off, so unmanaged stands are untouched.");
+caption(s, "Planted x1.6 sustained; PCT 1 + 0.6 exp(-0.05 t), a transient release that fades. In-sample managed mean absolute bias across nine metrics: v12.9.x 10.2 to v12.10 4.8 (OSM 8.3). Cross-validated on the next slide. Gated, default off, so unmanaged stands are untouched.");
+
+// ---------- 11b CROSS-VALIDATION (red-team robustness) ----------
+s = p.addSlide(); s.background = { color: CREAM };
+titleBar(s, "Does the lever hold out of sample?", "New calibration approaches");
+const cvhead = ["Test","Planted","PCT","Managed","OSM (managed)"];
+const cvrows = [
+  ["In sample (published)","6.9","4.1","4.8","8.3"],
+  ["Leave-one-installation-out","6.9","4.1","4.4","8.3"],
+  ["Managed split-half (200x)","--","--","6.7","8.1"],
+  ["Leave-one-province-out","6.7","7.3","7.1","8.3"]];
+const cvtab = [cvhead.map(c=>({text:c,options:{bold:true,color:WHITE,fill:{color:GREEN},fontSize:13,align:"center",valign:"middle",fontFace:BODY}}))]
+  .concat(cvrows.map((r,ri)=> r.map((c,ci)=>({text:c,options:{bold:ci===0,color:INK,fill:{color:ri%2?WHITE:"EDF1EA"},fontSize:12.5,align:ci===0?"left":"center",valign:"middle",fontFace:BODY}}))));
+s.addTable(cvtab, { x:0.6, y:1.75, w:7.6, colW:[3.0,1.15,1.15,1.15,1.15], rowH:0.6, border:{type:"solid",color:"DDE3DA",pt:1} });
+s.addText("Mean absolute level bias across nine metrics, lower is better", { x:0.6, y:1.5, w:7.6, h:0.25, fontFace:BODY, fontSize:11, italic:true, color:GREY });
+s.addShape(p.ShapeType.roundRect, { x:8.5, y:1.75, w:4.3, h:4.6, fill:{color:WHITE}, line:{color:"E0E6DD",width:1}, rectRadius:0.08 });
+s.addText([
+  { text:"What survives the red team\n", options:{bold:true, fontSize:16, color:GREEN} },
+  { text:"Planted is a robust win over OSM in every scheme, and it transfers across the NB to QC border.\n\n", options:{fontSize:13, color:INK} },
+  { text:"Managed overall edges OSM out of sample (4.4 to 6.7 vs 8.3).\n\n", options:{fontSize:13, color:INK} },
+  { text:"Honest limit: PCT improves within the Acadian core but does NOT transfer across the province block (7.3 vs OSM 3.7). It reinforces reporting the Quebec edge as out of domain.", options:{fontSize:13, color:OSMc} }
+], { x:8.8, y:2.0, w:3.7, h:4.2, fontFace:BODY, valign:"top", lineSpacingMultiple:1.06 });
+caption(s, "Because both class multipliers sit at the 1.6 guard clamp, the modifier is a capped constant; fold coefficients do not move, so the in-sample and out-of-sample numbers nearly coincide.");
 
 // ---------- 12 CLIMATE ----------
 s = p.addSlide(); s.background = { color: CREAM };
@@ -190,7 +212,7 @@ s.addText("Close on the operational domain, ahead on realism and transparency", 
 const vr = [
   "On the operational inventory domain OSM and FVS-ACD v12.9.x are close, and OSM is strong. The 2018 conclusion does not replicate on independent in-domain data scored with a common NSVB system.",
   "FVS-ACD advantages: biological realism and long-horizon plateau, QMD, a validated climate-ready ESI driver, and full transparency in R.",
-  "v12.10 (near-term lever): the Chapter-11 direct-effect management modifiers close the managed-stand gap to OSM and beat OSM on planted stands. Gated, default off.",
+  "v12.10 (near-term lever): the Chapter-11 direct-effect management modifiers close the managed-stand gap to OSM (cross-validated) and clearly beat OSM on planted stands. PCT improves in-core but does not transfer to the Quebec edge. Gated, default off; unmanaged stands untouched.",
   "v13 (structural): keep ESI; domain restriction plus increment-consistent anchor recalibration; a Bayesian hierarchical mortality and ingrowth refit with the management effect embedded; uncertainty carried through."];
 let vy=2.2;
 vr.forEach((t,i)=>{
@@ -198,5 +220,13 @@ vr.forEach((t,i)=>{
   s.addText(t, { x:1.25, y:vy-0.05, w:11.4, h:1.0, fontFace:BODY, fontSize:14.5, color:"E7EEE4", valign:"top", lineSpacingMultiple:1.03 });
   vy += 1.15;
 });
+
+// ---------- 16 QUESTIONS / CLOSE ----------
+s = p.addSlide(); s.background = { color: GREEN };
+s.addText("Questions / Comments", { x:0.8, y:2.5, w:11.7, h:1.0, fontFace:HSERIF, fontSize:46, color:WHITE, bold:true });
+s.addText("Aaron Weiskittel  |  aaron.weiskittel@maine.edu  |  Center for Research on Sustainable Forests, University of Maine",
+  { x:0.8, y:3.7, w:11.7, h:0.5, fontFace:BODY, fontSize:15, color:MOSS2 });
+s.addText("All results reproducible and openly archived; plot coordinates stay on the analysis cluster, aggregates only.",
+  { x:0.8, y:4.35, w:11.7, h:0.5, fontFace:BODY, fontSize:13, italic:true, color:"AFC4AB" });
 
 p.writeFile({ fileName: OUT }).then(f=>console.log("WROTE", f));
