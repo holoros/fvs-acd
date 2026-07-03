@@ -55,3 +55,34 @@ Validation for either route: spatially blocked (one-degree or ecoregion) out-of-
 > You are continuing the FVS-ACD site-driver modernization. Read `active-projects/fvs-acd-site-update/HANDOFF_FVS-ACD.md` and `CHARTER.md` first. Established and not to be re-derived: tree-level growth carries no site signal beyond size and competition (do not touch the diameter-growth equations or build a tree-level modifier); the modern unified-target ESI predicts measured site index far better than the legacy ACD_CSI (R^2 0.91 vs 0.52); and an ESI-anchored Chapman-Richards dominant-height curve matches a measured-SI-anchored one (R^2 0.80). Connect to Cardinal via /hpc-cardinal. Goal: produce a robust, validated, ESI-anchored dominant-height site sub-model for the Acadian variant of FVS and a drafted code change.
 >
 > Tasks, in order: (1) capture the staged nlme fit at `/fs/scratch/PUOM0008/crsfaaron/maine_cfi/hier_esi_height_summary.csv`; refit if it did not converge. (2) Explore Andrew Finley's stLMM (https://finleya.github.io/stLMM, github.com/finleya/stLMM): install it, and fit the dominant-height level / site-index anchor as a Bayesian structured LMM predicting the site level from ESI with iid(species), an ecoregion CAR or DAGAR areal term, and an NNGP spatial term; handle the nonlinear Chapman-Richards age shape separately or via an ADA difference transform; compare models by WAIC. (3) Add species-specific (polymorphic) shapes to remove the mid-rotation age-residual bias. (4) Validate out-of-sample with one-degree or ecoregion spatial blocking, report R^2, RMSE, and projection-bias by horizon, and run a Bakuzis realism check. (5) Translate the fitted curve into FVS-ACD variant coefficients and draft the code change against github.com/MidgardNaturalResources/ForestVegetationSimulator (the ACD variant dominant-height/site-index routines), and prepare a note to David Diaz to coordinate the upstream PR. Data assets and paths are listed in the handoff. Use R with data.table/nlme/stLMM, run heavy fits as SLURM jobs, keep figures to r-analysis/advanced-viz conventions, no em dashes, plaintext math. Document results as dated memos in this folder.
+
+---
+
+## Update 2026-07-03: management-modifier robust re-fit (v12.10.1), red-team clamp resolved
+
+The one weakness the 3 July red team flagged (planted and PCT diameter-growth multipliers pinned to the 1.6
+guard clamp, an effective capped constant) is fixed in AcadianGY_12.10.1.r.
+
+- Diagnosis: the modifier was the ratio of class-mean NET increments; the mean predicted-untreated net
+  increment is near zero on mature managed stands (planted 1.06, PCT 0.26 m2/ha) because self-thinning
+  declines cancel gross growth (about 25 pct of stands have negative predicted-untreated net increment), so
+  the ratio blew up (5.2, 10.2) and pinned to the clamp.
+- Fix: re-fit the direct effect as a robust ADDITIVE direct-effect release (10 pct trimmed mean of per-stand
+  observed-minus-predicted-untreated increment, per metric). Fitted BA release planted +3.8, PCT +2.4 m2/ha.
+  Clamp-free; fold coefficients now move (planted BA release 3.6 to 4.1 across folds). Equivalent net
+  multiplier about 3.0 planted / 2.3 PCT, i.e. ABOVE the old clamp, which is why the capped version still
+  under-predicted planted.
+- Out of sample (same red-team battery): leave-one-installation-out managed MAE 1.4, leave-one-province 1.5,
+  200-fold managed split-half 5.6 beating OSM in 76 pct of reps. PCT now transfers across the NB<->QC
+  province block (4.1 vs OSM 3.7, was 7.3) and the PCT BA residual closes (+0.3 vs OSM -5.4). Unmanaged and
+  growing stands untouched (additive only on PLANTED/PCT). Long-horizon plateau holds at every amplitude
+  (self-thinning caps; 160-yr smoke test); engine planted amplitude set to 2.0, ceiling about +20 pct.
+  Gate-off byte-identical to v12.9.x (max dbh diff 0.0e+00); legacy path reproduces v12.5.0.
+- Files: scripts/AcadianGY_12.10.1.r (model), 20260703_management_modifier_robust_refit.md (full memo),
+  results/mgmt/mgmt_gap_closure_robust.csv, mgmt_scorecard_byclass_robust.csv, mgmt_modifier_coefs_robust.rds.
+  Deck FVS-ACD_Hennigar_Aug2026.pptx (slides 10, 11, verdict) and the pre-meeting brief, Hennigar reply, and
+  Ben Rice email drafts all reconciled to the robust numbers. Cardinal ~/magplot/verify: mgmt_diagnose.R,
+  mgmt_cv_robust.R, mgmt_finalfit.R, mgmt_plateau_sweep.R, hennigar_figs_robust.R. Aggregates only;
+  coordinates never left the node.
+- Open item for v13: pin the exact per-tree engine amplitude that reproduces the additive net release via a
+  full engine re-projection, inside the hierarchical mortality/ingrowth refit with management as a predictor.

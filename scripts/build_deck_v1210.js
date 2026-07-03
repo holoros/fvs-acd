@@ -1,4 +1,4 @@
-// FVS-ACD vs OSM Hennigar Aug 2026 deck, v12.10. pptxgenjs from scratch. CRSF forest palette.
+// FVS-ACD vs OSM Hennigar Aug 2026 deck, v12.10.1 (robust management-modifier re-fit). pptxgenjs from scratch. CRSF forest palette.
 const pptxgen = require("pptxgenjs");
 const p = new pptxgen();
 p.defineLayout({ name: "W", width: 13.33, height: 7.5 });
@@ -60,7 +60,7 @@ titleBar(s, "Data harmonized onto one currency", "Data harmonization");
 const stats = [["705","ESI-covered in-domain stands for the\nmanaged breakdown (733 pooled scorecard)"],
   ["NSVB","FIA volume and biomass as the\ncommon currency for every model"],
   ["ESI v8","30 m climate-and-terrain site\ndriver, cross-border coverage"],
-  ["5","models scored head to head\nv12.5.0, v12.7.0, v12.9.x, v12.10, OSM"]];
+  ["5","models scored head to head\nv12.5.0, v12.7.0, v12.9.x, v12.10.1, OSM"]];
 stats.forEach((c,i)=>{
   const x = 0.6 + i*3.05;
   s.addShape(p.ShapeType.roundRect, { x, y:1.9, w:2.8, h:2.7, fill:{color:WHITE}, line:{color:"E0E6DD",width:1}, rectRadius:0.08, shadow:{type:"outer",blur:6,offset:2,color:"D5DDD3",opacity:0.5} });
@@ -135,7 +135,7 @@ s.addText([
   { text:"The verified difference\n", options:{bold:true, fontSize:17, color:MOSS2} },
   { text:"OSM's diameter-growth table literally carries an ", options:{fontSize:14, color:WHITE} },
   { text:"IsManaged", options:{fontSize:14, color:GOLD, bold:true} },
-  { text:" column. FVS-ACD v12 has no management term anywhere.\n\nThat is the specific, source-level reason OSM is competitive on the heavily managed benchmark, and exactly what v12.10 targets.", options:{fontSize:14, color:WHITE} }
+  { text:" column. FVS-ACD v12 has no management term anywhere.\n\nThat is the specific, source-level reason OSM is competitive on the heavily managed benchmark, and exactly what v12.10.1 targets.", options:{fontSize:14, color:WHITE} }
 ], { x:8.6, y:2.05, w:3.9, h:3.9, fontFace:BODY, valign:"top", lineSpacingMultiple:1.1 });
 caption(s, "OSM ships as a compiled binary; the exposed diameter-growth RF table verifies the management covariate. Mortality and ingrowth management terms are documented, not source-exposed.");
 
@@ -147,24 +147,24 @@ s.addText([
   { text:"Direct effect only (Ch 11).\n", options:{bold:true, color:GREEN, fontSize:15} },
   { text:"The base equations already carry the indirect structural effect. The modifier isolates the direct effect by the multi-step method (Wang 1990).\n\n", options:{fontSize:12.5} },
   { text:"Planted = Type 2, sustained.\nPCT = Type 1, transient, decaying.\n\n", options:{bold:true, color:GREEN, fontSize:13.5} },
-  { text:"Result: managed total-volume bias -9.9 to -1.6 percent. v12.10 clearly beats OSM on planted; on managed overall it edges OSM out of sample. Both class multipliers sit at the 1.6 clamp, so this is a capped, principled lever, not a tuned fit.", options:{fontSize:12.5} }
+  { text:"Result: robust re-fit. The direct effect is a fitted additive release (planted +3.8, PCT +2.4 m2/ha BA), not a clamped ratio, so its fold coefficients move with the data. v12.10.1 clearly beats OSM on planted and edges OSM on managed out of sample. The effect is larger than the old 1.6 clamp allowed, which is why the capped version still under-predicted planted.", options:{fontSize:12.5} }
 ], { x:9.0, y:1.8, w:3.8, h:5.0, fontFace:BODY, color:INK, valign:"top", lineSpacingMultiple:1.05 });
 
 // ---------- 11 MODIFIER FORM + GAP ----------
 s = p.addSlide(); s.background = { color: WHITE };
 titleBar(s, "Modifier form and gap closure", "New calibration approaches");
 fig(s, "F3_mgmt_concept_gap.png", { x:0.7, y:1.75, w:11.9, h:4.7 });
-caption(s, "Planted x1.6 sustained; PCT 1 + 0.6 exp(-0.05 t), a transient release that fades. In-sample managed mean absolute bias across nine metrics: v12.9.x 10.2 to v12.10 4.8 (OSM 8.3). Cross-validated on the next slide. Gated, default off, so unmanaged stands are untouched.");
+caption(s, "Robust additive direct-effect release (planted +3.8, PCT +2.4 m2/ha BA), clamp removed; engine carries a sustained (planted) or decaying (PCT) diameter-growth effect bounded by self-thinning. In-sample managed mean absolute bias across nine metrics: v12.9.x 10.2 to v12.10.1 1.3 (OSM 8.3). Cross-validated on the next slide. Gated, default off, so unmanaged stands are untouched.");
 
 // ---------- 11b CROSS-VALIDATION (red-team robustness) ----------
 s = p.addSlide(); s.background = { color: CREAM };
 titleBar(s, "Does the lever hold out of sample?", "New calibration approaches");
 const cvhead = ["Test","Planted","PCT","Managed","OSM (managed)"];
 const cvrows = [
-  ["In sample (published)","6.9","4.1","4.8","8.3"],
-  ["Leave-one-installation-out","6.9","4.1","4.4","8.3"],
-  ["Managed split-half (200x)","--","--","6.7","8.1"],
-  ["Leave-one-province-out","6.7","7.3","7.1","8.3"]];
+  ["In sample (robust)","4.0","3.0","1.3","8.3"],
+  ["Leave-one-installation-out","3.8","3.1","1.4","8.3"],
+  ["Managed split-half (200x)","--","--","5.6","8.1"],
+  ["Leave-one-province-out","5.6","4.1","1.5","8.3"]];
 const cvtab = [cvhead.map(c=>({text:c,options:{bold:true,color:WHITE,fill:{color:GREEN},fontSize:13,align:"center",valign:"middle",fontFace:BODY}}))]
   .concat(cvrows.map((r,ri)=> r.map((c,ci)=>({text:c,options:{bold:ci===0,color:INK,fill:{color:ri%2?WHITE:"EDF1EA"},fontSize:12.5,align:ci===0?"left":"center",valign:"middle",fontFace:BODY}}))));
 s.addTable(cvtab, { x:0.6, y:1.75, w:7.6, colW:[3.0,1.15,1.15,1.15,1.15], rowH:0.6, border:{type:"solid",color:"DDE3DA",pt:1} });
@@ -173,10 +173,10 @@ s.addShape(p.ShapeType.roundRect, { x:8.5, y:1.75, w:4.3, h:4.6, fill:{color:WHI
 s.addText([
   { text:"What survives the red team\n", options:{bold:true, fontSize:16, color:GREEN} },
   { text:"Planted is a robust win over OSM in every scheme, and it transfers across the NB to QC border.\n\n", options:{fontSize:13, color:INK} },
-  { text:"Managed overall edges OSM out of sample (4.4 to 6.7 vs 8.3).\n\n", options:{fontSize:13, color:INK} },
-  { text:"Honest limit: PCT improves within the Acadian core but does NOT transfer across the province block (7.3 vs OSM 3.7). It reinforces reporting the Quebec edge as out of domain.", options:{fontSize:13, color:OSMc} }
+  { text:"Managed edges OSM out of sample (1.4 LOIO, 1.5 LOPO, 5.6 split-half vs 8.3).\n\n", options:{fontSize:13, color:INK} },
+  { text:"PCT now transfers across the province block too (4.1 vs OSM 3.7, was 7.3 under the clamp), and the PCT basal-area residual closes. Quebec edge still reported as out of domain, conservatively.", options:{fontSize:13, color:OSMc} }
 ], { x:8.8, y:2.0, w:3.7, h:4.2, fontFace:BODY, valign:"top", lineSpacingMultiple:1.06 });
-caption(s, "Because both class multipliers sit at the 1.6 guard clamp, the modifier is a capped constant; fold coefficients do not move, so the in-sample and out-of-sample numbers nearly coincide.");
+caption(s, "The robust additive re-fit removed the 1.6 clamp; fold coefficients now move with the data (planted BA release 3.6 to 4.1 across folds) and the out-of-sample numbers hold. In-sample class bias is near zero by construction, so the cross-validated numbers are the evidence.");
 
 // ---------- 12 CLIMATE ----------
 s = p.addSlide(); s.background = { color: CREAM };
@@ -212,7 +212,7 @@ s.addText("Close on the operational domain, ahead on realism and transparency", 
 const vr = [
   "On the operational inventory domain OSM and FVS-ACD v12.9.x are close, and OSM is strong. The 2018 conclusion does not replicate on independent in-domain data scored with a common NSVB system.",
   "FVS-ACD advantages: biological realism and long-horizon plateau, QMD, a validated climate-ready ESI driver, and full transparency in R.",
-  "v12.10 (near-term lever): the Chapter-11 direct-effect management modifiers close the managed-stand gap to OSM (cross-validated) and clearly beat OSM on planted stands. PCT improves in-core but does not transfer to the Quebec edge. Gated, default off; unmanaged stands untouched.",
+  "v12.10.1 (near-term lever): the Chapter-11 direct-effect management modifiers, re-fit as a robust additive release, close the managed-stand gap to OSM out of sample and clearly beat OSM on planted stands. PCT now transfers across the province block. Gated, default off; unmanaged stands untouched.",
   "v13 (structural): keep ESI; domain restriction plus increment-consistent anchor recalibration; a Bayesian hierarchical mortality and ingrowth refit with the management effect embedded; uncertainty carried through."];
 let vy=2.2;
 vr.forEach((t,i)=>{

@@ -31,9 +31,10 @@ material to each:
   lacked), so we built the FVS analogue as a principled direct-effect modifier following the Chapter 11
   framework in our own book (planted as a sustained Type 2 effect, PCT as a transient Type 1 effect). It
   closes the managed-stand gap to OSM and beats OSM on planted stands, and it stays a gated modifier rather
-  than a refit. I cross-validated it (it holds out of sample on planted; the PCT piece improves in the
-  Acadian core but does not transfer to the Quebec edge, which is one more reason to treat Quebec as out of
-  domain). I think that framing, and the modifier, are useful for the group.
+  than a refit. I fit it as a robust additive direct-effect release (planted about +3.8 m2/ha basal area,
+  PCT +2.4) rather than an unstable multiplicative ratio, and cross-validated it: it holds out of sample,
+  including across the New Brunswick to Quebec province block (managed mean absolute bias about 1.5 vs OSM
+  8.3 out of fold). I think that framing, and the modifier, are useful for the group.
 - Integrating climate. We have current and 2030 climate site surfaces and can talk about how to use the
   projected one as a scenario without contaminating the validated base.
 - AI and productivity. A lot of this benchmark and the refinements were done with an AI-assisted workflow,

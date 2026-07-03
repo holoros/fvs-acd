@@ -1,5 +1,14 @@
 # Strategic management modifiers (v12.10): fit, form, and scorecard by management class
 
+> UPDATE 3 July 2026 (v12.10.1 robust re-fit): the clamped multipliers below (planted 1.6, PCT amplitude
+> 1.6) were the red-team weakness. They pinned to the 1.6 guard clamp because they were the ratio of
+> class-mean NET increments and the mean predicted-untreated net increment is near zero on these mature
+> managed stands. They are superseded by a robust ADDITIVE direct-effect release (planted +3.8 m2/ha BA,
+> PCT +2.4), which is clamp-free, whose fold coefficients move with the data, and which holds out of sample
+> (leave-one-installation-out managed MAE 1.4, leave-one-province 1.5, split-half 5.6 beating OSM in 76 pct
+> of reps). See 20260703_management_modifier_robust_refit.md for the full re-fit. The clamped numbers in
+> this memo are retained below for the record.
+
 *2 July 2026. Execution of 20260702_management_modifier_strategy.md. Builds the planted (Type 2) and PCT
 (Type 1) direct-effect diameter-growth modifiers by the multi-step method (Wang 1990) per Weiskittel,
 Hann, Kershaw and Vanclay 2011, Ch 11, adds them to v12.9.x as gated ops modifiers (AcadianGY_12.10.r),

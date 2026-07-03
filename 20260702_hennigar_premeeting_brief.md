@@ -76,24 +76,28 @@ is a Type 2 sustained response (a sustained diameter-growth multiplier); precomm
 transient response (a multiplicative boost that decays with time since treatment). Mortality deliberately
 does not get a multiplicative modifier, which would distort the logistic asymptote.
 
-Scored by management class on the independent MagPlot set, the modifiers (v12.10) close the managed-stand
-gap to OSM. Managed total-volume level bias goes from -9.9 percent (v12.9.x) to -1.6 percent (OSM -7.4), and
-mean absolute bias across nine metrics from 10.2 to 4.8 (OSM 8.3). On planted stands v12.10 clearly beats
-OSM (total volume -4 vs OSM -20). Unmanaged stands are untouched, so this is a targeted lever, not a global
-mortality bump. The modifier is gated and default off, so v12.10 with the gate off is identical to v12.9.x.
+Scored by management class on the independent MagPlot set, the modifiers (v12.10.1) close the managed-stand
+gap to OSM. Out of sample (leave-one-installation-out) the managed mean absolute bias across nine metrics
+drops from 10.2 (v12.9.x) to 1.4, against OSM 8.3, and managed total-volume bias sits near zero (OSM -7.4).
+On planted stands v12.10.1 clearly beats OSM (total volume -4 vs OSM -20; basal area -3 vs OSM -21).
+Unmanaged stands are untouched, so this is a targeted lever, not a global mortality bump. The modifier is
+gated and default off, so v12.10.1 with the gate off is identical to v12.9.x.
 
-I red-teamed this before bringing it to you, because the managed cells are small and the calibration is on
-the same stands. Two honest points. First, both class multipliers sit at the 1.6 guard clamp (the raw
-increment ratios are 5 to 10 times, unstable on these mature stands), so the modifier is a capped constant,
-not a tuned fit, which is why it is hard to overfit. Second, it holds out of sample: under
-leave-one-installation-out cross validation the managed mean absolute bias is 4.4 (versus OSM 8.3 and
-v12.9.x 10.2), and a 200-fold managed split-half gives 6.7, improving over v12.9.x in 94 percent of splits.
-Planted is a robust win over OSM in every scheme and transfers across the New Brunswick to Quebec border.
-The one real limit: under a leave-one-province-out block the PCT effect does not transfer (it reverts to
-about the untreated level and falls behind OSM), so PCT is a within-Acadian-core improvement, not a general
-one, which is a further reason to report the Quebec edge as out of domain. The managed calibration data are
-thin (planted n=51, PCT n=95), so a shared managed-remeasurement set (FIA TRTCD and STDORGCD, the provincial
-PSPs) would let us firm it up and carry the effect into a mortality and ingrowth refit in v13.
+I red-teamed this before bringing it to you, and the red team found one soft spot, which I then fixed.
+The first version fit the modifier as a multiplicative ratio of increments, and both class multipliers
+pinned to a 1.6 guard clamp because the raw ratios were 5 to 10 times: I was dividing observed increment by
+the predicted-untreated net increment, and on these mature managed stands that net increment is near zero
+(self-thinning cancels gross growth), so the ratio blows up. That made it a capped constant, not a fitted
+coefficient. I re-fit it as a robust additive direct-effect release (planted +3.8 m2/ha basal area, PCT
++2.4), which is clamp-free and whose fold coefficients move with the data. It holds out of sample: leave-
+one-installation-out managed mean absolute bias 1.4 (OSM 8.3), leave-one-province 1.5, and a 200-fold
+managed split-half of 5.6 that beats OSM in 76 percent of reps. The effect turned out to be LARGER than the
+clamp allowed, not smaller, which is why the capped version still under-predicted planted. The re-fit also
+fixed the two things I was going to caveat: PCT now transfers across the New Brunswick to Quebec province
+block (4.1 vs OSM 3.7, was 7.3) and the PCT basal-area residual closes (+0.3 vs OSM -5.4). A 160-year
+projection confirms self-thinning still caps the plateau, so nothing runs away. The managed calibration data
+are still thin (planted n=51, PCT n=95), so a shared managed-remeasurement set (FIA TRTCD and STDORGCD, the
+provincial PSPs) would firm it up and carry the effect into a mortality and ingrowth refit in v13.
 
 ## 2. Site productivity (agenda item 1)
 

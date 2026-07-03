@@ -6,6 +6,17 @@ attacked as a skeptical reviewer would, then resolved or documented. All computa
 (~/magplot/verify); this memo carries aggregates only, coordinates never left the node. Plaintext math,
 no em dashes.*
 
+> UPDATE 3 July 2026 (RESOLVED in v12.10.1): the one genuine weakness this review surfaced, that the
+> planted and PCT multipliers pinned to the 1.6 guard clamp and were an effective capped constant, has
+> been fixed. The direct effect is re-fit as a robust ADDITIVE direct-effect release (planted +3.8 m2/ha
+> BA, PCT +2.4), which is clamp-free and whose fold coefficients move with the data. It holds out of sample
+> on the same battery below (leave-one-installation-out managed MAE 1.4, leave-one-province 1.5, split-half
+> 5.6 beating OSM in 76 pct of reps), and it additionally resolves two qualifications from this review: PCT
+> now transfers across the NB to QC province block (LOPO PCT 4.1 vs OSM 3.7, was 7.3) and the PCT basal-area
+> residual closes (+0.3 vs OSM -5.4, was -9.6). The long-horizon plateau is preserved (self-thinning caps
+> it at every amplitude tested). See 20260703_management_modifier_robust_refit.md. The clamped-constant
+> discussion below (Challenges 2 and 3) is retained as the record of the weakness and its resolution.
+
 ## Verdict up front
 
 v12.10 survives the red team. The headline claims hold up:
