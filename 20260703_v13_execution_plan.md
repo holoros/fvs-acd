@@ -29,20 +29,32 @@ height increment as a function of ESI, current height, and an age proxy on the M
 and compare to the current A-from-ESI anchor. Payoff: unbiased height removes most of the residual volume
 over-prediction at its source, which is the highest single-metric leverage.
 
-v13.1 hierarchical mortality, ingrowth, and management (task 73). The centerpiece; depends on the design
-matrix, not on v13.0. A Bayesian hierarchical refit (brms or Stan) of mortality, ingrowth, and the
-management effect together, with region, ecoregion, forest-type, and management random effects and the brms
-SDImax asymptote. This replaces the capped 1.6 modifier with a pooled management effect that transfers
-across provinces (fixing the PCT leave-one-province-out failure the red team found) and separates the NB
-growing and QC mature tails by construction rather than by a single relative-density knob. First step:
-assemble the managed and unmanaged remeasurement design matrix (FIA TRTCD and STDORGCD, MagPlot management
-group, NB and NS PSP treatment histories) with the grouping factors and a clean fit-versus-test split.
+v13.1 hierarchical mortality, ingrowth, and management (task 73). REDIRECTED 4 July 2026: management moves
+to the growth model and merges with v13.2. The 3 to 4 July runs established that the management effect is a
+growth (diameter-increment) release, not a mortality effect. On the growth scale it is cleanly identified
+and poolable (planted survivor diameter increment +0.087 cm/yr t 26; brms posterior planted gross basal-area
+release +0.125 m2/ha/yr, 95 percent +0.076 to +0.172, probability positive 1.0; partially pooled release
+beats a capped constant in 5 of 6 leave-one-region-out regions; hierarchical dAIC over capped 8355). On the
+hazard scale the same effect is negligible and unidentified: the glmer reference management terms are
+non-significant (treated p 0.16, planted p 0.065), the overnight brms mortality fit did not converge (max
+Rhat 3.86, 56 divergences) and both HR intervals span 1, and the region management-slope SD (1.21) dwarfs its
+mean (0.25) because the effect is not there. So v13.1 splits: the mortality and ingrowth hierarchical refit
+(region, ecoregion, forest-type random effects, brms SDImax asymptote) proceeds without a management hazard
+term, and the management release becomes a hierarchical predictor in the v13.2 diameter-growth refit
+(region-pooled slope on a managed indicator, forest-type and ecoregion intercepts). This still replaces the
+capped 1.6 modifier with a pooled effect that transfers out of region and closes the v12.10.1 open item (the
+exact per-tree diameter amplitude), just on the correct scale. Design matrix and both fits are built
+(20260704_v131_growthscale_results.md). Remaining: the NB versus QC province transfer needs the provincial
+managed remeasurement data (the August ask), which FIA cannot supply.
 
-v13.2 increment refit and prediction intervals (task 74). Depends on v13.0 (shared site term) and the
-expanded data. Refit or recalibrate the Kuehne diameter and height growth with the ESI term, enforce
-growth-yield compatibility, and propagate parameter and residual uncertainty into per-prediction credible
-intervals, the scorecard dimension v12 fails. First step: quantify current increment residual structure
-versus ESI, size, and density to decide refit versus recalibration.
+v13.2 increment refit, management release, and prediction intervals (task 74). Now absorbs the v13.1
+management effect. Depends on v13.0 (shared site term) and the expanded data. Refit or recalibrate the Kuehne
+diameter and height growth with the ESI term, add management as a hierarchical predictor (region-pooled slope
+on a managed indicator with forest-type and ecoregion intercepts, per the 4 July growth-scale result),
+enforce growth-yield compatibility, and propagate parameter and residual uncertainty into per-prediction
+credible intervals, the scorecard dimension v12 fails. First step: quantify current increment residual
+structure versus ESI, size, and density to decide refit versus recalibration, and fold in the growth-scale
+management design matrix already built (v131g_fitset.rds on Cardinal).
 
 v13.3 climate scenario, data expansion, and scorecard CI (task 75). Ongoing and partly parallel. Add the
 ESI 2030 and time-varying surface as a separate forward scenario mode (never benchmarked on). Expand the

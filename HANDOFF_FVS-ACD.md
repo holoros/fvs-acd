@@ -151,3 +151,44 @@ modifiers, gate on) stays the shipped operational version.
    v131_loro.R, v131_brms.sbatch. Fitted objects stay on Cardinal ~/v13_kickoff/. Coordinates never left the
    node. Cardinal SSH note: the sandbox global ssh config is unusable (bad owner on a read-only file); connect
    by running ssh inside `unshare -rm` with a tmpfs mounted over /etc/ssh/ssh_config.d.
+
+---
+
+## Update, 4 July 2026: v13.1 redirected to the growth scale (management is a growth-release effect)
+
+Autonomous OODA run after the overnight brms mortality fit (job 12192521) finished but did not converge (max
+Rhat 3.86, min bulk ESS 4.5, 56 divergences) with the management hazard effect weakly identified (treated HR
+1.01, planted HR 0.90, both intervals span 1). Tested the interpretation that the management signal is a
+growth (release) effect, and it is. v12.10.1 stays shipped; nothing adopted.
+
+Thread A (growth scale, the answer). Built a stand-level growth design matrix from the same 8.22 M-tree CONUS
+remeasurement pairs, aggregated to the same stand key as the mortality design (237,374 stands, 207,109 fit,
+30,265 held out; 24,909 planted, 18,160 treated; 48 regions, 84 eco, 150 fortype). Fit a hierarchical growth
+model (region + eco + fortype intercepts plus a region random slope on management) on three responses: gross
+survivor basal-area increment, net basal-area increment, and survivor diameter increment. The management
+release is cleanly identified and strongest on planted: survivor diameter increment planted +0.087 cm/yr (t
+26), gross BA increment planted +0.125 m2/ha/yr (t 5.4, brms posterior 95 percent +0.076 to +0.172, P(positive)
+1.0), net BA increment planted +0.290 m2/ha/yr (about +2.9 m2/ha over a 10-yr interval, matching the v12.10.1
+MagPlot additive planted release of +3.8 from independent FIA data). Hierarchical beats capped constant by dAIC
+8355 (gross), and the partially pooled release beats the capped constant in 5 of 6 leave-one-region-out
+regions. brms Gaussian fit converged cleanly (max Rhat 1.04, 0 divergences), the opposite of the mortality fit
+on the identical crossed geometry. This is the proper home for the v12.10.1 additive release and it closes the
+v12.10.1 open item (the per-tree diameter amplitude).
+
+Thread B (mortality repair, secondary). Four brms mortality parameterizations all fail to converge (overnight
+Rhat 3.86 / 56 div; v1 tight-prior stalled and cancelled; v2 faster Rhat 4.21 / 426 div; v3 with the region
+management slope dropped 0 div but Rhat 4.04 and min bulk ESS 4.6, chains failing to mix). The non-convergence
+is the signature of a management hazard effect too weak to anchor the sampler. The one cleanly converged fit is
+the glmer reference: management terms non-significant (treated p 0.16, planted p 0.065), HR intervals spanning
+1, region slope SD 1.21 dwarfing its mean. Honest conclusion: management acts through growth; a mortality
+management term is not warranted.
+
+Redirect. v13.1 management moves from the mortality model to the growth model and merges with v13.2 (management
+becomes a hierarchical predictor on diameter growth: region-pooled slope on a managed indicator with fortype
+and eco intercepts). The v13.1 mortality/ingrowth refit proceeds with region and composition random effects but
+no management hazard term. Province transfer still needs the provincial managed remeasurement data (the August
+ask). Deliverable 20260704_v131_growthscale_results.md; scripts scripts/v131_growth_assembly_fit.R,
+v131_growth_brms.R, v131_mort_repair.R, v131_mort_repair_v2.R, v131_mort_repair_v3.R. Results
+results/v13_kickoff/v131g_*.csv and v131_mort_repair_*.csv. Fitted objects on Cardinal ~/v13_kickoff/
+(v131g_fitset.rds, v131g_brms_fit.rds, v131_mort_repair_v2/v3_fit.rds). Execution plan and v13 roadmap updated.
+Coordinates never left the node.

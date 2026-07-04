@@ -1,0 +1,10 @@
+metric,value
+n_all,237374
+n_fit,207109
+n_heldout,30265
+n_region,48
+n_eco,84
+n_fortype,150
+n_planted,24909
+n_treated,18160
+n_none,194305
