@@ -192,3 +192,45 @@ v131_growth_brms.R, v131_mort_repair.R, v131_mort_repair_v2.R, v131_mort_repair_
 results/v13_kickoff/v131g_*.csv and v131_mort_repair_*.csv. Fitted objects on Cardinal ~/v13_kickoff/
 (v131g_fitset.rds, v131g_brms_fit.rds, v131_mort_repair_v2/v3_fit.rds). Execution plan and v13 roadmap updated.
 Coordinates never left the node.
+
+---
+
+## Update, 4 July 2026 (afternoon): v12.10.1 red-team + stress test + pooled-parity reach
+
+Autonomous stress-and-parity run. v12.10.1 stays shipped; v12.10.2 built and gated but NOT adopted.
+
+Red team (20260704_v12101_redteam.md). v12.10.1 survives all six challenges. Managed win is out of sample
+(leave-one-installation-out managed mean abs bias 1.33 vs OSM 8.33, planted 3.95 vs 16.69, PCT 3.04 vs 3.73),
+additive fold coefficients move (planted 3.57 to 4.14), not a clamped constant. Additive release is physically
+bounded (managed predicted SDI max 803 planted / 1276 PCT, inside the unmanaged envelope; self-thinning cap holds
+at every amplitude). Consistent with the v13.1 growth-not-mortality finding. Pooled honestly behind OSM (5.0 vs
+3.2, EF 0.71 vs 0.75, TOST 7 vs 8 of 9). Equivalence and Bakuzis not gamed. One omission to add to the deck: the
+ingrowth result.
+
+Stress test (20260704_v12101_stress_and_parity.md). Bakuzis: v12.10.1 = v12.9.x unmanaged (byte identical),
+passes all five relations (Reineke -1.59, plateau 36, site ordering, Eichhorn, Sukachev); management-on plateau
+holds at every amplitude; v12.5.0 still fails self-thinning; OSM does not plateau. Matrix figure
+figures/fvsacd_bakuzis_matrix.png. Ingrowth: predicted (expected-value hurdle) NB 17.9 vs observed 39.8, QC 11.7
+vs 19.7 stems/ha/yr, so recruitment is under-predicted to about 45 to 59 percent of observed, but responds in the
+correct direction to density and management (planted recruit more than unmanaged: NB 21.5 vs 16.2), and the
+additive release and height handling do NOT distort recruitment. This is the residual of the 2018 too-infrequent
+problem, lifted off the near-zero floor but not closed; a v13 ingrowth target and an honest new slide row.
+Sensitivity: managed win survives release +/-30 percent (managed MAE 6.43, 4.85, 4.00 at scale 0.7, 1.0, 1.3, all
+beating OSM 8.33), SDI stays bounded (planted max 813 at +30 percent).
+
+Pooled parity reach (the answer is no, keep v12.10.1). Top-height over-prediction was the target (level bias f NB
+1.075, QC 1.101; increment ratio NB 1.73, QC 8.89). The operational height is calc_dht (the ESI domht anchor is
+off in the shipped config), so the lever is a gated per-region height-increment factor (AcadianGY_12.10.2.r,
+neutral factor reproduces v12.10.1). Full engine re-projection confirms the first-order estimate: top-height bias
+falls +9.2 to +4.0 (lands at OSM +4.4), but pooled mean abs bias WORSENS 4.46 to 5.02, total volume flips +2.1 to
+-3.6 (NB core -8.8), and QC modeling efficiency collapses to 0.134. The mechanism is error cancellation: FVS-ACD
+total volume is near-unbiased on the unmanaged core because over-predicted top height (+9 percent) offsets
+under-predicted basal area (about -8 percent); correcting height alone breaks the offset. Decision: keep
+v12.10.1; pooled parity is the v13.0 domain-plus-increment anchor (fix height AND basal area jointly on the
+mature-Acadian August refit data). v12.10.2 gated lever kept for that joint fit. No deck rebuild; add the ingrowth
+row to the biological-realism slide.
+
+Files: 20260704_v12101_redteam.md, 20260704_v12101_stress_and_parity.md, figures/fvsacd_bakuzis_matrix.png,
+results/parity/cb_v12102_results.csv, results/parity/bakuzis_relations.csv. Cardinal ~/magplot/verify:
+bench_parity.R, score_parity.R, AcadianGY_12.10.2.r, cb_v12102_results.csv, topht_recal_diag.csv. Coordinates
+never left the node.
