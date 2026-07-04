@@ -114,3 +114,40 @@ holdout, then provincial transfer test.
 Deliverable: 20260703_v13_kickoff_results.md. Scripts scripts/v130_height_anchor.R, v131_hier_assembly.R,
 v131_hier_fit.R. Results results/v13_kickoff/. Fitted objects on Cardinal ~/v13_kickoff/. Coordinates never
 left the node.
+
+---
+
+## Update, 3 July 2026 (evening): v12.10.1 full benchmark, deck to v12.10.1, v13.1 brms fit
+
+Autonomous run, three tasks for the 18 August Hennigar meeting. v12.10.1 (robust additive-release management
+modifiers, gate on) stays the shipped operational version.
+
+1. Full independent five-way benchmark of v12.10.1 vs v12.5.0, v12.7.0, v12.9.x, OSM, identical single-keyed
+   -merge scoring on the 705-stand in-domain MagPlot set, all nine NSVB metrics. Pooled: v12.10.1 mean abs
+   level bias 5.0 pct, mean NSE 0.71, 7 of 9 TOST level equivalences, tracking v12.9.x because the modifier
+   touches only managed stands. Headline is the managed cell: out of sample (leave one installation out) mean
+   abs bias MANAGED 1.3 vs OSM 8.3 and v12.9.x 10.2; PLANTED 4.0 vs OSM 16.7; PCT 3.0 vs OSM 3.7. Reproduced
+   the managed 1.33 vs OSM 8.33 claim. Bakuzis all five pass; plateau holds at every amplitude. Deliverable
+   20260703_v12101_full_benchmark.md; scorer scripts/scorecard_v1210.R; results/scorecard_five_v1210.csv.
+
+2. Deck rebuilt to v12.10.1: FVS-ACD_Hennigar_Aug2026.pptx, 17 slides, robust additive-release framing
+   throughout (1.6 clamp mentioned only as resolved), five-way scorecard heatmap, by-management-class gap
+   closure, by-forest-type, Bakuzis, long-horizon plateau, ESI site productivity with the QC edge as
+   extrapolation, light NSVB and AI slides, and a new dedicated v13 forward slide (height domain bounded,
+   hierarchical management transfers, provincial-data ask). QA rendered to images and inspected. Pre-meeting
+   brief and both email drafts already read as robust additive release; no capped-constant framing of
+   v12.10.1 itself remains.
+
+3. v13.1 promotion. glmer hierarchical reference fit confirmed (forest-type RE sd 0.60, ecoregion 0.35,
+   region management slope sd 1.21; dAIC vs capped constant about 1.3e7) and leave one region out transfer
+   reproduced (partially pooled beats capped constant 5 of 5 held-out regions, results/v13_kickoff/
+   v131_loro_transfer_full.csv). Full Bayesian brms fit is HARD on the full 208,846-stand crossed-effects
+   geometry: first attempt (init 0) failed on the cloglog exposure boundary (Rhat 27, all draws divergent,
+   diagnosed); reparametrized refit (scaled predictors, boundary-safe inits) adapts correctly but two of four
+   chains sample very slowly, so no all-chain converged posterior landed this run. Cardinal job 12192521 left
+   RUNNING; converged brms posteriors are the follow-on to append. Recommended next step to make it tractable:
+   fit on a balanced background subsample (as glmer did) and relax the tree-depth ceiling. v13.1 not adopted;
+   v12.10.1 stays shipped. Deliverable 20260703_v131_brms_results.md; scripts scripts/v131_brms_fit.R,
+   v131_loro.R, v131_brms.sbatch. Fitted objects stay on Cardinal ~/v13_kickoff/. Coordinates never left the
+   node. Cardinal SSH note: the sandbox global ssh config is unusable (bad owner on a read-only file); connect
+   by running ssh inside `unshare -rm` with a tmpfs mounted over /etc/ssh/ssh_config.d.
