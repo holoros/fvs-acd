@@ -205,6 +205,26 @@ ai.forEach(c=>{
   ay += 1.65;
 });
 
+// ---------- 13b V13 FORWARD ----------
+s = p.addSlide(); s.background = { color: WHITE };
+titleBar(s, "v13 forward: what the data lets us commit to now", "Roadmap");
+const v13 = [
+  ["Height domain bounded",
+   "The domain mask is a go: gate off predictions outside the calibrated ESI range so the anchor never extrapolates. The increment-consistent anchor refit is parked until mature Acadian data arrive, because on US only data the ESI to asymptote mapping is unidentified. Bound the domain now, refit the anchor once the older stands exist."],
+  ["Hierarchical management transfers",
+   "A Bayesian hierarchical mortality and management fit, with a region random slope on management. The region standard deviation is 1.21 on the log-hazard scale, far larger than the mean management effect, so a single capped constant is the wrong object. Leave one region out transfer beats the capped constant in 5 of 5 held out regions."],
+  ["Provincial-data ask",
+   "New Brunswick and Nova Scotia PSP treatment histories, the provincial site surfaces, and managed remeasurements. August is the moment to request a harmonized data sharing arrangement, so the managed calibration is fit on the full Acadian record rather than the thin planted and PCT samples we have now."]];
+let v13y = 1.75;
+v13.forEach((c,i)=>{
+  s.addShape(p.ShapeType.roundRect, { x:0.6, y:v13y, w:12.1, h:1.5, fill:{color:CREAM}, line:{color:"E0E6DD",width:1}, rectRadius:0.06 });
+  s.addShape(p.ShapeType.ellipse, { x:0.85, y:v13y+0.55, w:0.42, h:0.42, fill:{color:GOLD} });
+  s.addText(String(i+1), { x:0.85, y:v13y+0.55, w:0.42, h:0.42, align:"center", valign:"middle", color:GREEN, bold:true, fontSize:16, fontFace:BODY });
+  s.addText(c[0], { x:1.5, y:v13y+0.12, w:3.2, h:1.25, fontFace:HSERIF, fontSize:17, bold:true, color:GREEN, valign:"middle" });
+  s.addText(c[1], { x:4.85, y:v13y+0.12, w:7.65, h:1.25, fontFace:BODY, fontSize:12.5, color:INK, valign:"middle", lineSpacingMultiple:1.02 });
+  v13y += 1.62;
+});
+
 // ---------- 14 VERDICT ----------
 s = p.addSlide(); s.background = { color: GREEN };
 s.addText("VERDICT & ROADMAP", { x:0.7, y:0.72, w:12, h:0.4, fontFace:BODY, fontSize:13, color:MOSS2, bold:true, charSpacing:2 });
