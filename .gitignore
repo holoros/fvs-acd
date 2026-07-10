@@ -19,3 +19,5 @@ _context/.ssh-cardinal/
 FVS-ACD_Hennigar_Aug2026.pdf
 *_backup_*.pptx
 *.pdf#
+__pycache__/
+*.pyc
