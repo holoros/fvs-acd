@@ -288,7 +288,8 @@ rows <- rbindlist(list(build_rows_from_cb(), build_rows_from_ne()), use.names = 
 # Fit or fall back, per region, to the six numbers the hook consumes.
 fit_region <- function(region) {
   co_old <- old_coef[[region]]; if (is.null(co_old)) co_old <- c(1, 0)
-  dr <- if (!is.null(rows) && nrow(rows)) rows[region == ..region & is.finite(ascale_new) & is.finite(esi)] else NULL
+  .reg <- region   # local var to avoid data.table column/name collision in the i-expression
+  dr <- if (!is.null(rows) && nrow(rows)) rows[region == .reg & is.finite(ascale_new) & is.finite(esi)] else NULL
 
   if (is.null(dr) || nrow(dr) < 20) {
     # FALLBACK: no usable per-stand rows. Scale the OLD coefficients by the
