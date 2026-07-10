@@ -1,0 +1,31 @@
+# files_to_upload.txt for the FVS-ACD v12.10.1 Zenodo deposit.
+# One path per line. Paths resolve from this package folder (zenodo_v12101/).
+# Inline # comments are stripped by upload_to_zenodo.py.
+# ONLY shareable artifacts are listed. No per-stand results (cb_*_results.csv),
+# no plot coordinates, no FIA true coordinates, no proprietary provincial data.
+
+# Lead visual first so it sorts first and is the default preview.
+00_FVS-ACD_v12101_graphical_abstract.png
+
+# Frozen model source
+../scripts/AcadianGY_12.10.1.r          # frozen v12.10.1 R model (md5 027ad5e5...)
+
+# Reports
+../FVS-ACD_v12.10.1_benchmark_report_FINAL_20260710.md   # full independent benchmark report
+../20260629_FVS-ACD_variant_overview_GTR_draft.md        # variant overview GTR draft
+
+# Six summary figures
+../figures/fig1_scorecard_heatmap.png
+../figures/fig2_accuracy_by_forest_type.png
+../figures/fig3_bakuzis_relations.png
+../figures/fig4_selfthinning_trajectory.png
+../figures/fig5_offsetting_bias.png
+../figures/fig6_managed_oos_bias.png
+
+# Aggregate scorecard (copied into this package) and its data dictionary
+five_way_scorecard.csv
+data_dictionary.csv
+
+# Self-describing deposit docs
+README.md
+CITATION.cff

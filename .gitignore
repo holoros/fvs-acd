@@ -9,3 +9,13 @@ results/seven_islands/silc_plot_si2.csv
 .Rhistory
 results/seven_islands/pid_coords.csv
 node_modules/
+figures/_data/
+*.~lock*
+.~lock.*
+_context/.gh-holoros/
+_context/.ssh-cardinal/
+*token*
+*.zenodo_token
+FVS-ACD_Hennigar_Aug2026.pdf
+*_backup_*.pptx
+*.pdf#

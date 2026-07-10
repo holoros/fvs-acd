@@ -1,0 +1,27 @@
+scored 2026-07-08 (browser-driven OnDemand session; local Cardinal MCP not connected).
+v13.0: fit COMPLETE and component-unbiased in domain (height incr ratio 1.000/0.967; BA incr ratio 1.000).
+        BUILD ATTEMPTED this run: build_v130.py transferred (md5-verified) and run against ~/AcadianGY_12.10.2.r.
+        Anchor guard tripped: "ANCHOR ERROR: EDIT1a k/p/base parameter line found 0 times" (exit 2). No 13.0 file written.
+        Root cause = kit/model mismatch, not model quality. Live 12.10.2 domht block (lines 3593-3609):
+          3595 .k <- 0.0039; .p <- 0.726; .base <- 50   (kit EDIT1a expects .k <- 0.0803; .p <- 0.720; .base <- 50)
+          3602 .Aasym <- (.esi/.afac)/((1-exp(-.k*.base))^.p)  (kit EDIT1b expects .Asym)
+          3603 .target <- .Aasym * (1-exp(-.k*.age))^.p        (kit EDIT1c expects .Asym)
+          3609 cf line (EDIT1d) and 3652 sdm select drop (EDIT2b) DO match.
+        FIX (kit edit, not model surgery): set build_v130.py EDIT1a target to 0.0039/0.726, EDIT1b/1c .Asym -> .Aasym,
+        re-review diff, rerun. Then parse/smoke/cb_v130/gate/Bakuzis/subagent per runbook. Did NOT hand-edit anchors.
+        Diagnostics on Cardinal: ~/build_v130.log, ~/v130_anchor_probe.txt.
+v13.1: HARVESTED 2026-07-10 (local Cardinal MCP). Jobid 12275867 FAILED (exit 1:0), not a timeout; ran 11h49m.
+        Mortality fit finished but did NOT converge (max Rhat 3.64, ESS ~5-11, 566/3000 divergences, 57 pct
+        max treedepth, all chains E-BFMI < 0.3) so its summaries are untrustworthy. Ingrowth then crashed:
+        object 'YEARS' not found (data.table fifelse, YEARS vs years casing) before writing any output.
+        Gate could not run (ingrowth inputs absent) and mortality would fail the convergence gate regardless.
+        Verdict: PARK. Fix the YEARS casing bug + reparameterize mortality before rerun; NOT auto-resubmitted.
+        Failure note: _context/v13_autosubmit/failure.md (12275867 section). Narrative: results md 10 Jul update.
+Results: repos/fvs-acd/20260708_v130_joint_and_v131_refit_results.md ("v13.0 build and gate" section, 8 Jul evening).
+Nothing shipped to an operational AcadianGY_*.r. v12.10.1 stays the shipped August version.
+
+--- 10 July 2026 Phase 1 (v12.10.1 freeze) DONE ---
+Frozen: scripts/AcadianGY_12.10.1.r (comment-only header, md5 027ad5e5532b801718f8ad0b22bada9d), the canonical operational file (v12.9.x base + gated Chapter-11 mgmt modifiers, default off).
+Baseline corrected: cb_v12102 was a 12.9.2.r approximation; adopted cb_v12101_results.csv (from the actual 12.10.1.r, gate-off) as the canonical base scorecard on Cardinal. Pooled bias v12.10.1: BA -10.07, TOPHT +2.97, TOTVOL -3.96 pct (vs 12.9.2 -9.31/+2.79/-3.06; <1 pt each).
+Recipe + reconciliation: repos/fvs-acd/20260710_v12101_FREEZE_and_run_recipe.md.
+Not pushed to GitHub remote (local freeze only). v13.0 gate should now use cb_v12101, not cb_v12102 (Phase 2).

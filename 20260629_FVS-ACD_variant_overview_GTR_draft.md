@@ -1,18 +1,21 @@
 # Acadian (ACD) Variant Overview of the Forest Vegetation Simulator
 
-**DRAFT variant overview / General Technical Report scaffold. 29 June 2026.**
+**DRAFT variant overview / General Technical Report scaffold. 29 June 2026, updated 7 July 2026.**
 
 *Structured after the USDA Forest Service Northeast (NE) Variant Overview (FVS Staff 2008, rev.
 August 2023) so it can become the official FVS-ACD variant documentation. Equation content is drawn
-from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY 12.9.0
-source, built on the 12.7.1 development line. AcadianGY 12.5.0 remains the current operational and
-production version; 12.9.0 is the recommended forward version documented here, pending adoption.
-Sections still marked [POPULATE] need team-written text before publication (the geographic range map
-figure, the keyword and database usage reference, the full Literature Cited list, and the Appendix C/D
-validation and keyword material); the species and component parameter tables (Appendices A and B) are
-now populated directly from the AcadianGY 12.9.0 source. Plaintext math, no em dashes; this draft will
-be rendered to a formatted Word/PDF GTR. Updated 1 July 2026 with the three-model independent scorecard
-(v12.5.0, v12.9.0, OSM-ACD), the v12.9.0 refinement, and the species/parameter appendices.*
+from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY source,
+built on the 12.7.1 development line. AcadianGY 12.10.1 is the current operational and production
+version, documented here. Sections still marked [POPULATE] need team-written text before publication
+(the geographic range map figure, the keyword and database usage reference, the full Literature Cited
+list, and the Appendix C/D validation and keyword material); the species and component parameter tables
+(Appendices A and B) are populated directly from the AcadianGY source and are unchanged from v12.9.0
+through v12.10.1, since the later refinements touch mortality, ingrowth, self-thinning, and the
+management modifiers, not the species-level growth, crown, taper, or volume parameters. Plaintext math,
+no em dashes; this draft will be rendered to a formatted Word/PDF GTR. Updated 7 July 2026 to document
+v12.10.1 as the operational version, with the version lineage through 12.5.0, 12.7.0/12.7.1, 12.9.x,
+and 12.10.1, the five-way independent scorecard and honest scorecard position, the Bakuzis
+biological-realism pass, the disclosed ingrowth limit, and the planned v13 program.*
 
 ## Authors and Contributors
 
@@ -20,7 +23,7 @@ Aaron Weiskittel and the University of Maine Cooperative Forestry Research Unit 
 Acadian growth-and-yield model. Ben Rice (Midgard Natural Resources) maintains the FVS-ACD
 implementation and benchmarking. Component equations are credited to their authors throughout
 (Kuehne, Russell, Rijal, Li, Chen, Castle, Cen, and others; see Literature Cited). This overview
-documents the FVS-ACD variant as implemented in AcadianGY 12.9.0.
+documents the FVS-ACD variant as implemented in AcadianGY 12.10.1, the current operational version.
 
 Suggested citation: Weiskittel, A., Rice, B., and contributors. 2026. Acadian (ACD) Variant Overview
 - Forest Vegetation Simulator. CFRU / University of Maine, Orono, ME. [pages].
@@ -37,7 +40,7 @@ Suggested citation: Weiskittel, A., Rice, B., and contributors. 2026. Acadian (A
 7. Volume and Taper
 8. Modifiers (thinning, spruce budworm, hardwood form and risk)
 9. Model Application (site index rasters, cycle length, usage)
-10. Version 12.6.x Refinements
+10. Version Lineage, Current Operational Version (12.10.1), and Validation
 11. Literature Cited
 12. Appendices (species list, parameter tables)
 
@@ -326,6 +329,16 @@ Spruce budworm (Cen et al. 2018): balsam fir and spruce mortality, diameter and 
 cumulative defoliation, region ME and NB. Hardwood form and risk (Castle et al. 2018): mortality and
 diameter growth modifiers for selected hardwoods. All parameter tables in Appendix B.7.
 
+Direct-effect management modifiers (12.10.1). The current operational version adds the Chapter 11
+direct-effect management modifiers as gated additive releases on planted and precommercial-thinning
+(PCT) stands. Rather than a diameter-growth multiplier pinned to a guard clamp, the release is expressed
+as a robust additive term on the class of per-stand observed minus predicted-untreated increment (planted
++3.83 m² ha⁻¹ basal area, PCT +2.41 m² ha⁻¹, with proportional releases in the other metrics). It is
+gated by ops$use.mgmt.mod and applies only to planted and PCT stands, so the gate-off run is byte
+identical to v12.9.x on unmanaged stands. The release is a diameter-growth term, not a mortality term,
+is physically bounded within the unmanaged density envelope, and does not break the self-thinning
+plateau. See section 10.3 for the fit and validation.
+
 ## 9. Model Application
 
 CSI is supplied by the user or sampled from the raster surfaces (current and 2030/2060/2090 climate
@@ -333,33 +346,58 @@ normals); recent testing finds the 2030 surface reasonable. Cycle length is one 
 run from a tree list through the FVS interface or the AcadianGY R driver (make_stand, make_acd_tree,
 make_ops, AcadianGYOneStand). [POPULATE: keyword and database usage, analogous to Essential FVS.]
 
-## 10. Recommended version (12.9.0) and validation
+## 10. Version lineage, current operational version (12.10.1), and validation
 
-AcadianGY 12.5.0 is the current operational and production version. AcadianGY 12.9.0 is the recommended
-forward version, which integrates this development cycle's refinements into one file, built directly on
-12.7.1, and is documented here as the candidate to replace 12.5.0. The recommended configuration is: the Kuehne et al. (2022) diameter
-and height increment equations (4.6, 4.7) as the growth base; the validated ESI v8 as the site driver
-with the fitted ESI-anchored dominant height (3.4, 4.1); FIA NSVB volume and biomass (7); expected-value
-ingrowth, density-released (6); the coupled two-segment SDImax self-thinning (5); and the regional and
-composition-aware SDImax gate for the Quebec hardwood edge (5, 3.5). Every refinement is gated, and with
-the flags in their legacy position the build reproduces 12.5.0 bit for bit, so each is individually
-isolated and validated. 12.9.0 with its own gate unset reproduces 12.7.1 exactly.
+AcadianGY 12.10.1 is the current operational and production version and is frozen as the operational
+release for the 18 August 2026 Acadian Growth and Yield meeting; v13 is in progress but no v13 version is
+gated, so nothing in the v13 program below is a claimed result. v12.10.1 is the endpoint of a single
+development line that began with 12.5.0 and added one gated refinement at a time, each individually
+isolated so that with its flag in the legacy position the build reproduces the prior version bit for
+bit. The operational configuration is the Kuehne et al. (2022) diameter and height increment equations
+(4.6, 4.7) as the growth base; the validated ESI v8 as the site driver with the fitted ESI-consistent
+dominant-height anchor recalibration active (3.4, 4.1), which delivers the clean Bakuzis site ordering
+(10.2); a further top-height anchor-level parity correction available behind a gate but shipping off in
+the current config, deferred to v13.0 (see 10.3); FIA NSVB volume and biomass (7); expected-value,
+density-released ingrowth (6); the
+coupled two-segment relative-density self-thinning (5); the regional and composition-aware SDImax gate
+for the Quebec hardwood edge (5, 3.5); and the Chapter 11 direct-effect management modifiers as gated
+additive releases on planted and precommercial-thinning stands (8, and section 10.3 below).
 
-Refinements, in order of development:
-1. ESI site input (12.6.0), drop-in through the site slot; ESI v8 30 m surface adopted (12.7.0).
-2. Site-independent SDImax (12.6.0), from the brms re-estimation.
-3. SDImax-ceiling self-thinning (12.6.0), the density-frontier mortality.
-4. Expected-value ingrowth (12.6.1), fixing the under-recruitment stem-count deficit.
-5. ESI-anchored dominant height (12.7.0), fitted Chapman-Richards anchor (k 0.0039, p 0.726, base 50),
-   which removes the Bakuzis height site-ordering inversions (25 to 0).
-6. FIA NSVB volume and biomass through the emulator (12.7.x), R-squared 0.96 to 0.99 against FIA NSVB.
-7. Coupled two-segment relative-density self-thinning and density-released ingrowth (12.7.1), which
-   makes the long-horizon basal-area trajectory plateau at the biologically correct Acadian maximum
-   (about 33 m2/ha) instead of running away, and reduces the mature-stand volume and biomass
-   over-prediction.
-8. Regional and composition-aware SDImax gate (12.9.0), which closes the remaining mature-stand
-   over-prediction specifically in hardwood-dominated Quebec stands outside the Acadian-core ecoregion,
-   with an independent recent-FIA cross-check confirming zero effect on New Brunswick or Maine.
+The version lineage, in order of development:
+
+1. 12.5.0, the prior operational and production base. Kuehne et al. (2022) increment equations, climate
+   site index, and the 2012 stand and tree mortality. On long-horizon projection it does not self-thin,
+   with basal area climbing past 62 m² ha⁻¹ at age 120, and is not recommended for mature-stand or
+   long-horizon use.
+2. 12.7.0 and 12.7.1. The 12.7.x line added the validated ESI v8 site driver and the ESI-anchored
+   dominant height, FIA NSVB volume and biomass through the emulator (R-squared 0.96 to 0.99 against
+   FIA NSVB), the coupled two-segment relative-density self-thinning, and the density-released ingrowth.
+   Together these make the long-horizon basal-area trajectory plateau at the biologically correct
+   Acadian maximum (about 33 to 34 m² ha⁻¹) rather than running away, couple recruitment to relative
+   density so that a stand builds, self-thins along the density frontier, and rebounds as ingrowth
+   releases, and put observed and predicted tree lists on a single current volume and biomass currency.
+3. 12.9.x. A CONUS-scale brms re-estimation of plot-level maximum SDI (independent of the earlier
+   northern New England one) confirmed that composition and ecoregion, not site index, dominate the
+   variance in the self-thinning ceiling. v12.9.x adds a gated multiplier to SDImax active only when a
+   stand is simultaneously Quebec, outside the Acadian-core ecoregion, and hardwood-dominated. This
+   closes the remaining mature-stand over-prediction in exactly that population, with an independent
+   recent-FIA cross-check confirming zero effect on New Brunswick or Maine (the province term in the
+   gate excludes Maine by construction).
+4. 12.10.1. Chapter 11 direct-effect management modifiers, expressed as gated additive releases on
+   planted and precommercial-thinning (PCT) stands (section 10.3). The modifier is gated by
+   ops$use.mgmt.mod and touches only planted and PCT stands; the gate-off run is byte identical to
+   v12.9.x on the 266 unmanaged stands. This is the current operational version.
+
+Every refinement is gated, and with the flags in their legacy position the build reproduces the base
+bit for bit, so each is individually isolated and validated. v12.10.1 with its management gate off
+reproduces v12.9.x exactly, and v12.9.x with its own gate unset reproduces 12.7.1 exactly.
+
+Provenance note on the operational build. The operational scorecard baseline documented in this section was
+produced from the AcadianGY_12.9.2.r source plus the recorded operational ops recipe, the gated management
+release applied through make_ops on the v12.9.x engine. A standalone AcadianGY_12.10.1.r script that folds
+that recipe into the source now exists in the repository and carries the AcadianV12.10.1 version tag; it is
+being reconciled against the recipe-driven baseline to confirm it reproduces the scored results byte for
+byte before it supersedes the recipe as the canonical operational file.
 
 ### 10.1 Four-model independent scorecard (1 July 2026)
 
@@ -450,17 +488,111 @@ Biological realism (Bakuzis matrix): site ordering clean (0 of 125 inversions, t
 anchor), Reineke self-thinning slopes -1.28 to -1.35, one moderate Eichhorn flag. Observed ingrowth
 about 40 stems per ha per year in New Brunswick and 20 in Quebec, matched by the density-released form.
 
-The regional and composition-aware stand-mortality refit called for here is v12.9.0 (section 10.2): it
-closes the Quebec mature-stand over-prediction for the specific hardwood-dominated, outside-Acadian-core
-population, without reopening the New Brunswick under-prediction, since the gate excludes New Brunswick
-by construction. Two items bound the next development cycle. First, a tapered version of the v12.9.0
-correction for long-horizon carbon and old-growth work, since the current flat multiplier under-shoots
-the realistic basal-area plateau for the corrected population when run past the short-interval calibration
-window (section 10.2). Second, the long-horizon OSM comparison: on the Seven Islands stands the two agree
-at the start and then diverge, FVS-ACD self-thinning and OSM accumulating, first-order model-form
-uncertainty with no observed truth at that horizon, which localizes to stand mortality; the four-model
-scorecard (10.1) confirms this pattern holds on independent data at shorter, observed intervals as well
-(OSM's negative modeling efficiency versus AcadianGY's positive efficiency on every metric).
+### 10.3 v12.10.1: direct-effect management modifiers, the current operational version
+
+v12.10.1 adds the Chapter 11 direct-effect management modifiers as gated additive releases on planted
+and precommercial-thinning (PCT) stands, the current operational version. Relative to the v12.10.0
+prototype, the planted and PCT diameter-growth multipliers no longer pin to the old 0.7 to 1.6 guard
+clamp. The direct effect is re-expressed as a robust additive release, planted +3.83 m² ha⁻¹ basal area
+and PCT +2.41 m² ha⁻¹ (ten percent trimmed means over the class of per-stand observed minus
+predicted-untreated increment, with proportional releases in the other metrics), which is equivalent to
+a net multiplier of about 3.0 planted and 2.3 PCT, above the old 1.6 ceiling, which is why the clamped
+version still under-predicted planted. The modifier is gated by ops$use.mgmt.mod and applies only to
+planted and PCT stands; the gate-off run is byte identical to v12.9.x on the 266 unmanaged stands. The
+additive fold coefficients move with the data (planted basal-area release 3.57 to 4.14, PCT 2.28 to 2.57
+across cross-validation folds), so it is a fitted release, not a clamped constant. It is physically
+bounded: managed predicted SDI stays inside the unmanaged envelope, the release is a diameter-growth
+term rather than a mortality term, and the self-thinning plateau holds at every amplitude tested.
+
+The honest scorecard position. A five-way independent benchmark (v12.5.0, v12.7.0, v12.9.x, v12.10.1,
+and OSM v2.26.1) on the identical held-out in-domain data (MagPlot New Brunswick n=355 and ESI-covered
+Quebec n=350, plus recent Maine FIA for the growing-stand cross-check) places v12.10.1 between v12.9.x
+and OSM on the pooled operational domain and ahead of both on the managed cell.
+
+**Table 10.1.** Pooled operational scorecard, v12.10.1 versus the comparison models (nine NSVB metrics).
+
+| model | mean absolute level bias (%) | mean modeling efficiency | TOST level equivalences (of 9) |
+|---|---|---|---|
+| v12.9.x | 4.4 | 0.71 | 6 |
+| v12.10.1 | 5.0 | 0.71 | 7 |
+| OSM v2.26.1 | 3.2 | 0.75 | 8 |
+
+OSM keeps the best pooled level bias (3.2 versus 5.0), the best mean modeling efficiency (0.75 versus
+0.71), and the most TOST level equivalences (8 versus 7 of 9). v12.10.1 does not claim pooled parity.
+The point of v12.10.1 is the managed cell. Under leave-one-installation-out cross-validation the managed
+mean absolute bias across the nine metrics is 1.3 for v12.10.1 versus 8.3 for OSM and 10.2 for v12.9.x,
+and planted stands are a clean out-of-sample win, 4.0 for v12.10.1 versus 16.7 for OSM. The pooled shifts
+from v12.9.x are the managed cells lifting toward observed; the modifier touches only managed stands, so
+RMSE and modeling efficiency are unchanged from v12.9.x to three digits. On the pooled domain the FVS-ACD
+advantage is quadratic mean diameter (about +1 to +2 percent versus OSM +11 percent), biological realism,
+transparency, and a climate-ready site driver, not pooled precision.
+
+Biological realism (Bakuzis pass). v12.10.1 inherits the v12.9.x self-thinning machinery and, on seeded
+160-year projections across the ESI gradient, passes all five relations on the modified Bakuzis matrix
+(Leary 1997): Eichhorn (volume a function of height), Reineke self-thinning slope (fitted -1.59 against a
+-1.6 target), site ordering with no overtaking, the yield-density plateau (about 36 m² ha⁻¹), and
+Sukachev (size versus density). With the management modifier on, a seeded planted-softwood projection
+still plateaus at every amplitude tested (standard deviation of basal area over the last 20 years about
+0.21, flat), and the ceiling rises smoothly with amplitude because basal area at the Reineke limit rises
+with tree size. By contrast v12.5.0 fails self-thinning outright and OSM does not plateau over the tested
+horizon, so FVS-ACD self-thinning is the more biologically constrained long-run behavior.
+
+Disclosed ingrowth limit. Observed MagPlot recruitment, tree-id matched across remeasurements, is 39.8
+stems ha⁻¹ yr⁻¹ in New Brunswick and 19.7 in Quebec. The shipped expected-value ingrowth hurdle predicts
+17.9 and 11.7 stems ha⁻¹ yr⁻¹, about 45 percent of observed in New Brunswick and 59 percent in Quebec.
+Recruitment responds in the correct direction to density and management (planted and PCT stands, which
+carry lower residual density, recruit more than unmanaged), and the expected-value hurdle lifted
+recruitment well off the near-zero floor of the classic 2018 too-infrequent FVS-ACD problem, but a
+residual under-prediction of the absolute level remains. This is neither the 2018 near-zero failure nor
+an inflated recruitment; it is a real, moderate under-prediction, disclosed as a limit and a target for
+the v13 ingrowth refit. It does not change the shipped version and does not touch the managed-cell
+scorecard, which is a volume and basal-area result on the tag threshold.
+
+Pooled parity was tested and deferred. A top-height anchor-level correction was tested as a reach for
+pooled parity with OSM and deferred to v13.0. In the shipped config a top-height over-prediction of about
++9 percent offsets a basal-area under-prediction of about -8 percent, so FVS-ACD total volume is
+near-unbiased on the unmanaged core by error cancellation. Correcting top height alone removes the
+offsetting term and drives volume negative (pooled total volume flips from +2.1 to -3.6 percent, New
+Brunswick core to -8.8 percent) and widens rather than closes the pooled mean absolute bias gap to OSM.
+True parity therefore needs a joint re-anchor of dominant height and basal area together, recorded as the
+v13.0 domain-plus-increment refit. The gated lever exists in the source (neutral factor reproduces
+v12.10.1) but is not adopted for the operational version.
+
+### 10.4 Planned v13
+
+The v13 program addresses the disclosed limits above rather than the operational cell v12.10.1 already
+wins. It moves from gated levers on fixed equations to refitted, site-driven, region-and-composition-aware
+component equations with uncertainty, each step gated by the same multi-dimensional scorecard against the
+prior version and OSM. The program is planned in four releases and none is gated as of this writing, so
+nothing below is a result. It is the roadmap, not a claim.
+
+The first release, v13.0, is a joint dominant-height and basal-area re-anchor. The model is masked to its
+calibrated Acadian domain and dominant height and the increment are re-anchored together on the expanded
+remeasurement data, so the top-height over-prediction and the basal-area under-prediction are corrected in
+one step rather than left to offset each other. This replaces the error cancellation that currently keeps
+total volume near-unbiased on the unmanaged core (section 10.3), which the one-sided top-height lever tested
+this cycle showed cannot be corrected alone without driving volume negative.
+
+The second release, v13.1, is a Bayesian hierarchical refit of mortality and ingrowth with region,
+ecoregion, and forest-type random effects and the brms maximum-SDI posterior as the self-thinning asymptote.
+Fitting the two components as a system with shared random effects estimates directly the regional and
+composition structure now carried by the gated SDImax multiplier and the two-segment relative-density knob,
+so the growing and mature tails become separable by construction, and it targets the disclosed ingrowth
+limit (section 10.3) by matching observed recruitment (about 40 stems ha⁻¹ yr⁻¹ in New Brunswick, 20 in
+Quebec) rather than under-predicting it. The hierarchical fits carry parameter and residual uncertainty into
+prediction intervals, a scorecard dimension v12 does not satisfy.
+
+The third release, v13.2, carries management as a growth-scale release estimated per tree, so the additive
+stand-level release of v12.10.1 (section 10.3) is reproduced through the full engine by a fitted per-tree
+amplitude rather than a post-hoc net release applied at the stand level.
+
+The fourth release, v13.3, adds a climate-scenario mode driven by the current and future site-productivity
+surfaces, kept separate from the validated base so that projections can be run under alternative climate
+normals without ever benchmarking on a projected surface.
+
+Until v13 is gated, v12.10.1 is the recommended operational version for inventory projection, with v12.7.1
+retained for long-horizon carbon and old-growth work on the specific hardwood population where the v12.9.x
+flat multiplier under-shoots the realistic plateau.
 
 ## 11. Literature Cited
 

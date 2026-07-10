@@ -1,5 +1,28 @@
 # $Id: AcadianGY.R 3968 2022-04-28 10:36:05Z nickcrookston $
 ################################################################################
+# ===========================================================================
+# FROZEN OPERATIONAL BASELINE, August 2026. AcadianVersionTag AcadianV12.10.1.
+# This is the shipped FVS-ACD operational version for the 18 August 2026
+# Acadian Growth and Yield meeting. Comment-only header added 10 July 2026;
+# no equation or coefficient changed. Frozen from ~/_scripts/AcadianGY_12.10.1.r
+# on OSC Cardinal (md5 recorded in the freeze note). The v13 program (v13.0
+# joint height and basal-area re-anchor, v13.1 hierarchical mortality and
+# ingrowth, v13.2 management as a growth-scale release, v13.3 climate) does NOT
+# ship here; it is the fall arc, tracked separately.
+#
+# Model content: v12.9.x base (FIA NSVB volume and biomass, coupled two-segment
+# relative-density mortality with density-released ingrowth, composition and
+# ecoregion aware brms SDImax, ESI-consistent dominant-height anchor recal) plus
+# the Chapter-11 direct-effect management modifiers below (robust additive
+# release, planted +3.8, PCT +2.4 m2/ha basal area, clamp-free), gated by
+# ops$use.mgmt.mod (default OFF => identical to 12.9.x).
+#
+# Reproduces the operational base scorecard cb_v12101_results.csv (from this
+# file, management gated off, via bench_parity.R with NB_AFAC 0.579 QC_AFAC
+# 0.111). Pooled level bias in domain: basal area -10.07 pct, top height +2.97
+# pct, total volume -3.96 pct (the offsetting signature v13.0 targets). See the
+# freeze note repos/fvs-acd/20260710_v12101_FREEZE_and_run_recipe.md.
+# ===========================================================================
 # v12.7.1.r  (coupled two-segment self-thinning + density-released ingrowth)
 # v12.5.0.r 
 #
