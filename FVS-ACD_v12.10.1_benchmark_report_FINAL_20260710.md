@@ -183,7 +183,11 @@ clamped multiplier that pinned at 1.6 in every fold. The direct-effect release f
 Weiskittel, Hann, Kershaw and Vanclay (2011): the multi-step method of Wang (1990) holds the untreated
 equations fixed and fits the modifier on observed minus predicted-untreated increment, planted treated as a
 Type 2 sustained effect and PCT as a Type 1 transient release, with mortality deliberately left without a
-multiplicative modifier to avoid distorting the logistic asymptote.
+multiplicative modifier to avoid distorting the logistic asymptote. One caveat travels with these
+out-of-sample managed and planted results: they rest on thin planted and precommercial-thinning samples, and
+the leave-one-province-out transfer across the New Brunswick to Quebec border leans on a small number of
+managed installations per province, which is exactly the gap the v13 provincial managed-remeasurement data
+ask is meant to close.
 
 ### Biological realism and long-horizon behavior
 
@@ -198,7 +202,11 @@ seeded to age 160), each scored against the named law-like relations on the modi
 | Yield-density / plateau | flag | pass (37) | pass (36) | pass (36) | flag |
 | Sukachev (size vs density) | flag | pass | pass | pass | pass |
 
-v12.10.1 inherits the v12.9.x self-thinning machinery and passes all five relations. With the management
+v12.10.1 inherits the v12.9.x self-thinning machinery and passes all five relations. Note that OSM is not
+scored in this seeded-gradient Bakuzis battery, which runs only the AcadianGY builds; OSM's non-plateau
+finding comes from the matched-stand Seven Islands test below, so the Bakuzis passes are a direct FVS-ACD
+result while OSM enters the long-horizon comparison through the matched-stand trajectory rather than the same
+matrix. With the management
 modifier on, a seeded 160-year projection of a planted softwood stand still plateaus at every amplitude tested
 (standard deviation of basal area over the last 20 years about 0.21 m² ha⁻¹, flat), and the ceiling rises
 smoothly with amplitude (36.3, 41.6, 43.6, 45.6, 47.3 m² ha⁻¹ at amplitudes 1.0, 1.6, 2.0, 2.5, 3.0) because
@@ -237,7 +245,11 @@ Pooled precision belongs to OSM on the operational domain. OSM leads pooled mean
 5.0), mean modeling efficiency (0.75 versus 0.71), and TOST equivalence (8 of 9 versus 7 of 9). FVS-ACD's
 in-domain near-parity on volume is honest but is an offsetting cancellation of a basal-area under-prediction
 and a top-height over-prediction, not independent accuracy on each component. This is an equation-level limit
-and is the v13.0 joint re-anchor target; it cannot be closed by an anchor scale on one side.
+and is the v13.0 joint re-anchor target; it cannot be closed by an anchor scale on one side. The pooled
+precision gaps here are small relative to the stand-level RMSE and are reported without a formal paired
+difference test or a multiplicity adjustment across the nine correlated NSVB metrics, so they should be read
+as OSM modestly ahead on the pooled domain rather than as a decisive, individually significant gap on any one
+metric.
 
 Ingrowth is under-predicted. Recruitment across the tag threshold is a disclosed limit, not a scored win. The
 direction is correct but the absolute level is low:
