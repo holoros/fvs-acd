@@ -409,11 +409,15 @@ organization and the Forus Research download page), on identical independent in-
 scorecard is `20260701_four_model_scorecard.md`; figures `five_model_scorecard_heatmap.png` and
 `five_model_scorecard_radar.png` (v12.9.0 added as a fifth model, section 10.2).
 
-Headline finding: OSM-ACD has the lowest pooled level bias of the four models on every metric, but
-negative Nash-Sutcliffe modeling efficiency on every metric, meaning its stand-level predictions are less
-accurate than simply predicting the observed mean; its favorable aggregate bias is population-level
-cancellation of large individual over- and under-predictions, not per-stand skill. All three AcadianGY
-versions explain 55 to 78 percent of out-of-sample variance on every metric. AcadianGY 12.5.0 fails the
+Headline finding: OSM-ACD has the lowest pooled level bias of the four models on every metric and, once
+it is scored on all nine NSVB metrics through the same emulator harness as FVS-ACD, also carries the
+highest pooled modeling efficiency. An earlier read that showed a negative Nash-Sutcliffe efficiency for
+OSM on every metric was an index-join artifact, OSM output matched to the observed tree lists on a
+mismatched key rather than a real lack of per-stand skill; rescoring OSM through the common NSVB harness
+resolves it, and OSM's pooled modeling efficiency is positive and leads the set. Where FVS-ACD leads OSM
+is biological realism, the climate-ready site driver, and quadratic mean diameter, not pooled level bias
+or modeling efficiency. All three AcadianGY versions explain 55 to 78 percent of out-of-sample variance
+on every metric. AcadianGY 12.5.0 fails the
 Bakuzis self-thinning check outright (long-horizon basal area still climbing past 62 m2/ha at age 120
 with several thousand stems per hectare still alive) and is not recommended for mature-stand or
 long-horizon use. AcadianGY 12.7.1 is the best FVS-ACD version on the combined quantitative and
@@ -506,26 +510,27 @@ term rather than a mortality term, and the self-thinning plateau holds at every 
 
 The honest scorecard position. A five-way independent benchmark (v12.5.0, v12.7.0, v12.9.x, v12.10.1,
 and OSM v2.26.1) on the identical held-out in-domain data (MagPlot New Brunswick n=355 and ESI-covered
-Quebec n=350, plus recent Maine FIA for the growing-stand cross-check) places v12.10.1 between v12.9.x
-and OSM on the pooled operational domain and ahead of both on the managed cell.
+Quebec n=350, plus recent Maine FIA for the growing-stand cross-check) places v12.10.1 level with v12.9.x
+on the pooled operational domain, both behind OSM there, and ahead of both on the managed cell.
 
 **Table 10.1.** Pooled operational scorecard, v12.10.1 versus the comparison models (nine NSVB metrics).
 
 | model | mean absolute level bias (%) | mean modeling efficiency | TOST level equivalences (of 9) |
 |---|---|---|---|
-| v12.9.x | 4.4 | 0.71 | 6 |
-| v12.10.1 | 5.0 | 0.71 | 7 |
+| v12.9.x | 4.9 | 0.71 | 7 |
+| v12.10.1 | 4.9 | 0.71 | 7 |
 | OSM v2.26.1 | 3.2 | 0.75 | 8 |
 
-OSM keeps the best pooled level bias (3.2 versus 5.0), the best mean modeling efficiency (0.75 versus
+OSM keeps the best pooled level bias (3.2 versus 4.9), the best mean modeling efficiency (0.75 versus
 0.71), and the most TOST level equivalences (8 versus 7 of 9). v12.10.1 does not claim pooled parity.
 The point of v12.10.1 is the managed cell. Under leave-one-installation-out cross-validation the managed
 mean absolute bias across the nine metrics is 1.3 for v12.10.1 versus 8.3 for OSM and 10.2 for v12.9.x,
-and planted stands are a clean out-of-sample win, 4.0 for v12.10.1 versus 16.7 for OSM. The pooled shifts
-from v12.9.x are the managed cells lifting toward observed; the modifier touches only managed stands, so
-RMSE and modeling efficiency are unchanged from v12.9.x to three digits. On the pooled domain the FVS-ACD
-advantage is quadratic mean diameter (about +1 to +2 percent versus OSM +11 percent), biological realism,
-transparency, and a climate-ready site driver, not pooled precision.
+and planted stands are a clean out-of-sample win, 4.0 for v12.10.1 versus 16.7 for OSM. On the pooled
+domain v12.10.1 and v12.9.x are identical to one decimal, because the modifier touches only managed stands
+and those are a small share of the in-domain pool, so pooled mean absolute bias (4.9), RMSE, and modeling
+efficiency all carry over from v12.9.x unchanged and the modifier's effect appears only in the managed
+cell. On the pooled domain the FVS-ACD advantage is quadratic mean diameter (about +1 percent versus OSM
++11 percent), biological realism, transparency, and a climate-ready site driver, not pooled precision.
 
 Biological realism (Bakuzis pass). v12.10.1 inherits the v12.9.x self-thinning machinery and, on seeded
 160-year projections across the ESI gradient, passes all five relations on the modified Bakuzis matrix
@@ -534,8 +539,10 @@ Biological realism (Bakuzis pass). v12.10.1 inherits the v12.9.x self-thinning m
 Sukachev (size versus density). With the management modifier on, a seeded planted-softwood projection
 still plateaus at every amplitude tested (standard deviation of basal area over the last 20 years about
 0.21, flat), and the ceiling rises smoothly with amplitude because basal area at the Reineke limit rises
-with tree size. By contrast v12.5.0 fails self-thinning outright and OSM does not plateau over the tested
-horizon, so FVS-ACD self-thinning is the more biologically constrained long-run behavior.
+with tree size. By contrast v12.5.0 fails self-thinning outright in the same seeded battery. OSM is not
+scored in this seeded-gradient battery and enters the comparison only through the matched-stand
+trajectory, so the Bakuzis pass is a statement about FVS-ACD's seeded-gradient behavior rather than a
+five-way ranking.
 
 Disclosed ingrowth limit. Observed MagPlot recruitment, tree-id matched across remeasurements, is 39.8
 stems ha⁻¹ yr⁻¹ in New Brunswick and 19.7 in Quebec. The shipped expected-value ingrowth hurdle predicts
@@ -550,10 +557,10 @@ scorecard, which is a volume and basal-area result on the tag threshold.
 
 Pooled parity was tested and deferred. A top-height anchor-level correction was tested as a reach for
 pooled parity with OSM and deferred to v13.0. In the shipped config a top-height over-prediction of about
-+9 percent offsets a basal-area under-prediction of about -8 percent, so FVS-ACD total volume is
-near-unbiased on the unmanaged core by error cancellation. Correcting top height alone removes the
-offsetting term and drives volume negative (pooled total volume flips from +2.1 to -3.6 percent, New
-Brunswick core to -8.8 percent) and widens rather than closes the pooled mean absolute bias gap to OSM.
++4 percent only partly offsets a basal-area under-prediction of about -10 percent, so FVS-ACD total
+volume sits modestly under observed on the unmanaged core, about -4 percent, rather than near zero.
+Correcting top height alone removes the offsetting positive term and drives total volume further below
+observed rather than toward zero, widening rather than closing the pooled mean absolute bias gap to OSM.
 True parity therefore needs a joint re-anchor of dominant height and basal area together, recorded as the
 v13.0 domain-plus-increment refit. The gated lever exists in the source (neutral factor reproduces
 v12.10.1) but is not adopted for the operational version.
@@ -569,9 +576,10 @@ nothing below is a result. It is the roadmap, not a claim.
 The first release, v13.0, is a joint dominant-height and basal-area re-anchor. The model is masked to its
 calibrated Acadian domain and dominant height and the increment are re-anchored together on the expanded
 remeasurement data, so the top-height over-prediction and the basal-area under-prediction are corrected in
-one step rather than left to offset each other. This replaces the error cancellation that currently keeps
-total volume near-unbiased on the unmanaged core (section 10.3), which the one-sided top-height lever tested
-this cycle showed cannot be corrected alone without driving volume negative.
+one step rather than left to partly offset each other. This addresses the partial error cancellation that
+currently leaves total volume modestly under observed on the unmanaged core (section 10.3), which the
+one-sided top-height lever tested this cycle showed cannot be corrected alone without driving volume
+further negative.
 
 The second release, v13.1, is a Bayesian hierarchical refit of mortality and ingrowth with region,
 ecoregion, and forest-type random effects and the brms maximum-SDI posterior as the self-thinning asymptote.

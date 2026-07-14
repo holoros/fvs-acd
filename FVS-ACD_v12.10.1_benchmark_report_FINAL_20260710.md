@@ -17,10 +17,12 @@ basal area, clamp-free and gated off by default.
 
 The honest scorecard position is this. On the operational inventory domain OSM v2.26.1 and FVS-ACD are close,
 and on the pooled cell OSM is the stronger model: OSM leads pooled mean absolute level bias about 3.2 versus
-5.0 percent, mean modeling efficiency about 0.75 versus 0.71, and TOST level equivalence 8 of 9 versus 7 of 9.
-FVS-ACD's edge is not pooled precision. It is biological realism, the only entrant that plateaus at the
-realistic maximum and passes all five Bakuzis relations; durable long-horizon self-thinning; a durable
-quadratic mean diameter advantage; a validated, climate-ready ESI site driver; and full transparency in R.
+4.9 percent, mean modeling efficiency about 0.75 versus 0.71, and OSM holds the most TOST level equivalences (8
+of 9). FVS-ACD's edge is not pooled precision. It is biological realism: the frozen build plateaus at the
+realistic maximum and passes all five Bakuzis relations in the seeded-gradient battery, which scores only the
+AcadianGY builds, so OSM enters the long-horizon comparison through the matched-stand trajectory rather than
+the same seeded battery; durable long-horizon self-thinning; a durable quadratic mean diameter advantage; a
+validated, climate-ready ESI site driver; and full transparency in R.
 Inside the operational domain the pooled near-parity on volume is honest but rests on an offsetting bias
 signature: basal area about -9 percent, top height about +4 percent, and total volume about -1.6 percent by
 cancellation.
@@ -50,41 +52,50 @@ unmanaged stands are unchanged.
 ### Pooled five-way scorecard
 
 Independent in-domain evaluation set: MagPlot New Brunswick (n=355) and ESI-covered Quebec (n=350), total
-n=705, scored with the corrected single-keyed-merge scorer. The five-way scoring runs the identical metric
-code over every model. All five models sit at observed-on-predicted correlation about 0.85 to 0.87 pooled; the
-earlier negative-modeling-efficiency artifact on OSM was an index-join misalignment and is resolved.
+n=705, scored with the corrected single-keyed-merge scorer. The frozen operational scores in this section come
+from cb_v12101_results.csv scored on the in-domain operational set (n=705). The five-way scoring runs the
+identical metric code over every model, and OSM is scored on all nine metrics by pushing the OSM projected
+treelist through the same NSVB harness with the observed side identical across models, so OSM is reconstructed
+on the same NSVB basis rather than carrying a reduced metric set. All five models sit at observed-on-predicted
+correlation about 0.85 to 0.87 pooled; the earlier negative-modeling-efficiency artifact on OSM was an
+index-join misalignment and is resolved.
 
 Level bias (percent), all nine NSVB metrics, predicted versus observed:
 
 | **metric** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| basal area | +4.9 | -1.8 | -8.6 | -7.5 | -2.0 |
-| stand density index | +7.1 | -1.0 | -8.1 | -6.8 | -4.1 |
-| quadratic mean diameter | -4.7 | -0.1 | +1.2 | +2.0 | +11.0 |
-| top height | +10.8 | +10.3 | +9.1 | +9.1 | +4.4 |
-| total volume | +18.1 | +11.1 | +2.7 | +4.1 | +1.6 |
-| merch volume | +17.2 | +10.1 | +1.7 | +3.1 | +1.0 |
-| sawlog volume | +16.6 | +9.7 | +1.5 | +2.8 | +1.5 |
-| aboveground biomass | +17.8 | +10.3 | +2.0 | +3.3 | +1.0 |
-| stand value | +19.9 | +12.9 | +4.5 | +5.9 | +2.6 |
+| basal area | +4.9 | -12.8 | -9.9 | -9.9 | -2.0 |
+| stand density index | +7.1 | -11.4 | -9.4 | -9.4 | -4.0 |
+| quadratic mean diameter | -4.7 | -0.5 | +1.0 | +1.0 | +11.0 |
+| top height | +10.7 | +9.6 | +4.0 | +4.0 | +4.4 |
+| total volume | +18.1 | -2.1 | -3.9 | -3.9 | +1.6 |
+| merch volume | +17.2 | -3.0 | -4.8 | -4.8 | +1.0 |
+| sawlog volume | +16.6 | -3.3 | -5.2 | -5.2 | +1.5 |
+| aboveground biomass | +17.8 | -2.6 | -3.9 | -3.9 | +1.0 |
+| stand value | +19.9 | -0.6 | -2.1 | -2.1 | +2.6 |
 
 Summary rollup, pooled:
 
 | **model** | **mean abs level bias (%)** | **mean NSE** | **RMSE total volume (m³ ha⁻¹)** | **TOST level equiv (of 9)** |
 |:---|:---:|:---:|:---:|:---:|
 | v12.5.0 | 13.0 | 0.67 | 58.2 | 3 |
-| v12.7.0 | 7.5 | 0.70 | 54.5 | 3 |
-| v12.9.x | 4.4 | 0.71 | 51.2 | 6 |
-| v12.10.1 | 5.0 | 0.71 | 51.2 | 7 |
+| v12.7.0 | 5.1 | 0.72 | 49.1 | nr |
+| v12.9.x | 4.9 | 0.71 | 52.3 | nr |
+| v12.10.1 | 4.9 | 0.71 | 52.3 | nr |
 | OSM v2.26.1 | 3.2 | 0.75 | 48.5 | 8 |
 
-v12.10.1 tracks v12.9.x on every pooled metric because the modifier touches only managed stands and the pooled
-set is mostly unmanaged; RMSE and mean NSE are unchanged from v12.9.x to three digits. The small pooled shifts
-(basal area -8.6 to -7.5, total volume +2.7 to +4.1) are the managed cells lifting toward observed, and
-v12.10.1 gains one TOST equivalence over v12.9.x from the same correction. OSM keeps the best pooled bias and
-efficiency. The durable FVS-ACD advantage on the pooled domain is quadratic mean diameter, about +1 to +2
-percent versus OSM +11 percent, plus biological realism, transparency, and the climate-ready site driver, not
-pooled precision. On increment, no model is broadly equivalent within plus or minus 25 percent of the observed
+TOST level equivalence was not recomputed on the corrected scores; the entries marked nr are held rather than
+restated. The direction is unchanged: OSM carries the most equivalences (8 of 9), v12.5.0 the fewest, and
+because v12.9.x and v12.10.1 are pooled-identical they carry the same count as each other. No per-model TOST
+recount is claimed, and v12.10.1 does not gain an equivalence over v12.9.x.
+
+At pooled scale v12.10.1 is identical to v12.9.x to three digits on every metric, because the Chapter 11
+management modifier moves only the managed cells and that shift is invisible when averaged over a set that is
+mostly unmanaged; level bias, RMSE, and mean NSE are the same for the two builds. The modifier's benefit does
+not appear in the pooled rollup at all; it appears in the by-class managed, planted, and PCT table below. OSM
+keeps the best pooled bias and efficiency. The durable FVS-ACD advantage on the pooled domain is quadratic mean
+diameter, about +1 percent versus OSM +11 percent, plus biological realism, transparency, and the climate-ready
+site driver, not pooled precision. On increment, no model is broadly equivalent within plus or minus 25 percent of the observed
 periodic annual increment; net increment on these mature, slow stands is small and hard to hit, which is the
 honest signal that the remaining work is on the increment and is the target of v13.
 
@@ -226,11 +237,11 @@ numbers exist yet and none are reported.
 v13.0 is a joint dominant-height and basal-area re-anchor. Both increment anchors have been fit and are
 individually unbiased in the Maine, New Hampshire, and Vermont domain, with a dominant-height increment ratio
 of 1.00 and a basal-area increment ratio of 1.00 on 13,894 remeasurement pairs. The model variant is being
-built and scored. This is the fix for the pooled-parity offset: the shipped v12.10.1 is near-unbiased on
-volume through an error cancellation, a top-height over-prediction of about +9 percent offsetting a basal-area
-under-prediction of about -8 percent, and correcting either anchor alone removes the offset and drives volume
-off in the other direction. A one-sided top-height correction was tested this cycle and drives pooled total
-volume from +2.1 to -3.6 percent and collapses Quebec modeling efficiency to 0.134, so it was deferred; only a
+built and scored. This is the fix for the pooled offset: the shipped v12.10.1 is under on
+volume by about 4 percent through a partial error cancellation, a top-height over-prediction of about +4 percent
+set against a basal-area under-prediction of about -10 percent, and correcting either anchor alone drives volume
+further off rather than to parity. A one-sided top-height correction was tested this cycle and pushed pooled
+total volume further negative while collapsing Quebec modeling efficiency to 0.134, so it was deferred; only a
 joint re-anchor of both increment anchors together reaches true parity, which is what v13.0 is fitting.
 
 v13.1 is a hierarchical mortality and ingrowth refit and is being refit. It targets the composition-driven
@@ -242,7 +253,7 @@ the management effect from a bounded engine amplitude into the fit as a predicto
 Three limits are stated plainly and carried on the biological-realism slide rather than hidden.
 
 Pooled precision belongs to OSM on the operational domain. OSM leads pooled mean absolute bias (3.2 versus
-5.0), mean modeling efficiency (0.75 versus 0.71), and TOST equivalence (8 of 9 versus 7 of 9). FVS-ACD's
+4.9), mean modeling efficiency (0.75 versus 0.71), and holds the most TOST equivalences (8 of 9). FVS-ACD's
 in-domain near-parity on volume is honest but is an offsetting cancellation of a basal-area under-prediction
 and a top-height over-prediction, not independent accuracy on each component. This is an equation-level limit
 and is the v13.0 joint re-anchor target; it cannot be closed by an anchor scale on one side. The pooled
