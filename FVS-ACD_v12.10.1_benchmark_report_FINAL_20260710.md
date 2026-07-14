@@ -64,30 +64,35 @@ Level bias (percent), all nine NSVB metrics, predicted versus observed:
 
 | **metric** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| basal area | +4.9 | -12.8 | -9.9 | -9.9 | -2.0 |
-| stand density index | +7.1 | -11.4 | -9.4 | -9.4 | -4.0 |
-| quadratic mean diameter | -4.7 | -0.5 | +1.0 | +1.0 | +11.0 |
-| top height | +10.7 | +9.6 | +4.0 | +4.0 | +4.4 |
-| total volume | +18.1 | -2.1 | -3.9 | -3.9 | +1.6 |
-| merch volume | +17.2 | -3.0 | -4.8 | -4.8 | +1.0 |
-| sawlog volume | +16.6 | -3.3 | -5.2 | -5.2 | +1.5 |
-| aboveground biomass | +17.8 | -2.6 | -3.9 | -3.9 | +1.0 |
-| stand value | +19.9 | -0.6 | -2.1 | -2.1 | +2.6 |
+| basal area | +2.9 | -13.4 | -9.9 | -9.9 | -2.0 |
+| stand density index | +5.1 | -12.1 | -9.4 | -9.4 | -4.1 |
+| quadratic mean diameter | -4.9 | -0.7 | +1.0 | +1.0 | +11.0 |
+| top height | +4.6 | +3.7 | +4.0 | +4.0 | +4.4 |
+| total volume | +9.3 | -8.3 | -3.9 | -3.9 | +1.6 |
+| merch volume | +8.4 | -9.1 | -4.8 | -4.8 | +1.0 |
+| sawlog volume | +7.8 | -9.5 | -5.2 | -5.2 | +1.5 |
+| aboveground biomass | +9.7 | -8.1 | -3.9 | -3.9 | +1.1 |
+| stand value | +11.0 | -6.7 | -2.1 | -2.1 | +2.6 |
 
 Summary rollup, pooled:
 
 | **model** | **mean abs level bias (%)** | **mean NSE** | **RMSE total volume (m³ ha⁻¹)** | **TOST level equiv (of 9)** |
 |:---|:---:|:---:|:---:|:---:|
-| v12.5.0 | 13.0 | 0.67 | 58.2 | 3 |
-| v12.7.0 | 5.1 | 0.72 | 49.1 | nr |
-| v12.9.x | 4.9 | 0.71 | 52.3 | nr |
-| v12.10.1 | 4.9 | 0.71 | 52.3 | nr |
+| v12.5.0 | 7.1 | 0.71 | 53.1 | 4 |
+| v12.7.0 | 8.0 | 0.73 | 49.6 | 2 |
+| v12.9.x | 4.9 | 0.71 | 52.3 | 7 |
+| v12.10.1 | 4.9 | 0.71 | 52.3 | 7 |
 | OSM v2.26.1 | 3.2 | 0.75 | 48.5 | 8 |
 
-TOST level equivalence was not recomputed on the corrected scores; the entries marked nr are held rather than
-restated. The direction is unchanged: OSM carries the most equivalences (8 of 9), v12.5.0 the fewest, and
-because v12.9.x and v12.10.1 are pooled-identical they carry the same count as each other. No per-model TOST
-recount is claimed, and v12.10.1 does not gain an equivalence over v12.9.x.
+TOST level equivalence is recomputed on the frozen scores. OSM carries the most equivalences (8 of 9), v12.7.0
+the fewest (2 of 9), and because v12.9.x and v12.10.1 are pooled-identical they carry the same count as each
+other (7 of 9). v12.5.0 sits at 4 of 9. v12.10.1 does not gain an equivalence over v12.9.x, since the two
+builds are identical on the pooled base scorecard.
+
+A harness note belongs with this pooled scorecard. Because the bench applies the operational ops uniformly,
+v12.7.1, v12.9.x, and v12.10.1 are byte-identical on the pooled base scorecard and differ only in the managed
+cells; the five-way therefore has three distinct engines at pooled scale, v12.5.0, v12.7.0, and the shared
+newer build (v12.7.1 / v12.9.x / v12.10.1).
 
 At pooled scale v12.10.1 is identical to v12.9.x to three digits on every metric, because the Chapter 11
 management modifier moves only the managed cells and that shift is invisible when averaged over a set that is
@@ -134,28 +139,32 @@ Total volume level bias (percent) by jurisdiction:
 
 | **model** | **New Brunswick (n=355)** | **Quebec (n=350)** |
 |:---|:---:|:---:|
-| v12.5.0 | +0.6 | +33.3 |
-| v12.7.0 | -4.4 | +24.4 |
-| v12.9.x | -6.9 | +11.0 |
-| v12.10.1 | -5.5 | +12.4 |
+| v12.5.0 | -1.6 | +18.7 |
+| v12.7.0 | -13.4 | -3.9 |
+| v12.9.x | -11.8 | +2.9 |
+| v12.10.1 | -11.8 | +2.9 |
 | OSM v2.26.1 | -8.0 | +9.8 |
 
-In the New Brunswick core v12.10.1 total volume of -5.5 percent is closer to zero than v12.9.x (-6.9) and OSM
-(-8.0), because the managed release lifts the managed New Brunswick stands. The Quebec edge (+12.4) is
-marginally above v12.9.x and OSM and carries the out-of-domain top-height over-read; it is reported as an edge.
+This table is the gate-off base scorecard split by province, so v12.9.x and v12.10.1 are identical; the managed
+release appears in the management-class table, not here. In the New Brunswick core OSM total volume of -8.0
+percent is closest to zero, with the shared newer build at -11.8 and v12.7.0 at -13.4. In Quebec the shared
+newer build (+2.9) is closer to zero than OSM (+9.8), while v12.5.0 over-reads at +18.7; the Quebec figures
+carry the out-of-domain top-height over-read and are reported as an edge.
 
 Total volume level bias (percent) by forest type (percent hardwood basal area at first measurement; softwood
 under 25, mixedwood 25 to 75, hardwood over 75):
 
 | **forest type** | **n** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| softwood | 321 | +8.3 | +0.3 | -7.4 | -5.9 | -1.0 |
-| mixedwood | 186 | +16.2 | +10.7 | +2.6 | +4.1 | -3.9 |
-| hardwood | 178 | +42.4 | +35.5 | +25.3 | +26.2 | +14.6 |
+| softwood | 321 | +0.6 | -16.4 | -14.1 | -14.1 | -1.0 |
+| mixedwood | 186 | +7.2 | -9.5 | -4.1 | -4.1 | -3.9 |
+| hardwood | 178 | +31.3 | +11.4 | +19.0 | +19.0 | +14.6 |
 
-Softwood is near zero for the modern versions. The managed release nudges softwood and mixedwood v12.10.1
-totals toward observed. Hardwood is the shared frontier for every model, OSM included at +14.6 percent, and is
-the target of the v13 composition-aware refit rather than a management-modifier problem.
+This is the gate-off base scorecard, so v12.9.x and v12.10.1 are identical in every forest-type cell. Softwood
+volume is under-predicted by the shared newer build (-14.1) while OSM sits near zero (-1.0); mixedwood is close
+for both the newer build (-4.1) and OSM (-3.9). Hardwood is the shared frontier for every model, the newer
+build at +19.0 and OSM at +14.6 percent, and is the target of the v13 composition-aware refit rather than a
+management-modifier problem.
 
 ### Management class, the headline
 
@@ -163,19 +172,23 @@ In-sample level bias (percent), the cells the modifier targets:
 
 | **class** | **n** | **metric** | **v12.9.x** | **v12.10.1** | **OSM** |
 |:---|:---:|:---|:---:|:---:|:---:|
-| NONE | 266 | basal area | -8.2 | -8.2 | -2.0 |
-| NONE | 266 | total volume | +1.0 | +1.0 | -1.6 |
-| PLANTED | 51 | basal area | -23.6 | -3.2 | -20.9 |
-| PLANTED | 51 | total volume | -16.9 | -4.0 | -19.6 |
-| PCT | 95 | basal area | -13.9 | +0.3 | -5.4 |
-| PCT | 95 | total volume | -5.7 | +0.1 | -0.1 |
-| MANAGED | 146 | basal area | -17.6 | -1.0 | -11.2 |
-| MANAGED | 146 | total volume | -9.9 | +0.7 | -7.4 |
+| NONE | 266 | basal area | -9.9 | -9.9 | -2.0 |
+| NONE | 266 | total volume | -5.3 | -5.3 | -1.6 |
+| PLANTED | 51 | basal area | -24.9 | -4.4 | -20.9 |
+| PLANTED | 51 | total volume | -23.7 | -10.8 | -19.7 |
+| PCT | 95 | basal area | -15.6 | -1.3 | -5.4 |
+| PCT | 95 | total volume | -11.3 | -2.0 | -0.1 |
+| MANAGED | 146 | basal area | -19.0 | -2.5 | -11.2 |
+| MANAGED | 146 | total volume | -15.9 | -5.3 | -7.4 |
 
-The unmanaged cell is byte identical between v12.9.x and v12.10.1, the gate confirmation. Planted and PCT basal
-area and volume move from meaningful under-prediction to near zero, and pooled managed basal area goes from
--17.6 to -1.0 percent. The PCT basal-area residual the red team deferred is closed by the additive form (+0.3
-versus OSM -5.4).
+The unmanaged cell is byte identical between v12.9.x and v12.10.1, the gate confirmation. The gate closes the
+managed basal-area gap sharply: planted basal area moves from -24.9 to -4.4, PCT from -15.6 to -1.3, and pooled
+managed from -19.0 to -2.5 percent. On absolute basal-area bias v12.10.1 beats OSM in every managed class,
+managed 2.5 versus OSM 11.2, planted 4.4 versus 20.9, and PCT 1.3 versus 5.4. The PCT basal-area residual the
+red team deferred is closed by the additive form (-1.3 versus OSM -5.4). One frozen-basis shift to flag on the
+volume side: gate-on planted total volume is -10.8 rather than near zero, because the frozen afac lowers
+untreated planted-stand volume so the fixed additive release closes less of the volume gap; the basal-area
+releases are unchanged.
 
 Out of sample is the number that matters. Mean absolute level bias across the nine metrics under leave one
 installation out cross validation, with the MagPlot installation as the fold unit:

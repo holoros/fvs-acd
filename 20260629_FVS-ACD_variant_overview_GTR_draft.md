@@ -511,21 +511,37 @@ term rather than a mortality term, and the self-thinning plateau holds at every 
 The honest scorecard position. A five-way independent benchmark (v12.5.0, v12.7.0, v12.9.x, v12.10.1,
 and OSM v2.26.1) on the identical held-out in-domain data (MagPlot New Brunswick n=355 and ESI-covered
 Quebec n=350, plus recent Maine FIA for the growing-stand cross-check) places v12.10.1 level with v12.9.x
-on the pooled operational domain, both behind OSM there, and ahead of both on the managed cell.
+on the pooled operational domain, both behind OSM there, and ahead of both on the managed cell. Because
+the frozen operational harness fully specifies the operational ops, v12.7.1, v12.9.x, and v12.10.1 are
+byte identical on the pooled base scorecard and differ only in the managed cells; the five-way therefore
+resolves to three distinct pooled engines, v12.5.0, v12.7.0, and the shared v12.7.1, v12.9.x, and
+v12.10.1 operational line.
 
 **Table 10.1.** Pooled operational scorecard, v12.10.1 versus the comparison models (nine NSVB metrics).
 
 | model | mean absolute level bias (%) | mean modeling efficiency | TOST level equivalences (of 9) |
 |---|---|---|---|
+| v12.5.0 | 7.1 | 0.71 | 4 |
+| v12.7.0 | 8.0 | 0.73 | 2 |
 | v12.9.x | 4.9 | 0.71 | 7 |
 | v12.10.1 | 4.9 | 0.71 | 7 |
 | OSM v2.26.1 | 3.2 | 0.75 | 8 |
 
 OSM keeps the best pooled level bias (3.2 versus 4.9), the best mean modeling efficiency (0.75 versus
-0.71), and the most TOST level equivalences (8 versus 7 of 9). v12.10.1 does not claim pooled parity.
-The point of v12.10.1 is the managed cell. Under leave-one-installation-out cross-validation the managed
-mean absolute bias across the nine metrics is 1.3 for v12.10.1 versus 8.3 for OSM and 10.2 for v12.9.x,
-and planted stands are a clean out-of-sample win, 4.0 for v12.10.1 versus 16.7 for OSM. On the pooled
+0.71), and the most TOST level equivalences (8 versus 7 of 9, against four of nine for v12.5.0 and two
+of nine for v12.7.0). On the frozen harness every model's top height lands in a tight +3.7 to +4.6
+percent band, so the apparent top-height over-prediction once read into the older 12.5.0 and 12.7.0
+lines was an artifact of the pre-freeze basis and does not survive re-benching; the two older engines
+separate instead on volume, v12.5.0 a strong total-volume over-predictor (+9.3 percent, mean absolute
+level bias 7.1) and v12.7.0 a volume under-predictor (-8.3 percent, mean absolute level bias 8.0).
+v12.10.1 does not claim pooled parity.
+The point of v12.10.1 is the managed cell. The Chapter 11 gate closes the managed gap sharply in
+absolute basal-area bias, planted from -24.9 to -4.4 percent, PCT from -15.6 to -1.3 percent, and the
+managed class as a whole from -19.0 to -2.5 percent, and v12.10.1 beats OSM on every managed class in
+absolute basal-area bias (managed 2.5 versus 11.2, planted 4.4 versus 20.9, PCT 1.3 versus 5.4). One
+frozen-basis caveat to flag: gate-on planted total volume now sits at -10.8 percent, because the frozen
+anchor lowers untreated planted-stand volume so the fixed additive release closes less of the volume
+gap; the basal-area releases themselves are unchanged. On the pooled
 domain v12.10.1 and v12.9.x are identical to one decimal, because the modifier touches only managed stands
 and those are a small share of the in-domain pool, so pooled mean absolute bias (4.9), RMSE, and modeling
 efficiency all carry over from v12.9.x unchanged and the modifier's effect appears only in the managed
