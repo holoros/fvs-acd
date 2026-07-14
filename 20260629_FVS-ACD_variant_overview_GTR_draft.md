@@ -466,18 +466,35 @@ inventory projection; v12.7.1 remains the recommended version for carbon and old
 this specific population until a tapered version of the correction, relaxing toward the true asymptote
 rather than applying a flat multiplier throughout the rotation, is fit.
 
-Independent validation. The figures in this subsection, including the recent Maine FIA (n=788), the
-ESI-covered Quebec edge (n=378), and the Reineke self-thinning slopes, are from the development-era
-12.7.0 to 12.7.1 study computed on a non-frozen harness and on stand sets that differ from the frozen
-five-way scorecard in section 10.3; they are retained as the original developmental record and have not
-been re-benched on the frozen operational harness. On genuinely independent, in-domain data, the full FIA NSVB metric set,
+Independent validation, and what carries to the frozen harness. This subsection is the development-era
+12.7.0 to 12.7.1 self-thinning validation. It was run on a non-frozen dominant-height calibration and on
+populations, recent Maine FIA (n=788) and the ESI-covered Quebec edge (n=378), that are not in the frozen
+per-stand MagPlot files behind the section 10.3 five-way, so it has not been, and cannot cheaply be,
+re-benched on the frozen operational harness. Its results split by whether they depend on the
+dominant-height anchor factor (afac). A code-level check of the frozen harness confirms the afac enters at
+one point only, the dominant-height increment multiplier (dht.mult, operationally NB 0.579 and QC 0.111),
+and never touches the diameter-increment path or the density-dependent mortality that sets trees per
+hectare and quadratic mean diameter. The self-thinning results reported here are therefore density-frontier
+quantities that do not depend on the afac and carry to the frozen harness unchanged: the Reineke slopes,
+the plateau-versus-runaway trajectory finding, and the 12.7.0 to 12.7.1 self-thinning improvement. The
+level-bias figures that follow, and any dominant-height or NSVB-volume number in particular, were computed
+at the development afac and are not frozen-consistent; they are the original developmental record, not
+frozen results. The authoritative frozen scorecard is the five-way in section 10.3.
+
+On genuinely independent, in-domain data, the full FIA NSVB metric set,
 predicted versus observed t2 level bias, New Brunswick (n=355) and the ESI-covered Quebec edge (n=378),
 12.7.0 to 12.7.1:
 
 - New Brunswick total volume -3.9 to -9.8 percent, biomass -1.4 to -7.3, value -4.5 to -10.2; basal
-  area -3.5 to -8.5, top height +6.9 to +6.8.
+  area -3.5 to -8.5.
 - Quebec edge total volume +23.3 to +14.4 percent, biomass +19.1 to +10.2, value +27.3 to +18.3; basal
-  area -2.1 to -9.3, top height +12.9 to +12.5.
+  area -2.1 to -9.3.
+
+Top-height (dominant-height) bias is deliberately not tabulated here. It is the single metric the afac
+scales directly, so the development-era figures ran warm and are not frozen-consistent. On the frozen
+operational harness the dominant-height afac (NB 0.579, QC 0.111) brings every build's dominant height into
+the tight +3.7 to +4.6 percent band reported for the five-way in section 10.3; that band, not the
+development-era top-height numbers, is the operational result.
 
 The coupled self-thinning reduces the mature-stand Quebec-edge volume and biomass over-prediction by
 roughly a third to a half. New Brunswick and Quebec stands overlap in relative density, so the same
@@ -495,6 +512,9 @@ FVS-ACD does not hold for v12.7 on independent New Brunswick data.
 Biological realism (Bakuzis matrix): site ordering clean (0 of 125 inversions, the dominant-height
 anchor), Reineke self-thinning slopes -1.28 to -1.35, one moderate Eichhorn flag. Observed ingrowth
 about 40 stems per ha per year in New Brunswick and 20 in Quebec, matched by the density-released form.
+The Reineke self-thinning slopes are a property of the density frontier, the slope of log(TPH) on
+log(QMD), and as noted above do not depend on the dominant-height afac, so they stand on the frozen
+harness unchanged.
 
 ### 10.3 v12.10.1: direct-effect management modifiers, the current operational version
 
