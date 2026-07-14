@@ -24,12 +24,12 @@ AcadianGY builds, so OSM enters the long-horizon comparison through the matched-
 the same seeded battery; durable long-horizon self-thinning; a durable quadratic mean diameter advantage; a
 validated, climate-ready ESI site driver; and full transparency in R.
 Inside the operational domain the pooled near-parity on volume is honest but rests on an offsetting bias
-signature: basal area about -9 percent, top height about +4 percent, and total volume about -1.6 percent by
+signature: basal area about -10 percent, top height about +4 percent, and total volume about -2.2 percent by
 cancellation.
 
 The reason v12.10.1 exists, and the cell it is built to win, is management. On the managed stands, out of
-sample, the additive release beats OSM cleanly: managed mean absolute bias 1.3 versus OSM 8.3, planted 4.0
-versus OSM 16.7, and PCT 4.1 versus OSM 3.7 across the harder New Brunswick to Quebec province block. The one
+sample, the additive release beats OSM cleanly: managed mean absolute bias 0.9 versus OSM 8.3, planted 4.0
+versus OSM 16.7, and PCT 3.8 versus OSM 3.7 across the harder New Brunswick to Quebec province block. The one
 honest limit that remains is ingrowth: recruitment across the tag threshold is under-predicted, about 45
 percent of observed in New Brunswick and about 59 percent in Quebec, but it responds in the correct direction
 to density and management. v13 is the fall arc and is presented here as roadmap only; it is in progress and
@@ -121,17 +121,17 @@ ecoregions):
 
 | **metric** | **units** | **subset** | **n** | **obs mean** | **pred mean** | **bias (%)** | **RMSE** | **NSE** |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| basal area | m² ha⁻¹ | in domain | 492 | 18.47 | 16.77 | -9.20 | 8.78 | 0.630 |
-| basal area | m² ha⁻¹ | all plots | 733 | 19.44 | 17.37 | -10.63 | 8.94 | 0.639 |
-| top height | m | in domain | 492 | 13.14 | 13.68 | +4.16 | 2.50 | 0.788 |
-| top height | m | all plots | 733 | 13.28 | 13.82 | +4.02 | 2.42 | 0.799 |
-| total volume | m³ ha⁻¹ | in domain | 492 | 92.94 | 91.43 | -1.63 | 55.81 | 0.619 |
-| total volume | m³ ha⁻¹ | all plots | 733 | 97.84 | 94.27 | -3.64 | 53.16 | 0.705 |
+| basal area | m² ha⁻¹ | in domain | 492 | 18.47 | 16.66 | -9.81 | 8.95 | 0.616 |
+| basal area | m² ha⁻¹ | all plots | 733 | 19.44 | 17.25 | -11.28 | 9.09 | 0.626 |
+| top height | m | in domain | 492 | 13.14 | 13.71 | +4.38 | 2.50 | 0.788 |
+| top height | m | all plots | 733 | 13.28 | 13.84 | +4.21 | 2.42 | 0.799 |
+| total volume | m³ ha⁻¹ | in domain | 492 | 92.94 | 90.87 | -2.23 | 57.02 | 0.602 |
+| total volume | m³ ha⁻¹ | all plots | 733 | 97.84 | 93.52 | -4.41 | 54.68 | 0.688 |
 
-The restriction tightens pooled volume bias (total volume -1.63 percent in domain versus -3.64 percent on all
+The restriction tightens pooled volume bias (total volume -2.23 percent in domain versus -4.41 percent on all
 plots) and leaves the offsetting height-over and basal-area-under signature intact, which is exactly the
 pooled-parity offset the v13.0 joint re-anchor targets. Quadratic mean diameter stays near unbiased in domain
-(-0.01 percent). The all-plots numbers are retained alongside the in-domain numbers so nothing is hidden.
+(-0.04 percent). The all-plots numbers are retained alongside the in-domain numbers so nothing is hidden.
 
 ### By jurisdiction and by forest type
 
@@ -195,14 +195,14 @@ installation out cross validation, with the MagPlot installation as the fold uni
 
 | **class** | **n** | **v12.9.x** | **v12.10.1** | **OSM** |
 |:---|:---:|:---:|:---:|:---:|
-| PLANTED | 51 | 15.8 | 4.0 | 16.7 |
-| PCT | 95 | 7.5 | 3.0 | 3.7 |
-| MANAGED | 146 | 10.2 | 1.3 | 8.3 |
+| PLANTED | 51 | 19.3 | 4.0 | 16.7 |
+| PCT | 95 | 10.4 | 1.5 | 3.7 |
+| MANAGED | 146 | 13.2 | 0.9 | 8.3 |
 
-Under the harsher leave one province out block, managed is 1.5, planted 5.6 versus OSM 16.7, and PCT 4.1
+Under the harsher leave one province out block, managed is 0.9, planted 5.7 versus OSM 16.7, and PCT 3.8
 versus OSM 3.7, close but marginally behind across the border. Under a managed split half over 200 reps
-v12.10.1 averages 5.6 and beats OSM in 76 percent of reps and v12.9.x in 82 percent. The additive fold
-coefficients are stable across folds (planted basal-area release 3.57 to 4.14, PCT 2.28 to 2.57), unlike the
+v12.10.1 averages 5.2 and beats OSM in 79 percent of reps and v12.9.x in 92 percent. The additive fold
+coefficients are stable across folds (planted basal-area release 3.85 to 4.40, PCT 2.45 to 2.76), unlike the
 clamped multiplier that pinned at 1.6 in every fold. The direct-effect release follows Chapter 11 of
 Weiskittel, Hann, Kershaw and Vanclay (2011): the multi-step method of Wang (1990) holds the untreated
 equations fixed and fits the modifier on observed minus predicted-untreated increment, planted treated as a

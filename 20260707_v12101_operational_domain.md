@@ -16,17 +16,17 @@ ecoregion edge. No equation or parameter changed. Pooled, out of fold:
 
 | Metric | Units | Subset | n | Obs mean | Pred mean | Bias % | RMSE | NSE |
 |:------:|:-----:|:------:|:-:|:--------:|:---------:|:------:|:----:|:---:|
-| BA | m² ha⁻¹ | In domain | 492 | 18.47 | 16.77 | -9.20 | 8.78 | 0.630 |
-| BA | m² ha⁻¹ | All plots | 733 | 19.44 | 17.37 | -10.63 | 8.94 | 0.639 |
-| TOPHT | m | In domain | 492 | 13.14 | 13.68 | +4.16 | 2.50 | 0.788 |
-| TOPHT | m | All plots | 733 | 13.28 | 13.82 | +4.02 | 2.42 | 0.799 |
-| TOTVOL | m³ ha⁻¹ | In domain | 492 | 92.94 | 91.43 | -1.63 | 55.81 | 0.619 |
-| TOTVOL | m³ ha⁻¹ | All plots | 733 | 97.84 | 94.27 | -3.64 | 53.16 | 0.705 |
+| BA | m² ha⁻¹ | In domain | 492 | 18.47 | 16.66 | -9.81 | 8.95 | 0.616 |
+| BA | m² ha⁻¹ | All plots | 733 | 19.44 | 17.25 | -11.28 | 9.09 | 0.626 |
+| TOPHT | m | In domain | 492 | 13.14 | 13.71 | +4.38 | 2.50 | 0.788 |
+| TOPHT | m | All plots | 733 | 13.28 | 13.84 | +4.21 | 2.42 | 0.799 |
+| TOTVOL | m³ ha⁻¹ | In domain | 492 | 92.94 | 90.87 | -2.23 | 57.02 | 0.602 |
+| TOTVOL | m³ ha⁻¹ | All plots | 733 | 97.84 | 93.52 | -4.41 | 54.68 | 0.688 |
 
-The restriction tightens the pooled volume bias (TOTVOL -1.63 percent in domain vs -3.64 percent on all
-plots) and leaves the offsetting height-over/BA-under signature intact (TOPHT about +4 percent, BA about -9
+The restriction tightens the pooled volume bias (TOTVOL -2.23 percent in domain vs -4.41 percent on all
+plots) and leaves the offsetting height-over/BA-under signature intact (TOPHT about +4 percent, BA about -10
 percent), which is exactly the pooled-parity offset the v13.0 joint re-anchor targets. QMD stays near unbiased
-in domain (-0.01 percent). Full eight-metric table in scorecard_domain_v12101.csv on Cardinal.
+in domain (-0.04 percent). Full eight-metric table in scorecard_domain_v12101.csv on Cardinal.
 
 ## The domain
 
@@ -54,7 +54,7 @@ It converts the one genuinely weak part of the pooled story into a stated limit 
 the domain the model is used as intended; the Quebec edge is declared outside the calibrated range instead of
 being scored as if it were a failure. Pooled scorecard numbers reported on the in-domain subset are the honest
 operational numbers; the all-plots pooled numbers are retained alongside them for transparency, so nothing is
-hidden. The managed-stand advantage (out-of-fold mean absolute bias 1.3 vs OSM 8.3; planted 4.0 vs 16.7) and
+hidden. The managed-stand advantage (out-of-fold mean absolute bias 0.9 vs OSM 8.3; planted 4.0 vs 16.7) and
 the biological-realism advantage (only model that plateaus at the realistic maximum and passes the Bakuzis
 relations) are unchanged and remain the headline.
 

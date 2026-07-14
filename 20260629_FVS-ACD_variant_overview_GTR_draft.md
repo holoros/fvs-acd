@@ -466,7 +466,11 @@ inventory projection; v12.7.1 remains the recommended version for carbon and old
 this specific population until a tapered version of the correction, relaxing toward the true asymptote
 rather than applying a flat multiplier throughout the rotation, is fit.
 
-Independent validation. On genuinely independent, in-domain data, the full FIA NSVB metric set,
+Independent validation. The figures in this subsection, including the recent Maine FIA (n=788), the
+ESI-covered Quebec edge (n=378), and the Reineke self-thinning slopes, are from the development-era
+12.7.0 to 12.7.1 study computed on a non-frozen harness and on stand sets that differ from the frozen
+five-way scorecard in section 10.3; they are retained as the original developmental record and have not
+been re-benched on the frozen operational harness. On genuinely independent, in-domain data, the full FIA NSVB metric set,
 predicted versus observed t2 level bias, New Brunswick (n=355) and the ESI-covered Quebec edge (n=378),
 12.7.0 to 12.7.1:
 
@@ -503,7 +507,7 @@ predicted-untreated increment, with proportional releases in the other metrics),
 a net multiplier of about 3.0 planted and 2.3 PCT, above the old 1.6 ceiling, which is why the clamped
 version still under-predicted planted. The modifier is gated by ops$use.mgmt.mod and applies only to
 planted and PCT stands; the gate-off run is byte identical to v12.9.x on the 266 unmanaged stands. The
-additive fold coefficients move with the data (planted basal-area release 3.57 to 4.14, PCT 2.28 to 2.57
+additive fold coefficients move with the data (planted basal-area release 3.85 to 4.40, PCT 2.45 to 2.76
 across cross-validation folds), so it is a fitted release, not a clamped constant. It is physically
 bounded: managed predicted SDI stays inside the unmanaged envelope, the release is a diameter-growth
 term rather than a mortality term, and the self-thinning plateau holds at every amplitude tested.
