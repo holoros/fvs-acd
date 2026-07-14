@@ -21,3 +21,4 @@ FVS-ACD_Hennigar_Aug2026.pdf
 *.pdf#
 __pycache__/
 *.pyc
+*.tmp
