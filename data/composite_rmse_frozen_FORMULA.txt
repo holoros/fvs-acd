@@ -1,0 +1,22 @@
+FVS-ACD %RMSE composite score definition (0 to 100, higher is better)
+=====================================================================
+Per metric per model on a given stratum:
+  %RMSE        = 100 * RMSE / mean(observed)
+  metric_score = 100 * max(0, 1 - %RMSE / CAP),  CAP = 100
+                 (%RMSE 0 -> 100; %RMSE 100% or worse -> 0)
+  This single score blends accuracy and precision, which is what was asked:
+  it penalises both systematic error and scatter, unlike a bias-only score.
+
+PRIMARY composite (volume + value weighted) = weighted mean of the nine
+  metric_score values with volume and value carrying the highest weight:
+    TOTVOL 3, VALUE 3, MERCHVOL 2, SAWVOL 2, BIOMASS 2, BA 1, SDI 1, QMD 1,
+    TOPHT 1  (sum of weights = 16).
+EQUAL-WEIGHT composite (reference) = simple mean of the nine metric_score
+  values (every metric weight 1).
+
+Reference column composite_primary_bias is the prior bias-and-NSE composite
+  (composite_scores_frozen.csv), carried alongside so the change from the
+  bias basis to the %RMSE basis is visible in one table.
+
+Strata scored: POOLED_indomain (esi_cov TRUE or PROV==NB, n=705); Softwood;
+  Mixedwood; Hardwood. Frozen basis: frozen_subsidiary_W.rds.

@@ -1,0 +1,11 @@
+## Benchmark dataset
+
+The frozen evaluation benchmark comprises n = 705 remeasured stands drawn from the permanent-plot networks of the two Canadian jurisdictions that anchor the Acadian region, New Brunswick (n = 355) and Quebec (n = 350). Forest-type composition, assigned from the hardwood share of stand basal area (softwood at 25% or less hardwood, hardwood at 75% or more, mixedwood between), is 321 softwood, 186 mixedwood, and 178 hardwood stands, with the remaining 20 stands unclassified. Each stand carries an observed initial and remeasured state together with the predicted remeasured state from every model variant, evaluated on nine National Scale Volume and Biomass (NSVB) metrics: basal area, stand density index, quadratic mean diameter, top height, total volume, merchantable volume, sawlog volume, aboveground biomass, and stumpage value.
+
+The benchmark is built from remeasurement pairs whose interval ranges from 4 to 14 years, with a median of 5 years and a mean near 7 years, so each prediction is a growth-and-yield projection over the stand's own observed remeasurement window rather than a fixed horizon. Total, merchantable, and sawlog volume and aboveground biomass are placed on the NSVB basis so that observed and predicted state are compared in a common estimation framework.
+
+Evaluation is restricted to the operational in-domain set: a stand is retained when it falls within the Ecological Site Index (ESI) coverage or lies in New Brunswick. Every stand in the frozen benchmark satisfies this condition (all 705 are ESI-covered), which keeps the comparison inside the region and site conditions the model was calibrated to represent.
+
+The spatial extent and forest-type distribution of the benchmark are shown in Figure 12 (a locator of the Acadian study region with stand counts on a 50 km equal-area hex grid) and Figure 13 (the same aggregation split into softwood, mixedwood, and hardwood panels).
+
+Coordinate privacy: plot coordinates are restricted and were used only server-side to build the aggregated hex counts. No true coordinate appears in any released figure, table, or file; the maps and count summaries carry aggregated hex polygons and stand counts only.
