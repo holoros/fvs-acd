@@ -1,4 +1,4 @@
-# Acadian (ACD) Variant Overview of the Forest Vegetation Simulator
+# FVS-ACD (Acadian Variant) Overview of the Forest Vegetation Simulator
 
 **DRAFT variant overview / General Technical Report scaffold. 29 June 2026, updated 7 July 2026.**
 
@@ -6,13 +6,12 @@
 August 2023) so it can become the official FVS-ACD variant documentation. Equation content is drawn
 from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY source,
 built on the 12.7.1 development line. AcadianGY 12.10.1 is the current operational and production
-version, documented here. Sections still marked [POPULATE] need team-written text before publication
+version, documented here. Sections still in preparation need team-written text before publication
 (the geographic range map figure, the keyword and database usage reference, the full Literature Cited
 list, and the Appendix C/D validation and keyword material); the species and component parameter tables
 (Appendices A and B) are populated directly from the AcadianGY source and are unchanged from v12.9.0
 through v12.10.1, since the later refinements touch mortality, ingrowth, self-thinning, and the
-management modifiers, not the species-level growth, crown, taper, or volume parameters. Plaintext math,
-no em dashes; this draft will be rendered to a formatted Word/PDF GTR. Updated 7 July 2026 to document
+management modifiers, not the species-level growth, crown, taper, or volume parameters. This draft will be rendered to a formatted Word/PDF GTR. Updated 7 July 2026 to document
 v12.10.1 as the operational version, with the version lineage through 12.5.0, 12.7.0/12.7.1, 12.9.x,
 and 12.10.1, the five-way independent scorecard and honest scorecard position, the Bakuzis
 biological-realism pass, the disclosed ingrowth limit, and the planned v13 program.*
@@ -25,8 +24,8 @@ implementation and benchmarking. Component equations are credited to their autho
 (Kuehne, Russell, Rijal, Li, Chen, Castle, Cen, and others; see Literature Cited). This overview
 documents the FVS-ACD variant as implemented in AcadianGY 12.10.1, the current operational version.
 
-Suggested citation: Weiskittel, A., Rice, B., and contributors. 2026. Acadian (ACD) Variant Overview
-- Forest Vegetation Simulator. CFRU / University of Maine, Orono, ME. [pages].
+Suggested citation: Weiskittel, A. 2026. FVS-ACD (Acadian variant) overview: Forest Vegetation
+Simulator. CRSF and CFRU, University of Maine, Orono, ME. [pages].
 
 ## Table of Contents
 
@@ -54,7 +53,7 @@ Suggested citation: Weiskittel, A., Rice, B., and contributors. 2026. Acadian (A
 | Maximum stand density index | Composition-based, Weiskittel and Kuehne (2019); see 3.5 |
 | Species | 37 Acadian species codes plus OH (other hardwood) and OS (other softwood) |
 | Minimum DBH | 2.5 cm for height prediction; ingrowth threshold DBH user-set |
-| Units | Metric internally (DBH cm, height m, BA m2/ha, TPH per ha) |
+| Units | Metric internally (DBH cm, height m, BA m² ha⁻¹, trees ha⁻¹) |
 | Volume | Kozak variable-exponent taper; Westfall and Scott |
 
 ## 1. Introduction
@@ -75,7 +74,7 @@ individual-tree, distance-independent model and, like the other variants, suppor
 The Acadian variant applies to northern New England (Maine, New Hampshire, Vermont) and Atlantic
 Canada (New Brunswick, Nova Scotia) plus southern Quebec, the region for which the component
 equations were fit. Region codes select the regional mortality and modifier parameters (ME, NB, NS,
-QC). [POPULATE: range map figure, analogous to FVSne figure 2.0.1.]
+QC). *Geographic range map in preparation.*
 
 ## 3. Control Variables
 
@@ -121,7 +120,7 @@ separate future-climate product and are not the operational site driver.
 ### 3.5 Maximum density (maximum SDI)
 
 Stand density index is additive at the plot level, SDI = sum over trees of (DBH/25.4)^1.6 * TPH, with
-DBH in cm and TPH per ha. Maximum SDI follows Weiskittel and Kuehne (2019), a composition- and
+DBH in cm and trees ha⁻¹. Maximum SDI follows Weiskittel and Kuehne (2019), a composition- and
 structure-based function:
 
     SDImax = 475.2079 - 1.5908*HW.ba.percent - 236.9051*log(meanSG) + 50.3299*sqrt(DBHrange)
@@ -255,7 +254,7 @@ next-version fix is a regional refit of the 2012 stand-mortality coefficients.
 
 Coupled self-thinning and density-released ingrowth (12.7.1). The 12.7.0 self-thinning used a single
 slope above a relative-density onset, which on long-horizon projection never plateaued (basal area
-climbed past 36 m2/ha and was still rising at age 120). Version 12.7.1 replaces it with a coupled
+climbed past 36 m² ha⁻¹ and was still rising at age 120). Version 12.7.1 replaces it with a coupled
 two-segment relative-density mortality. Let RD = SDI/SDImax. Mortality is zero below RD 0.30, rises on
 a gentle slope from 0.30 to a break at 0.62 (ops$sdimort.onset, ops$sdimort.break, ops$sdimort.beta.gentle),
 and rises on a steep slope above the break (ops$sdimort.beta.steep), so a fully stocked stand self-thins
@@ -264,7 +263,7 @@ RD, recruitment is suppressed at high RD and released below about RD 0.58. The b
 is the build, self-thin, and rebound dynamic of a stand that grows to its maximum, self-thins along the
 density frontier, and rebounds as ingrowth releases when density falls, the process underlying a
 shifting-mosaic steady state. On a 160-year projection of a young dense spruce-fir stand across the site
-gradient, basal area builds and plateaus at about 33 to 34 m2/ha by mid-rotation and then levels, inside
+gradient, basal area builds and plateaus at about 33 to 34 m² ha⁻¹ by mid-rotation and then levels, inside
 the realistic fully-stocked Acadian spruce-fir range (about 28 to 34), replacing the 12.7.0 runaway
 climb. The decline-and-rebound is critically damped at the single-stand deterministic scale. Because
 mature Quebec-edge stands and moderately dense New Brunswick stands overlap in relative density, this
@@ -344,7 +343,7 @@ plateau. See section 10.3 for the fit and validation.
 CSI is supplied by the user or sampled from the raster surfaces (current and 2030/2060/2090 climate
 normals); recent testing finds the 2030 surface reasonable. Cycle length is one year. The model is
 run from a tree list through the FVS interface or the AcadianGY R driver (make_stand, make_acd_tree,
-make_ops, AcadianGYOneStand). [POPULATE: keyword and database usage, analogous to Essential FVS.]
+make_ops, AcadianGYOneStand). *Keyword and database usage section in preparation.*
 
 ## 10. Version lineage, current operational version (12.10.1), and validation
 
@@ -418,7 +417,7 @@ OSM through the common NSVB harness resolves it, and OSM's pooled modeling effic
 leads the set. FVS-ACD leads OSM on biological realism, the climate-ready site driver, and quadratic mean
 diameter, not on pooled level bias or modeling efficiency. All three AcadianGY versions explain 55 to 78
 percent of out-of-sample variance on every metric. AcadianGY 12.5.0 fails the Bakuzis self-thinning check
-outright, with long-horizon basal area still climbing past 62 m2/ha at age 120 and several thousand stems
+outright, with long-horizon basal area still climbing past 62 m² ha⁻¹ at age 120 and several thousand stems
 per hectare still alive, and is not recommended for mature-stand or long-horizon use. Of the FVS-ACD
 versions, AcadianGY 12.7.1 has the best combined quantitative and qualitative profile prior to the 12.9.0
 refinement below.
@@ -454,12 +453,12 @@ observed t2 level bias:
   (-9.3 to -18.1 percent), the SDImax-driven trade-off confined now to exactly the population needing it.
 - New Brunswick: unchanged from 12.7.1 in every metric.
 - Recent Maine FIA: unchanged from 12.7.1 (basal-area level -2.2 percent, annual increment -0.085
-  m2/ha/yr), confirming the gate cannot affect Maine plots.
+  m² ha⁻¹ yr⁻¹), confirming the gate cannot affect Maine plots.
 - A stand-level split-half robustness check (163 target-cell stands, two random halves) confirmed the
   correction is not driven by a handful of outlier stands.
 
 Known residual: a seeded 160-year trajectory of the corrected hardwood population plateaus at about 21
-m2/ha, below the realistic 28 to 32 m2/ha target for that composition (the same composition, uncorrected,
+m² ha⁻¹, below the realistic 28 to 32 m² ha⁻¹ target for that composition (the same composition, uncorrected,
 plateaus at 31 to 32). A correction calibrated on a 5 to 15 year remeasurement window, carried through a
 full rotation, under-shoots the long-horizon asymptote. v12.9.0 is recommended for short-to-mid rotation
 inventory projection; v12.7.1 remains the recommended version for carbon and old-growth applications on
@@ -778,10 +777,45 @@ flat multiplier under-shoots the realistic plateau.
 
 ## 11. Literature Cited
 
-[POPULATE with full references: Loo and Ives 2003; Weiskittel et al. 2011, 2012, 2013; Weiskittel and
-Li 2012; Weiskittel and Kuehne 2019; Rijal et al. 2012a,b; Russell and Weiskittel 2011; Russell et
-al. 2014; Kuehne et al. 2016, 2022; Li et al. 2011, 2012; Chen et al. (in prep., 2023); Cen et al.
-2018; Castle et al. 2018; Jiang et al. 2014; Leary 1997 (Bakuzis); Dixon 2002 (Essential FVS).]
+Castle, M., Weiskittel, A., Wagner, R.G., Ducey, M.J., Frank, J., and Pelletier, G. 2018. Evaluating the influence of stem form and damage on individual-tree diameter increment and survival in the Acadian Region: implications for predicting future value of northern commercial hardwood stands. *Canadian Journal of Forest Research* 48: 1007-1019.
+
+Cen et al. 2018. Spruce budworm-associated mortality modifiers for the Acadian Region (Maine and New Brunswick). Full citation to be confirmed.
+
+Chen, C., Kershaw, J.A., Weiskittel, A.R., and McGarrigle, E. 2023. Can a multistage approach improve individual tree mortality predictions across the complex mixed-species and managed forests of eastern North America? *Forest Ecosystems* 10: 100086. Cited in the text as Chen et al., in preparation.
+
+Dixon, G.E. (comp.). 2002 (revised regularly). *Essential FVS: A User's Guide to the Forest Vegetation Simulator*. Internal report. USDA Forest Service, Forest Management Service Center, Fort Collins, CO.
+
+FVS Staff. 2008 (revised August 2023). *Northeast (NE) Variant Overview: Forest Vegetation Simulator*. USDA Forest Service, Forest Management Service Center, Fort Collins, CO.
+
+Kuehne, C., Weiskittel, A.R., Wagner, R.G., and Roth, B.E. 2016. Development and evaluation of individual tree- and stand-level approaches for predicting spruce-fir response to commercial thinning in Maine, USA. *Forest Ecology and Management* 376: 84-95.
+
+Kuehne, C., Weiskittel, A.R., and Kershaw, J.A. 2022. Development and evaluation of refined annualized individual tree diameter and height increment equations for the Acadian variant of the Forest Vegetation Simulator. *Mathematical and Computational Forestry and Natural Resource Sciences* 14: 9-31.
+
+Leary, R.A. 1997. Testing models of unthinned red pine plantation dynamics using a modified Bakuzis matrix of stand properties. *Ecological Modelling* 98: 35-46.
+
+Li, R. et al. 2011. Individual-tree ingrowth model for the Acadian Region. Full citation to be confirmed.
+
+Li, R., Weiskittel, A., Dick, A.R., Kershaw, J.A., and Seymour, R.S. 2012. Regional stem taper equations for eleven conifer species in the Acadian Region of North America: development and assessment. *Northern Journal of Applied Forestry* 29(1): 5-14.
+
+Loo, J., and Ives, N. 2003. The Acadian forest: historical condition and human impacts. *The Forestry Chronicle* 79(3): 462-474.
+
+Rijal, B., Weiskittel, A.R., and Kershaw, J.A. 2012a. Development of regional height to diameter equations for 15 tree species in the North American Acadian Region. *Forestry: An International Journal of Forest Research* 85(3): 379-390.
+
+Rijal, B., Weiskittel, A.R., and Kershaw, J.A. 2012b. Development of height to crown base models for thirteen tree species of the North American Acadian Region. *The Forestry Chronicle* 88(1): 60-73.
+
+Russell, M.B., and Weiskittel, A.R. 2011. Maximum and largest crown width equations for 15 tree species in Maine. *Northern Journal of Applied Forestry* 28(2): 84-91.
+
+Russell, M.B., Weiskittel, A.R., and Kershaw, J.A. 2014. Comparing strategies for modeling individual-tree height and height-to-crown base increment in mixed-species Acadian forests of northeastern North America. *European Journal of Forest Research* 133: 1121-1135.
+
+Weiskittel, A.R., Crookston, N.L., and Radtke, P.J. 2011. Linking climate, gross primary productivity, and site index across forests of the western United States. *Canadian Journal of Forest Research* 41: 1710-1721.
+
+Weiskittel, A.R., and Li, R. 2012. Bark ratio and merchantable stem conversion for the primary Acadian species. Full citation to be confirmed.
+
+Weiskittel, A.R. et al. 2012. Stand- and tree-level mortality models for the Acadian Region. Full citation to be confirmed.
+
+Weiskittel, A.R. et al. 2013. Refit of the height-to-crown-base model with species random effects for the Acadian Region. Full citation to be confirmed.
+
+Weiskittel, A.R., and Kuehne, C. 2019. Evaluating and modeling variation in site-level maximum carrying capacity of mixed-species forest stands in the Acadian Region of northeastern North America. *The Forestry Chronicle* 95(3): 171-182.
 
 ## 12. Appendices
 

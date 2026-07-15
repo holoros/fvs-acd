@@ -5,7 +5,7 @@ report consolidates the v12.10.1 full independent five-way benchmark, the operat
 five-way scorecard with equivalence testing and Bakuzis relations, the Chapter 11 management-modifier
 scorecard, and the OSM matched-stand comparison into a single record. All computation ran on Cardinal
 (~/magplot/verify and ~/silc_cfi); only aggregates appear here and true plot coordinates never left the node.
-Plaintext math, no em dashes. Volume, biomass, and value are on the shared FIA NSVB system throughout.*
+Volume, biomass, and value are on the shared FIA NSVB system throughout.*
 
 ## Verdict up front
 
