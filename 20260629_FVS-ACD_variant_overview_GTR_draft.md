@@ -6,9 +6,10 @@
 August 2023) so it can become the official FVS-ACD variant documentation. Equation content is drawn
 from the Acadian GY Model Documentation (Weiskittel and team, 2025-05-20) and the AcadianGY source,
 built on the 12.7.1 development line. AcadianGY 12.10.1 is the current operational and production
-version, documented here. Sections still in preparation need team-written text before publication
-(the geographic range map figure, the keyword and database usage reference, the full Literature Cited
-list, and the Appendix C/D validation and keyword material); the species and component parameter tables
+version, documented here. The geographic range map, the keyword and database usage reference (Appendix
+C), the Literature Cited, and the Appendix C and D validation and keyword material are drafted in this
+revision, with the keyword reference flagged as a usage overview to be finalized with the FVS software
+team; the species and component parameter tables
 (Appendices A and B) are populated directly from the AcadianGY source and are unchanged from v12.9.0
 through v12.10.1, since the later refinements touch mortality, ingrowth, self-thinning, and the
 management modifiers, not the species-level growth, crown, taper, or volume parameters. This draft will be rendered to a formatted Word/PDF GTR. Updated 7 July 2026 to document
@@ -74,7 +75,14 @@ individual-tree, distance-independent model and, like the other variants, suppor
 The Acadian variant applies to northern New England (Maine, New Hampshire, Vermont) and Atlantic
 Canada (New Brunswick, Nova Scotia) plus southern Quebec, the region for which the component
 equations were fit. Region codes select the regional mortality and modifier parameters (ME, NB, NS,
-QC). *Geographic range map in preparation.*
+QC).
+
+![Geographic range of the Acadian variant (FVS-ACD).](figures/fig14_acadian_range.png)
+
+**Figure 14.** Geographic range of the Acadian variant (FVS-ACD): northern New England (Maine, New
+Hampshire, Vermont), Atlantic Canada (New Brunswick and Nova Scotia), and southern Quebec, the region
+for which the component equations were fit and over which the region codes (ME, NB, NS, QC) select the
+regional mortality and modifier parameter sets.
 
 ## 3. Control Variables
 
@@ -343,7 +351,8 @@ plateau. See section 10.3 for the fit and validation.
 CSI is supplied by the user or sampled from the raster surfaces (current and 2030/2060/2090 climate
 normals); recent testing finds the 2030 surface reasonable. Cycle length is one year. The model is
 run from a tree list through the FVS interface or the AcadianGY R driver (make_stand, make_acd_tree,
-make_ops, AcadianGYOneStand). *Keyword and database usage section in preparation.*
+make_ops, AcadianGYOneStand). The keyword and database usage reference for the variant is given in
+Appendix C.
 
 ## 10. Version lineage, current operational version (12.10.1), and validation
 
@@ -796,6 +805,15 @@ three relations defined only on the seeded gradient.
 | Yield-density / plateau | flag | pass (37) | pass (36) | pass (36) | flag |
 | Sukachev (size vs density) | flag | pass | pass | pass | not scored |
 
+![Modified Bakuzis law-like relations matrix by model.](figures/fig3_bakuzis_relations.png)
+
+**Figure 3.** Modified Bakuzis matrix (Leary 1997) of law-like stand relationships evaluated on seeded
+160-year projections across the ESI productivity gradient, showing the pass and flag pattern for each
+AcadianGY version and the external OSM entrant on the five relations (Eichhorn, Reineke self-thinning,
+site ordering, yield-density plateau, and Sukachev). OSM is scored only on the two size-density
+relations observable from its matched-stand trajectory and marked not scored on the three relations
+defined only on the seeded gradient.
+
 Disclosed ingrowth limit. Observed MagPlot recruitment, tree-id matched across remeasurements, is 39.8
 stems ha⁻¹ yr⁻¹ in New Brunswick and 19.7 in Quebec. The shipped expected-value ingrowth hurdle predicts
 17.9 and 11.7 stems ha⁻¹ yr⁻¹, about 45 percent of observed in New Brunswick and 59 percent in Quebec.
@@ -914,7 +932,7 @@ flat multiplier under-shoots the realistic plateau.
 
 Castle, M., Weiskittel, A., Wagner, R.G., Ducey, M.J., Frank, J., and Pelletier, G. 2018. Evaluating the influence of stem form and damage on individual-tree diameter increment and survival in the Acadian Region: implications for predicting future value of northern commercial hardwood stands. *Canadian Journal of Forest Research* 48: 1007-1019.
 
-Cen et al. 2018. Spruce budworm-associated mortality modifiers for the Acadian Region (Maine and New Brunswick). Full citation to be confirmed.
+Chen, C. (Cen Chen), Weiskittel, A., Bataineh, M., and MacLean, D.A. 2018. Refining the Forest Vegetation Simulator for projecting the effects of spruce budworm defoliation in the Acadian Region of North America. *The Forestry Chronicle* 94(3): 240-253. doi:10.5558/tfc2018-037. The in-text callout "Cen et al. 2018" uses the first author's given name; reconcile it to Chen et al. 2018.
 
 Chen, C., Kershaw, J.A., Weiskittel, A.R., and McGarrigle, E. 2023. Can a multistage approach improve individual tree mortality predictions across the complex mixed-species and managed forests of eastern North America? *Forest Ecosystems* 10: 100086. Cited in the text as Chen et al., in preparation.
 
@@ -928,7 +946,7 @@ Kuehne, C., Weiskittel, A.R., and Kershaw, J.A. 2022. Development and evaluation
 
 Leary, R.A. 1997. Testing models of unthinned red pine plantation dynamics using a modified Bakuzis matrix of stand properties. *Ecological Modelling* 98: 35-46.
 
-Li, R. et al. 2011. Individual-tree ingrowth model for the Acadian Region. Full citation to be confirmed.
+Li, R., Weiskittel, A.R., and Kershaw, J.A., Jr. 2011. Modeling annualized occurrence, frequency, and composition of ingrowth using mixed-effects zero-inflated models and permanent plots in the Acadian Forest Region of North America. *Canadian Journal of Forest Research* 41(10): 2077-2089. doi:10.1139/x11-117.
 
 Li, R., Weiskittel, A., Dick, A.R., Kershaw, J.A., and Seymour, R.S. 2012. Regional stem taper equations for eleven conifer species in the Acadian Region of North America: development and assessment. *Northern Journal of Applied Forestry* 29(1): 5-14.
 
@@ -944,11 +962,11 @@ Russell, M.B., Weiskittel, A.R., and Kershaw, J.A. 2014. Comparing strategies fo
 
 Weiskittel, A.R., Crookston, N.L., and Radtke, P.J. 2011. Linking climate, gross primary productivity, and site index across forests of the western United States. *Canadian Journal of Forest Research* 41: 1710-1721.
 
-Weiskittel, A.R., and Li, R. 2012. Bark ratio and merchantable stem conversion for the primary Acadian species. Full citation to be confirmed.
+Weiskittel, A.R., and Li, R. 2012. Bark ratio (diameter outside bark to diameter inside bark) conversion for the primary Acadian species. The Acadian bark relationships trace to Li, R., and Weiskittel, A.R. 2011, Estimating and predicting bark thickness for seven conifer species in the Acadian Region of North America using a mixed-effects modeling approach: comparison of model forms and subsampling strategies, *European Journal of Forest Research* 130(2): 219-233 (doi:10.1007/s10342-010-0423-y), and to the bark component of Li et al. (2012); the exact author order and year of the in-text "Weiskittel and Li 2012" callout remain to be confirmed with the team.
 
-Weiskittel, A.R. et al. 2012. Stand- and tree-level mortality models for the Acadian Region. Full citation to be confirmed.
+Weiskittel, A.R., Kershaw, J.A., Jr., and Hennigar, C. 2012. Stand- and tree-level mortality models for the Acadian variant of the Forest Vegetation Simulator. University of Maine Cooperative Forestry Research Unit (CFRU), Orono, ME. Citation to be confirmed: not located as a standalone peer-reviewed article and most likely a CFRU annual report or internal Acadian model documentation of that period.
 
-Weiskittel, A.R. et al. 2013. Refit of the height-to-crown-base model with species random effects for the Acadian Region. Full citation to be confirmed.
+Weiskittel, A.R., Kershaw, J.A., Jr., and Rijal, B. 2013. Refit of the Acadian height-to-crown-base model with species random effects. University of Maine Cooperative Forestry Research Unit (CFRU), Orono, ME. Citation to be confirmed: not located as a standalone peer-reviewed article; the base height-to-crown-base model is Rijal et al. 2012b and this is the internal species-random-effect refit carried in the AcadianGY source.
 
 Weiskittel, A.R., and Kuehne, C. 2019. Evaluating and modeling variation in site-level maximum carrying capacity of mixed-species forest stands in the Acadian Region of northeastern North America. *The Forestry Chronicle* 95(3): 171-182.
 
@@ -956,11 +974,12 @@ Weiskittel, A.R., and Kuehne, C. 2019. Evaluating and modeling variation in site
 
 Appendices A and B below are populated directly from the AcadianGY 12.9.0 source
 (`scripts/AcadianGY_12.9.0.r`), extracted programmatically from the working parameter tables so the
-values match the running model exactly. Appendix C (keyword reference) and Appendix D (validation
-tables and figures) are not yet populated: C needs team-written usage documentation analogous to the
-Essential FVS keyword reference (Dixon 2002), and D should pull the final tables and figures directly
-from the companion benchmarking report (`FVS-ACD_12.9_benchmark_report.md`) once that report is
-finalized, rather than duplicating numbers here. Formatting note: several Appendix B tables have 9 to
+values match the running model exactly. Appendix C is the keyword and database usage reference,
+modeled on the Essential FVS keyword reference (Dixon 2002) and offered as a usage overview to be
+finalized with the FVS software team. Appendix D is the validation appendix, compiled directly from
+the frozen five-way benchmark results (n = 705 in-domain stands) so every number matches the frozen
+operational harness reported in section 10 and in the companion benchmarking report
+(`FVS-ACD_v12.10.1_benchmark_report_FINAL_20260710.md`). Formatting note: several Appendix B tables have 9 to
 12 columns and render narrow in a portrait Word layout (see rendered docx); the final typeset GTR
 should set these in landscape orientation or a smaller table font rather than leaving them
 word-wrapped as in this draft.
@@ -1487,3 +1506,378 @@ Legacy total-tree cubic-volume equation, retained for cross-checking against the
 | BC | Black cherry | 0.033 | 393.3 | 0.184 |
 | RO | Northern red oak | 1.512 | 336.5 | 0.184 |
 | OH | Other hardwood (group) | 1.512 | 336.5 | 0.184 |
+
+## Appendix C. Keyword and Database Usage
+
+This appendix is a usage overview of how the Acadian variant is invoked and driven through the standard
+Forest Vegetation Simulator keyword and database machinery, modeled on the structure of the Essential
+FVS keyword reference (Dixon 2002); it is to be finalized with the FVS software team, and the example
+records below are illustrative of the conventions rather than a validated production keyword set.
+
+### C.1 Invoking the Acadian (ACD) variant
+
+The variant code is ACD. FVS is distributed as one executable per variant, so the Acadian variant is
+selected by running the ACD build, or equivalently by choosing the Acadian (ACD) variant in the FVS
+user interface, in FVSOnline, or in an rFVS or fvsOL session, before the run stream is read. A single
+run uses one variant. All Acadian inputs and outputs are metric internally (DBH in cm, height in m,
+basal area in m² ha⁻¹, density in trees ha⁻¹), in contrast with the imperial defaults of most CONUS
+variants. As a matter of reproducibility, record the variant and revision with every run (for example,
+FVS-ACD built on AcadianGY 12.10.1, the current operational version documented here).
+
+### C.2 Keyword file structure
+
+FVS is driven by a keyword (.key) file, a sequence of fixed-form records read in order. Each record
+carries a keyword in the first field (columns 1 to 10) and up to seven numeric parameter fields in the
+following 10-column fields; supplemental data that some keywords require (SQL text, tree records, event
+lists) follow on subsequent lines and are closed by an end record. Keywords group by function: stand
+identification and inventory (StdIdent, StandCN, MgmtId, InvYear), time control (TimeInt, NumCycl), the
+database extension block (Database ... End), management activities (thinning and regeneration), and
+output requests (Summary, TreeList, Compute). A comment begins with an exclamation mark. The run stream
+is closed with Process and Stop.
+
+An annotated example keyword set for a basic one-year-cycle Acadian projection:
+
+```
+StdIdent
+ACD0001    Example Acadian spruce-fir stand
+StandCN
+ACD0001
+MgmtId
+NONE
+InvYear    2026            ! inventory (start) year
+TimeInt    0    1          ! all cycles one year long (Acadian one-year cycle)
+NumCycl    20              ! project 20 cycles, that is 20 years
+!  --- input from the FVS database ---
+Database
+DSNIn
+AcadianInput.db
+StandSQL
+SELECT * FROM FVS_StandInit WHERE Stand_ID = '%StandID%'
+EndSQL
+TreeSQL
+SELECT * FROM FVS_TreeInit WHERE Stand_ID = '%StandID%'
+EndSQL
+!  --- output to the FVS database ---
+DSNOut
+AcadianOutput.db
+Summary    2               ! stand summary table to the database
+TreeLiSt   0               ! tree list to the database, all cycles
+End                        ! close the Database block
+Process
+Stop
+```
+
+The StandSQL and TreeSQL queries pull the stand-level and tree-level records for the stand from the
+input database; the Summary and TreeLiSt requests inside the Database block route the summary and
+tree-list output to the output database. Site productivity (the Acadian ESI, section C.4) and region
+code travel in the stand record, so a basic run needs no separate site-index keyword.
+
+### C.3 The FVS database extension: input
+
+FVS reads its input either from a formatted tree-list file or, as in the example above, through the
+database extension. Two tables carry the input. The stand table (FVS_StandInit) holds one row per stand
+with the stand-level attributes: stand identifier, inventory year, location and region, site
+productivity, sampling design (basal-area factor or fixed plot size), aspect, slope, and elevation. The
+tree table (FVS_TreeInit) holds one row per sample tree with the stand identifier, plot identifier,
+tree count or expansion factor, species code, diameter (DBH), total height where measured, height to
+crown base or crown ratio where measured, and any tree history or damage codes. For the Acadian variant
+the species field uses the alpha Acadian codes of Appendix A (species outside the set map to OH or OS by
+type), diameters are in cm and heights in m, and missing heights and crown ratios are filled by the
+variant's height-diameter and height-to-crown-base equations (sections 4.1 and 4.3).
+
+### C.4 The FVS database extension: output
+
+Output is requested with keywords inside the Database block and written to the output database. The
+summary table (FVS_Summary and FVS_Summary2) carries one row per stand and cycle with stand-level state
+and periodic values: trees ha⁻¹, basal area, quadratic mean diameter, top height, stand density index
+and relative density, and merchantable and total volume. The tree list (FVS_TreeList) carries one row
+per tree record per cycle with the projected diameter, height, crown ratio, and per-tree volume, so
+composition and size structure can be tracked through time (as in the species-composition analysis of
+section 10.3.1). User-defined variables can be emitted through Compute variables and the FVS_Compute
+table. For the Acadian variant the volume and biomass columns are reported on the FIA National Scale
+Volume and Biomass (NSVB) system (section 7).
+
+### C.5 Where the Acadian variant differs in inputs and outputs
+
+The Acadian variant departs from a typical CONUS variant in five ways that touch keyword and database
+usage. First, productivity enters as the Ecological Site Index (ESI, section 3.4), a climate-and-soil
+driven site driver supplied per stand through the site-productivity slot of the stand record rather
+than a mapped habitat type or a species site index; the legacy Climate Site Index is accepted in the
+same slot. Second, there is no habitat-type code, and Level 3 ecoregion is an optional stratifier for
+maximum density only (sections 3.3 and 3.5). Third, the region code (ME, NB, NS, QC) travels in the
+stand record and selects the regional mortality and spruce budworm modifier parameter sets. Fourth,
+inputs and outputs are metric. Fifth, the reported volume and biomass are on the NSVB basis (gross cubic
+volume, net merchantable and sawlog volume, and aboveground dry biomass, section 7), so the volume
+columns in the summary and tree-list output are NSVB responses rather than the legacy single
+form-factor merchantable volume. The projection cycle is one year (section 9); reporting frequency is
+user-selectable through TimeInt and the output keywords.
+
+## Appendix D. Validation Tables
+
+This appendix compiles the frozen five-way benchmark results behind section 10 so every number matches
+the frozen operational harness exactly. The benchmark is the n = 705 in-domain remeasured stands (New
+Brunswick n = 355, Quebec n = 350), each stand projected over its own observed remeasurement window and
+scored on the nine FIA National Scale Volume and Biomass (NSVB) metrics: basal area (BA), stand density
+index (SDI), quadratic mean diameter (QMD), top height (TOPHT), total volume (TOTVOL), merchantable
+volume (MERCHVOL), sawlog volume (SAWVOL), aboveground biomass (BIOMASS), and stand value (VALUE).
+Because the frozen operational harness fully specifies the operational configuration, v12.7.1, v12.9.x,
+and v12.10.1 (management gate off) are byte identical on the pooled base scorecard; they differ only in
+the managed cells, shown in Table D5. OSM is v2.26.1.
+
+**Table D1.** Pooled five-way level bias (percent) on the nine NSVB metrics, frozen operational harness
+(n = 705). Positive is over-prediction of the remeasured state.
+
+| Metric | v12.5.0 | v12.7.0 | v12.9.x | v12.10.1 | OSM |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Basal area (BA) | +2.9 | -13.4 | -9.9 | -9.9 | -2.0 |
+| Stand density index (SDI) | +5.1 | -12.1 | -9.4 | -9.4 | -4.1 |
+| Quadratic mean diameter (QMD) | -4.9 | -0.7 | +1.0 | +1.0 | +11.0 |
+| Top height (TOPHT) | +4.6 | +3.7 | +4.0 | +4.0 | +4.4 |
+| Total volume (TOTVOL) | +9.3 | -8.3 | -3.9 | -3.9 | +1.6 |
+| Merch volume (MERCHVOL) | +8.4 | -9.1 | -4.8 | -4.8 | +1.0 |
+| Sawlog volume (SAWVOL) | +7.8 | -9.5 | -5.2 | -5.2 | +1.5 |
+| Aboveground biomass (BIOMASS) | +9.7 | -8.1 | -3.9 | -3.9 | +1.1 |
+| Stand value (VALUE) | +11.0 | -6.7 | -2.1 | -2.1 | +2.6 |
+
+**Table D2.** Pooled rollup on the frozen harness (n = 705): mean absolute level bias across the nine
+metrics, mean Nash-Sutcliffe modeling efficiency (NSE), total-volume RMSE, and the count of the nine
+metrics passing the TOST level equivalence.
+
+| Model | Mean abs level bias (%) | Mean NSE | RMSE total volume (m³ ha⁻¹) | TOST level equivalences (of 9) |
+|:---|:---:|:---:|:---:|:---:|
+| v12.5.0 | 7.1 | 0.71 | 53.1 | 4 |
+| v12.7.0 | 8.0 | 0.73 | 49.6 | 2 |
+| v12.9.x | 4.9 | 0.71 | 52.3 | 7 |
+| v12.10.1 | 4.9 | 0.71 | 52.3 | 7 |
+| OSM | 3.2 | 0.75 | 48.5 | 8 |
+
+**Table D3.** Pooled percent RMSE (%RMSE) by model and metric on the frozen harness (n = 705). Lower is
+better; %RMSE penalizes systematic offset and scatter together and is dimensionless.
+
+| Metric | v12.5.0 | v12.7.0 | v12.9.x | v12.10.1 | OSM |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Basal area (BA) | 40.8 | 45.3 | 45.8 | 45.8 | 39.6 |
+| Stand density index (SDI) | 40.9 | 45.9 | 46.2 | 46.2 | 39.6 |
+| Quadratic mean diameter (QMD) | 27.8 | 25.4 | 25.7 | 25.7 | 29.1 |
+| Top height (TOPHT) | 18.8 | 18.2 | 18.4 | 18.4 | 16.1 |
+| Total volume (TOTVOL) | 56.0 | 52.3 | 55.2 | 55.2 | 51.1 |
+| Merch volume (MERCHVOL) | 53.6 | 50.9 | 53.4 | 53.4 | 49.0 |
+| Sawlog volume (SAWVOL) | 57.7 | 55.1 | 57.8 | 57.8 | 53.4 |
+| Aboveground biomass (BIOMASS) | 52.2 | 47.9 | 50.6 | 50.6 | 47.2 |
+| Stand value (VALUE) | 62.0 | 55.8 | 59.4 | 59.4 | 56.3 |
+
+**Table D4.** Forest-type scorecard, signed level bias (percent) by model and metric on the frozen
+harness, for the softwood (n = 321), mixedwood (n = 186), and hardwood (n = 178) strata (20 unclassified
+stands excluded). Forest type is the committed percent-hardwood rule on the initial treelist (softwood
+at most 25% hardwood BA, hardwood at least 75%, mixedwood between).
+
+Softwood (n = 321):
+
+| Model | BA | SDI | QMD | TOPHT | TOTVOL | MERCHVOL | SAWVOL | BIOMASS | VALUE |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| v12.5.0 | +0.8 | +3.4 | -5.1 | -0.6 | +0.6 | +0.4 | -0.2 | +1.1 | +0.5 |
+| v12.7.0 | -16.0 | -14.2 | -1.5 | -1.4 | -16.4 | -16.5 | -16.9 | -16.2 | -16.4 |
+| v12.9.x | -14.0 | -12.8 | +0.1 | -1.2 | -14.1 | -14.2 | -14.7 | -14.1 | -14.1 |
+| v12.10.1 | -14.0 | -12.8 | +0.1 | -1.2 | -14.1 | -14.2 | -14.7 | -14.1 | -14.1 |
+| OSM | -2.3 | -3.2 | +8.1 | +3.9 | -1.0 | -1.0 | -0.8 | -1.4 | -1.1 |
+
+Mixedwood (n = 186):
+
+| Model | BA | SDI | QMD | TOPHT | TOTVOL | MERCHVOL | SAWVOL | BIOMASS | VALUE |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| v12.5.0 | -2.1 | -0.7 | -4.9 | +3.2 | +7.2 | +6.7 | +6.3 | +6.4 | +8.8 |
+| v12.7.0 | -17.0 | -16.3 | -1.1 | +2.1 | -9.5 | -10.0 | -10.3 | -10.4 | -8.3 |
+| v12.9.x | -12.5 | -12.6 | +0.4 | +2.6 | -4.1 | -4.6 | -4.7 | -5.2 | -2.6 |
+| v12.10.1 | -12.5 | -12.6 | +0.4 | +2.6 | -4.1 | -4.6 | -4.7 | -5.2 | -2.6 |
+| OSM | -7.7 | -10.0 | +9.1 | +1.8 | -3.9 | -4.2 | -3.5 | -5.2 | -3.0 |
+
+Hardwood (n = 178):
+
+| Model | BA | SDI | QMD | TOPHT | TOTVOL | MERCHVOL | SAWVOL | BIOMASS | VALUE |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| v12.5.0 | +15.3 | +18.2 | -7.1 | +12.3 | +31.3 | +30.0 | +30.6 | +30.8 | +32.8 |
+| v12.7.0 | -1.9 | -0.3 | -1.4 | +11.4 | +11.4 | +10.2 | +10.8 | +10.6 | +12.7 |
+| v12.9.x | +3.9 | +4.3 | +0.6 | +11.7 | +19.0 | +17.6 | +18.4 | +17.9 | +20.4 |
+| v12.10.1 | +3.9 | +4.3 | +0.6 | +11.7 | +19.0 | +17.6 | +18.4 | +17.9 | +20.4 |
+| OSM | +7.1 | +2.6 | +16.5 | +6.9 | +14.6 | +13.1 | +14.6 | +13.6 | +16.0 |
+
+Hardwood is the high-variance frontier shared by every model, including OSM; v12.9.x and v12.10.1 are
+identical in every forest-type cell because the management gate does not touch the unmanaged stands
+that dominate each stratum.
+
+**Table D5.** Management-class basal-area and total-volume level bias (percent) on the frozen harness,
+showing the effect of the v12.10.1 Chapter 11 direct-effect gate (v12.9.x is gate off, v12.10.1 is gate
+on). The gate touches only planted and PCT stands, so the unmanaged cell confirms the two builds are
+identical there.
+
+| Class (n) | Metric | v12.5.0 | v12.7.0 | v12.9.x | v12.10.1 | OSM |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|
+| Unmanaged (266) | BA | +2.5 | -13.7 | -9.9 | -9.9 | -2.0 |
+| Unmanaged (266) | TOTVOL | +7.5 | -9.7 | -5.3 | -5.3 | -1.6 |
+| Planted (51) | BA | -14.5 | -28.2 | -24.9 | -4.4 | -20.9 |
+| Planted (51) | TOTVOL | -14.0 | -28.0 | -23.7 | -10.8 | -19.7 |
+| PCT (95) | BA | -3.2 | -17.2 | -15.6 | -1.3 | -5.4 |
+| PCT (95) | TOTVOL | +1.9 | -13.6 | -11.3 | -2.0 | -0.1 |
+| Managed (146) | BA | -7.4 | -21.3 | -19.0 | -2.5 | -11.2 |
+| Managed (146) | TOTVOL | -4.0 | -19.0 | -15.9 | -5.3 | -7.4 |
+
+**Table D6.** Observed-on-predicted regression and Robinson-Froese (2004) equivalence, pooled in-domain
+set (n = 705), all nine metrics. The regression is observed = a + b x predicted; the slope b and
+intercept a are equivalent to 1 and 0 respectively when their 90% confidence interval falls inside the
+region of equivalence (slope [0.75, 1.25]; intercept plus or minus 25% of the mean observed). Overall is
+TRUE only when both pass. A slope above one means the model under-predicts the high end.
+
+| Metric | Model | Slope b | Intercept a | R² | Overall equiv |
+|:---|:---|:---:|:---:|:---:|:---:|
+| BA | v12.5.0 | 0.93 | 0.72 | 0.73 | TRUE |
+| BA | v12.7.0 | 1.21 | -0.81 | 0.71 | FALSE |
+| BA | v12.9.x | 1.14 | -0.42 | 0.68 | TRUE |
+| BA | v12.10.1 | 1.14 | -0.42 | 0.68 | TRUE |
+| BA | OSM | 0.98 | 0.79 | 0.74 | TRUE |
+| SDI | v12.5.0 | 0.93 | 9.64 | 0.69 | TRUE |
+| SDI | v12.7.0 | 1.17 | -14.74 | 0.65 | TRUE |
+| SDI | v12.9.x | 1.13 | -10.80 | 0.63 | TRUE |
+| SDI | v12.10.1 | 1.13 | -10.80 | 0.63 | TRUE |
+| SDI | OSM | 1.00 | 20.29 | 0.71 | TRUE |
+| QMD | v12.5.0 | 1.09 | -0.58 | 0.74 | TRUE |
+| QMD | v12.7.0 | 1.03 | -0.36 | 0.77 | TRUE |
+| QMD | v12.9.x | 0.99 | 0.00 | 0.77 | TRUE |
+| QMD | v12.10.1 | 0.99 | 0.00 | 0.77 | TRUE |
+| QMD | OSM | 0.81 | 1.52 | 0.79 | TRUE |
+| TOPHT | v12.5.0 | 0.92 | 0.55 | 0.82 | TRUE |
+| TOPHT | v12.7.0 | 0.93 | 0.40 | 0.82 | TRUE |
+| TOPHT | v12.9.x | 0.93 | 0.46 | 0.82 | TRUE |
+| TOPHT | v12.10.1 | 0.93 | 0.46 | 0.82 | TRUE |
+| TOPHT | OSM | 1.03 | -1.01 | 0.86 | TRUE |
+| TOTVOL | v12.5.0 | 0.83 | 8.45 | 0.74 | TRUE |
+| TOTVOL | v12.7.0 | 1.04 | 4.02 | 0.75 | TRUE |
+| TOTVOL | v12.9.x | 0.99 | 5.08 | 0.71 | TRUE |
+| TOTVOL | v12.10.1 | 0.99 | 5.08 | 0.71 | TRUE |
+| TOTVOL | OSM | 0.95 | 2.96 | 0.75 | TRUE |
+| MERCHVOL | v12.5.0 | 0.84 | 7.59 | 0.75 | TRUE |
+| MERCHVOL | v12.7.0 | 1.06 | 3.37 | 0.75 | TRUE |
+| MERCHVOL | v12.9.x | 1.00 | 4.11 | 0.72 | TRUE |
+| MERCHVOL | v12.10.1 | 1.00 | 4.11 | 0.72 | TRUE |
+| MERCHVOL | OSM | 0.96 | 2.60 | 0.76 | TRUE |
+| SAWVOL | v12.5.0 | 0.85 | 5.73 | 0.75 | TRUE |
+| SAWVOL | v12.7.0 | 1.05 | 3.15 | 0.76 | TRUE |
+| SAWVOL | v12.9.x | 1.00 | 3.30 | 0.72 | TRUE |
+| SAWVOL | v12.10.1 | 1.00 | 3.30 | 0.72 | TRUE |
+| SAWVOL | OSM | 0.96 | 1.84 | 0.77 | TRUE |
+| BIOMASS | v12.5.0 | 0.80 | 8.51 | 0.71 | TRUE |
+| BIOMASS | v12.7.0 | 1.03 | 3.73 | 0.72 | TRUE |
+| BIOMASS | v12.9.x | 0.96 | 5.58 | 0.68 | TRUE |
+| BIOMASS | v12.10.1 | 0.96 | 5.58 | 0.68 | TRUE |
+| BIOMASS | OSM | 0.93 | 4.52 | 0.73 | TRUE |
+| VALUE | v12.5.0 | 0.81 | 419.60 | 0.73 | TRUE |
+| VALUE | v12.7.0 | 1.01 | 230.17 | 0.74 | TRUE |
+| VALUE | v12.9.x | 0.95 | 302.98 | 0.71 | TRUE |
+| VALUE | v12.10.1 | 0.95 | 302.98 | 0.71 | TRUE |
+| VALUE | OSM | 0.93 | 177.51 | 0.74 | TRUE |
+
+Four of the five models pass the joint equivalence test on all nine metrics; the single exception is
+v12.7.0 basal area, whose slope of 1.21 sits just outside the [0.75, 1.25] region once its confidence
+interval is included. Every volume and value cell passes overall equivalence for all five models, and
+the operational build v12.10.1 has TOTVOL slope 0.99 and VALUE slope 0.95.
+
+**Table D7.** Overall composite score on the %RMSE basis (primary volume-and-value weighting and equal
+weighting), by stratum, frozen harness. Each metric earns a 0 to 100 score from its %RMSE
+(score = 100 x max(0, 1 - %RMSE/100)); the primary composite weights TOTVOL and VALUE 3, MERCHVOL,
+SAWVOL, and BIOMASS 2, and BA, SDI, QMD, and TOPHT 1 (weights sum to 16). Higher is better.
+
+Primary (volume-and-value weighting):
+
+| Model | Pooled | Softwood | Mixedwood | Hardwood |
+|:---|:---:|:---:|:---:|:---:|
+| v12.5.0 | 49.4 | 61.2 | 57.8 | 23.5 |
+| v12.7.0 | 52.1 | 56.3 | 59.1 | 39.2 |
+| v12.9.x | 49.8 | 55.3 | 58.2 | 33.4 |
+| v12.10.1 | 49.8 | 55.3 | 58.2 | 33.4 |
+| OSM | 53.4 | 61.6 | 59.5 | 34.4 |
+
+Equal weighting:
+
+| Model | Pooled | Softwood | Mixedwood | Hardwood |
+|:---|:---:|:---:|:---:|:---:|
+| v12.5.0 | 54.5 | 63.9 | 62.1 | 32.9 |
+| v12.7.0 | 55.9 | 59.5 | 62.4 | 45.5 |
+| v12.9.x | 54.2 | 58.6 | 61.9 | 40.9 |
+| v12.10.1 | 54.2 | 58.6 | 61.9 | 40.9 |
+| OSM | 57.6 | 64.0 | 63.3 | 42.1 |
+
+**Table D8.** Overall composite score on the bias-and-NSE basis (primary volume-and-value weighting and
+equal weighting), by stratum, frozen harness. This is the prior composite carried alongside the %RMSE
+composite of Table D7 so the change of basis is visible. Higher is better.
+
+Primary (volume-and-value weighting):
+
+| Model | Pooled | Softwood | Mixedwood | Hardwood |
+|:---|:---:|:---:|:---:|:---:|
+| v12.5.0 | 64.9 | 87.4 | 71.6 | 26.3 |
+| v12.7.0 | 66.5 | 51.3 | 63.7 | 58.5 |
+| v12.9.x | 74.3 | 55.7 | 74.8 | 40.4 |
+| v12.10.1 | 74.3 | 55.7 | 74.8 | 40.4 |
+| OSM | 80.9 | 85.3 | 76.1 | 47.0 |
+
+Equal weighting:
+
+| Model | Pooled | Softwood | Mixedwood | Hardwood |
+|:---|:---:|:---:|:---:|:---:|
+| v12.5.0 | 67.9 | 86.0 | 73.9 | 31.8 |
+| v12.7.0 | 66.4 | 54.8 | 62.9 | 62.9 |
+| v12.9.x | 73.0 | 58.8 | 72.7 | 48.3 |
+| v12.10.1 | 73.0 | 58.8 | 72.7 | 48.3 |
+| OSM | 79.3 | 83.0 | 74.0 | 51.6 |
+
+The ranking moves with the basis. On the bias basis OSM leads and the v12.9.x and v12.10.1 line ranks
+second pooled; on the %RMSE basis, which scores systematic and random error together, OSM stays first
+but v12.7.0 rises (its scatter is competitive despite real offsets) and the operational line ties
+v12.7.0 near rank three. Every model scores far lower on hardwood than on softwood or mixedwood, the
+shared frontier.
+
+**Table D9.** Observed and predicted softwood basal-area fraction across the remeasurement interval,
+pooled and by forest type, frozen benchmark (n = 680 classifiable stands of the frozen 705). Fractions
+are percentages; bias and shifts are in percentage points (pts). The shift ratio is predicted mean
+shift divided by observed mean shift (1.0 is a perfect match, negative is a wrong-direction move). This
+reproduces the section 10.3.1 table.
+
+| Model | Stratum | n | Obs t1 (%) | Obs t2 (%) | Pred t2 (%) | Obs shift (pts) | Pred shift (pts) | Bias (pts) | Direction | Shift ratio |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| v12.5.0 | Pooled | 680 | 59.9 | 60.7 | 59.5 | +0.82 | -0.45 | -1.27 | wrong | -0.55 |
+| v12.5.0 | Softwood | 320 | 94.0 | 92.0 | 92.6 | -1.95 | -1.41 | +0.54 | right | 0.72 |
+| v12.5.0 | Mixedwood | 186 | 51.7 | 51.3 | 51.5 | -0.40 | -0.24 | +0.17 | right | 0.59 |
+| v12.5.0 | Hardwood | 174 | 6.1 | 13.3 | 7.2 | +7.20 | +1.08 | -6.13 | right | 0.15 |
+| v12.7.0 | Pooled | 680 | 59.9 | 60.7 | 59.6 | +0.82 | -0.30 | -1.11 | wrong | -0.37 |
+| v12.7.0 | Softwood | 320 | 94.0 | 92.0 | 92.8 | -1.95 | -1.11 | +0.84 | right | 0.57 |
+| v12.7.0 | Mixedwood | 186 | 51.7 | 51.3 | 51.6 | -0.40 | -0.11 | +0.30 | right | 0.26 |
+| v12.7.0 | Hardwood | 174 | 6.1 | 13.3 | 7.1 | +7.20 | +1.00 | -6.21 | right | 0.14 |
+| v12.10.1 | Pooled | 680 | 59.9 | 60.7 | 59.7 | +0.82 | -0.26 | -1.08 | wrong | -0.32 |
+| v12.10.1 | Softwood | 320 | 94.0 | 92.0 | 92.9 | -1.95 | -1.06 | +0.89 | right | 0.54 |
+| v12.10.1 | Mixedwood | 186 | 51.7 | 51.3 | 51.7 | -0.40 | -0.05 | +0.35 | right | 0.14 |
+| v12.10.1 | Hardwood | 174 | 6.1 | 13.3 | 7.1 | +7.20 | +0.98 | -6.22 | right | 0.14 |
+| OSM | Pooled | 680 | 59.9 | 60.7 | 60.8 | +0.82 | +0.88 | +0.06 | right | 1.08 |
+| OSM | Softwood | 320 | 94.0 | 92.0 | 94.0 | -1.95 | +0.02 | +1.97 | wrong | -0.01 |
+| OSM | Mixedwood | 186 | 51.7 | 51.3 | 53.5 | -0.40 | +1.81 | +2.21 | wrong | -4.49 |
+| OSM | Hardwood | 174 | 6.1 | 13.3 | 7.6 | +7.20 | +1.46 | -5.74 | right | 0.20 |
+
+**Table D10.** Modified Bakuzis matrix (Leary 1997), the quantitative basis behind Figure 3 and Table
+10.3c, from the seeded productivity-gradient battery. Values in parentheses are the diagnostic
+quantities: Eichhorn coefficient of variation of volume at matched height, fitted Reineke self-thinning
+slope, count of site-ordering inversions, and the yield-density plateau basal area. OSM is scored only
+where its long-horizon behavior is observable on the matched-stand trajectory. v12.10.1 is Bakuzis
+identical to v12.9.x (it inherits the same self-thinning machinery), so v12.7.1 and v12.9.x bracket the
+operational line here.
+
+| Model | Eichhorn (CV %) | Reineke slope | Site ordering (inversions) | Yield-density plateau BAmax (m² ha⁻¹) | BA at 160 yr (m² ha⁻¹) | Sukachev |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| v12.5.0 | pass (13.3) | flag | pass (0) | flag (64.9) | 64.9 | flag |
+| v12.7.0 | pass (11.2) | flag (-1.8) | pass (0) | pass (37.1) | 37.1 | pass |
+| v12.7.1 | pass (11.0) | pass (-1.59) | pass (0) | pass (36.1) | 36.1 | pass |
+| v12.9.x | pass (11.0) | pass (-1.59) | pass (0) | pass (36.1) | 36.1 | pass |
+| OSM | not scored | flag | not scored | flag (42.4) | not scored | not scored |
+
+v12.5.0 fails the two size-density relations outright, with basal area still at 64.9 m² ha⁻¹ at age 160,
+while the v12.7.1 and later builds plateau near 36 m² ha⁻¹ on a Reineke slope of -1.59 against the -1.6
+target. OSM flags both size-density relations because its stand-level basal area never plateaus and
+never self-thins, accumulating to 42.4 m² ha⁻¹ with no decline phase; the three relations defined only
+on the seeded cross-site gradient are marked not scored for the external model.
