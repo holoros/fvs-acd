@@ -59,16 +59,16 @@ Suggested citation: Weiskittel, A., Rice, B., and contributors. 2026. Acadian (A
 
 ## 1. Introduction
 
-The Acadian forest region comprises northern New England and Atlantic Canada, a transitional
-mixed conifer and hardwood type between the northern hardwood forests to the south and the boreal
-forest to the north (Loo and Ives 2003). The Acadian growth-and-yield model, developed by the CFRU
-team led by Aaron Weiskittel, is the regionally specific model for this setting, and FVS-ACD is its
-implementation in the Forest Vegetation Simulator framework. FVS-ACD differs from the FVS Northeast
-(NE) variant in that its core growth, mortality, height, crown, ingrowth, and taper relationships
-were fit on Acadian data (the Kuehne et al. 2022 increment equations alone used more than 2.5
-million diameter and a million height observations), and it is driven by a climate-based site index
-rather than a traditional site index. FVS-ACD is a one-year-cycle, individual-tree,
-distance-independent model and, like other variants, supports the FVS extensions.
+The Acadian forest region spans northern New England and Atlantic Canada. It is a transitional
+mixed conifer and hardwood type, sitting between the northern hardwood forests to the south and the
+boreal forest to the north (Loo and Ives 2003). The Acadian growth-and-yield model, developed by the
+CFRU team led by Aaron Weiskittel, is the regionally specific model for this setting, and FVS-ACD is
+its implementation within the Forest Vegetation Simulator framework. It departs from the FVS
+Northeast (NE) variant in two respects. Its core growth, mortality, height, crown, ingrowth, and
+taper relationships were fit on Acadian data, with the Kuehne et al. (2022) increment equations alone
+drawing on more than 2.5 million diameter and a million height observations, and it is driven by a
+climate-based site index in place of a traditional site index. FVS-ACD is a one-year-cycle,
+individual-tree, distance-independent model and, like the other variants, supports the FVS extensions.
 
 ## 2. Geographic Range
 
@@ -108,15 +108,15 @@ surfaces for current and future (2030, 2060, 2090) climate normals. CSI enters t
 diameter increment, stand basal-area increment, height increment, mortality, ingrowth, and maximum
 SDI.
 
-Operational note (12.7.0): the production model uses the validated modern Ecological Site Index (ESI)
+Operational note (12.7.0). The production model uses the validated modern Ecological Site Index (ESI)
 as the site driver, supplied through the same input slot. ESI tracks measured site index well
-(R^2 0.91). A controlled full-set test showed ESI and the legacy climate site index give the same
-regional volume and value (all-region basal-area bias +1.4 percent under both), so the ESI gain is not
-in volume or value bias but in dominant-height behavior and biological realism: ESI anchors the stand
-dominant height onto a fitted Chapman-Richards curve (k = 0.0039, p = 0.726, base age 50; section 4.1
-note), which removes the Bakuzis height site-ordering inversions. The ESI surface is supplied as a
-raster (Acadian ESI v8). The earlier AcadianSIm climate surfaces are a separate future-climate product,
-not the operational site driver.
+(R^2 0.91). A controlled full-set test showed that ESI and the legacy climate site index give the same
+regional volume and value, with an all-region basal-area bias of +1.4 percent under both. The ESI gain
+therefore does not appear in volume or value bias. It appears in dominant-height behavior and biological
+realism, since ESI anchors the stand dominant height onto a fitted Chapman-Richards curve (k = 0.0039,
+p = 0.726, base age 50; section 4.1 note), which removes the Bakuzis height site-ordering inversions.
+The ESI surface is supplied as a raster (Acadian ESI v8). The earlier AcadianSIm climate surfaces are a
+separate future-climate product and are not the operational site driver.
 
 ### 3.5 Maximum density (maximum SDI)
 
@@ -259,8 +259,8 @@ climbed past 36 m2/ha and was still rising at age 120). Version 12.7.1 replaces 
 two-segment relative-density mortality. Let RD = SDI/SDImax. Mortality is zero below RD 0.30, rises on
 a gentle slope from 0.30 to a break at 0.62 (ops$sdimort.onset, ops$sdimort.break, ops$sdimort.beta.gentle),
 and rises on a steep slope above the break (ops$sdimort.beta.steep), so a fully stocked stand self-thins
-along the SDImax line. It is coupled with a density-released ingrowth (section 6): recruitment is
-suppressed at high RD and released below about RD 0.58, through a logistic in RD. The biological rationale
+along the SDImax line. It is coupled with a density-released ingrowth (section 6). Through a logistic in
+RD, recruitment is suppressed at high RD and released below about RD 0.58. The biological rationale
 is the build, self-thin, and rebound dynamic of a stand that grows to its maximum, self-thins along the
 density frontier, and rebounds as ingrowth releases when density falls, the process underlying a
 shifting-mosaic steady state. On a 160-year projection of a young dense spruce-fir stand across the site
@@ -272,16 +272,16 @@ relative-density lever reduces the mature-stand over-prediction while modestly d
 growing-stand under-prediction; separating the two is the next-version regional and composition-aware
 mortality target.
 
-Regional and composition-aware SDImax gate (12.9.0). The 12.7.1 mature-stand residual, on closer
-diagnosis, is not a Quebec-wide phenomenon but is concentrated in hardwood-dominated Quebec stands
-outside the Acadian-core ecoregion; softwood-dominated Quebec stands and all of New Brunswick were
-already close to unbiased. v12.9.0 adds a gated multiplier to the SDImax term used by this self-thinning
-mechanism (section 3.5), active only when a stand is simultaneously province Quebec, ecoregion outside
-the Acadian core, and hardwood-dominated. This raises the effective self-thinning intensity for that
-specific population, closing the target cell's total-volume bias from +56.7 to +10.4 percent with no
-effect on New Brunswick or on the independent recent Maine FIA growing-stand check (see section 10). The
-mechanism is additive to, not a replacement for, the coupled self-thinning above: it scales SDImax before
-the RD = SDI/SDImax ratio that drives the two-segment mortality curve.
+Regional and composition-aware SDImax gate (12.9.0). Closer diagnosis showed that the 12.7.1
+mature-stand residual is not a Quebec-wide phenomenon. It concentrates in hardwood-dominated Quebec
+stands outside the Acadian-core ecoregion, whereas softwood-dominated Quebec stands and all of New
+Brunswick were already close to unbiased. v12.9.0 adds a gated multiplier to the SDImax term used by
+this self-thinning mechanism (section 3.5), active only when a stand is simultaneously province Quebec,
+ecoregion outside the Acadian core, and hardwood-dominated. This raises the effective self-thinning
+intensity for that specific population and closes the target cell's total-volume bias from +56.7 to
++10.4 percent, with no effect on New Brunswick or on the independent recent Maine FIA growing-stand
+check (see section 10). The mechanism adds to the coupled self-thinning above rather than replacing it,
+scaling SDImax before the RD = SDI/SDImax ratio that drives the two-segment mortality curve.
 
 ## 6. Regeneration and Ingrowth
 
@@ -331,12 +331,12 @@ diameter growth modifiers for selected hardwoods. All parameter tables in Append
 
 Direct-effect management modifiers (12.10.1). The current operational version adds the Chapter 11
 direct-effect management modifiers as gated additive releases on planted and precommercial-thinning
-(PCT) stands. Rather than a diameter-growth multiplier pinned to a guard clamp, the release is expressed
-as a robust additive term on the class of per-stand observed minus predicted-untreated increment (planted
-+3.83 m² ha⁻¹ basal area, PCT +2.41 m² ha⁻¹, with proportional releases in the other metrics). It is
-gated by ops$use.mgmt.mod and applies only to planted and PCT stands, so the gate-off run is byte
-identical to v12.9.x on unmanaged stands. The release is a diameter-growth term, not a mortality term,
-is physically bounded within the unmanaged density envelope, and does not break the self-thinning
+(PCT) stands. The direct effect is expressed as a robust additive term on the class of per-stand observed
+minus predicted-untreated increment, in place of a diameter-growth multiplier pinned to a guard clamp
+(planted +3.83 m² ha⁻¹ basal area, PCT +2.41 m² ha⁻¹, with proportional releases in the other metrics).
+It is gated by ops$use.mgmt.mod and applies only to planted and PCT stands, so the gate-off run is byte
+identical to v12.9.x on unmanaged stands. The release is a diameter-growth term and not a mortality
+term, is physically bounded within the unmanaged density envelope, and does not break the self-thinning
 plateau. See section 10.3 for the fit and validation.
 
 ## 9. Model Application
@@ -348,12 +348,12 @@ make_ops, AcadianGYOneStand). [POPULATE: keyword and database usage, analogous t
 
 ## 10. Version lineage, current operational version (12.10.1), and validation
 
-AcadianGY 12.10.1 is the current operational and production version and is frozen as the operational
-release for the 18 August 2026 Acadian Growth and Yield meeting; v13 is in progress but no v13 version is
+AcadianGY 12.10.1 is the current operational and production version, frozen as the operational release
+for the 18 August 2026 Acadian Growth and Yield meeting. Version 13 is in progress, but no v13 version is
 gated, so nothing in the v13 program below is a claimed result. v12.10.1 is the endpoint of a single
-development line that began with 12.5.0 and added one gated refinement at a time, each individually
-isolated so that with its flag in the legacy position the build reproduces the prior version bit for
-bit. The operational configuration is the Kuehne et al. (2022) diameter and height increment equations
+development line that began with 12.5.0 and added one gated refinement at a time. Each refinement is
+individually isolated, so that with its flag in the legacy position the build reproduces the prior
+version bit for bit. The operational configuration is the Kuehne et al. (2022) diameter and height increment equations
 (4.6, 4.7) as the growth base; the validated ESI v8 as the site driver with the fitted ESI-consistent
 dominant-height anchor recalibration active (3.4, 4.1), which delivers the clean Bakuzis site ordering
 (10.2); a further top-height anchor-level parity correction available behind a gate but shipping off in
@@ -409,19 +409,19 @@ organization and the Forus Research download page), on identical independent in-
 scorecard is `20260701_four_model_scorecard.md`; figures `five_model_scorecard_heatmap.png` and
 `five_model_scorecard_radar.png` (v12.9.0 added as a fifth model, section 10.2).
 
-Headline finding: OSM-ACD has the lowest pooled level bias of the four models on every metric and, once
-it is scored on all nine NSVB metrics through the same emulator harness as FVS-ACD, also carries the
-highest pooled modeling efficiency. An earlier read that showed a negative Nash-Sutcliffe efficiency for
-OSM on every metric was an index-join artifact, OSM output matched to the observed tree lists on a
-mismatched key rather than a real lack of per-stand skill; rescoring OSM through the common NSVB harness
-resolves it, and OSM's pooled modeling efficiency is positive and leads the set. Where FVS-ACD leads OSM
-is biological realism, the climate-ready site driver, and quadratic mean diameter, not pooled level bias
-or modeling efficiency. All three AcadianGY versions explain 55 to 78 percent of out-of-sample variance
-on every metric. AcadianGY 12.5.0 fails the
-Bakuzis self-thinning check outright (long-horizon basal area still climbing past 62 m2/ha at age 120
-with several thousand stems per hectare still alive) and is not recommended for mature-stand or
-long-horizon use. AcadianGY 12.7.1 is the best FVS-ACD version on the combined quantitative and
-qualitative profile prior to the 12.9.0 refinement below.
+The headline finding is that OSM-ACD carries the lowest pooled level bias of the four models on every
+metric and, once it is scored on all nine NSVB metrics through the same emulator harness as FVS-ACD, also
+carries the highest pooled modeling efficiency. An earlier read that showed a negative Nash-Sutcliffe
+efficiency for OSM on every metric was an index-join artifact. OSM output had been matched to the
+observed tree lists on a mismatched key rather than reflecting a real lack of per-stand skill. Rescoring
+OSM through the common NSVB harness resolves it, and OSM's pooled modeling efficiency is positive and
+leads the set. FVS-ACD leads OSM on biological realism, the climate-ready site driver, and quadratic mean
+diameter, not on pooled level bias or modeling efficiency. All three AcadianGY versions explain 55 to 78
+percent of out-of-sample variance on every metric. AcadianGY 12.5.0 fails the Bakuzis self-thinning check
+outright, with long-horizon basal area still climbing past 62 m2/ha at age 120 and several thousand stems
+per hectare still alive, and is not recommended for mature-stand or long-horizon use. Of the FVS-ACD
+versions, AcadianGY 12.7.1 has the best combined quantitative and qualitative profile prior to the 12.9.0
+refinement below.
 
 ### 10.2 v12.9.0: a targeted SDImax correction for the Quebec hardwood edge
 
