@@ -164,6 +164,162 @@ for both the newer build (-4.1) and OSM (-3.9). Hardwood is the shared frontier 
 build at +19.0 and OSM at +14.6 percent, and is a target for the v13 composition-aware refit, not a
 management-modifier problem.
 
+The full nine-metric forest-type scorecard is below, one table per forest type as signed level bias in
+percent for each of the five models on the frozen basis. Bootstrap 95 percent confidence intervals and the
+green, yellow, and red flags for every cell are in Figure 7. The forest-type strata exclude the 20 stands
+whose initial treelist could not be classified, leaving softwood 321, mixedwood 186, and hardwood 178; the
+total-volume rows reproduce the summary above.
+
+**Softwood (n = 321), level bias (percent).**
+
+| **metric** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| basal area | +0.8 | -16.0 | -14.0 | -14.0 | -2.3 |
+| stand density index | +3.4 | -14.2 | -12.8 | -12.8 | -3.2 |
+| quadratic mean diameter | -5.1 | -1.5 | +0.1 | +0.1 | +8.1 |
+| top height | -0.6 | -1.4 | -1.2 | -1.2 | +3.9 |
+| total volume | +0.6 | -16.4 | -14.1 | -14.1 | -1.0 |
+| merchantable volume | +0.4 | -16.5 | -14.2 | -14.2 | -1.0 |
+| sawlog volume | -0.2 | -16.9 | -14.7 | -14.7 | -0.8 |
+| aboveground biomass | +1.1 | -16.2 | -14.1 | -14.1 | -1.4 |
+| stand value | +0.5 | -16.4 | -14.1 | -14.1 | -1.1 |
+
+**Mixedwood (n = 186), level bias (percent).**
+
+| **metric** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| basal area | -2.1 | -17.0 | -12.5 | -12.5 | -7.7 |
+| stand density index | -0.7 | -16.3 | -12.6 | -12.6 | -10.0 |
+| quadratic mean diameter | -4.9 | -1.1 | +0.4 | +0.4 | +9.1 |
+| top height | +3.2 | +2.1 | +2.6 | +2.6 | +1.8 |
+| total volume | +7.2 | -9.5 | -4.1 | -4.1 | -3.9 |
+| merchantable volume | +6.7 | -10.0 | -4.6 | -4.6 | -4.2 |
+| sawlog volume | +6.3 | -10.3 | -4.7 | -4.7 | -3.5 |
+| aboveground biomass | +6.4 | -10.4 | -5.2 | -5.2 | -5.2 |
+| stand value | +8.8 | -8.3 | -2.6 | -2.6 | -3.0 |
+
+**Hardwood (n = 178), level bias (percent).**
+
+| **metric** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| basal area | +15.3 | -1.9 | +3.9 | +3.9 | +7.1 |
+| stand density index | +18.2 | -0.3 | +4.3 | +4.3 | +2.6 |
+| quadratic mean diameter | -7.1 | -1.4 | +0.6 | +0.6 | +16.5 |
+| top height | +12.3 | +11.4 | +11.7 | +11.7 | +6.9 |
+| total volume | +31.3 | +11.4 | +19.0 | +19.0 | +14.6 |
+| merchantable volume | +30.0 | +10.2 | +17.6 | +17.6 | +13.1 |
+| sawlog volume | +30.6 | +10.8 | +18.4 | +18.4 | +14.6 |
+| aboveground biomass | +30.8 | +10.6 | +17.9 | +17.9 | +13.6 |
+| stand value | +32.8 | +12.7 | +20.4 | +20.4 | +16.0 |
+
+Read down the metrics, the softwood column is the pooled volume story in miniature: v12.10.1 under-reads
+every merchantable output by about 14 percent and flags red on all five, while OSM holds all five within
+about 1.5 percent of zero and flags green; structure is clean for the shared newer build, with quadratic
+mean diameter and top height inside 1.2 percent even as basal area sits at -14.0. Mixedwood is the most
+balanced stratum, the shared newer build and OSM both inside about 5 percent on every volume metric and
+green or yellow throughout. Hardwood is the shared frontier, every model over-reading the merchantable
+outputs, the shared newer build by 18 to 20 percent and OSM by 13 to 16, all red, which confirms a
+composition-driven ceiling for the v13 refit rather than a management-modifier problem.
+
+### Weighted overall composite score
+
+To collapse the nine metrics into one number per model, each model earns a composite score from 0 to 100,
+higher is better. Per metric a bias score of 100 × (1 − min(1, |bias| / 20)) rewards accuracy, so 0 percent
+bias scores 100 and a bias of 20 percent or worse scores 0, and an efficiency score of 100 × max(0, NSE)
+rewards per-stand fit; the metric score is their equal blend, 0.5 of the bias score plus 0.5 of the
+efficiency score. The primary composite is a weighted mean of the nine metric scores that places total
+volume and stumpage value first, at weight 3 each, the other three merchantable outputs (merchantable and
+sawlog volume, and biomass) second, at weight 2 each, and the four structure metrics (basal area, stand
+density index, quadratic mean diameter, top height) last, at weight 1 each, for a weight sum of 16. This
+volume and value first weighting reflects the operational priority that a growth engine reproduce harvest
+volume and value before stand structure. An equal-weight mean of the same nine metric scores is retained as
+a reference column to show the ranking is not an artifact of the weighting. Composites are computed on the
+pooled in-domain set and on each forest type.
+
+On the pooled in-domain set the ranking, on the primary volume and value weighting with the equal-weight
+composite for reference, is:
+
+| **rank** | **model** | **primary (volume + value)** | **equal-weight reference** |
+|:---:|:---|:---:|:---:|
+| 1 | OSM | 80.9 | 79.3 |
+| 2 | v12.9.x | 74.3 | 73.0 |
+| 2 | v12.10.1 | 74.3 | 73.0 |
+| 4 | v12.7.0 | 66.5 | 66.4 |
+| 5 | v12.5.0 | 64.9 | 67.9 |
+
+The primary composite per model, pooled and by forest type, is:
+
+| **model** | **pooled in-domain** | **softwood** | **mixedwood** | **hardwood** |
+|:---|:---:|:---:|:---:|:---:|
+| v12.5.0 | 64.9 | 87.4 | 71.6 | 26.3 |
+| v12.7.0 | 66.5 | 51.3 | 63.7 | 58.5 |
+| v12.9.x | 74.3 | 55.7 | 74.8 | 40.4 |
+| v12.10.1 | 74.3 | 55.7 | 74.8 | 40.4 |
+| OSM | 80.9 | 85.3 | 76.1 | 47.0 |
+
+The ranking is robust at the top and to the choice of weighting. OSM leads and the shared newer build (v12.9.x
+and v12.10.1, identical on the base) sits second on both the primary volume and value weighting and the
+equal-weight reference; only the two oldest engines trade the fourth and fifth positions, v12.7.0 rising above
+v12.5.0 once volume and value dominate the score, which is precisely the operational contrast the primary
+weighting is meant to surface. Within forest types the top two are unchanged in every stratum. The by-type
+ordering shifts with composition, as expected from the bias tables: softwood is led by v12.5.0 then OSM,
+mixedwood and the pooled set by OSM, and hardwood by v12.7.0, whose flatter hardwood bias scores best on the
+one stratum where every newer build over-reads. Figure 8 shows the pooled ranking, the equal-weight reference,
+and the by-forest-type composites overlaid.
+
+### Species composition over time
+
+Stand species composition is defined as the basal-area fraction by species group, using live trees at least 4 cm
+DBH: softwood versus hardwood, and a three-way split into spruce-fir (*Abies* + *Picea*), other softwood, and
+hardwood. For each benchmark stand we have a starting state (t1) and an observed endpoint (t2) from the MagPlot
+QC and NB remeasured treelists, and each model predicts the endpoint. Predicted composition for the FVS-ACD
+flagships (v12.5.0, v12.7.0, v12.10.1) comes from a non-invasive composition re-run of the frozen benchmark
+harness that emits per-group basal area at t2; the run reproduces the frozen August operational baseline
+(NB_AFAC 0.579, QC_AFAC 0.111) with zero difference against cb_v12101 on all nine stand totals. OSM predicted
+composition is taken directly from its head-to-head predicted treelist. The stand set is the frozen scorecard
+pooled set of 705 unique stands; 25 stands lacked classifiable t1 basal area, leaving 680. Forest type is the
+committed percent-hardwood rule applied to the t1 treelist (softwood at most 25 percent hardwood BA, hardwood at
+least 75 percent, else mixedwood). Bias is predicted minus observed softwood fraction in percentage points
+(pts); the shift ratio is predicted mean shift divided by observed mean shift, so 1.0 is a perfect match and a
+negative value is a wrong-direction move.
+
+Observed and predicted softwood basal-area fraction across the remeasurement interval, pooled and by forest
+type, on the frozen benchmark (n = 680 classifiable stands of the frozen 705, fractions in percent, bias and
+shifts in percentage points), is:
+
+| **Model** | **Stratum** | **n** | **Obs t1 (%)** | **Obs t2 (%)** | **Pred t2 (%)** | **Obs shift (pts)** | **Pred shift (pts)** | **Bias (pts)** | **Direction** | **Shift ratio** |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **v12.5.0** | Pooled | 680 | 59.9 | 60.7 | 59.5 | +0.82 | -0.45 | -1.27 | wrong | -0.55 |
+| **v12.5.0** | Softwood | 320 | 94.0 | 92.0 | 92.6 | -1.95 | -1.41 | +0.54 | right | 0.72 |
+| **v12.5.0** | Mixedwood | 186 | 51.7 | 51.3 | 51.5 | -0.40 | -0.24 | +0.17 | right | 0.59 |
+| **v12.5.0** | Hardwood | 174 | 6.1 | 13.3 | 7.2 | +7.20 | +1.08 | -6.13 | right | 0.15 |
+| **v12.7.0** | Pooled | 680 | 59.9 | 60.7 | 59.6 | +0.82 | -0.30 | -1.11 | wrong | -0.37 |
+| **v12.7.0** | Softwood | 320 | 94.0 | 92.0 | 92.8 | -1.95 | -1.11 | +0.84 | right | 0.57 |
+| **v12.7.0** | Mixedwood | 186 | 51.7 | 51.3 | 51.6 | -0.40 | -0.11 | +0.30 | right | 0.26 |
+| **v12.7.0** | Hardwood | 174 | 6.1 | 13.3 | 7.1 | +7.20 | +1.00 | -6.21 | right | 0.14 |
+| **v12.10.1** | Pooled | 680 | 59.9 | 60.7 | 59.7 | +0.82 | -0.26 | -1.08 | wrong | -0.32 |
+| **v12.10.1** | Softwood | 320 | 94.0 | 92.0 | 92.9 | -1.95 | -1.06 | +0.89 | right | 0.54 |
+| **v12.10.1** | Mixedwood | 186 | 51.7 | 51.3 | 51.7 | -0.40 | -0.05 | +0.35 | right | 0.14 |
+| **v12.10.1** | Hardwood | 174 | 6.1 | 13.3 | 7.1 | +7.20 | +0.98 | -6.22 | right | 0.14 |
+| **OSM** | Pooled | 680 | 59.9 | 60.7 | 60.8 | +0.82 | +0.88 | +0.06 | right | 1.08 |
+| **OSM** | Softwood | 320 | 94.0 | 92.0 | 94.0 | -1.95 | +0.02 | +1.97 | wrong | -0.01 |
+| **OSM** | Mixedwood | 186 | 51.7 | 51.3 | 53.5 | -0.40 | +1.81 | +2.21 | wrong | -4.49 |
+| **OSM** | Hardwood | 174 | 6.1 | 13.3 | 7.6 | +7.20 | +1.46 | -5.74 | right | 0.20 |
+
+![Figure 9. Predicted versus observed softwood basal-area fraction at the remeasurement endpoint (t2) by model, with the 1:1 line (top), and the observed versus predicted mean compositional shift from t1 to t2 by forest type (bottom). Points are colored by committed forest type. Frozen benchmark, MagPlot QC and NB remeasured stands.](figures/fig9_species_composition_over_time.png)
+
+Stand composition is nearly stationary across the interval: the pooled mean softwood fraction moves less than one
+point (59.9% to 60.7%), and the only large observed signal is a +7.2 pt softwood gain in hardwood-dominated
+stands, partly offset by a -1.9 pt softwood loss in softwood stands. All three FVS-ACD models reproduce the
+direction of change within softwood and mixedwood stands but under-shift by roughly a third to a half, and they
+miss the pooled net direction, predicting a small softwood decline (-0.3 to -0.5 pt) against the observed +0.8 pt
+increase, because they under-represent softwood in-migration into hardwood stands (predicted about +1.0 pt versus
+observed +7.2 pt, bias near -6 pts). OSM best tracks the pooled net shift (+0.9 pt, ratio 1.08) but overshoots
+softwood in mixedwood and softwood stands; the spruce-fir split tells the same story, with the observed +7.0 pt
+spruce-fir gain in hardwood stands under-predicted by every model. Every model holds stand-level softwood
+fraction within about 1 to 2 pts of observed in softwood and mixedwood types, so overall composition is preserved
+and the shared weakness is the rate of softwood recolonization of hardwood-dominated stands.
+
 ### Management class, the headline
 
 In-sample level bias (percent), the cells the modifier targets:
@@ -314,6 +470,10 @@ carry the following four to six.
 ![Figure 5. The offsetting bias signature in domain, basal area about -9 percent under and top height about +4 percent over canceling to total volume about -1.6 percent.](figures/fig5_offsetting_bias.png)
 
 ![Figure 6. Managed-cell out-of-sample mean absolute bias by management class under leave one installation out, v12.9.x, v12.10.1, and OSM for planted, PCT, and managed.](figures/fig6_managed_oos_bias.png)
+
+![Figure 7. Forest-type scorecard, level bias percent with bootstrap 95 percent CIs and green, yellow, and red flags, nine metrics by five models faceted by forest type (softwood n = 321, mixedwood n = 186, hardwood n = 178) on the frozen basis.](figures/fig7_scorecard_by_fortype.png)
+
+![Figure 8. Volume and value weighted overall composite score by model, the pooled in-domain primary composite (total volume and value weighted highest) as ranked bars, the equal-weight composite as a reference tick on each bar, and the by-forest-type primary composites overlaid as markers.](figures/fig8_overall_composite.png)
 
 ## Methods and provenance
 

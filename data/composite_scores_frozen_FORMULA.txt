@@ -1,0 +1,33 @@
+FVS-ACD frozen composite score definition (0 to 100, higher is better)
+=====================================================================
+Per metric per model on a given stratum:
+  bias_score   = 100 * (1 - min(1, |bias_pct| / 20))
+                 (0% bias -> 100; |bias| >= 20% -> 0)
+  nse_score    = 100 * max(0, NSE)
+  metric_score = 0.5 * bias_score + 0.5 * nse_score
+  metric_score values are frozen in composite_metric_scores_frozen.csv and
+  are read, not recomputed, by every downstream composite and figure.
+
+PRIMARY composite (volume + value weighted) = weighted mean of the nine
+  metric_score values with volume and value carrying the highest weight:
+    TOTVOL   3
+    VALUE    3
+    MERCHVOL 2
+    SAWVOL   2
+    BIOMASS  2
+    BA       1
+    SDI      1
+    QMD      1
+    TOPHT    1
+  sum of weights = 16. This is the primary reported composite: it puts total
+  volume and stumpage value first, the remaining merchantable outputs
+  (merchantable volume, sawlog volume, biomass) second, and the four
+  structure metrics (basal area, stand density index, quadratic mean
+  diameter, top height) last.
+
+EQUAL-WEIGHT composite (reference / robustness) = simple mean of the nine
+  metric_score values (every metric weight 1). Retained as a secondary column
+  to show the ranking is not an artifact of the weighting.
+
+Strata: POOLED_indomain (esi_cov TRUE or PROV==NB); Softwood; Mixedwood; Hardwood.
+bias_pct and NSE are computed on the frozen basis (frozen_subsidiary_W.rds).
