@@ -7,14 +7,18 @@
 # comparison model. Green passes, brick red flags, neutral grey not scored;
 # bold PASS / FLAG / N/S labels give a redundant, colorblind-safe encoding.
 #
-# OSM cannot be seeded on the same synthetic productivity gradient, so it is
-# scored only where its long-horizon behavior is observable. The self-thinning
-# (Reineke) and yield-density plateau relations are read from the matched-stand
-# Seven Islands trajectory, where OSM accumulates basal area to about 42 m2 ha-1
-# by age 60 without a plateau while the AcadianGY builds peak near 33 and
-# self-thin to about 27; OSM FLAGS both. Relations that require the seeded
-# cross-site gradient (Eichhorn, site ordering, Sukachev) are marked not scored
-# rather than assigned a fabricated pass.
+# OSM is now scored on ALL FIVE relations from its own long-horizon run: OSM was
+# projected 160 years (YEARS 160, YPC 1) over the 73 SILC/CFI stands, binned into
+# three site-productivity terciles by T50HT (OSM dominant height at reference age
+# 50) as the analog of the seeded ESI 12/16/20 gradient; relation tests reuse the
+# AcadianGY battery definitions verbatim. Over the full horizon OSM PASSES Reineke
+# self-thinning (log SDI slope -1.56, pooled -1.69), the yield-density plateau
+# (mid-site basal area peaks near 35.8 m2 ha-1 then levels/self-thins to 34.7),
+# and Sukachev, and FLAGS Eichhorn (cross-site volume-at-height CV 26.3 percent)
+# and site ordering (42 height, 105 volume trajectory inversions). The two flags
+# partly reflect the real-stand substitution (projection-year axis, heterogeneous
+# starting ages); the earlier age-60 matched-stand FLAG on Reineke and the
+# plateau is superseded by this 150-plus-year run.
 #
 # R-first house standard. A matching matplotlib renderer (fig3_bakuzis_relations.py)
 # produced the shipped PNG because R was unavailable in the build sandbox. This
@@ -66,11 +70,12 @@ p <- ggplot(d, aes(relation, model, fill = status)) +
                                `NOT SCORED` = "N/S (not scored)")) +
   coord_equal() +
   labs(title = "Biological realism: Bakuzis law-like relations",
-       caption = paste("Green passes, red flags, grey not scored. OSM is an",
-                       "external model, scored only where its long-horizon\n",
-                       "behavior is observable; its non-plateau, non-self-thinning",
-                       "basal area flags both size-density relations.\n",
-                       "N/S = not scored (external model, no seeded gradient)."),
+       caption = paste("Green passes, red flags. OSM (external) is scored on all",
+                       "five relations from its own 150-plus-year run over the\n",
+                       "SILC/CFI stands binned into three T50HT site terciles; it",
+                       "passes self-thinning, the yield-density plateau, and\n",
+                       "Sukachev, and flags Eichhorn and site ordering under the",
+                       "real-stand substitution (projection-year, mixed ages)."),
        x = NULL, y = NULL) +
   theme_minimal(base_size = 13) +
   theme(panel.grid = element_blank(),

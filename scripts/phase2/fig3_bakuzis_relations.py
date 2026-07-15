@@ -9,14 +9,21 @@ v12.9.x), plus OSM as an external comparison model. Green is a pass, brick red
 is a flag, neutral grey is not scored; bold PASS / FLAG / N/S labels give a
 redundant, colorblind-safe encoding on top of the fill.
 
-OSM cannot be seeded on the same synthetic productivity gradient, so it is
-scored honestly only where its long-horizon behavior is observable. The
-self-thinning (Reineke) and yield-density plateau relations are read from the
-matched-stand Seven Islands trajectory, where OSM accumulates basal area to
-about 42 m2 ha-1 by age 60 without a plateau while the AcadianGY builds peak
-near 33 and self-thin to about 27; OSM FLAGS both. Relations that require the
-seeded cross-site gradient (Eichhorn, site ordering, Sukachev) are marked not
-scored rather than assigned a fabricated pass.
+OSM is now scored on ALL FIVE relations from its own long-horizon run: OSM was
+projected 160 years (YEARS 160, YPC 1) over the 73 SILC/CFI stands, binned into
+three site-productivity terciles by T50HT (OSM dominant height at reference age
+50) as the analog of the seeded ESI 12/16/20 gradient. Relation tests reuse the
+AcadianGY Bakuzis battery definitions verbatim. Over the full horizon OSM PASSES
+Reineke self-thinning (log SDI slope -1.56, pooled -1.69), the yield-density
+plateau (mid-site basal area peaks near 35.8 m2 ha-1 and levels/self-thins to
+34.7 rather than accumulating without bound), and Sukachev (quadratic mean
+diameter rises as density falls). OSM FLAGS Eichhorn (cross-site volume-at-height
+coefficient of variation 26.3 percent, above the 15 percent bound) and site
+ordering (trajectory crossings, 42 height and 105 volume inversions). The two
+flags partly reflect the real-stand substitution: OSM stands carry heterogeneous
+starting ages on a projection-year axis rather than an age-aligned seeded
+gradient. The earlier short-horizon (age 60) matched-stand read that flagged
+Reineke and the plateau is superseded by this 150-plus-year run.
 
 R-first is the house standard; a matching ggplot2 script lives alongside at
 fig3_bakuzis_relations.R. This Python/matplotlib generator is the renderer that
@@ -116,17 +123,20 @@ ax.set_aspect("equal")
 ax.set_title("Biological realism: Bakuzis law-like relations",
              fontsize=14, fontweight="bold", loc="center", pad=16)
 fig.text(0.5, 0.05,
-         "Green passes, red flags, grey not scored. OSM is an external model "
-         "and is scored only where its long-horizon behavior is observable; "
-         "its non-plateau, non-self-thinning basal area flags both size-density "
-         "relations. N/S = not scored (external model, no seeded gradient).",
+         "Green passes, red flags. OSM (external) is scored on all five relations "
+         "from its own 150-plus-year run over the SILC/CFI stands binned into three "
+         "T50HT site terciles; it passes self-thinning, the yield-density plateau, "
+         "and Sukachev, and flags Eichhorn and site ordering under the real-stand "
+         "substitution (projection-year axis, heterogeneous starting ages).",
          ha="center", fontsize=9, color="#555555", wrap=True)
 
 # Legend
 handles = [Patch(facecolor=FILL["PASS"], edgecolor="white", label="PASS"),
-           Patch(facecolor=FILL["FLAG"], edgecolor="white", label="FLAG"),
-           Patch(facecolor=FILL["NOT SCORED"], edgecolor="white",
-                 label="N/S (not scored)")]
+           Patch(facecolor=FILL["FLAG"], edgecolor="white", label="FLAG")]
+# Only advertise the not-scored key if a cell actually carries it.
+if any(st == "NOT SCORED" for _m, _r, st in check):
+    handles.append(Patch(facecolor=FILL["NOT SCORED"], edgecolor="white",
+                         label="N/S (not scored)"))
 ax.legend(handles=handles, loc="upper left", bbox_to_anchor=(0, -0.12),
           ncol=3, frameon=False, fontsize=10.5, handlelength=1.3,
           columnspacing=1.4, handletextpad=0.6)
