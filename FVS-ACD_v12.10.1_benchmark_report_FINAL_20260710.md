@@ -35,6 +35,32 @@ appears here as roadmap only. It is in progress, not gated, and no v13 scorecard
 
 ## Evidence
 
+### Benchmark dataset
+
+The frozen evaluation benchmark comprises n=705 remeasured stands drawn from the permanent-plot networks of the
+two Canadian jurisdictions that anchor the Acadian region, New Brunswick (n=355) and Quebec (n=350). Forest-type
+composition, assigned from the hardwood share of stand basal area (softwood at 25 percent or less hardwood,
+hardwood at 75 percent or more, mixedwood between), is 321 softwood, 186 mixedwood, and 178 hardwood stands,
+with the remaining 20 stands unclassified. Each stand carries an observed initial and remeasured state together
+with the predicted remeasured state from every model variant, evaluated on the nine FIA National Scale Volume
+and Biomass (NSVB) metrics: basal area, stand density index, quadratic mean diameter, top height, total volume,
+merchantable volume, sawlog volume, aboveground biomass, and stumpage value.
+
+The benchmark is built from remeasurement pairs whose interval ranges from 4 to 14 years, with a median of 5
+years and a mean near 7, so each prediction is a growth-and-yield projection over the stand's own observed
+remeasurement window rather than a fixed horizon. Total, merchantable, and sawlog volume and aboveground biomass
+are placed on the NSVB basis so that observed and predicted state are compared in a common estimation framework.
+Evaluation is restricted to the operational in-domain set, a stand retained when it falls within the Ecological
+Site Index (ESI) coverage or lies in New Brunswick; every stand in the frozen benchmark satisfies this
+condition, all 705 ESI-covered, which keeps the comparison inside the region and site conditions the model was
+calibrated to represent.
+
+The spatial extent and forest-type distribution of the benchmark are shown in Figure 12, a locator of the
+Acadian study region with stand counts on a 50 km equal-area hex grid, and Figure 13, the same aggregation split
+into softwood, mixedwood, and hardwood panels. Plot coordinates are restricted and were used only server-side to
+build the aggregated hex counts; no true coordinate appears in any released figure, table, or file, and the maps
+and count summaries carry aggregated hex polygons and stand counts only.
+
 ### Version and configuration confirmed
 
 The scored operational build is the v12.9.x base plus the gated Chapter 11 management modifiers, tag
@@ -221,23 +247,143 @@ green or yellow throughout. Hardwood is the shared frontier, every model over-re
 outputs, the shared newer build by 18 to 20 percent and OSM by 13 to 16, all red, which confirms a
 composition-driven ceiling for the v13 refit rather than a management-modifier problem.
 
+### Accuracy and precision: percent RMSE
+
+Percent bias measures only systematic offset, and it inflates on metrics with low means, so a small absolute
+error reads as a large percentage. To score accuracy and precision together we add the root mean squared error
+and its scale-free form, the percent RMSE, RMSE = sqrt(mean((observed − predicted)²)) and %RMSE = 100 × RMSE /
+mean(observed). Unlike percent bias, %RMSE penalises both systematic error and scatter, so it does not deflate
+on high-mean metrics and does not inflate on low-mean ones, which makes it the fairer accuracy-and-precision
+summary. Uncertainty on %RMSE is a within-province stratified bootstrap (2000 replicates, seed 42), resampling
+stands within New Brunswick and Quebec so the interval respects the two-province design. We report %RMSE
+alongside the mean bias percent kept for continuity, the mean absolute error, and the Nash-Sutcliffe efficiency.
+
+Percent RMSE by model and metric on the pooled in-domain set (n=705), lower is better, is:
+
+| **metric** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| basal area | 40.8 | 45.3 | 45.8 | 45.8 | 39.6 |
+| stand density index | 40.9 | 45.9 | 46.2 | 46.2 | 39.6 |
+| quadratic mean diameter | 27.8 | 25.4 | 25.7 | 25.7 | 29.1 |
+| top height | 18.8 | 18.2 | 18.4 | 18.4 | 16.1 |
+| total volume | 56.0 | 52.3 | 55.2 | 55.2 | 51.1 |
+| merch volume | 53.6 | 50.9 | 53.4 | 53.4 | 49.0 |
+| sawlog volume | 57.7 | 55.1 | 57.8 | 57.8 | 53.4 |
+| aboveground biomass | 52.2 | 47.9 | 50.6 | 50.6 | 47.2 |
+| stand value | 62.0 | 55.8 | 59.4 | 59.4 | 56.3 |
+
+Structure metrics are tight, top height near 18 percent and quadratic mean diameter near 26. The
+merchantable-output metrics carry the scatter: total volume, sawlog volume, and value all sit in the mid-50s to
+low-60s percent even where mean bias is only a few percent, which is the point of the metric. On the pooled set
+v12.10.1 total volume is 55.2 percent (95 percent interval 49.1 to 61.7) and value is 59.4 percent (52.1 to
+67.0); OSM is a little lower at 51.1 and 56.3 percent. Figure 11 is the %RMSE scorecard, the model by metric
+heatmap of %RMSE on the pooled set with within-province bootstrap intervals in each cell.
+
+The hardwood reframe follows directly. Hardwood error is scatter-dominated, not bias-dominated. On the hardwood
+stratum v12.10.1 total volume carries a mean bias of about +19 percent but a %RMSE of about 76 percent, and
+stand value about +20 percent bias against about 81 percent %RMSE; OSM is similar, with hardwood total-volume
+%RMSE about 75 percent and value about 80 percent. Every model shows the same pattern, the percentage bias
+understating the true error because most of that error is variance, not offset. Hardwood is a high-variance
+frontier shared by all five models, not a systematic defect of any one build, and reporting %RMSE rather than
+bias alone keeps that honest.
+
+### Observed-on-predicted regression and the region of equivalence
+
+For each model, metric, and stratum we fit the ordinary least squares regression of observed on predicted,
+observed = a + b × predicted, and report the slope b, the intercept a, and R². A slope of one and an intercept
+of zero mark a model that tracks the 1:1 line. We test that jointly with a Robinson and Froese (2004) style
+equivalence test, two one-sided tests at alpha = 0.05, checking that the 90 percent confidence interval of each
+parameter falls entirely inside a stated region of equivalence: the intercept region is plus or minus 25 percent
+of the mean observed value for that metric and stratum, and the slope region is the interval 0.75 to 1.25. The
+model is declared equivalent only when both the intercept and the slope pass. This regression equivalence is a
+complement to the paired-difference TOST reported with the pooled scorecard; here the test is on the shape of
+the observed-on-predicted fit rather than the mean difference. Because observed is regressed on predicted, a
+slope above one means the model under-predicts the high end and a slope below one means it over-predicts it.
+
+Observed-on-predicted regression and equivalence flags on the pooled in-domain set (n=705), key metrics. TRUE
+means the parameter's 90 percent interval lies inside its region of equivalence.
+
+| **metric** | **model** | **slope b** | **intercept a** | **R²** | **slope equiv** | **intercept equiv** | **overall** |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| BA | v12.5.0 | 0.93 | 0.72 | 0.73 | TRUE | TRUE | TRUE |
+| BA | v12.7.0 | 1.21 | -0.81 | 0.71 | FALSE | TRUE | FALSE |
+| BA | v12.9.x | 1.14 | -0.42 | 0.68 | TRUE | TRUE | TRUE |
+| BA | v12.10.1 | 1.14 | -0.42 | 0.68 | TRUE | TRUE | TRUE |
+| BA | OSM | 0.98 | 0.79 | 0.74 | TRUE | TRUE | TRUE |
+| TOTVOL | v12.5.0 | 0.83 | 8.45 | 0.74 | TRUE | TRUE | TRUE |
+| TOTVOL | v12.7.0 | 1.04 | 4.02 | 0.75 | TRUE | TRUE | TRUE |
+| TOTVOL | v12.9.x | 0.99 | 5.08 | 0.71 | TRUE | TRUE | TRUE |
+| TOTVOL | v12.10.1 | 0.99 | 5.08 | 0.71 | TRUE | TRUE | TRUE |
+| TOTVOL | OSM | 0.95 | 2.96 | 0.75 | TRUE | TRUE | TRUE |
+| VALUE | v12.5.0 | 0.81 | 419.6 | 0.73 | TRUE | TRUE | TRUE |
+| VALUE | v12.7.0 | 1.01 | 230.2 | 0.74 | TRUE | TRUE | TRUE |
+| VALUE | v12.9.x | 0.95 | 303.0 | 0.71 | TRUE | TRUE | TRUE |
+| VALUE | v12.10.1 | 0.95 | 303.0 | 0.71 | TRUE | TRUE | TRUE |
+| VALUE | OSM | 0.93 | 177.5 | 0.74 | TRUE | TRUE | TRUE |
+
+Across all nine metrics on the pooled set, four of the five models pass the joint equivalence test on every
+metric, nine of nine. The single exception is v12.7.0 basal area, where the slope of 1.21 sits just outside the
+0.75 to 1.25 region once its confidence interval is included, so basal area is flagged not equivalent for that
+build; its intercept still passes, and its volume and value slopes are essentially one. Every volume and value
+cell passes overall equivalence for all five models: total-volume slopes run 0.83 to 1.04 and value slopes 0.81
+to 1.01, and the operational build v12.10.1 has a total-volume slope of 0.99 and a value slope of 0.95, both
+equivalent to one. Figure 10 is the observed-versus-predicted equivalence plot, faceted with total volume,
+value, and basal area as rows and the five models as columns, each panel showing the per-stand cloud coloured by
+forest type, the 1:1 line, the OLS fit, and the shaded region of equivalence, annotated with the slope and the
+joint verdict.
+
+The equivalence test confirms what %RMSE and bias together imply. On total volume and stand value, the outputs
+that matter most for management, every model tracks the 1:1 line within a region we are willing to treat as
+practically equivalent, and the operational build does so with slopes near one and no systematic tilt. The one
+flag, v12.7.0 basal area, is a slope that runs slightly steep rather than a location error, consistent with that
+build's known basal-area behaviour. Equivalence is a stricter and more transparent claim than a low p-value on a
+difference test: it states the size of the departure we would tolerate up front and then shows the models fall
+inside it.
+
 ### Weighted overall composite score
 
 To collapse the nine metrics into one number per model, each model earns a composite score from 0 to 100,
-higher is better. Per metric a bias score of 100 × (1 − min(1, |bias| / 20)) rewards accuracy, so 0 percent
-bias scores 100 and a bias of 20 percent or worse scores 0, and an efficiency score of 100 × max(0, NSE)
-rewards per-stand fit; the metric score is their equal blend, 0.5 of the bias score plus 0.5 of the
-efficiency score. The primary composite is a weighted mean of the nine metric scores that places total
-volume and stumpage value first, at weight 3 each, the other three merchantable outputs (merchantable and
-sawlog volume, and biomass) second, at weight 2 each, and the four structure metrics (basal area, stand
-density index, quadratic mean diameter, top height) last, at weight 1 each, for a weight sum of 16. This
-volume and value first weighting reflects the operational priority that a growth engine reproduce harvest
-volume and value before stand structure. An equal-weight mean of the same nine metric scores is retained as
-a reference column to show the ranking is not an artifact of the weighting. Composites are computed on the
-pooled in-domain set and on each forest type.
+higher is better. We compute two composites and lead with the accuracy-and-precision view, because %RMSE scores
+systematic error and scatter together where bias alone flatters a low-scatter but biased build. The primary
+composite is built on %RMSE: each metric earns a score of 100 × max(0, 1 − %RMSE / 100), so a metric with %RMSE
+of 0 scores 100 and one at 100 percent or worse scores 0, and the composite is the weighted mean of the nine
+metric scores with total volume and stumpage value carrying the highest weight (total volume 3, value 3,
+merchantable and sawlog volume and biomass 2 each, the four structure metrics 1 each, for a weight sum of 16).
+The complementary composite is the earlier bias-and-efficiency blend: per metric a bias score of 100 × (1 −
+min(1, |bias| / 20)) rewards accuracy and an efficiency score of 100 × max(0, NSE) rewards per-stand fit, blended
+equally, then combined under the same volume-and-value weighting, with an equal-weight mean carried as a
+reference column. Both composites are computed on the pooled in-domain set and on each forest type.
 
-On the pooled in-domain set the ranking, on the primary volume and value weighting with the equal-weight
-composite for reference, is:
+On the pooled in-domain set the primary %RMSE-weighted composite ranking is:
+
+| **rank** | **model** | **%RMSE composite (primary)** |
+|:---:|:---|:---:|
+| 1 | OSM | 53.4 |
+| 2 | v12.7.0 | 52.1 |
+| 3 | v12.9.x | 49.8 |
+| 3 | v12.10.1 | 49.8 |
+| 5 | v12.5.0 | 49.4 |
+
+The primary %RMSE composite per model, pooled and by forest type, is:
+
+| **model** | **pooled in-domain** | **softwood** | **mixedwood** | **hardwood** |
+|:---|:---:|:---:|:---:|:---:|
+| v12.5.0 | 49.4 | 61.2 | 57.8 | 23.5 |
+| v12.7.0 | 52.1 | 56.3 | 59.1 | 39.2 |
+| v12.9.x | 49.8 | 55.3 | 58.2 | 33.4 |
+| v12.10.1 | 49.8 | 55.3 | 58.2 | 33.4 |
+| OSM | 53.4 | 61.6 | 59.5 | 34.4 |
+
+Every model scores far lower on hardwood than on softwood or mixedwood, the shared high-variance frontier of the
+%RMSE section above rather than a defect of any one build. The two views diverge on v12.7.0. It ranks low on the
+bias composite because it carries real systematic offsets (basal area bias -13.4 percent), but rises to second on
+the %RMSE composite because once systematic and random error are scored together its predictions are less
+scattered. The operational build v12.10.1 is the least biased of the FVS-ACD engines with slightly more scatter,
+so it leads v12.7.0 on the bias composite but ties v12.9.x just behind it on %RMSE. OSM stays first on both.
+
+The complementary bias-and-efficiency composite is kept so the change of basis is visible. On the pooled
+in-domain set the bias ranking, on the primary volume and value weighting with the equal-weight composite for
+reference, is:
 
 | **rank** | **model** | **primary (volume + value)** | **equal-weight reference** |
 |:---:|:---|:---:|:---:|
@@ -374,16 +520,22 @@ seeded to age 160), each scored against the named law-like relations on the modi
 
 | **relation** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| Eichhorn (V ~ f height) | pass | pass | pass | pass | pass |
+| Eichhorn (V ~ f height) | pass | pass | pass | pass | not scored |
 | Reineke slope (target -1.6) | flag | pass (-1.8) | pass (-1.59) | pass (-1.59) | flag |
-| Site ordering (no overtaking) | pass | pass | pass | pass | pass |
+| Site ordering (no overtaking) | pass | pass | pass | pass | not scored |
 | Yield-density / plateau | flag | pass (37) | pass (36) | pass (36) | flag |
-| Sukachev (size vs density) | flag | pass | pass | pass | pass |
+| Sukachev (size vs density) | flag | pass | pass | pass | not scored |
 
-v12.10.1 inherits the v12.9.x self-thinning machinery and passes all five relations. OSM is not scored in this
-seeded-gradient Bakuzis battery, which runs only the AcadianGY builds. OSM's non-plateau finding comes from
-the matched-stand Seven Islands test below, so the Bakuzis passes are a direct FVS-ACD result and OSM enters
-the long-horizon comparison through the matched-stand trajectory instead of the same matrix. With the
+v12.10.1 inherits the v12.9.x self-thinning machinery and passes all five relations. OSM now enters the matrix
+as an external entrant, scored where its long-horizon behavior is observable on the matched-stand Seven Islands
+trajectory. It flags both size-density relations, Reineke self-thinning and the yield-density plateau, because
+its stand-level basal area never plateaus and never self-thins, accumulating monotonically from about 32 to 42
+m² ha⁻¹ by age 60 while the AcadianGY builds peak near 33 and self-thin back to about 27. That non-plateau
+accumulation, not any single-metric offset, is the central point of biological-realism separation between OSM
+and the v12.7.1 and later builds. OSM is marked not scored, rather than passed, on Eichhorn, site ordering, and
+Sukachev: each of those three tests is defined only on the seeded cross-site productivity gradient, and OSM is
+an external model that cannot be run on that synthetic gradient, so no honest pass or flag can be assigned for
+those relations. Figure 3 carries the full matrix with the OSM column. With the
 management modifier on, a seeded 160-year projection of a planted softwood stand still plateaus at every
 amplitude tested (standard deviation of basal area over the last 20 years about 0.21 m² ha⁻¹, flat), and the
 ceiling rises smoothly with amplitude (36.3, 41.6, 43.6, 45.6, 47.3 m² ha⁻¹ at amplitudes 1.0, 1.6, 2.0, 2.5,
@@ -400,19 +552,22 @@ ha⁻¹, a 35 percent divergence by age 60 localized entirely to the mortality a
 v13 is the fall arc. It is in progress, not gated, and appears here as roadmap only. No v13 scorecard numbers
 exist yet and none are reported.
 
-v13.0 is a joint dominant-height and basal-area re-anchor. Both increment anchors have been fit and are
-individually unbiased in the Maine, New Hampshire, and Vermont domain, with a dominant-height increment ratio
-of 1.00 and a basal-area increment ratio of 1.00 on 13,894 remeasurement pairs. The model variant is being
-built and scored. This is the fix for the pooled offset. The shipped v12.10.1 is under on volume by about 4
-percent through a partial error cancellation, a top-height over-prediction of about +4 percent set against a
-basal-area under-prediction of about -10 percent, and correcting either anchor alone drives volume further off
-rather than to parity. A one-sided top-height correction was tested this cycle and pushed pooled total volume
-further negative while collapsing Quebec modeling efficiency to 0.134, so it was deferred. Only a joint
-re-anchor of both increment anchors together reaches true parity, which is what v13.0 is fitting.
+v13.0 was a joint dominant-height and basal-area re-anchor aimed at the pooled offset. The shipped v12.10.1 is
+under on volume by about 4 percent through a partial error cancellation, a top-height over-prediction of about
++4 percent set against a basal-area under-prediction of about -10 percent, and correcting either anchor alone
+drives volume further off rather than to parity. A one-sided top-height correction tested earlier pushed pooled
+total volume further negative while collapsing Quebec modeling efficiency to 0.134. This cycle a narrow height
+re-anchor fix was run as a blend sweep across weights 0.50 to 1.00, and every setting in the sweep parked: none
+reached pooled parity without reopening the offset, so the v13.0 height path is exhausted for now and stays
+parked. The basal-area increment anchor, individually unbiased in the Maine, New Hampshire, and Vermont domain
+(basal-area increment ratio 1.00 on 13,894 remeasurement pairs), is validated and retained for the v13.1 cycle.
+The shipped v12.10.1 stays the frozen August operational baseline.
 
-v13.1 is a hierarchical mortality and ingrowth refit and is being refit. It targets the composition-driven
-hardwood over-prediction that every model shares and the ingrowth under-prediction documented below, moving
-the management effect from a bounded engine amplitude into the fit as a predictor.
+v13.1 is a hierarchical mortality and ingrowth refit. It targets the composition-driven hardwood over-prediction
+that every model shares and the ingrowth under-prediction documented below, moving the management effect from a
+bounded engine amplitude into the fit as a predictor, and it now carries the retained basal-area increment
+correction from the v13.0 cycle. The refit is running on the cluster with convergence pending; no v13.1
+scorecard numbers exist yet.
 
 ## Honest limits
 
@@ -459,7 +614,7 @@ data can reproduce, which is why the boundary is declared rather than scored as 
 Figures are rendered separately through advanced-viz and are not generated in this report. The report should
 carry the following four to six.
 
-![Figure 1. Five-way scorecard heatmap of level bias and modeling efficiency across the nine NSVB metrics for v12.5.0, v12.7.0, v12.9.x, v12.10.1, and OSM v2.26.1 on the pooled in-domain set.](figures/fig1_scorecard_heatmap.png)
+![Figure 1. Five-way scorecard heatmap of level bias and modeling efficiency across the nine NSVB metrics for v12.5.0, v12.7.0, v12.9.x, v12.10.1, and OSM v2.26.1 on the pooled in-domain set, with an added Overall composite strip beneath the per-metric bias tiles showing each model's %RMSE-weighted composite (0 to 100) on its own scale, separated from the bias-flag tiles.](figures/fig1_scorecard_heatmap.png)
 
 ![Figure 2. Total volume level bias by forest type (softwood, mixedwood, hardwood) for the five models, showing the composition-driven hardwood frontier shared by every model.](figures/fig2_accuracy_by_forest_type.png)
 
@@ -474,6 +629,14 @@ carry the following four to six.
 ![Figure 7. Forest-type scorecard, level bias percent with bootstrap 95 percent CIs and green, yellow, and red flags, nine metrics by five models faceted by forest type (softwood n = 321, mixedwood n = 186, hardwood n = 178) on the frozen basis.](figures/fig7_scorecard_by_fortype.png)
 
 ![Figure 8. Volume and value weighted overall composite score by model, the pooled in-domain primary composite (total volume and value weighted highest) as ranked bars, the equal-weight composite as a reference tick on each bar, and the by-forest-type primary composites overlaid as markers.](figures/fig8_overall_composite.png)
+
+![Figure 10. Observed-versus-predicted equivalence plot, faceted with total volume, value, and basal area as rows and the five models as columns. Each panel shows the per-stand cloud coloured by forest type, the 1:1 line, the OLS fit, and the shaded Robinson-Froese region of equivalence, annotated with the slope b and the joint verdict. Pooled in-domain set (n = 705).](figures/fig10_equivalence.png)
+
+![Figure 11. Percent RMSE scorecard, the model by metric heatmap of %RMSE across the nine NSVB metrics for the five models on the pooled in-domain set, with within-province bootstrap intervals in each cell.](figures/fig11_rmse_scorecard.png)
+
+![Figure 12. Locator of the Acadian study region with benchmark stand counts aggregated on a 50 km equal-area hex grid (New Brunswick n = 355, Quebec n = 350; true plot coordinates never released).](figures/fig12_data_locator.png)
+
+![Figure 13. Benchmark stand counts on the same 50 km hex grid split into softwood (n = 321), mixedwood (n = 186), and hardwood (n = 178) panels.](figures/fig13_data_by_fortype.png)
 
 ## Methods and provenance
 
