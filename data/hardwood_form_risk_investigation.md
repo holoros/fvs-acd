@@ -305,3 +305,26 @@ Data (Cardinal):
 - FIA: `~/fia_data/ME_TREE.csv` (and NH, VT, NY, MA, CT, RI equivalents)
 - Frozen scorecards (local): `repos/fvs-acd/data/scorecard_rmse_frozen.csv`,
   `repos/fvs-acd/data/scorecard_five_by_fortype_frozen.csv`
+
+---
+
+## Phase 1 A/B result, harvested 2026-07-15
+
+SLURM job 12367953 (hwmod_ab.sbatch) completed cleanly in 00:40:02. The parity check confirmed the A/B is valid: the modifier OFF run reproduced the frozen cb_v12101 baseline exactly, with max|off-cb| = 0.000e+00 for BA, TOTVOL, SAWVOL, VALUE, and TOPHT. The comparison stand set was n=705 (Hardwood 178, Softwood 321, Mixedwood 186, Unknown 20). Phase 1 wired calc_form_prob and calc_risk_prob into ddbh_hw_mod and tsurv_hw_mod through a probability-weighted expected-value formulation in AcadianGY_13.1proto_hwmod.r.
+
+For the Hardwood stratum the modifier moved every target metric in the improving direction (dRMSE < 0), but the magnitudes are small. Level BA %RMSE fell from 49.783 to 49.650 (dRMSE -0.133) and level TOTVOL %RMSE from 76.053 to 75.674 (dRMSE -0.380). The increments improved more: BA_PAI %RMSE from 796.837 to 795.282 (dRMSE -1.555) and TOTVOL_PAI %RMSE from 974.107 to 972.297 (dRMSE -1.810). One flag: hardwood BA_PAI bias flipped from +2.83 to -9.09, so the modifier pushes the BA increment from slight underprediction into overprediction; TOTVOL_PAI bias improved (144.50 to 135.05). The very large increment %RMSE values reflect near-zero mean increments (BA_PAI mean 0.126, TOTVOL_PAI mean 0.768), not instability.
+
+Softwood did not regress: dRMSE was within noise on all four metrics (BA -0.001, TOTVOL +0.001, BA_PAI -0.059, TOTVOL_PAI +0.042), as expected since the modifier is hardwood-targeted. Mixedwood showed small mixed movement, a minor regression on BA level (+0.053) and on both increments (BA_PAI +0.451, TOTVOL_PAI +0.279) with a slight TOTVOL level gain (-0.035), consistent with the hardwood component of mixedwood stands being touched by the modifier.
+
+Verdict: Phase 1 is directionally correct for hardwood and harmless to softwood, but the effect is modest and it introduces a small mixedwood increment regression plus a hardwood BA-increment bias sign flip. Not a shipper on this evidence. v12.10.1 stays the operational AcadianGY baseline. Any keeper is gated against cb_v12101 and requires Aaron's sign-off. Suggested next step is to decide whether to tune the modifier strength (dampen so the hardwood BA increment bias does not overshoot and mixedwood is left alone) before a Phase 2 A/B, or to park Phase 1 as a negative-to-marginal result.
+
+## Candidate (a) ingrowth-recruit split: BUILT and DRY-TESTED, staged not submitted (16 July 2026)
+
+The record-split A/B (job 12390203) splits only the initial tree list; ingrowth recruits from create_ingrowth_tree get form=NA/risk=NA (baseline), so the modifiers never fire on them. Candidate (a) extends the split to new recruits each cycle. Built as NEW files so the in-flight job's files stay untouched:
+
+- ~/magplot/verify/bench_parity_split_ig.R = bench_parity_split.R plus a split_ingrowth(cur) wrapper and a SPLIT_INGROWTH env toggle. In the yearly loop, after cur<-bf(nx), when SPLIT and SPLIT_INGROWTH are both TRUE it splits only records with is.na(form) and a Table A.9 hardwood sp (the fresh recruits), assigns form/risk once via split_formrisk, reassigns their tree ids above the current max to avoid collision, and carries them fixed. Already-split records (non-NA form) and softwood recruits are left alone.
+- ~/magplot/verify/run_bench_split_ig.sh (runner pointed at the _ig scorer), ~/hwsplit_ig.sbatch (two passes split_ig_off/split_ig_on with SPLIT_INGROWTH=TRUE, distinct tags, then analyze), ~/analyze_split_ig_ab.R (reads split_ig_off/on and adds a MARGINAL block: ingrowth-split ON vs the initial-only split ON on hardwood BA, TOTVOL, VALUE_s, SAWVOL_s, so the recruit-split effect is isolated).
+
+Dry-test: unit test of split_ingrowth conserved stems (104.9 to 104.9), split the RO recruit's 12 stems across sub-records, left already-split RM records untouched, kept softwood recruits at NA form, unique monotone ids. End-to-end NMAX=2 smoke through the proto engine ran 0 fail and wrote smoke_ig_results.csv.
+
+NOT submitted. Gate order: harvest the initial-split A/B (12390203) first at 3 PM; only if the initial split is clean and the marginal from recruits is worth the cost, submit sbatch ~/hwsplit_ig.sbatch. Expect the recruit-split payoff mostly at longer projection intervals where ingrowth accumulates, and more in VALUE/quality than total BA (mortality is renormalized to a fixed budget, so the survival modifier reallocates compositionally).
