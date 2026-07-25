@@ -783,36 +783,46 @@ Biological realism (Bakuzis pass). v12.10.1 inherits the v12.9.x self-thinning m
 Sukachev (size versus density). With the management modifier on, a seeded planted-softwood projection
 still plateaus at every amplitude tested (standard deviation of basal area over the last 20 years about
 0.21, flat), and the ceiling rises smoothly with amplitude because basal area at the Reineke limit rises
-with tree size. By contrast v12.5.0 fails self-thinning outright in the same seeded battery. OSM now enters the
-matrix as an external entrant, scored where its long-horizon behavior is observable on the matched-stand Seven
-Islands trajectory. It flags both size-density relations, Reineke self-thinning and the yield-density plateau,
-because its stand-level basal area never plateaus and never self-thins, accumulating monotonically from about 32
-to 42 m² ha⁻¹ by age 60 while the AcadianGY builds peak near 33 and self-thin back to about 27; that non-plateau
-accumulation is the central point of biological-realism separation between OSM and the v12.7.1 and later builds.
-OSM is marked not scored, rather than passed, on Eichhorn, site ordering, and Sukachev, each of which is defined
-only on the seeded cross-site productivity gradient that an external model cannot be run on, so no honest pass or
-flag can be assigned there.
+with tree size. By contrast v12.5.0 fails self-thinning outright in the same seeded battery. OSM is now scored
+on all five relations as well, from a 160-year projection over a real-stand productivity gradient, since it
+cannot be seeded on the synthetic ESI gradient. The 73 benchmark stands are binned into low, mid, and high
+terciles on OSM's own site-index height, the real-stand analog of the seeded ESI gradient, and the per-site
+trajectories are scored with the same relation definitions used for the AcadianGY battery. Over the near-term
+horizon, to about age 60, OSM over-accumulates basal area relative to FVS-ACD, which self-thins earlier. Over
+the full 160-year horizon, however, OSM does eventually plateau and self-thin: its mid-site basal area peaks
+near 36 m² ha⁻¹ and levels to about 35 m² ha⁻¹ on a Reineke slope of about -1.56, so it passes both the
+yield-density plateau and Reineke self-thinning, and it passes Sukachev. It flags the two cross-site relations,
+Eichhorn (cross-site coefficient of variation of volume at matched height about 26 percent) and site ordering,
+and both flags are sensitive to the real-stand substitution: OSM trajectories run on a projection-year axis
+from heterogeneous real starting conditions rather than an age-aligned bare-ground gradient, so the cross-site
+tests read on unequal starting ages, and that caveat is reported plainly as a qualifier on both flags. The
+biological-realism separation between OSM and the v12.7.1 and later builds is therefore not that OSM never
+plateaus, but that FVS-ACD self-thins earlier and more consistently and holds cleaner cross-site behavior on
+the seeded gradient.
 
-**Table 10.3c.** Modified Bakuzis pass and flag matrix (Leary 1997) by model and law-like relation. OSM is scored
-only on the two size-density relations observable from its matched-stand trajectory and marked not scored on the
-three relations defined only on the seeded gradient.
+**Table 10.3c.** Modified Bakuzis pass and flag matrix (Leary 1997) by model and law-like relation. The
+AcadianGY builds are scored on the seeded ESI gradient; OSM is scored on all five relations from a 160-year
+projection over a real-stand productivity gradient (the 73 benchmark stands binned into terciles on OSM's own
+site-index height), because it cannot be seeded on the synthetic gradient.
 
 | relation | v12.5.0 | v12.7.0 | v12.9.x | v12.10.1 | OSM |
 |---|---|---|---|---|---|
-| Eichhorn (V ~ f height) | pass | pass | pass | pass | not scored |
-| Reineke slope (target -1.6) | flag | pass (-1.8) | pass (-1.59) | pass (-1.59) | flag |
-| Site ordering (no overtaking) | pass | pass | pass | pass | not scored |
-| Yield-density / plateau | flag | pass (37) | pass (36) | pass (36) | flag |
-| Sukachev (size vs density) | flag | pass | pass | pass | not scored |
+| Eichhorn (V ~ f height) | pass | pass | pass | pass | flag |
+| Reineke slope (target -1.6) | flag | pass (-1.8) | pass (-1.59) | pass (-1.59) | pass (-1.56) |
+| Site ordering (no overtaking) | pass | pass | pass | pass | flag |
+| Yield-density / plateau | flag | pass (37) | pass (36) | pass (36) | pass (36) |
+| Sukachev (size vs density) | flag | pass | pass | pass | pass |
 
 ![Modified Bakuzis law-like relations matrix by model.](figures/fig3_bakuzis_relations.png)
 
-**Figure 3.** Modified Bakuzis matrix (Leary 1997) of law-like stand relationships evaluated on seeded
-160-year projections across the ESI productivity gradient, showing the pass and flag pattern for each
-AcadianGY version and the external OSM entrant on the five relations (Eichhorn, Reineke self-thinning,
-site ordering, yield-density plateau, and Sukachev). OSM is scored only on the two size-density
-relations observable from its matched-stand trajectory and marked not scored on the three relations
-defined only on the seeded gradient.
+**Figure 3.** Modified Bakuzis matrix (Leary 1997) of law-like stand relationships, showing the pass and flag
+pattern for each AcadianGY version and the external OSM entrant on the five relations (Eichhorn, Reineke
+self-thinning, site ordering, yield-density plateau, and Sukachev). The AcadianGY builds are evaluated on
+seeded 160-year projections across the ESI productivity gradient; OSM is scored on all five from a 160-year
+projection over a real-stand productivity gradient, the 73 benchmark stands binned into terciles on OSM's own
+site-index height, because it cannot be seeded on the synthetic gradient. OSM passes Reineke self-thinning, the
+yield-density plateau, and Sukachev, and flags the two cross-site relations, Eichhorn and site ordering, both
+sensitive to the real-stand substitution.
 
 Disclosed ingrowth limit. Observed MagPlot recruitment, tree-id matched across remeasurements, is 39.8
 stems ha⁻¹ yr⁻¹ in New Brunswick and 19.7 in Quebec. The shipped expected-value ingrowth hurdle predicts
@@ -954,7 +964,7 @@ Loo, J., and Ives, N. 2003. The Acadian forest: historical condition and human i
 
 Rijal, B., Weiskittel, A.R., and Kershaw, J.A. 2012a. Development of regional height to diameter equations for 15 tree species in the North American Acadian Region. *Forestry: An International Journal of Forest Research* 85(3): 379-390.
 
-Rijal, B., Weiskittel, A.R., and Kershaw, J.A. 2012b. Development of height to crown base models for thirteen tree species of the North American Acadian Region. *The Forestry Chronicle* 88(1): 60-73.
+Rijal, B., Weiskittel, A.R., and Kershaw, J.A. 2012b. Development of height to crown base models for thirteen tree species of the North American Acadian Region. *The Forestry Chronicle* 88(1): 60-73. doi:10.5558/tfc2012-011.
 
 Russell, M.B., and Weiskittel, A.R. 2011. Maximum and largest crown width equations for 15 tree species in Maine. *Northern Journal of Applied Forestry* 28(2): 84-91.
 
@@ -964,9 +974,9 @@ Weiskittel, A.R., Crookston, N.L., and Radtke, P.J. 2011. Linking climate, gross
 
 Weiskittel, A.R., and Li, R. 2012. Bark ratio (diameter outside bark to diameter inside bark) conversion for the primary Acadian species. The Acadian bark relationships trace to Li, R., and Weiskittel, A.R. 2011, Estimating and predicting bark thickness for seven conifer species in the Acadian Region of North America using a mixed-effects modeling approach: comparison of model forms and subsampling strategies, *European Journal of Forest Research* 130(2): 219-233 (doi:10.1007/s10342-010-0423-y), and to the bark component of Li et al. (2012); the exact author order and year of the in-text "Weiskittel and Li 2012" callout remain to be confirmed with the team.
 
-Weiskittel, A.R., Kershaw, J.A., Jr., and Hennigar, C. 2012. Stand- and tree-level mortality models for the Acadian variant of the Forest Vegetation Simulator. University of Maine Cooperative Forestry Research Unit (CFRU), Orono, ME. Citation to be confirmed: not located as a standalone peer-reviewed article and most likely a CFRU annual report or internal Acadian model documentation of that period.
+Weiskittel, A.R., Kershaw, J.A., Jr., and Hennigar, C. 2012. Stand- and tree-level mortality models for the Acadian variant of the Forest Vegetation Simulator. University of Maine Cooperative Forestry Research Unit (CFRU), Orono, ME. Internal CFRU and Acadian model documentation: a targeted CrossRef and literature search (15 July 2026) found no standalone peer-reviewed article, consistent with the AcadianGY source, which carries these mortality equations without a journal citation. Cite as CFRU documentation; no DOI. The team should supply the exact CFRU annual report year and page range if a formal citation is required.
 
-Weiskittel, A.R., Kershaw, J.A., Jr., and Rijal, B. 2013. Refit of the Acadian height-to-crown-base model with species random effects. University of Maine Cooperative Forestry Research Unit (CFRU), Orono, ME. Citation to be confirmed: not located as a standalone peer-reviewed article; the base height-to-crown-base model is Rijal et al. 2012b and this is the internal species-random-effect refit carried in the AcadianGY source.
+Weiskittel, A.R., Kershaw, J.A., Jr., and Rijal, B. 2013. Refit of the Acadian height-to-crown-base model with species random effects. University of Maine Cooperative Forestry Research Unit (CFRU), Orono, ME. Confirmed internal work, not a standalone article: a CrossRef search (15 July 2026) found no 2013 publication under this title, and the AcadianGY source dates this species-random-effect refit to September 2012. The published base model is Rijal et al. 2012b (doi:10.5558/tfc2012-011, above); cite this entry as the internal refit of that model.
 
 Weiskittel, A.R., and Kuehne, C. 2019. Evaluating and modeling variation in site-level maximum carrying capacity of mixed-species forest stands in the Acadian Region of northeastern North America. *The Forestry Chronicle* 95(3): 171-182.
 
@@ -1861,10 +1871,11 @@ reproduces the section 10.3.1 table.
 | OSM | Hardwood | 174 | 6.1 | 13.3 | 7.6 | +7.20 | +1.46 | -5.74 | right | 0.20 |
 
 **Table D10.** Modified Bakuzis matrix (Leary 1997), the quantitative basis behind Figure 3 and Table
-10.3c, from the seeded productivity-gradient battery. Values in parentheses are the diagnostic
-quantities: Eichhorn coefficient of variation of volume at matched height, fitted Reineke self-thinning
-slope, count of site-ordering inversions, and the yield-density plateau basal area. OSM is scored only
-where its long-horizon behavior is observable on the matched-stand trajectory. v12.10.1 is Bakuzis
+10.3c. Values in parentheses are the diagnostic quantities: Eichhorn coefficient of variation of volume
+at matched height, fitted Reineke self-thinning slope, count of site-ordering inversions, and the
+yield-density plateau basal area. The AcadianGY builds are scored on the seeded productivity-gradient
+battery; OSM is scored on all five relations from a 160-year projection over a real-stand productivity
+gradient, the 73 benchmark stands binned into terciles on OSM's own site-index height. v12.10.1 is Bakuzis
 identical to v12.9.x (it inherits the same self-thinning machinery), so v12.7.1 and v12.9.x bracket the
 operational line here.
 
@@ -1874,10 +1885,13 @@ operational line here.
 | v12.7.0 | pass (11.2) | flag (-1.8) | pass (0) | pass (37.1) | 37.1 | pass |
 | v12.7.1 | pass (11.0) | pass (-1.59) | pass (0) | pass (36.1) | 36.1 | pass |
 | v12.9.x | pass (11.0) | pass (-1.59) | pass (0) | pass (36.1) | 36.1 | pass |
-| OSM | not scored | flag | not scored | flag (42.4) | not scored | not scored |
+| OSM | flag (26.3) | pass (-1.56) | flag (42 ht, 105 vol) | pass (35.8) | 34.7 | pass |
 
 v12.5.0 fails the two size-density relations outright, with basal area still at 64.9 m² ha⁻¹ at age 160,
 while the v12.7.1 and later builds plateau near 36 m² ha⁻¹ on a Reineke slope of -1.59 against the -1.6
-target. OSM flags both size-density relations because its stand-level basal area never plateaus and
-never self-thins, accumulating to 42.4 m² ha⁻¹ with no decline phase; the three relations defined only
-on the seeded cross-site gradient are marked not scored for the external model.
+target. OSM, scored on all five over the real-stand gradient, passes both size-density relations over the
+full horizon: its mid-site basal area peaks near 35.8 m² ha⁻¹ and levels to 34.7 by age 160 on a Reineke
+slope of -1.56, and it passes Sukachev. It flags the two cross-site relations, Eichhorn (CV 26.3 percent)
+and site ordering (42 height and 105 volume inversions), both sensitive to the real-stand substitution,
+which runs OSM on a projection-year axis from heterogeneous starting conditions rather than an age-aligned
+bare-ground gradient.

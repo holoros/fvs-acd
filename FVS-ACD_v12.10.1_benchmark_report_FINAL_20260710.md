@@ -19,10 +19,13 @@ On the operational inventory domain OSM v2.26.1 and FVS-ACD are close, and on th
 stronger model. OSM leads pooled mean absolute level bias about 3.2 versus 4.9 percent, mean modeling
 efficiency about 0.75 versus 0.71, and holds the most TOST level equivalences (8 of 9). FVS-ACD does not lead
 on pooled precision. Its advantages are elsewhere: the frozen build plateaus at the realistic maximum and
-passes all five Bakuzis relations in the seeded-gradient battery, which scores only the AcadianGY builds, so
-OSM enters the long-horizon comparison through the matched-stand trajectory instead of the same seeded
-battery. FVS-ACD also carries durable long-horizon self-thinning, a durable quadratic mean diameter advantage,
-a validated and climate-ready ESI site driver, and full transparency in R. Inside the operational domain the
+passes all five Bakuzis relations on the seeded productivity gradient. OSM, projected 160 years over a
+real-stand productivity gradient because it cannot be seeded on the synthetic ESI gradient, is now scored on
+all five as well: it passes Reineke self-thinning, the yield-density plateau, and Sukachev, and flags the two
+cross-site relations, Eichhorn and site ordering, both of which are sensitive to the real-stand substitution.
+The FVS-ACD biological-realism edge is therefore earlier and more consistent self-thinning and cross-site
+behavior, not a claim that OSM never plateaus. FVS-ACD also carries a durable quadratic mean diameter
+advantage, a validated and climate-ready ESI site driver, and full transparency in R. Inside the operational domain the
 pooled near-parity on volume rests on an offsetting bias signature, with basal area about -10 percent, top
 height about +4 percent, and total volume about -2.2 percent by cancellation.
 
@@ -515,37 +518,50 @@ meant to close.
 
 ### Biological realism and long-horizon behavior
 
-Bakuzis relations from seeded 160-year projections across an ESI productivity gradient (ESI 12, 16, and 20
-seeded to age 160), each scored against the named law-like relations on the modified Bakuzis matrix:
+Bakuzis relations on the modified Bakuzis matrix, each scored against the named law-like relations. The
+AcadianGY builds are scored from seeded 160-year projections across an ESI productivity gradient (ESI 12, 16,
+and 20 seeded to age 160). OSM cannot be seeded on that synthetic gradient, so it is projected 160 years over
+a real-stand productivity gradient, the 73 benchmark stands binned into low, mid, and high terciles on OSM's
+own site-index height, and scored on all five relations from that run:
 
 | **relation** | **v12.5.0** | **v12.7.0** | **v12.9.x** | **v12.10.1** | **OSM** |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| Eichhorn (V ~ f height) | pass | pass | pass | pass | not scored |
-| Reineke slope (target -1.6) | flag | pass (-1.8) | pass (-1.59) | pass (-1.59) | flag |
-| Site ordering (no overtaking) | pass | pass | pass | pass | not scored |
-| Yield-density / plateau | flag | pass (37) | pass (36) | pass (36) | flag |
-| Sukachev (size vs density) | flag | pass | pass | pass | not scored |
+| Eichhorn (V ~ f height) | pass | pass | pass | pass | flag |
+| Reineke slope (target -1.6) | flag | pass (-1.8) | pass (-1.59) | pass (-1.59) | pass (-1.56) |
+| Site ordering (no overtaking) | pass | pass | pass | pass | flag |
+| Yield-density / plateau | flag | pass (37) | pass (36) | pass (36) | pass (36) |
+| Sukachev (size vs density) | flag | pass | pass | pass | pass |
 
-v12.10.1 inherits the v12.9.x self-thinning machinery and passes all five relations. OSM now enters the matrix
-as an external entrant, scored where its long-horizon behavior is observable on the matched-stand Seven Islands
-trajectory. It flags both size-density relations, Reineke self-thinning and the yield-density plateau, because
-its stand-level basal area never plateaus and never self-thins, accumulating monotonically from about 32 to 42
-m² ha⁻¹ by age 60 while the AcadianGY builds peak near 33 and self-thin back to about 27. That non-plateau
-accumulation, not any single-metric offset, is the central point of biological-realism separation between OSM
-and the v12.7.1 and later builds. OSM is marked not scored, rather than passed, on Eichhorn, site ordering, and
-Sukachev: each of those three tests is defined only on the seeded cross-site productivity gradient, and OSM is
-an external model that cannot be run on that synthetic gradient, so no honest pass or flag can be assigned for
-those relations. Figure 3 carries the full matrix with the OSM column. With the
+v12.10.1 inherits the v12.9.x self-thinning machinery and passes all five relations on the seeded gradient.
+OSM is now scored on all five as well, from a 160-year projection over a real-stand productivity gradient,
+since it cannot be seeded on the synthetic ESI gradient. The 73 benchmark stands are binned into low, mid, and
+high terciles on OSM's own site-index height, the real-stand analog of the seeded ESI gradient, and the
+per-site trajectories are scored with the same relation definitions used for the AcadianGY battery.
+
+Over the near-term horizon, to about age 60, OSM over-accumulates basal area relative to FVS-ACD, which
+self-thins earlier. Over the full 160-year horizon, however, OSM does eventually plateau and self-thin: its
+mid-site basal area peaks near 36 m² ha⁻¹ and levels to about 35 m² ha⁻¹, and its density frontier follows a
+Reineke slope of about -1.56, so OSM passes both the yield-density plateau and Reineke self-thinning, and it
+passes Sukachev. It flags the two cross-site relations, Eichhorn (cross-site coefficient of variation of
+volume at matched height about 26 percent) and site ordering, and both flags are sensitive to the real-stand
+substitution: OSM trajectories run on a projection-year axis from heterogeneous real starting conditions rather
+than an age-aligned bare-ground gradient, so the cross-site tests read on unequal starting ages. That caveat is
+reported plainly and it qualifies both cross-site flags. The biological-realism separation between OSM and the
+v12.7.1 and later builds is therefore not that OSM never plateaus, but that FVS-ACD self-thins earlier and more
+consistently and holds cleaner cross-site behavior on the seeded gradient. Figure 3 carries the full matrix
+with the OSM column. With the
 management modifier on, a seeded 160-year projection of a planted softwood stand still plateaus at every
 amplitude tested (standard deviation of basal area over the last 20 years about 0.21 m² ha⁻¹, flat), and the
 ceiling rises smoothly with amplitude (36.3, 41.6, 43.6, 45.6, 47.3 m² ha⁻¹ at amplitudes 1.0, 1.6, 2.0, 2.5,
 3.0) because basal area at the Reineke limit rises with tree size. The operational engine amplitude is set to
 2.0. The modifier accelerates the approach and lifts the ceiling to a productive planted-conifer level without
 breaking self-thinning. v12.5.0 still fails self-thinning outright, running to 62 to 65 m² ha⁻¹ with thousands
-of stems still alive. On a matched-stand test OSM does not plateau over the tested horizon. On the same nine
-Seven Islands stands from an identical start (FVS-ACD 31.4, OSM 31.9 m² ha⁻¹ at year 0), FVS-ACD peaks near 33
-m² ha⁻¹ by age 10 to 20 and self-thins to 27 by age 60, while OSM accumulates monotonically to about 42 m²
-ha⁻¹, a 35 percent divergence by age 60 localized entirely to the mortality and self-thinning mechanism.
+of stems still alive. On the matched-stand test, over the near-term horizon OSM over-accumulates relative to
+FVS-ACD. On the same nine Seven Islands stands from an identical start (FVS-ACD 31.4, OSM 31.9 m² ha⁻¹ at year
+0), FVS-ACD peaks near 33 m² ha⁻¹ by age 10 to 20 and self-thins to 27 by age 60, while OSM reaches about 42 m²
+ha⁻¹ at age 60, a 35 percent divergence at that age in the mortality and self-thinning timing. Over the longer
+horizon OSM does plateau and self-thin, so the age-60 snapshot captures the timing difference, that FVS-ACD
+self-thins earlier and more consistently, not a permanent divergence.
 
 ## v13 roadmap
 
@@ -620,7 +636,7 @@ carry the following four to six.
 
 ![Figure 3. Bakuzis relations pass and flag matrix by model, the five law-like relations against the five entrants.](figures/fig3_bakuzis_relations.png)
 
-![Figure 4. Long-horizon self-thinning trajectories on matched Seven Islands stands, FVS-ACD plateau and decline against OSM monotonic accumulation over 60 years from an identical start.](figures/fig4_selfthinning_trajectory.png)
+![Figure 4. Self-thinning trajectories on matched Seven Islands stands over the first 60 years from an identical start, FVS-ACD plateauing and declining by age 60 while OSM is still accumulating. OSM plateaus and self-thins later over the full horizon, so the age-60 snapshot shows the timing difference, that FVS-ACD self-thins earlier and more consistently, rather than a permanent divergence.](figures/fig4_selfthinning_trajectory.png)
 
 ![Figure 5. The offsetting bias signature in domain, basal area about -9 percent under and top height about +4 percent over canceling to total volume about -1.6 percent.](figures/fig5_offsetting_bias.png)
 
