@@ -7,6 +7,13 @@ comparison through v12.10.1, the all-sites benchmark carries v12.11, and the
 height-coverage census carries the integrity finding. Merging the first two
 would imply a single continuous series that was never scored as one.
 
+Uncertainty is shown where it exists and withheld where it does not. Panel A
+carries the 95 percent intervals already in the frozen scorecard. Panel B
+carries stand-level bootstrap intervals (allsites_bias_ci.csv); if that file is
+absent the panel degrades to bars and says so. Panel C is a complete
+enumeration of the staged tree lists, so it has no sampling uncertainty and
+gets no error bars; drawing them there would invent a quantity.
+
 Usage: build_graphical_abstract.py [--doi 10.5281/zenodo.XXXXXXX]
 """
 import argparse
@@ -55,22 +62,27 @@ order = ["v12.5.0", "v12.7.0", "v12.7.1", "v12.9.x", "v12.10.1"]
 vals = {x["model"]: float(x["bias_pct"]) for x in r}
 y = [vals[m] for m in order]
 osm = vals.get("OSM")
+lo = {x["model"]: float(x["bias_lo95"]) for x in r}
+hi = {x["model"]: float(x["bias_hi95"]) for x in r}
+ylo = [lo[m] for m in order]
+yhi = [hi[m] for m in order]
 ax.axhline(0, color="black", lw=0.9, zorder=1)
-ax.plot(range(len(order)), y, "-o", color=GREEN, lw=2.2, ms=6.5, zorder=3, label="FVS-ACD")
-ax.set_ylim(min(y) - 2.4, max(y) + 1.8)
 if osm is not None:
-    ax.axhline(osm, color=RED, lw=1.6, ls="--", zorder=2, label="OSM v2.26.1")
-    ax.text(len(order) - 1, osm + 0.55, "OSM %+.1f%%" % osm, color=RED,
-            fontsize=8.2, ha="right", va="bottom")
-for i, v in enumerate(y):
-    ax.annotate("%+.1f" % v, (i, v), textcoords="offset points",
-                xytext=(0, 10 if v >= 0 else -17), ha="center", fontsize=8.2, color=GREEN)
+    ax.axhspan(lo["OSM"], hi["OSM"], color=RED, alpha=0.10, zorder=0)
+    ax.axhline(osm, color=RED, lw=1.4, ls="--", zorder=2, label="OSM v2.26.1 (95% CI band)")
+ax.errorbar(range(len(order)), y, yerr=[np.array(y) - np.array(ylo), np.array(yhi) - np.array(y)],
+            fmt="-o", color=GREEN, lw=2.0, ms=6.0, capsize=3.5, elinewidth=1.4,
+            zorder=3, label="FVS-ACD (95% CI)")
+ax.set_ylim(min(ylo) - 1.6, max(yhi) + 2.2)
+for i, m in enumerate(order):
+    if lo[m] * hi[m] > 0:
+        ax.plot(i, yhi[i] + 0.8, marker="*", color=GREEN, ms=7, zorder=4)
 ax.set_xticks(range(len(order)))
 ax.set_xticklabels(order, rotation=32, ha="right", fontsize=8.4)
 ax.set_ylabel("Total volume bias (%)", fontsize=9.4)
-ax.set_title("A. Five generations, one population\nlegacy in-domain set, n = 705; v12.11 not scored here",
+ax.set_title("A. Recent generations are not separable from OSM\nlegacy in-domain set, n = 705; star = CI excludes zero",
              fontsize=9.8, loc="left", color=GREEN, fontweight="bold")
-ax.legend(fontsize=7.8, frameon=False, loc="upper right")
+ax.legend(fontsize=7.0, frameon=False, loc="upper right")
 ax.grid(axis="y", alpha=0.22, lw=0.6)
 for s in ("top", "right"):
     ax.spines[s].set_visible(False)
@@ -94,18 +106,62 @@ D = {}
 for x in r:
     D.setdefault(x["source"], {})[key.get(x["model"], x["model"])] = float(x["TOTVOL_bias_pct"])
 srcs = [s for s in srcs if "base" in D.get(s, {}) and "v1211" in D.get(s, {})]
+
+# Stand-level bootstrap intervals, if the Cardinal job has been run. The two
+# files spell three source names differently ("held-out" vs "held out", PEF vs
+# Penobscot Exp. Forest, SILC vs SILC/Seven Islands CFI), so join on a
+# normalized key rather than the raw string.
+def canon(name):
+    t = name.split("(")[0].strip().lower().replace("-", " ")
+    for k, v in (("baxter", "baxter"), ("ctrn", "ctrn"), ("maine fia", "mefia"),
+                 ("pef", "pef"), ("penobscot", "pef"), ("silc", "silc"),
+                 ("nb magplot", "nb"), ("qc magplot", "qc")):
+        if k in t:
+            return v
+    return t
+
+
+CI, has_ci = {}, False
+try:
+    for x in rows("allsites_bias_ci.csv"):
+        CI.setdefault(canon(x["source"]), {})[x["model"]] = (
+            float(x["bias_pct"]), float(x["bias_lo95"]), float(x["bias_hi95"]))
+    has_ci = True
+except (FileNotFoundError, KeyError):
+    pass
+
+
+def err(src, mdl):
+    """Asymmetric yerr for one bar, or nan where no interval was computed."""
+    v = CI.get(canon(src), {}).get(mdl)
+    if v is None:
+        return np.nan, np.nan, np.nan
+    est, lo, hi = v
+    return est, est - lo, hi - est
+
+
 idx = np.arange(len(srcs))
 w = 0.27
 ax.axhline(0, color="black", lw=0.9)
-ax.bar(idx - w, [D[s]["base"] for s in srcs], w, color=GREY, label="Base v12.10.1")
-ax.bar(idx, [D[s]["v1211"] for s in srcs], w, color=GREEN, label="v12.11")
-ax.bar(idx + w, [D[s].get("osm", np.nan) for s in srcs], w, color=RED, label="OSM v2.26.1")
+for off, mdl, col, lab in ((-w, "base", GREY, "Base v12.10.1"),
+                           (0.0, "v1211", GREEN, "v12.11"),
+                           (w, "osm", RED, "OSM v2.26.1")):
+    vals = [D[s].get(mdl, np.nan) for s in srcs]
+    ax.bar(idx + off, vals, w, color=col, label=lab, zorder=2)
+    if has_ci:
+        packed = [err(s, mdl) for s in srcs]
+        dn = np.array([p[1] for p in packed], dtype=float)
+        up = np.array([p[2] for p in packed], dtype=float)
+        ax.errorbar(idx + off, vals, yerr=[dn, up], fmt="none", ecolor="#333333",
+                    elinewidth=1.0, capsize=2.2, zorder=4)
 ax.set_xticks(idx)
 ax.set_xticklabels([shorten(s) for s in srcs], rotation=32, ha="right", fontsize=8.2)
 ax.set_ylabel("Total volume bias (%)", fontsize=9.4)
-ax.set_title("B. v12.11 halves bias on its targets\nall-sites benchmark; OSM unscored on two sources",
+ax.set_title("B. v12.11 halves bias on its targets\n" +
+             ("bars 95% bootstrap CI over stands" if has_ci else "no intervals computed"),
              fontsize=9.8, loc="left", color=GREEN, fontweight="bold")
-ax.legend(fontsize=7.6, frameon=False, ncol=1, loc="lower right")
+ax.legend(fontsize=7.2, frameon=False, ncol=3, loc="lower center",
+          bbox_to_anchor=(0.5, -0.02))
 ax.grid(axis="y", alpha=0.22, lw=0.6)
 for s in ("top", "right"):
     ax.spines[s].set_visible(False)
@@ -127,7 +183,7 @@ for i, c in enumerate(cov):
     ax.text(c + 1.4, i, "%.0f%%" % c, va="center", fontsize=7.6, color="#333333")
 ax.set_xlim(0, 112)
 ax.set_xlabel("t2 basal area with a measured height (%)", fontsize=9.0)
-ax.set_title("C. Managed sources are the imputed ones\nheight-coverage census, 11 sources",
+ax.set_title("C. Managed sources are the imputed ones\ncensus, 11 sources; complete count, no CI",
              fontsize=9.8, loc="left", color=GREEN, fontweight="bold")
 ax.grid(axis="x", alpha=0.22, lw=0.6)
 for s in ("top", "right"):

@@ -204,6 +204,7 @@ PRODUCERS = {
     "bench_ns_long_scorecard.csv": "bench_ns_long_scorecard.R",
     "bakuzis_relations.csv": "bakuzis_allmodels.R",
     "bakuzis_longterm.csv": "bakuzis_allmodels.R",
+    "allsites_bias_ci.csv": "boot_ci_allsites.R",
 }
 deposited = {os.path.basename(p) for p in paths}
 g5 = []

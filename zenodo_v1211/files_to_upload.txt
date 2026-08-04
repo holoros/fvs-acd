@@ -35,6 +35,9 @@
 ../figures/_data/htfix_rescore_multi.csv       # CTRN rescore
 ../figures/_data/baxfix_curve_validation.csv   # fitted curve validated against 463 measured Baxter stems
 
+# ---- uncertainty ----
+../figures/_data/allsites_bias_ci.csv          # 95% bootstrap CI on all-sites total-volume bias, 4000 reps
+
 # ---- scripts that produce the deposited tables (Gate 5) ----
 ../scripts/height_coverage_census.R          # census + the rescore tables
 ../scripts/regen_five_way_scorecard_frozen.R # scorecard_five_v1210_frozen.csv
@@ -42,6 +45,7 @@
 ../scripts/bench_ns_scorecard.R              # bench_ns_scorecard.csv
 ../scripts/bench_ns_long_scorecard.R         # bench_ns_long_scorecard.csv
 ../scripts/bakuzis_allmodels.R               # bakuzis_relations + bakuzis_longterm
+../scripts/boot_ci_allsites.R                # allsites_bias_ci.csv
 build_graphical_abstract.py
 
 # ---- documentation ----

@@ -30,17 +30,22 @@ publish from the edit page, or re-run with `--publish` appended.
 Publishing a NEW record is NOT idempotent. Re-running after a successful publish creates a second record
 rather than a no-op.
 
-## Gate results, run 4 August 2026
+## Gate results, re-run 4 August 2026 after the uncertainty pass
 
-All six gates pass. 33 files staged, 0 missing.
+All six gates pass. 35 files staged, 0 missing. The count rose from 33 because the graphical abstract was
+rebuilt to carry uncertainty, which added `allsites_bias_ci.csv` and its producer `boot_ci_allsites.R`.
+
+Note the required order was followed: the figure was re-rendered FIRST, then the gates were run, so the
+checksums in `CHECKSUMS.sha256` describe the current bytes. Regenerating checksums before a re-render is the
+silent failure this sequence exists to prevent.
 
 | Gate | Result |
 |---|---|
 | 1 lead file | pass. `00_FVS-ACD_v1211_graphical_abstract.png` is first in the manifest, sorts first, and is named in `default_preview` |
 | 2 source freshness | pass. 2 rendered docx/md pairs, 0 stale |
-| 3 restricted data | pass. 30 files, 759,833 characters scanned, 0 hard hits, 0 waived |
-| 4 checksums | 33 SHA-256 written to `CHECKSUMS.sha256` AFTER the last render |
-| 5 code reproduces data | pass. 18 CSVs, 0 without a deposited producer |
+| 3 restricted data | pass. 32 files, 765,585 characters scanned, 0 hard hits, 0 waived |
+| 4 checksums | 35 SHA-256 written to `CHECKSUMS.sha256` AFTER the last render |
+| 5 code reproduces data | pass. 19 CSVs, 0 without a deposited producer |
 | 6 metadata | pass |
 
 ### Gate 3 detail, the restricted-data audit

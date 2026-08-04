@@ -67,6 +67,28 @@ so most of that flag is imputation on the most hardwood-heavy source rather than
 over-correcting. Across every source the pattern is the same: the height treatment moves the models together and
 leaves their ordering intact, so the comparisons are durable even where the levels are not.
 
+## Uncertainty
+
+Uncertainty is shown where it exists and withheld where it does not, and the three panels of the graphical
+abstract differ deliberately on this point.
+
+Panel A carries the 95% intervals already present in `scorecard_five_v1210_frozen.csv`. They change the reading.
+Only v12.5.0 (+9.25%, CI 5.18 to 13.51) and v12.7.0 (-8.28%, CI -11.63 to -4.82) have intervals excluding zero.
+The three most recent generations and OSM all overlap zero and all overlap each other, so on pooled total volume
+over the legacy in-domain set the apparent ordering among v12.7.1, v12.9.x, v12.10.1 and OSM is not
+statistically separable. A star marks each interval that excludes zero.
+
+Panel B carries 95% bootstrap intervals from `allsites_bias_ci.csv`, taken by resampling stands with
+replacement, 4,000 replicates, seed 20260804. Bias is a ratio of means, so a normal approximation would be
+wrong. Several readings tighten or loosen: CFRU CTRN separates cleanly, with v12.11 at -2.24% (CI -3.27 to
+-1.21) not overlapping OSM at -4.81% (CI -5.98 to -3.62), while Baxter's small sample (n = 91) leaves base and
+v12.11 both overlapping zero and NB MagPlot leaves v12.11 and OSM overlapping each other. SILC at n = 73 is the
+widest cell in the benchmark. Read the intervals before quoting any single-source win.
+
+Panel C has no error bars, and that is deliberate. The coverage census is a complete enumeration of the staged
+tree lists, not a sample from a population, so it carries no sampling uncertainty. Drawing intervals there would
+invent a quantity that does not exist.
+
 ## Files
 
 `00_FVS-ACD_v1211_graphical_abstract.png` is the lead visual and the graphical abstract.
@@ -78,6 +100,8 @@ master scorecard by determinant, the overall ranking, the Bakuzis biological-rea
 and the two Nova Scotia scorecards.
 
 Integrity: the coverage census, the two rescore tables, and the Baxter curve validation.
+
+Uncertainty: `allsites_bias_ci.csv`, the bootstrap intervals behind panel B, produced by `boot_ci_allsites.R`.
 
 Scripts: `height_coverage_census.R` produces the census and rescore tables; `build_graphical_abstract.py`
 produces the lead figure. `data_dictionary.csv` describes the columns.
