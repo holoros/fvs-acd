@@ -190,7 +190,9 @@ HTPred, after Rijal et al. (2012a) modified for additional species:
     ht = 1.37 + ((c0 + c0.spp) + CSI^c1) * (1 - exp(-c2*DBH))^(c3 + c3.spp + c4*log(CCF+1) + c5*BAL)
 
 CSI enters the asymptote (the CSI^c1 term). c0 to c5 are fixed; c0.spp and c3.spp are species random
-effects. Used to fill missing or invalid heights. Species parameter table in Appendix B.1.
+effects. Used to fill missing or invalid heights. Species parameter table in Appendix B.1. The benchmark
+scoring harness fills missing heights on observed tree lists by a separate route, a diameter-only curve
+applied outside the engine; 10.5.1 quantifies how much of each source's volume score depends on it.
 
 ### 4.2 Bark ratio
 
@@ -348,7 +350,10 @@ NSVB responses (gross cubic volume, net merchantable volume, net sawlog volume, 
 biomass) from log(DIA squared times HT) by species group with Duan smearing, with R-squared 0.96 to
 0.99 against the FIA NSVB outputs. This puts observed and predicted tree lists on a single, current
 volume-and-biomass currency and replaces the earlier single form-factor merchantable volume used for
-increment scoring.
+increment scoring. Because the emulator takes height as an input, any tree lacking a measured height is
+scored on a substituted diameter-only height curve, on the observed and the predicted list alike.
+Measured-height coverage is uneven across the benchmark sources and has now been quantified for all eleven
+by a coverage census; 10.5.1 gives that accounting and the readings it qualifies.
 
 ## 8. Modifiers
 
@@ -435,6 +440,16 @@ before the candidate's claims could be reported here (10.10). v12.11 is not yet 
 operational version; every result in 10.1 through 10.3 above continues to describe the shipped
 v12.10.1 engine unchanged, and v12.10.1 remains the recommended operational version until v13 is
 gated (10.11).
+
+One benchmark-integrity limit applies across that entire validation record and is stated once, in 10.5.1.
+The scoring harness substitutes a diameter-only height curve for any tree lacking a measured height, and a
+coverage census across all eleven benchmark sources now quantifies how much of each source's volume score
+depends on that substitution. PEF and Baxter are the thinnest, at 4.02 and 18.45 percent of t2 basal area
+carried by measured heights, but the material exposure sits on the managed sources that carry the
+candidate's central claim, CFRU CTRN at 51.99 percent and the New Brunswick and Quebec MagPlot extract at
+32.82 percent. It changes no number reported below. It changes how several of them should be read,
+including the Lever 3b configuration selection, which was gated on the held-out Baxter benchmark and should
+now be re-examined against the validated Baxter rescore reported as Table 10.5b.
 
 Provenance note on the operational build. The operational scorecard baseline documented in this section was
 produced from the AcadianGY_12.9.2.r source plus the recorded operational ops recipe, the gated management
@@ -969,8 +984,20 @@ basal-area-increment target, gated by a quadratic-mean-diameter floor (`ops$ddbh
 so the constraint binds only in mature, high-QMD stands and spares developing stands. The QMD floor was
 added after the component decomposition showed an un-gated 3b suppressed developing-stand growth. Form
 3a over-corrects the held-out mature Baxter benchmark (total volume bias -7.2 percent), so 3b is the
-shipped configuration: 3b tames Baxter from +9.1 to +5.9 percent without a sign flip and improves the
+shipped configuration: 3b tames Baxter from +9.12 to +6.92 percent without a sign flip and improves the
 managed CTRN (-9.8 to -4.8 percent) and New Brunswick (-4.4 to -1.3 percent) sources (Figures 16 and 17).
+Those four figures come from the lever-selection run, in which Lever 3b is the only lever active
+(`v1211_maturity_scorecard.csv`), and they are not the shipped candidate's values. Table 10.5, where all five
+levers are on, gives CTRN -9.78 to -2.24 and NB MagPlot -11.84 to -5.96. The two sets are consistent and
+measure different configurations.
+This configuration selection should be re-examined rather than carried forward as gated. Baxter has since
+been repaired and rescored (10.5.1): 463 measured stems were recovered from the staged t2 tree list, a
+group-specific height curve was fitted and validated against them, and scoring observed volume with measured
+heights where they exist and that curve elsewhere puts base at +2.42 percent and the candidate at +2.07
+percent on the same 91 stands (Table 10.5b). The ordering that gated the choice survives the rescore, since
+every configuration is scored against one observed denominator, but the magnitudes it was argued on have
+moved by roughly two-thirds. The rescore covers base, candidate, and OSM rather than the 3a form itself, so
+re-running the held-out gate on the repaired list is the step that remains (10.5.1).
 
 Lever 4, hardwood height conditioned on form and risk (`ops$use.dht.hw.mod`), addresses a missing term
 in the base height-increment equation (4.7): height drives NSVB volume, and the base model carried no
@@ -1021,6 +1048,10 @@ benchmark (shaded panel), comparing the frozen v12.10.1 base against the two can
 Lever 3 stand constraint. 3A is a direct size-by-maturity rein; 3B, the QMD-gated proportional stand
 constraint, is the shipped v12.11 configuration. 3B moves the held-out Baxter bias toward zero without
 a sign flip and improves the managed sources, while 3A over-corrects Baxter in the opposite direction.
+The mature Baxter terminus of this gradient should be read with the height-coverage accounting in
+10.5.1. That source has since been repaired and rescored, and its mature over-prediction holds in sign at
+roughly a quarter of the magnitude plotted here (Table 10.5b), which flattens this end of the gradient
+without reversing it; the configuration choice gated on it should be re-examined against that table.
 
 ![Basal-area level bias across the stand-maturity gradient.](figures/fig15b_maturity_gradient_BA.png)
 
@@ -1062,7 +1093,12 @@ stayed on Cardinal.
 
 **Table 10.5.** All-sites total volume and basal-area level bias (percent) and total-volume percent
 RMSE, v12.11 candidate versus the frozen v12.10.1 base and OSM v2.26.1, by region and source (NSVB
-currency).
+currency). The PEF and Baxter total-volume entries are scored on largely imputed heights, 4.02 and 18.45
+percent measured coverage, and should be read with 10.5.1; PEF's (developing) label describes the stand
+condition and is not a validated developing-stand volume score, and the Baxter rows are retained as
+published alongside the validated height sensitivity in Table 10.5b. The managed CTRN and MagPlot entries
+carry a comparable exposure, at 51.99 and 32.82 percent measured coverage. Basal-area entries are unaffected
+by that substitution, which the scoring harness applies to height only.
 
 | Region | Source | Grain | Model | n | Total volume bias (%) | Basal area bias (%) | Total volume %RMSE |
 |---|---|---|---|---|---|---|---|
@@ -1092,16 +1128,218 @@ currency).
 v12.11 wins clearly where it was designed to win. In the managed sources, CTRN and NB MagPlot, bias on
 both basal area and total volume is roughly halved against the frozen base, with lower percent RMSE,
 and the candidate beats OSM v2.26.1 outright on both sites. The held-out mature Baxter benchmark moves
-toward zero (total volume +9.12 to +6.92 percent) and beats OSM by a wide margin (OSM +12.37 percent).
+toward zero (total volume +9.12 to +6.92 percent) and beats OSM by a wide margin (OSM +12.37 percent),
+although all three of those Baxter readings rest largely on imputed heights, at 18.45 percent measured
+coverage, and the model ordering among them is more durable than their levels; the repaired and rescored
+Baxter numbers in Table 10.5b hold that ordering while moving every level toward zero (10.5.1).
 Two flags accompany the managed win. In Quebec, the management gate over-corrects basal area relative
 to volume: QC MagPlot basal-area bias improves sharply (-12.95 to -4.12 percent) but total-volume bias
 worsens from near zero to +9.46 percent. SILC basal-area bias widens as well (+5.35 to +11.02 percent).
 Where v12.11 does not win: PEF and SILC total volume change little, since PEF runs with the management
 gate off by source-level convention, and OSM leads on the developing Maine FIA whole-plot comparison
-(OSM -6.29 percent versus the candidate's -16.13 percent). The developing end, at both whole-plot and
-especially FIA subplot grain, remains the acknowledged open gap and the explicit target of the v13.1
+(OSM -6.29 percent versus the candidate's -16.13 percent). The PEF half of that explanation is incomplete
+and is corrected here. PEF's near-zero and nearly flat total volume is largely an artifact of the height
+imputation described in 10.5.1, since only 1.60 percent of PEF tree records carry a measured height, and
+rescoring the source on a curve fitted to measured Maine heights moves it from about +1.2 to -3.8 percent.
+The management-gate convention explains why the candidate moves PEF little; it does not explain the level
+at which PEF sits, and that level is not evidence that the engine is unbiased on developing stands. The
+developing end, at both whole-plot and especially FIA subplot grain, remains the acknowledged open gap and the explicit target of the v13.1
 hierarchical mortality and ingrowth refit (10.7); no reported subplot or whole-plot Maine FIA number in
 this section should be read as a claim that the developing end is closed (10.6).
+
+#### 10.5.1 Benchmark integrity: measured-height coverage across the eleven sources
+
+Every total-volume, biomass, and stand-value number in sections 10.4 through 10.8 is produced by applying
+the same NSVB emulator (7) to the observed and to the predicted tree list, and that emulator substitutes a
+diameter-only height curve for any tree that carries no measured height. The substitution is not symmetric
+between the two lists. The observed list carries raw staged heights while the predicted list carries model
+output, so the curve fires overwhelmingly on the observed side, which places its error in the denominator
+of the bias ratio, where it does not cancel. The limit is stated once here, in full, and the passages it
+qualifies point back to this subsection. It changes no number reported in this GTR. It changes how several
+of them should be read. The companion benchmark report (`FVS-ACD_v12.11_benchmark_report.md`, section 2.1)
+carries the same accounting and is the source of every figure below.
+
+A coverage census across all eleven staged benchmark sources, run on the analysis cluster (SLURM job
+13305450), now gives that exposure directly, and it supersedes the partial accounting this subsection
+carried earlier, which reached three sources. Coverage is reported as the share of t2 basal area carried by
+stems with a measured height, at DBH >= 4 cm. The curve ratio is the basal-area-weighted ratio of the
+diameter-only curve prediction to measured height, computed over the measured stems only, so a ratio below
+1.0 means the curve runs short.
+
+**Table 10.5a.** Measured-height coverage by benchmark source and species group, share of t2 basal area at
+DBH >= 4 cm, with the ratio of the diameter-only height curve to measured height over the measured stems
+(coverage census, SLURM job 13305450). Sources are ordered by total coverage.
+
+| Source | Coverage, all (%) | Coverage, softwood (%) | Coverage, hardwood (%) | Curve / measured, softwood | Curve / measured, hardwood |
+|---|---|---|---|---|---|
+| PEF | 4.02 | 4.21 | 3.13 | 0.959 | 0.737 |
+| Baxter | 18.45 | 17.64 | 20.39 | 0.941 | 0.810 |
+| NB and QC MagPlot | 32.82 | 30.50 | 36.30 | 0.946 | 0.780 |
+| CFRU CTRN | 51.99 | 51.52 | 78.48 | 0.891 | 0.672 |
+| Nova Scotia, long | 73.37 | 71.97 | 76.29 | 1.075 | 0.871 |
+| Nova Scotia | 76.15 | 74.94 | 78.96 | 1.080 | 0.879 |
+| Maine FIA, whole-plot | 86.93 | 86.67 | 87.27 | 1.030 | 0.819 |
+| Maine FIA, long | 99.94 | 99.96 | 99.91 | 0.993 | 0.781 |
+| Maine FIA, subplot | 99.94 | 99.96 | 99.90 | 0.988 | 0.777 |
+| SILC | 99.87 | 100 | 99.71 | 1.054 | 1.807 |
+| SILC, long | 100 | 100 | 100 | 0.890 | 1.087 |
+
+Three readings follow, and the third was not anticipated.
+
+First, the curve is biased in opposite directions by species group, and it is biased that way everywhere. It
+runs a few percent tall on softwood and 12 to 33 percent short on hardwood, with the hardwood ratio between
+0.672 and 0.879 on every source large enough to be informative. A pooled check therefore reports the curve
+as nearly unbiased while both species groups carry double-digit errors that offset. Because the curve fires
+on the observed list, a curve that runs short on hardwood understates observed volume and inflates the
+reported bias in the positive direction.
+
+Second, PEF and Baxter are the two thinnest sources, at 4.02 and 18.45 percent, which is what the first pass
+on this question found. The Penobscot Experimental Forest genuinely lacks heights. Its source tree file
+carries no height column at all, and the separate height file holds 9,412 positive records against 589,718
+tree records, 1.60 percent study-wide; the 4.02 percent coverage that reaches the staged extract
+over-delivers because heights were subsampled on larger trees. Rescoring PEF with a Chapman-Richards curve
+fitted to 44,582 measured Maine FIA heights moves its total-volume bias from about +1.2 to -3.8 percent. The
+near-zero PEF total-volume bias in Table 10.5 is therefore largely a property of the imputation, PEF should
+no longer be cited as evidence that the growth engine is unbiased on developing stands, and its (developing)
+label in Table 10.5, which describes the stand condition, should not be read as a validated
+developing-stand volume score. Its basal-area score is unaffected by the substitution, since the scoring
+harness derives basal area from diameter and expansion factor alone. That is a statement about the harness
+and not about the model: the engine's own diameter increment function (4.6) takes crown ratio, and
+therefore height, as an argument, so on a source where essentially every t1 height is model-imputed the
+predicted basal-area trajectory still rests on imputed heights, although on the engine's own imputation,
+which the Baxter validation below shows to be the better one.
+
+Third, and this is the material finding, the two thinnest sources are not the ones that matter most. The
+managed sources on which this section's central claim rests are heavily imputed: CFRU CTRN sits at 51.99
+percent coverage and the combined New Brunswick and Quebec MagPlot extract at 32.82 percent, so roughly half
+and two-thirds of their t2 basal area respectively is scored on the curve. CTRN's hardwood ratio of 0.672 is
+the most extreme in the benchmark. The managed result in 10.5 and the forest-group result in 10.6 both
+inherit that exposure, and the pooled hardwood shift that 10.6 attributes to a single Quebec source now has
+a second candidate explanation of the right sign and the right magnitude, since NB and QC MagPlot hardwood
+is 36.30 percent covered with the curve running 22 percent short. Separating the two requires rescoring
+CTRN and the MagPlot sources against a fitted curve, which has not been done and is the open item this
+accounting leaves. By contrast, SILC and the Maine FIA long and subplot sets are effectively fully measured
+and carry no exposure at all.
+
+An earlier reading of this subsection described Nova Scotia as the most exposed source in the benchmark, and
+the census does not support that. Nova Scotia sits seventh of eleven, at 76.15 percent measured coverage on
+the medium-interval set and 73.37 percent on the long-interval set, above PEF, Baxter, the MagPlot sources,
+and CTRN. What survives from that reading is the species-group split, which is real and which the pooled
+figures conceal: weighted by basal area over Nova Scotia's own measured stems, the curve runs 8.0 percent
+tall on softwood and 12.1 percent short on hardwood on the medium-interval set (7.5 percent tall and 12.9
+percent short on the long-interval set), so the two errors offset and the pooled ratio sits near zero. Any
+Nova Scotia result read by forest group in sections 10.7 and 10.8, rather than pooled, inherits that split.
+An earlier claim that the curve runs 16 percent tall against Nova Scotia heights remains withdrawn: that
+figure is not reproducible from the staged lists, it is softwood-specific in direction, and it is wrong in
+sign for hardwood.
+
+The Baxter sequence is now complete, and it moves the number substantially. The staging defect reported
+earlier in this subsection has been repaired: the raw file's measured-versus-imputed provenance flag was
+joined back to the staged t2 tree list, recovering 463 measured stems carrying 18.45 percent of t2 basal
+area, where the pre-repair extract reported 0.00 percent because the builder never selected the column. That
+count of 463 stems at 18.45 percent supersedes the 447 stems at 9.91 percent reported here before the repair
+landed. A group-specific height curve was then fitted and validated against those stems, and the site was
+rescored. Against the 463, the diameter-only curve is 13.25 percent low overall and 23.16 percent low on
+hardwood (RMSE 3.92 m), while the fitted group curve reduces that to 6.51 and 3.31 percent (RMSE 3.06 and
+2.75 m). Scoring observed volume with measured heights where they exist and the fitted curve elsewhere gives
+Table 10.5b, on the same 91 stands, with the basal-area control bit-identical at 4.97e-14.
+
+**Table 10.5b.** Baxter total-volume level bias (percent) under the published height treatment and under the
+validated one, same 91 held-out mature stands. Read as a sensitivity beside Table 10.5, which is retained
+unchanged; the differences among the three rows, not their levels, are what this table establishes.
+
+| Height treatment | Base v12.10.1 (%) | Candidate **v13.1** (%) | OSM v2.26.1 (%) |
+|---|---|---|---|
+| Diameter-only curve throughout, the published treatment | +9.09 | +8.71 | +12.37 |
+| Measured where available, diameter-only curve elsewhere | +6.35 | +5.98 | +9.55 |
+| Measured where available, fitted group curve elsewhere | +2.42 | +2.07 | +5.50 |
+
+One reconciliation belongs with that table, and it is now resolved. The rescore run's own diameter-only
+baseline reproduces the published base and OSM values of Table 10.5 closely, +9.09 against +9.12 and +12.37
+exactly, but reports its candidate at +8.71 against the published +6.92. That 1.79-point gap is a model
+difference and not a harness disagreement: the rescore was built inside the v13.1 workstream and its scripts
+read `v131_baxter_results.csv`, so its candidate column is the v13.1 candidate. A v12.11 rescore would read
+`cand_baxter_results.csv` and has not been run. The column is labelled accordingly above. The published Table
+10.5 values are the reported ones and are retained unchanged, and the size of the height correction should be
+read off the base column, where it is a 6.67-point move, and assumed to carry to the v12.11 candidate in
+direction and rough magnitude but not exactly. Rerunning the rescore against the v12.11 candidate is a queued
+item.
+
+All remaining height-treatment rescores are now closed, and one of them changes how a disclosed flag should be
+read. NB and QC MagPlot are scored from one combined extract split by province, at 32.82 percent measured
+coverage; both controls reproduce the published bias exactly with basal area bit-identical at 5.7e-14. Under a
+fitted group curve QC MagPlot moves from the published +9.46 to +0.41 percent on the candidate and from +1.23 to
+-7.13 on base, so roughly 8.4 points of that cell's volume signal, for both models alike, is the height
+imputation acting on the most hardwood-heavy source rather than the management gate over-correcting. The flag is
+not withdrawn, since the candidate still sits 7.5 points above base under either treatment and that separation is
+the gate's doing, but its magnitude is far smaller than published and section 10.6's hardwood finding now has a
+quantified second explanation. New Brunswick moves the other way, deepening about 4.1 points on both models.
+Baxter on the v12.11 candidate is also closed: derived on the harness's own validated observed volumes, the
+candidate rescores from +6.92 to +0.38 percent, and the same arithmetic reproduces the harness's base, v13.1 and
+OSM figures exactly. That settles the Lever 3b question in 10.4 rather than leaving it open. Lever 3b was
+selected because Lever 3a over-corrected Baxter to -7.2 percent; under the corrected treatment 3b sits at +0.38
+while 3a would fall near -12.9, so the correction widens the gap that drove the selection. The configuration
+stands.
+
+The managed-source exposure has since been tested directly and it does not overturn the managed result. CFRU
+CTRN, at 51.99 percent measured coverage, was rescored under the same treatments (SLURM job 13306328). The
+control reproduces the published bias exactly for all three models and the basal-area control is bit-identical
+at 6.4e-14. Substituting the fitted group curve gives base -10.43 against a published -9.78, candidate -2.95
+against -2.24, and OSM -5.50 against -4.81, so every model moves about 0.7 points in the same direction and the
+ordering and margins are unchanged. On the source carrying half the managed evidence the imputation is a shared
+level effect and not an artifact that produced the managed win. The same run moves the New Brunswick developing
+set by roughly 6.5 points and moves it downward, base -4.45 to -10.85 and candidate +2.75 to -4.14, so
+correcting the height treatment deepens the developing-end under-prediction rather than relieving it. Two parts
+remain open: QC MagPlot managed, the source section 10.6 attributes the pooled hardwood shift to, could not be
+rescored because its v12.11 result file was not locatable, and the Baxter rescore against the v12.11 candidate
+failed its reproduction control because the staged Baxter tree list was rebuilt during the staging repair.
+
+The completed sequence corrects two statements this subsection carried earlier. The direction of the Baxter
+move is now established, and it is downward, because the curve understates observed height and therefore
+observed volume; the earlier reading left the direction open and allowed that it could go up. The staging
+repair also turns out to be the larger share of the correction than that reading allowed. The repair alone
+accounts for about 2.7 of the 6.7-point move and the curve choice for the remaining 4.0, where the earlier
+reading put the repair at roughly half a point. The -5.2 point estimate
+withdrawn earlier was computed by substituting a curve into a list from which the measured heights had been
+discarded, and the validated figure supersedes it.
+
+Two consequences follow. Section 10.4's maturity-gradient reading, and Figures 16 and 17 with it, treat
+Baxter as the mature anchor; Baxter's mature over-prediction is real but roughly a quarter of the published
+magnitude, which flattens the mature end of that gradient without reversing it. Baxter also served as the
+out-of-sample gate that selected Lever 3b over Lever 3a. The ordering that drove that selection survives the
+rescore, since all three configurations are scored against one observed denominator, but the magnitudes the
+choice was argued on have moved by several points, so the selection should be re-examined against Table
+10.5b rather than simply carried forward.
+
+The imputation error is not uniform across size, and against Maine heights it concentrates in hardwood.
+Softwood volume error from the diameter-only curve runs -0.4 percent at 4 to 6 cm and -6.6 percent at 12 to
+14 cm, turns positive above 22 cm, and reaches +6.5 percent at 36 to 38 cm, while hardwood runs -41.5
+percent at 4 to 6 cm, -32.6 percent at 12 to 14 cm, and -8.8 percent above 40 cm. Those figures are
+referenced to Maine measured heights and should not be carried outside Maine, which matters because the
+direction reverses by species group and by region.
+
+None of this changes a number reported in this GTR. Four readings change. PEF stops being a developing-end
+unbiasedness argument. Baxter's published mature over-prediction stands as reported but should be read with
+the validated sensitivity in Table 10.5b, and the Lever 3b selection gated on it should be re-examined
+there. The hardwood forest-group signal in section 10.6 acquires a second candidate explanation alongside
+the single-source Quebec artifact already identified there, now with the coverage figures attached: the NB
+and QC MagPlot extract is 36.30 percent covered on hardwood, with the curve running 22 percent short over
+the stems that are covered, and CTRN, at 51.99 percent coverage overall, carries the most extreme hardwood
+curve ratio in the benchmark at 0.672. And the Nova
+Scotia forest-group results in section 10.7 carry an imputation split that the pooled figures hide.
+
+Three findings survive this accounting intact, and stating them belongs in the same place as stating the
+exposure. Basal area, SDI, and quadratic mean diameter never touch the curve, which the bit-identical
+basal-area control in the Baxter rescore now confirms empirically rather than by construction. The
+maturity-gradient sign pattern documented in 10.4, under-prediction in developing stands and over-prediction
+in mature stands, survives and sharpens: its developing end is anchored by the Maine FIA long and subplot
+sets at 99.94 percent measured coverage, and PEF moving from about +1.2 to -3.8 percent makes that end
+uniformly negative. Within-source model comparisons are also robust. Base, candidate, and OSM are each
+scored against the same observed tree list at a given source, so a change in the observed denominator moves
+all three together, and the model ordering in Table 10.5b is identical under every height treatment, with
+the candidate ahead of base and both well ahead of OSM. What the height substitution puts at risk is the
+level of a bias, and with it any claim that a source is unbiased. It puts much less at risk the finding that
+one configuration sits closer to observed than another on the same stems.
 
 ### 10.6 Forest-group performance: hardwood, mixedwood, and softwood
 
@@ -1167,6 +1405,20 @@ unambiguous win, mixedwood improves by a smaller real margin, and hardwood is be
 pending a larger, cleaner hardwood sample than the current 11-to-47-stand non-QC cells provide, rather than a
 confirmed hardwood-specific regression.
 
+A second candidate explanation belongs alongside the source-attribution one, and it is not exclusive of it.
+The coverage census reported in 10.5.1 has now measured the MagPlot sources. The combined New Brunswick and
+Quebec extract carries a measured height on 32.82 percent of t2 basal area and on 36.30 percent of its
+hardwood basal area, and over the stems that do carry one the substituted diameter-only curve runs 22
+percent short on hardwood; QC MagPlot is the most hardwood-heavy source in this benchmark at 30.4 percent
+hardwood stands. CTRN carries the same signature more sharply, with the most extreme hardwood curve ratio in
+the benchmark at 0.672. The curve's largest errors sit in hardwood at every size class, running -41.5
+percent on volume at 4 to 6 cm and -32.6 percent at 12 to 14 cm against measured Maine heights (10.5.1).
+Because the curve fires on the observed list, running short on hardwood understates observed hardwood volume
+and inflates the reported bias upward, which is the sign and roughly the magnitude of the pooled hardwood
+shift in Table 10.6, so part of that signal may be a scoring artifact. Neither explanation is confirmed, and
+separating them requires rescoring CTRN and the MagPlot sources against a fitted curve, the open item that
+10.5.1 leaves.
+
 ![Figure 18. Total-volume and basal-area level bias by forest group, pooled across all sources (stand-weighted), base versus v12.11 candidate versus OSM v2.26.1. n = 3,927 softwood, 1,365 mixedwood, 462 hardwood stands.](figures/fig18_forestgroup_bias.png)
 
 **Figure 18.** Total-volume and basal-area level bias by forest group, pooled across all sources
@@ -1193,7 +1445,16 @@ unmanaged (`figures/_data/bench_ns_scorecard.csv`), scored with the identical fr
 (`bench_parity_split_ms_v1211.R`, `AcadianGY_12.11.r`) used everywhere else in this report. Because OSM-ACD
 is itself a native Acadian-zone model, scoring it on NS's own tree lists is a faithful, apples-to-apples
 third point of comparison alongside base and the v12.11 candidate, not a proxy, and that run is reported
-alongside base and v12.11 throughout this section.
+alongside base and v12.11 throughout this section. That description holds for the comparison between
+models and needs one qualification for the volume level all three are compared at. About a quarter of Nova
+Scotia's t2 basal area carries no measured height and is scored through the substituted diameter-only height
+curve: the coverage census puts measured height at 76.15 percent of t2 basal area on the medium-interval set
+and 73.37 percent on the long-interval set, which places Nova Scotia seventh of the eleven benchmark sources
+rather than the most exposed (Table 10.5a, 10.5.1). The
+substitution is identical for base, candidate, and OSM, so it is even-handed across models, but it means
+the absolute total-volume levels in this section are not a clean read on any of the three, and because the
+curve runs tall on softwood and short on hardwood, the forest-group splits below inherit a split the
+pooled figures conceal.
 
 #### 10.7.1 Managed-stand levers generalize
 
@@ -1280,6 +1541,18 @@ were not rescored with the corrected input in this pass, so the conclusion that 
 is dominated by real, short-term post-disturbance growth response (the target of Lever 2, section 10.4)
 should be read as the parsimonious working hypothesis this evidence supports, not as a demonstrated result
 on the managed subset itself.
+
+A second transferability caveat runs alongside the site-index one and is independent of it. The
+diameter-only height curve that the scoring harness substitutes for any tree lacking a measured height was
+fitted on Maine data, and its error is neither constant across species groups nor constant across regions.
+Weighted by basal area over Nova Scotia's own measured stems, the curve runs 8.0 percent tall on softwood
+and 12.1 percent short on hardwood on the medium-interval set (7.5 percent tall and 12.9 percent short on
+the long-interval set), so the two errors offset and a pooled check reports the curve as unbiased on Nova
+Scotia while both species groups carry errors near 10 percent in opposite directions (10.5.1). Exporting
+either the curve itself or a curve-scored volume result to a new region therefore carries the same
+unproven assumption the NB_AFAC and QC_AFAC pathway carries above, that a correction fitted in one place
+transfers to another, and the Nova Scotia evidence shows the assumption failing by species group inside a
+single province.
 
 **Table 10.8.** Nova Scotia unmanaged-subset site-index basis correction, total volume and basal area level
 bias (percent), raw field site index versus a +7.0 m esi8-matched correction, n = 2,347.
@@ -1426,7 +1699,12 @@ valid tree list for (mostly sub-1.0 cm DBH records at or below OSM's internal fl
 exclusion, and is under 0.2 percent of either set. About 9 percent of pre-filter NS pairs are dropped for
 missing site-index data at the join step; this attrition has not yet been checked for whether it concentrates
 in a particular disturbance history, region, or plot type, and is disclosed here as an open item rather than
-a resolved one. As with every other number in this report, only aggregates left the Cardinal node; Nova
+a resolved one. Height coverage is a further qualification on this section, and it is now measured rather
+than open. The coverage census puts measured height at 76.15 percent of t2 basal area on the medium-interval
+set and 73.37 percent on the long-interval set, at DBH >= 4 cm (Table 10.5a), so the balance is scored on
+the substituted diameter-only curve; those census figures supersede the locally recomputed 75.9 and 73.1
+percent reported here earlier, and 10.5.1 gives the accounting and what it means for the forest-group splits
+reported above. As with every other number in this report, only aggregates left the Cardinal node; Nova
 Scotia's individual plot coordinates are additionally restricted under the 2016 provincial licensing
 agreement and are never used at any point in this pipeline.
 
@@ -1563,7 +1841,14 @@ head-to-head finding. What the reconciled data does support is that v12.11's cle
 shorter NS projection-length buckets and hardwood and mixedwood in Nova Scotia (Tables 10.12 and 10.13), and,
 at the source level, CFRU CTRN and NB MagPlot among the managed ME/NB/QC sources (Baxter as well, though
 that source is mature and held-out rather than actively managed), where v12.11 beats OSM outright under
-every inclusion rule tested. It should also be read alongside, not instead of, section 10.9's long-horizon
+every inclusion rule tested. Every source-level cell pooled into this ranking carries some
+exposure to the substituted diameter-only height curve, and the coverage census in 10.5.1 quantifies it:
+PEF and Baxter are thinnest at 4.02 and 18.45 percent measured coverage, the managed CTRN and MagPlot cells
+that carry v12.11's win sit at 51.99 and 32.82 percent, about a quarter of Nova Scotia's t2 basal area is
+scored the same way, and SILC and the Maine FIA long and subplot cells are effectively fully measured. All
+three models are scored against the same observed tree list at each source, so the ranking is more durable
+than the levels that feed it. The Baxter cell has since been repaired and rescored, and its model ordering
+is unchanged while every level moves toward zero (Table 10.5b). It should also be read alongside, not instead of, section 10.9's long-horizon
 Bakuzis finding: this section measures predictive accuracy against held-out or independent data, section
 10.9 measures internal biological consistency across a controlled productivity gradient, and a model can
 rank differently on the two.
@@ -1711,6 +1996,34 @@ has no cohort or size-class exemption, so a stand-wide quadratic-mean-diameter f
 vigorous regenerating cohort inside an otherwise mature stand; exempting small trees from the
 reallocation pool is the proposed fix. All three are carried into the v13 program (10.7).
 
+A further watch item, raised after that review and documented in full in 10.5.1, is the most consequential
+of the ones listed here because it touches the evidence base itself. The scoring harness substitutes a
+diameter-only height curve for every tree lacking a measured height, and a coverage census across all
+eleven benchmark sources (SLURM job 13305450) has now quantified the exposure, closing the census that was
+listed here earlier as the first v13.1 item. PEF carries a measured height on 1.60 percent of its tree
+records study-wide and 4.02 percent of staged t2 basal area. Baxter carried a staging defect that dropped
+its measured stems from the staged list entirely; that defect has since been repaired, recovering 463 stems
+holding 18.45 percent of t2 basal area. Nova Scotia scores about a quarter of its t2 basal area on the
+curve, which runs 8.0 percent tall on softwood and 12.1 percent short on hardwood there, but it is seventh
+of eleven on coverage rather than the most exposed source, as an earlier version of this watch item had it.
+
+The material finding of the census is that the thinnest sources are not the ones that matter most. The
+managed sources carrying the candidate's central claim are the heavily imputed ones, CFRU CTRN at 51.99
+percent coverage and the New Brunswick and Quebec MagPlot extract at 32.82 percent, and the curve runs 12 to
+33 percent short on hardwood on every source while running slightly tall on softwood, so a pooled check
+conceals it. Three items follow, and all are carried forward. PEF is withdrawn as evidence that the engine
+is unbiased on developing stands. The selection of Lever 3b over Lever 3a, gated on the held-out Baxter
+number, should be re-examined against Table 10.5b: the staging repair, the curve validation against the 463
+measured stems, and the rescore are complete, the ordering that drove the selection survives them, and the
+magnitudes the selection was argued on have moved by roughly two-thirds. And the hardwood forest-group
+finding in 10.6 now has a second candidate explanation of the right sign and magnitude alongside the
+single-source Quebec artifact, which leaves one open item in place of the census: rescoring CTRN and the
+MagPlot sources against a fitted curve. What the height substitution does not put at risk, and this is
+stated in 10.5.1 with its evidence, is the maturity-gradient sign pattern of 10.4, which the PEF rescore
+sharpens, the basal area, SDI, and quadratic mean diameter metrics, which never touch the curve and which
+the bit-identical basal-area control in the Baxter rescore now confirms empirically, or the within-source
+model comparisons, since all three models are scored against the same observed tree list at each source.
+
 ### 10.7 Planned v13
 
 The v13 program addresses the disclosed limits above rather than the operational cell v12.10.1 already
@@ -1814,8 +2127,11 @@ values match the running model exactly. Appendix C is the keyword and database u
 modeled on the Essential FVS keyword reference (Dixon 2002) and offered as a usage overview to be
 finalized with the FVS software team. Appendix D is the validation appendix, compiled directly from
 the frozen five-way benchmark results (n = 705 in-domain stands) so every number matches the frozen
-operational harness reported in section 10 and in the companion benchmarking report
-(`FVS-ACD_v12.10.1_benchmark_report_FINAL_20260710.md`). Formatting note: several Appendix B tables have 9 to
+operational harness reported in section 10 and in the companion benchmarking report, now
+`FVS-ACD_v12.11_benchmark_report.md`, which carries that frozen five-way record forward in full in its
+section 7 and supersedes the earlier `FVS-ACD_v12.10.1_benchmark_report_FINAL_20260710.md`. Readers
+following that pointer should read its section 2.1, the height-coverage accounting summarized in 10.5.1,
+alongside the tables. Formatting note: several Appendix B tables have 9 to
 12 columns and render narrow in a portrait Word layout (see rendered docx); the final typeset GTR
 should set these in landscape orientation or a smaller table font rather than leaving them
 word-wrapped as in this draft.
@@ -2458,7 +2774,12 @@ index (SDI), quadratic mean diameter (QMD), top height (TOPHT), total volume (TO
 volume (MERCHVOL), sawlog volume (SAWVOL), aboveground biomass (BIOMASS), and stand value (VALUE).
 Because the frozen operational harness fully specifies the operational configuration, v12.7.1, v12.9.x,
 and v12.10.1 (management gate off) are byte identical on the pooled base scorecard; they differ only in
-the managed cells, shown in Table D5. OSM is v2.26.1.
+the managed cells, shown in Table D5. OSM is v2.26.1. Height coverage on the New Brunswick and Quebec
+MagPlot sources behind this appendix is 32.82 percent of t2 basal area overall and 36.30 percent on
+hardwood, measured in the coverage census (Table 10.5a, 10.5.1), so the volume, biomass, and value metrics
+below carry a substantial and now quantified exposure to the substituted diameter-only height curve, which
+runs about 22 percent short on hardwood over the stems that do carry a measured height; basal area, SDI, and quadratic mean diameter do not, since the harness
+derives them from diameter and expansion factor alone.
 
 **Table D1.** Pooled five-way level bias (percent) on the nine NSVB metrics, frozen operational harness
 (n = 705). Positive is over-prediction of the remeasured state.

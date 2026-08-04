@@ -1,0 +1,69 @@
+# FVS-ACD v12.11 benchmark deposit manifest.
+# Paths are relative to this file. The uploader reads each file off disk at run
+# time, so the deposit always carries whatever the last build produced.
+# The graphical abstract is FIRST and is also named in default_preview.
+
+00_FVS-ACD_v1211_graphical_abstract.png
+
+# ---- documents ----
+../FVS-ACD_v12.11_benchmark_report.docx        # full benchmark report, 38 tables
+../FVS-ACD_v12.11_benchmark_report.md          # markdown source of the report
+../FVS-ACD_variant_overview_GTR_v1211.docx     # variant overview GTR
+../FVS-ACD_variant_overview_GTR_v1211.md       # markdown source of the GTR
+
+# ---- model source ----
+../scripts/versions/AcadianGYv12.1.2.r         # archived engine source
+
+# ---- comparative scorecards: the numbers behind every claim ----
+../figures/_data/scorecard_five_v1210_frozen.csv   # 5 generations + OSM, in-domain n=705 (Section 7)
+../figures/_data/five_way_scorecard.csv            # same 5 models, all-plots n=733 (see README caution)
+../figures/_data/v1211_allsites_scorecard.csv      # base / v12.11 / OSM by source
+../figures/_data/v1211_forestgroup_scorecard.csv   # by softwood, mixedwood, hardwood
+../figures/_data/v1211_maturity_scorecard.csv      # lever-selection run, 3a vs 3b
+../figures/_data/v1211_sample_sizes.csv
+../figures/_data/master_scorecard.csv              # by determinant
+../figures/_data/overall_ranking.csv
+../figures/_data/overall_ranking_summary.csv
+../figures/_data/bakuzis_relations.csv             # biological realism, five relations
+../figures/_data/bakuzis_longterm.csv              # 160-year horizon
+../figures/_data/bench_ns_scorecard.csv            # Nova Scotia, independent province
+../figures/_data/bench_ns_long_scorecard.csv
+
+# ---- benchmark integrity: the height-coverage work ----
+../figures/_data/height_coverage_census.csv    # 11 sources, coverage and curve error by species group
+../figures/_data/htfix_close_v2.csv            # Baxter, NB and QC MagPlot rescored under a fitted curve
+../figures/_data/htfix_rescore_multi.csv       # CTRN rescore
+../figures/_data/baxfix_curve_validation.csv   # fitted curve validated against 463 measured Baxter stems
+
+# ---- scripts that produce the deposited tables (Gate 5) ----
+../scripts/height_coverage_census.R          # census + the rescore tables
+../scripts/regen_five_way_scorecard_frozen.R # scorecard_five_v1210_frozen.csv
+../scripts/forestgroup_scorecard_v1211.R     # v1211_allsites + forestgroup scorecards
+../scripts/bench_ns_scorecard.R              # bench_ns_scorecard.csv
+../scripts/bench_ns_long_scorecard.R         # bench_ns_long_scorecard.csv
+../scripts/bakuzis_allmodels.R               # bakuzis_relations + bakuzis_longterm
+build_graphical_abstract.py
+
+# ---- documentation ----
+README.md
+CITATION.cff
+data_dictionary.csv
+
+# =====================================================================
+# EXPLICITLY NOT DEPOSITED
+# =====================================================================
+# FIA true plot coordinates and any per-plot coordinate file. Restricted;
+#   these stay server-side on the analysis cluster. Only fuzzed or aggregated
+#   products appear anywhere in this deposit.
+# Staged per-tree benchmark lists (bench_*_tree_t2.csv, magp_qcnb_tree_t2.csv).
+#   These carry per-plot records for proprietary provincial and ownership
+#   inventories. The census and rescore tables derived from them are deposited;
+#   the tree lists are not.
+# J.D. Irving per-parcel outputs. Proprietary; aggregates only by agreement.
+# Section 7 Tables 7 to 22 source beyond scorecard_five_v1210_frozen.csv: the
+#   remaining legacy tables were carried forward from the v12.10.1 report and
+#   their intermediate files were never archived. The frozen in-domain file that
+#   reproduces Table 7 IS deposited; the rest are noted as unreproducible in the
+#   report itself.
+# The Hennigar August 2026 deck. A talk, not an archival artifact, and it
+#   duplicates the report's content. Deposit the report instead.
