@@ -2333,7 +2333,8 @@ the rest; the repair accounts for roughly 2.7 of the 6.7 points.
 **New and material.** The sources carrying this report's central managed-stand claim are the heavily imputed
 ones. CTRN is 51.99% covered and NB and QC MagPlot 32.82%, against SILC and the Maine FIA long and subplot sets
 at effectively full coverage. The diameter-only curve runs short on hardwood on every source, between 12% and
-33%, while running slightly tall on softwood, so pooled checks conceal it. Section 6's hardwood finding
+33% on every source large enough to be informative, while its softwood direction varies by source, from
+11% short at CFRU CTRN to 8% tall in Nova Scotia, so pooled checks conceal it. Section 6's hardwood finding
 therefore has a second candidate explanation of the right sign and magnitude alongside the single-source Quebec
 artifact, and separating them requires rescoring CTRN and the MagPlot sources against a fitted curve. That is
 the open item this revision leaves.

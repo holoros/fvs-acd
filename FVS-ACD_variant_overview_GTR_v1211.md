@@ -1187,7 +1187,7 @@ DBH >= 4 cm, with the ratio of the diameter-only height curve to measured height
 Three readings follow, and the third was not anticipated.
 
 First, the curve is biased in opposite directions by species group, and it is biased that way everywhere. It
-runs a few percent tall on softwood and 12 to 33 percent short on hardwood, with the hardwood ratio between
+runs 12 to 33 percent short on hardwood, with a softwood direction that varies by source, and with the hardwood ratio between
 0.672 and 0.879 on every source large enough to be informative. A pooled check therefore reports the curve
 as nearly unbiased while both species groups carry double-digit errors that offset. Because the curve fires
 on the observed list, a curve that runs short on hardwood understates observed volume and inflates the
@@ -1453,7 +1453,7 @@ and 73.37 percent on the long-interval set, which places Nova Scotia seventh of 
 rather than the most exposed (Table 10.5a, 10.5.1). The
 substitution is identical for base, candidate, and OSM, so it is even-handed across models, but it means
 the absolute total-volume levels in this section are not a clean read on any of the three, and because the
-curve runs tall on softwood and short on hardwood, the forest-group splits below inherit a split the
+curve runs short on hardwood and varies in direction on softwood, the forest-group splits below inherit a split the
 pooled figures conceal.
 
 #### 10.7.1 Managed-stand levers generalize
@@ -2010,7 +2010,8 @@ of eleven on coverage rather than the most exposed source, as an earlier version
 The material finding of the census is that the thinnest sources are not the ones that matter most. The
 managed sources carrying the candidate's central claim are the heavily imputed ones, CFRU CTRN at 51.99
 percent coverage and the New Brunswick and Quebec MagPlot extract at 32.82 percent, and the curve runs 12 to
-33 percent short on hardwood on every source while running slightly tall on softwood, so a pooled check
+33 percent short on hardwood on every source large enough to be informative, while its softwood direction
+varies by source, so a pooled check
 conceals it. Three items follow, and all are carried forward. PEF is withdrawn as evidence that the engine
 is unbiased on developing stands. The selection of Lever 3b over Lever 3a, gated on the held-out Baxter
 number, should be re-examined against Table 10.5b: the staging repair, the curve validation against the 463

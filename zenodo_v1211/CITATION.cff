@@ -4,6 +4,7 @@ title: "FVS-ACD v12.11 benchmark: six Acadian growth and yield model generations
 version: "12.11.0"
 date-released: "2026-08-04"
 license: CC-BY-4.0
+# doi and url are added after the concept DOI mints; see RUNBOOK.md 'After it mints'.
 type: dataset
 authors:
   - family-names: Weiskittel

@@ -46,6 +46,11 @@
 ../scripts/bench_ns_long_scorecard.R         # bench_ns_long_scorecard.csv
 ../scripts/bakuzis_allmodels.R               # bakuzis_relations + bakuzis_longterm
 ../scripts/boot_ci_allsites.R                # allsites_bias_ci.csv
+../scripts/bench_parity_split_ms_v131_DRAFT.R # v1211_allsites_scorecard.csv
+../scripts/bench_parity_split_ms_v131.R       # lever-selection driver; consumes the maturity scorecard
+../scripts/htfix_close_v2.R                  # htfix_close_v2.csv
+../scripts/htfix_rescore_multi.R             # htfix_rescore_multi.csv
+../scripts/baxfix_main2.R                    # baxfix_curve_validation.csv
 build_graphical_abstract.py
 
 # ---- documentation ----

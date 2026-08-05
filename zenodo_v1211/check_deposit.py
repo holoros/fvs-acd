@@ -97,11 +97,14 @@ TOKENS = ["_SERVERSIDE", "FIA.xy", "per_plot_embedding", "plot_coords"]
 # code. A latitude and longitude appearing as an adjacent pair also counts.
 DD_LAT = r"-?(?:4[3-9]|5[0-2])\.\d{3,}"
 DD_LON = r"-?(?:6[0-9]|7[0-1])\.\d{3,}"
-DD_ANY = re.compile(r"\b(?:%s|%s)\b" % (DD_LAT, DD_LON))
-DD_PAIR = re.compile(r"\b%s\b\s*[,;\s]\s*\b%s\b" % (DD_LAT, DD_LON))
+DD_ANY = re.compile(r"(?<![\w.])(?:%s|%s)(?![\w.])" % (DD_LAT, DD_LON))
+# The word boundary must sit AFTER the optional minus, or the pattern can never
+# match a negative longitude, which is every longitude in the Acadian region.
+DD_PAIR = re.compile(r"(?<![\w.])%s\s*[,;\s]\s*%s(?![\w.])" % (DD_LAT, DD_LON))
 DMS = re.compile(r"\b\d{1,3}\s*[dD°]\s*\d{1,2}\s*['′]\s*\d{1,2}(?:\.\d+)?\s*[\"″]")
-COORD_HDR = re.compile(r"^(lat|lon|long|latitude|longitude|x|y|xcoord|ycoord|"
-                       r"coord\w*|easting|northing)$", re.I)
+COORD_HDR = re.compile(r"^(lat|lon|long|latitude|longitude|x|y|xcoord|ycoord|x_coord|y_coord|"
+                       r"lat_dd|lon_dd|plot_lat|plot_lon|lat_wgs84|lon_wgs84|point_x|point_y|"
+                       r"geometry|wkt|utm_e|utm_n|coord\w*|easting|northing)$", re.I)
 NEAR = re.compile(r"\b(lat|lon|long|latitude|longitude|coord|easting|northing|"
                   r"wgs84|epsg|crs)\b", re.I)
 
@@ -125,10 +128,16 @@ for p, a in resolved:
             (waived if is_code else hard).append(
                 "%s: token %s" % (os.path.basename(a), tk))
 
-    # An adjacent lat/lon pair is a coordinate wherever it appears.
-    m = DD_PAIR.search(txt)
-    if m:
-        hard.append("%s: decimal-degree PAIR %r" % (os.path.basename(a), m.group(0)[:40]))
+    # An adjacent lat/lon pair is a coordinate in PROSE or CODE, where writing two
+    # such numbers side by side means a location. It is not evidence in a CSV,
+    # where adjacent numeric columns are ordinary: five_way_scorecard.csv row 37
+    # holds pai_pred 49.0390369296994 beside pai_bias -68.4838806501757, which
+    # are periodic annual increments on stand value, not a coordinate. CSVs are
+    # covered by the column-header test below, which is the right instrument.
+    if not a.endswith(".csv"):
+        m = DD_PAIR.search(txt)
+        if m:
+            hard.append("%s: decimal-degree PAIR %r" % (os.path.basename(a), m.group(0)[:40]))
 
     if a.endswith(".csv"):
         # Column-aware: flag a coordinate-range value only under a header that
@@ -137,15 +146,13 @@ for p, a in resolved:
         if lines:
             hdr = [h.strip().strip('"') for h in lines[0].split(",")]
             bad = [i for i, h in enumerate(hdr) if COORD_HDR.match(h)]
-            for ln in lines[1:400]:
+            for ln in lines[1:]:
                 cells = ln.split(",")
                 for i in bad:
                     if i < len(cells) and DD_ANY.search(cells[i]):
                         hard.append("%s: coordinate column %r carries %s"
                                     % (os.path.basename(a), hdr[i], cells[i][:20]))
                         break
-                if bad and len(hard) and hard[-1].startswith(os.path.basename(a) + ": coordinate column"):
-                    break
     else:
         # Prose and code: flag only when a coordinate word sits within 40 chars.
         for m in DD_ANY.finditer(txt):
@@ -162,8 +169,13 @@ for w in waived:
     print("        waived (code only): %s" % w)
 if hard:
     fails.append("Gate 3 RESTRICTED DATA: " + "; ".join(hard[:8]))
+unscanned = [os.path.basename(a) for p, a in resolved if not a.endswith(TEXTLIKE)]
 print("Gate 3  restricted data      %d files, %d chars scanned, %d hard, %d waived"
       % (scanned, chars, len(hard), len(waived)))
+if unscanned:
+    print("        NOT text-scannable (%d): %s" % (len(unscanned), ", ".join(unscanned)))
+    warns.append("Gate 3 coverage: %d binary files not text-scanned: %s"
+                 % (len(unscanned), ", ".join(unscanned)))
 
 # ---------------------------------------------------------------- Gate 4
 sums = {}
@@ -190,23 +202,26 @@ REFERENCE_TABLES = {
     "master_scorecard.csv": "compiled by hand from the deposited per-source scorecards; see report Section 12",
     "overall_ranking.csv": "compiled by hand from the deposited per-source scorecards; see report Section 12",
     "overall_ranking_summary.csv": "rollup of overall_ranking.csv; see report Section 12",
+    "bakuzis_longterm.csv": "compiled from the 160-year Bakuzis runs; source memo 20260723_bakuzis_longterm.md. Producing script not archived",
+    "v1211_maturity_scorecard.csv": "lever-selection run (3a vs 3b) driven by bench_parity_split_ms_v131.R, which is deposited and consumes it; the ad-hoc write step was never archived. Cited by report Section 3 and GTR 10.4, so deposited with the gap disclosed",
 }
-PRODUCERS = {
-    "height_coverage_census.csv": "height_coverage_census.R",
-    "htfix_close_v2.csv": "height_coverage_census.R",
-    "htfix_rescore_multi.csv": "height_coverage_census.R",
-    "baxfix_curve_validation.csv": "height_coverage_census.R",
-    "scorecard_five_v1210_frozen.csv": "regen_five_way_scorecard_frozen.R",
-    "v1211_allsites_scorecard.csv": "forestgroup_scorecard_v1211.R",
-    "v1211_forestgroup_scorecard.csv": "forestgroup_scorecard_v1211.R",
-    "v1211_maturity_scorecard.csv": "forestgroup_scorecard_v1211.R",
-    "bench_ns_scorecard.csv": "bench_ns_scorecard.R",
-    "bench_ns_long_scorecard.csv": "bench_ns_long_scorecard.R",
-    "bakuzis_relations.csv": "bakuzis_allmodels.R",
-    "bakuzis_longterm.csv": "bakuzis_allmodels.R",
-    "allsites_bias_ci.csv": "boot_ci_allsites.R",
-}
-deposited = {os.path.basename(p) for p in paths}
+# Producers are VERIFIED by reading each deposited script for a write call
+# naming the table, not asserted from a hand-written map. An earlier version of
+# this gate carried such a map and six of its thirteen entries were wrong, so
+# the gate certified provenance it had never checked.
+WRITE_CALL = re.compile(r"(?:fwrite|write\.csv|to_csv|write_csv)\s*\(", re.I)
+
+
+def produced_by(csv_name, script_abs):
+    """True if script_abs contains a write call and names csv_name."""
+    try:
+        src = open(script_abs, encoding="utf8", errors="replace").read()
+    except OSError:
+        return False
+    return bool(WRITE_CALL.search(src)) and csv_name in src
+
+
+script_abs = [a for p, a in resolved if a.endswith((".R", ".r", ".py"))]
 g5 = []
 for p in paths:
     b = os.path.basename(p)
@@ -214,15 +229,11 @@ for p in paths:
         continue
     if b in REFERENCE_TABLES:
         continue
-    prod = PRODUCERS.get(b)
-    if prod and prod in deposited:
-        continue
-    if prod:
-        g5.append("%s produced by %s which is NOT deposited" % (b, prod))
-    else:
-        g5.append("%s has no declared producer" % b)
+    hits = [os.path.basename(s_) for s_ in script_abs if produced_by(b, s_)]
+    if not hits:
+        g5.append("%s: no deposited script writes it" % b)
 if g5:
-    warns.append("Gate 5 provenance: " + "; ".join(g5))
+    fails.append("Gate 5 provenance: " + "; ".join(g5))
 print("Gate 5  code reproduces data %d csv files, %d without a deposited producer"
       % (sum(1 for p in paths if p.endswith(".csv")), len(g5)))
 for g in g5:
