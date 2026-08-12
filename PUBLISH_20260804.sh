@@ -16,7 +16,17 @@ set -euo pipefail
 
 REPO="${REPO:-$HOME/Documents/Claude/CRSF-Cowork/repos/fvs-acd}"
 BRANCH="${BRANCH:-hardwood-formrisk-wip}"
-TOKEN="${TOKEN:-$HOME/.zenodo_token}"
+# Token search order per the zenodo-deposit skill: Cardinal-style ~/.zenodo_token
+# first, then the local ~/.config/zenodo/token. Override with TOKEN=<path>.
+if [ -n "${TOKEN:-}" ]; then
+  :
+elif [ -f "$HOME/.zenodo_token" ]; then
+  TOKEN="$HOME/.zenodo_token"
+elif [ -f "$HOME/.config/zenodo/token" ]; then
+  TOKEN="$HOME/.config/zenodo/token"
+else
+  TOKEN="$HOME/.zenodo_token"   # reported in the error below if neither exists
+fi
 
 cd "$REPO"
 
@@ -56,8 +66,16 @@ git add -A
 echo
 echo "== staged =="
 git status --short | head -40
-echo "  ($(git diff --cached --name-only | wc -l | tr -d ' ') paths total)"
+STAGED=$(git diff --cached --name-only | wc -l | tr -d ' ')
+echo "  ($STAGED paths total)"
 
+# A clean tree is a normal state on a re-run: the git work may already be done
+# and the point of this invocation may be the Zenodo step. git commit exits 1
+# when there is nothing to commit, which under `set -e` would abort the script
+# before it ever reaches the deposit. Skip the commit instead of dying.
+if [ "$STAGED" -eq 0 ]; then
+  echo "  nothing to commit, working tree clean. Skipping commit."
+else
 git commit -F - <<'MSG'
 v12.11 benchmark: height-coverage census, rescores, and the Zenodo deposit
 
@@ -96,16 +114,17 @@ Deposit
   match a negative longitude, and Gate 5's producer map was hand-written and
   six of thirteen entries were wrong. Gate 5 now reads each script.
 MSG
+fi
 
 echo
-echo "== commit created =="
+echo "== HEAD =="
 git --no-pager log --oneline -1
 
 # ---------------------------------------------------------------- 4. push
 if [ "${PUSH:-0}" = "1" ]; then
   echo
   echo "== pushing to origin/$BRANCH =="
-  git push origin "$BRANCH"
+  git push origin "$BRANCH" || echo "  push reported nothing to do (already in sync)"
 else
   echo
   echo "Not pushed. Review, then:  git push origin $BRANCH"
@@ -116,7 +135,15 @@ fi
 if [ "${ZENODO:-0}" = "1" ]; then
   echo
   echo "== Zenodo: gates, then DRAFT =="
-  [ -f "$TOKEN" ] || { echo "No token at $TOKEN"; exit 1; }
+  if [ ! -f "$TOKEN" ]; then
+    echo "No Zenodo token found. Looked for:"
+    echo "  $HOME/.zenodo_token"
+    echo "  $HOME/.config/zenodo/token"
+    echo "Your token is on Cardinal at ~/.zenodo_token. Either run this there,"
+    echo "or copy it down:  install -m 600 /dev/null ~/.zenodo_token"
+    exit 1
+  fi
+  echo "  using token: $TOKEN"
   cd "$REPO/zenodo_v1211"
   python3 check_deposit.py
   python3 upload_to_zenodo.py \
