@@ -22,6 +22,8 @@ reported on the shared FIA National Scale Volume and Biomass (NSVB) system throu
 
 1. Verdict up front
 2. Benchmark scope and data coverage
+   2.1 Measured-height coverage and what it does to the scorecard
+   2.2 Reproducibility
 3. Version and configuration: the five gated levers
 4. Validation: the guardrail battery
 5. All-sites comparison: Maine, New Brunswick, and Quebec
@@ -350,6 +352,50 @@ imputed height distribution, though on the engine's imputation, which the same v
 one. The maturity-gradient sign pattern also survives, and the PEF rescore sharpens it, since the developing end
 is anchored by the Maine FIA sets at 99.94% measured coverage and PEF moving from +1.2% to -3.8% makes that end
 uniformly negative.
+
+**Canonical coverage account, updated 11 August 2026.** The coverage accounting above, and the OSM-ACD
+comparisons built on it throughout this report, are now cross-indexed against
+`20260811_final_scorecard_all_datasets.md`, the finalized cross-dataset scorecard and the canonical document for
+model coverage across all eleven benchmark sources this project has staged. It supersedes
+`20260723_master_scorecard_and_ranking.md`, whose content is preserved unchanged at
+`20260723_master_scorecard_and_ranking_PREV_20260811.md` for provenance. Its Table 30 confirms, on the same
+eleven-source basis as this section's Table 5a, that v12.11 is scored on nine of eleven sources and OSM-ACD
+v2.26.1 on seven of eleven, missing Maine FIA subplot and QC MagPlot exactly as already documented here, and it
+discloses a third, previously undocumented coverage gap found while building that matrix: the Maine FIA
+mature/control pair (memat, n = 1,757; medev, n = 1,759), staged for the v13.1 development track on 5 August
+2026, has no score at all against either v12.11 or OSM, only against base and a set of experimental v13.1 levers.
+That pair falls outside the eight-source ME/NB/QC set this report's rankings are built on and changes no number
+here; it is noted because a coverage account that stopped at the two already-known gaps would not have been
+exhaustive. No new Cardinal run produced this cross-check, and no frozen number in this report changed as a
+result of it.
+
+### 2.2 Reproducibility
+
+AcadianGY, called "FVS-ACD" throughout this report, is a fully open R reimplementation of the Acadian
+growth-and-yield model, distinct from the compiled Fortran FVS Acadian variant maintained separately by Ben Rice
+at Midgard Natural Resources. Its source has been openly readable throughout development, in contrast to
+OSM-ACD, the competing benchmark model, which is closed, compiled .NET software. As of this revision, the scored
+production versions of AcadianGY are git-tagged at the exact commit containing each version's engine file:
+v12.6.1 (`v12.6.1-candidate`), v12.7.0 (`v12.7.0-operational`), v12.10.1, the current frozen operational
+baseline (`v12.10.1-frozen-aug2026`), and v12.11, the candidate evaluated in this report
+(`v12.11-candidate-aug2026`). Each tag has been audited against the repository history and confirmed to point at
+a commit whose engine file is byte-identical to the version actually scored here, with the scoring harness and
+dependency manifest (`data.table`, `dplyr`, `nlme`, `purrr`) documented alongside it in
+`reproducibility/README.md`.
+
+This is a map to what already exists, not a new portability claim. Running AcadianGY still requires OSC
+Cardinal, where the project's tree-list, plot-manifest, and coordinate data reside and where the pinned R 4.5.2
+environment lives; a fully portable, laptop-runnable package does not yet exist. One honest gap remains and is
+stated rather than papered over: for v12.10.1 and v12.11, the harness scripts in this repository aggregate and
+score pre-computed per-stand result files, but the driver script that actually executes the engine against raw
+stand records to produce those files was not found checked into the repository as a distinct file for either
+version. The equivalent driver pattern does survive in-repo for v12.7.0 and v12.7.1
+(`scripts/comprehensive_bench.R`, parameterized by a `MODEL_FILE` environment variable), and it is likely the
+same pattern was reused on Cardinal with `MODEL_FILE` repointed, but no v12.10.1- or v12.11-specific copy was
+preserved under its own filename. v13.1, the in-progress hierarchical mortality and management refit, is
+excluded from this reproducible set and remains marked DRAFT; it has not converged to a scored release. Full
+detail, including the Cardinal reproduction path and the git-notes audit trail, is in `reproducibility/README.md`
+and `reproducibility/statement_for_report_and_deck.md`.
 
 ## 3. Version and configuration: the five gated levers
 
@@ -719,6 +765,12 @@ is not one. The predicted mean is 96.311 m³ ha⁻¹ in both; only the observed 
 94.830, when the 28 non-ESI Quebec stands drop out. The matching magnitudes are a coincidence. Quote Table 7
 against the frozen in-domain file, never against `five_way_scorecard.csv`, and archiving the former alongside
 the figures data is an open item in Section 10.
+
+This section's 705-stand legacy scorecard is cited by name in `20260811_final_scorecard_all_datasets.md` Section
+7 as an independent cross-check, not new evidence: that document confirms OSM's pooled-precision advantage here,
+mean absolute bias 3.2 versus v12.10.1's 4.9%, mean modeling efficiency 0.75 versus 0.71, is the same direction
+and rough magnitude as the common-cells finding on the newer eleven-source master scorecard. Cross-references
+elsewhere in this report to the master scorecard now point to that finalized document; see Section 12.
 
 ### 7.1 Version and configuration confirmed
 
@@ -1485,6 +1537,21 @@ every model shares and the ingrowth under-prediction above, moving the managemen
 amplitude into the fit as a predictor, and it carries the retained basal-area increment correction from the
 v13.0 cycle. No v13.1 scorecard numbers exist yet; the refit is running with convergence pending.
 
+**Status note, 11 August 2026: v13.1 Bakuzis outcome.** Biological-realism testing of v13.1 against the modified
+Bakuzis matrix has since run and produced a shipping decision, reflected in the companion deck
+(`20260811_deck_bakuzis_content_diff.md`). Two v13.1 lever configurations fail the biological-realism test and
+are blocked from shipping: `nosdi` fails on level rather than slope, with SDI drifting from 670 (base) to 1020
+by age 160 and basal area plateauing at 35 to 50 m² ha⁻¹ above the defensible envelope, and the full-stack
+configuration (`ing3.9`, all levers) shows a basal-area drawdown of 14.2% against base's 3.0% between ages 27 and
+48 with recovery delayed to ages 86 to 92, and its apparent volume gain reverses sign, +14.9% at year 20 to
+-2.9% at year 160. A narrower subset clears the test and is the one now shipping: ingrowth at 2.5x plus the r2
+increment refit, with SDImax retained and its onset retuned from 0.30 toward 0.55 to 0.60 relative density. This
+is a testing and configuration-selection outcome, not a new scorecard; no v13.1 scorecard numbers against the
+benchmark sources in this report exist yet, and the statement in Section 12 that OSM and v12.11 remain the two
+frozen models this report compares is unchanged. A secondary, non-blocking flag on the base configuration, a
+Sukachev-relationship departure at age 160 where ESI 20 carries +6.3% stems against +1.6% basal area over ESI
+12, is noted here for completeness but did not affect the shipping decision.
+
 ## 11. Nova Scotia: an independent-province validation
 
 Nova Scotia is not part of the pooled all-sites benchmark in Section 2; it is evaluated here as a fully separate,
@@ -1802,7 +1869,9 @@ rather than by pooling across these cross-tabbed cells, for the reason given aft
 *Data: `figures/_data/master_scorecard.csv` (16 rows per model, 13 with data), pooling
 `figures/_data/v1211_allsites_scorecard.csv`, `figures/_data/v1211_forestgroup_scorecard.csv`,
 `figures/_data/bench_ns_scorecard.csv`, and `figures/_data/bench_ns_long_scorecard.csv`, the same source files
-already cited for Tables 5, 6, 26, and 28. Source memo: `20260723_master_scorecard_and_ranking.md`.*
+already cited for Tables 5, 6, 26, and 28. Source memo: `20260811_final_scorecard_all_datasets.md` (finalized 11
+August 2026; supersedes `20260723_master_scorecard_and_ranking.md`, preserved unchanged at
+`20260723_master_scorecard_and_ranking_PREV_20260811.md`).*
 
 ![Figure 24. Master scorecard heatmap, total-volume percent RMSE by determinant cell, base versus candidate v12.11 versus OSM v2.26.1, cell fill by rank (green best, red worst).](figures/fig22_determinant_scorecard.png)
 
@@ -1851,7 +1920,9 @@ with-NS rows plotted in Figure 25), `overall_ranking_detail.csv` (per-source ran
 and `master_scorecard_sources.csv` (the 28-row non-overlapping per-source input table), all built from
 `v1211_allsites_scorecard.csv`, `bench_ns_scorecard.csv`, and `bench_ns_long_scorecard.csv` by
 `figures/_data/build_reconciled_ranking.py`. Bold marks the better model on each metric within each scenario
-row-pair; a tie is bolded on both. Source memo: `20260723_master_scorecard_and_ranking.md`.*
+row-pair; a tie is bolded on both. Source memo: `20260811_final_scorecard_all_datasets.md` (finalized 11 August
+2026; supersedes `20260723_master_scorecard_and_ranking.md`, preserved unchanged at
+`20260723_master_scorecard_and_ranking_PREV_20260811.md`).*
 
 ![Figure 25. Overall FVS-ACD ranking under two defensible weightings, with and without Nova Scotia: equal-per-source mean rank (top) and stand-weighted pooled total-volume percent RMSE (bottom), base versus candidate v12.11 versus OSM v2.26.1, all-available-data inclusion rule.](figures/fig23_overall_ranking.png)
 
@@ -1892,8 +1963,18 @@ opposite ordering on mean rank, OSM at 1.38 against v12.11's 1.92, while v12.11 
 independent, non-overlapping source level; both were built on the four-determinant cross-tab, which triple-counts
 Nova Scotia as described above. This section replaces both with the six-scenario, per-source ranking in Table 34,
 verified end to end against `v1211_allsites_scorecard.csv`, `bench_ns_scorecard.csv`, and
-`bench_ns_long_scorecard.csv` and documented in full in `20260723_master_scorecard_and_ranking.md`. Those numbers
-are the authoritative overall ranking for this report going forward.
+`bench_ns_long_scorecard.csv` and documented in full in `20260811_final_scorecard_all_datasets.md` (finalized 11
+August 2026, superseding `20260723_master_scorecard_and_ranking.md`). Those numbers are the authoritative overall
+ranking for this report going forward.
+
+**Coverage matrix, 11 August 2026.** `20260811_final_scorecard_all_datasets.md` adds a Table 30 coverage matrix
+spanning all eleven benchmark sources this project has staged, not only the eight that feed Table 34 above. It
+confirms OSM-ACD v2.26.1 has no score on Maine FIA subplot or QC MagPlot, exactly the gap already noted through
+this report, and discloses a third gap found while building that matrix: the Maine FIA mature/control pair
+(memat, medev), staged 5 August 2026 for the v13.1 development track, has no score against either v12.11 or OSM.
+That pair sits outside the eight-source ranking basis above and changes no rank or ranking number in Table 34; it
+is recorded here per the house rule against silent omission of newly discovered coverage gaps. No new Cardinal
+run was made to produce this matrix and no frozen number changed.
 
 ## 13. Methods and provenance
 
@@ -2416,3 +2497,34 @@ five-lever candidate.
 **Removed.** Nothing. Table count 37 to 38, H3 25 to 26.
 
 **Build pipeline note.** Backed up to `FVS-ACD_v12.11_benchmark_report_PREV11_20260804e.md` and `.docx`.
+
+### Update, 11 August 2026: finalized scorecard, reproducibility bundle, and v13.1 Bakuzis status
+
+**Added.** A new Section 2.2, "Reproducibility," summarizing `reproducibility/README.md` and
+`reproducibility/statement_for_report_and_deck.md`: AcadianGY is fully open R, in contrast to OSM-ACD's closed
+compiled .NET; v12.6.1, v12.7.0, v12.10.1, and v12.11 are now git-tagged and audited byte-identical against the
+version each was scored under; and the honest limitation is stated rather than overclaimed, namely that
+reproduction still requires Cardinal-resident data and R environment, and that the specific driver script
+executing the v12.10.1/v12.11 engine against raw stand records was not found checked into the repository as a
+distinct file (only the v12.7.x pattern survives in-repo). A closing paragraph was added to Section 2.1 and a
+new paragraph to Section 12 cross-indexing this report's coverage and ranking tables against
+`20260811_final_scorecard_all_datasets.md`, the newly finalized, canonical cross-dataset scorecard spanning all
+eleven benchmark sources, including its Table 30 disclosure of a third coverage gap, the Maine FIA memat/medev
+mature-and-control pair, which has no score against either v12.11 or OSM and sits outside this report's
+eight-source ranking basis. A dated status note was added to Section 10 summarizing the v13.1 Bakuzis
+biological-realism outcome now reflected in the companion deck: two configurations (`nosdi`, and the full-stack
+`ing3.9`) are blocked from shipping, and a narrower subset, ingrowth 2.5x plus the r2 increment refit with
+SDImax retained and its onset retuned, ships instead.
+
+**Changed.** Every cross-reference to `20260723_master_scorecard_and_ranking.md` (Section 12, three instances)
+now points to `20260811_final_scorecard_all_datasets.md`, which supersedes it; the prior file's content is
+preserved unchanged at `20260723_master_scorecard_and_ranking_PREV_20260811.md`. No number in Tables 30 through
+34, or anywhere else in this report, changed. The two open items carried since 4 August, QC MagPlot managed
+never rescored under the validated height treatment and the Baxter v12.11 reproduction control failing at 750
+against a 5e-13 target, remain open and are not claimed resolved anywhere in this revision.
+
+**Removed.** Nothing.
+
+**Build pipeline note.** The pre-revision `.md` was backed up to
+`FVS-ACD_v12.11_benchmark_report_PREV_20260811.md` before this edit; the `.docx`/`.pdf` renders were not
+regenerated as part of this pass.
