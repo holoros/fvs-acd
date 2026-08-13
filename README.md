@@ -65,7 +65,7 @@ Resources); model changes coordinate with that repository.
 
 ## Layout
 
-- `scripts/` model versions (`AcadianGY_*.r`), build/patch scripts, validation harnesses.
+- `scripts/` complete model version lineage (`AcadianGY_*.r`, 31 files, 12.3.6 through the current model of record 13.1), build/patch scripts, validation harnesses.
 - `results/` aggregate scorecards, bias tables, trajectories (no coordinates).
 - `figures/` publication PNGs.
 - `data/` frozen scorecard and composite-score CSVs, snippet notes.
