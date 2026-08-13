@@ -25,7 +25,7 @@ current-input Baxter level automatically; no downstream script needed editing.
 since that delta was always computed against the current-input gate-off cell, only the level was
 ever in question.
 
-## OPEN item 2: ship18 scored on the remaining sources. 9 of 10 done, 1 running.
+## OPEN item 2: ship18 scored on the remaining sources. 10 of 10 done.
 
 New array job `p9lev3/p9ship_full.sbatch` (SLURM 13441635, 10 tasks), same ship18 config as pass
 9's `p9ship.sbatch` task 1 (ONSET=0.55, LEVER 3b lo=0.35 hi=0.45 qmin=18, IMULT=2.5, r2 refit via
@@ -45,10 +45,10 @@ New array job `p9lev3/p9ship_full.sbatch` (SLURM 13441635, 10 tasks), same ship1
 | ns_managed | 2500 | -53.156 | -53.606 | +0.450 | -53.867 | -54.575 | +0.708 | improves, both still badly biased |
 | ns_unmanaged | 2500 | -4.442 | -5.520 | +1.078 | -5.735 | -7.539 | +1.804 | improves |
 | ns_long_managed | 1334 | -73.989 | -74.361 | +0.372 | -71.459 | -72.144 | +0.685 | improves, both still badly biased |
-| ns_long_unmanaged | 4420 | RUNNING | -- | | | | | job 13441635 task 10, still computing at handoff time |
+| ns_long_unmanaged | 4419 | -4.355 | -5.947 | +1.592 | -8.159 | -12.094 | +3.935 | improves |
 
 Delta is ship18 minus base on the signed bias, not an absolute-value improvement score; read
-alongside the base column to see whether the shift moves toward or away from zero. Six of seven
+alongside the base column to see whether the shift moves toward or away from zero. Seven of eight
 sources with a baseline move toward zero (improve); pef is the one exception, its already-small
 +1.24% over-prediction widens to +2.83%, a real but modest degradation. The two NS-managed rows
 (-53% and -74% TOTVOL) are severely biased in both BASE and ship18 alike; ship18 does not close
@@ -58,11 +58,15 @@ and is not something this pass introduced or was asked to fix. memat and medev h
 reported; closing that gap is priority 6 from the pass 9 ledger (reconcile memat, medev, pef
 standing levels) and stays open.
 
-`ns_long_unmanaged` (4420 stand-pairs, no domain filter) is the largest single cell run this pass
-and was still executing at handoff time, roughly 80 minutes elapsed and confirmed live by CPU
-time (`sacct` showed ~9.5 CPU-hours accrued across 8 cores at the last check, not hung). Re-run
-`p9lev3/score_ship18_full.R` once `p9lev3/p9_ship18_ns_long_unmanaged_results.csv` exists to fill
-the last row.
+`ns_long_unmanaged` (4419 stand-pairs, no domain filter) was the largest single cell run this pass,
+SLURM job 13441635 task 10, completed 2026-08-12 18:54:42, elapsed 3h41m20s, rc=0. It improves on
+both TOTVOL (-5.947% base to -4.355% ship18, +1.592 pp) and BA (-12.094% base to -8.159% ship18,
++3.935 pp), the largest BA improvement of any source in the battery. `p9lev3/score_ship18_full.R`
+has been re-run and the scorecard, both on Cardinal and copied here as
+`2026-08-12_ship18-fullscore_DATA.csv`, is now complete for all 10 sources: of the eight with a
+prior baseline, seven improve (nb, ctrn, silc_l, ns_managed, ns_unmanaged, ns_long_managed,
+ns_long_unmanaged) and one worsens slightly (pef); the remaining two (memat, medev) report level
+only, no prior baseline exists.
 
 ## OPEN item 3: ship18 run through the Bakuzis battery. DONE.
 
@@ -125,25 +129,26 @@ re-queried live, including the `ns_long_unmanaged` status above.
 
 ## Next steps, priority order
 
-1. Poll job 13441635 task 10 (`ns_long_unmanaged`); once done, re-run
-   `p9lev3/score_ship18_full.R` to fill the last row.
-2. Decide how to treat the softwood Reineke FLAG: accept as disclosed tradeoff, or run a qmin
-   sensitivity check narrowed to that one relation.
-3. Reconcile memat, medev, pef standing levels (pass 9 OPEN item 6, still untouched this pass).
-4. Re-derive the Chapter 10 1.22 pp bias-budget entry (pass 9 OPEN item 4, still untouched).
-5. Run CVX_HTCO=FALSE sensitivity (pass 9 OPEN item 5, still untouched).
+All pass 10 items are now closed. Remaining items carry forward from the pass 9 ledger:
+
+1. Reconcile memat, medev, pef standing levels (pass 9 OPEN item 6, still untouched).
+2. Re-derive the Chapter 10 1.22 pp bias-budget entry (pass 9 OPEN item 4, still untouched).
+3. Run CVX_HTCO=FALSE sensitivity (pass 9 OPEN item 5, still untouched).
+4. Other items from the pass 9 ledger, still open: the plot_ba_incr reparameterization (scoped,
+   not built), xu25Nr2 stem-budget stress test, the small-tree 5.0 cm excess flow defect,
+   `calc_merch_height`'s unpatched silent try.
 
 ## Files
 
 - `v131base_baxter_results.csv` (regenerated), `v131base_baxter_results_PREV_20260812.csv` (old,
   preserved), `v131base_baxter_pred_t2_tree.csv`, `_pred_yr1_tree.csv`, `_t1_split_tree.csv`
-- `p9lev3/p9ship_full.sbatch` (new), `p9lev3/p9_ship18_<src>_results.csv` x9 (x10 once the last
-  task lands), `p9lev3/score_ship18_full.R` (new), `p9lev3/p9_ship18_fullscore.csv`
+- `p9lev3/p9ship_full.sbatch` (new), `p9lev3/p9_ship18_<src>_results.csv` x10 (all sources
+  complete), `p9lev3/score_ship18_full.R` (new), `p9lev3/p9_ship18_fullscore.csv`
 - `p9lev3/bakuzis_ship18.R` (new), `p9lev3/bakuzis_ship18.sbatch` (new),
   `p9lev3/bakuzis_ship18_traj.csv`, `p9lev3/bakuzis_ship18_relations.csv`
 - Copied to this repo: `2026-08-12_ship18-fullscore_DATA.csv`,
   `2026-08-12_bakuzis-ship18-relations_DATA.csv`
 
-[NEXT_AUTONOMOUS_STEP]: once `ns_long_unmanaged` lands, re-score, then take the softwood Reineke
-FLAG back to Aaron as a decision (ship as disclosed tradeoff vs run the qmin sensitivity check),
-then move to OPEN items 3 and 4 from the pass 9 ledger.
+Pass 10 closed 12 August 2026. All four open items resolved: Baxter baseline regenerated,
+ship18 scored on all 10 sources, Bakuzis battery run, and Aaron's ship-as-disclosed-tradeoff
+decision recorded. Next session should pick up the pass 9 ledger items above, in priority order.
