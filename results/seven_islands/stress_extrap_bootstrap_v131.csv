@@ -1,0 +1,3 @@
+model,metric,mean,ci_lo,ci_hi,ci_type,n_stands,n_fail,n_ingrowth_explosion
+v131,BA_PAI_m2ha_yr,-0.779051434424559,-0.80780511549852,-0.750512854262816,"bootstrap percentile, plot-clustered, n=2000",120,0,0
+v131,mortality_engaged_frac,1,1,1,"bootstrap percentile, plot-clustered, n=2000",120,0,0

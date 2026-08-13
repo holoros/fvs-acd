@@ -1,0 +1,61 @@
+================================================================
+BAKUZIS ASSESSMENT:bakuzis_v131_full_v25_traj.csv
+================================================================
+
+[1/3 Monotonicity] HT increasing, TPH decreasing with age:
+  base site 12: HT_up=FALSE TPH_down=FALSE
+  base site 16: HT_up=FALSE TPH_down=FALSE
+  base site 20: HT_up=FALSE TPH_down=FALSE
+  candidate_managed site 12: HT_up=FALSE TPH_down=FALSE
+  candidate_managed site 16: HT_up=FALSE TPH_down=FALSE
+  candidate_managed site 20: HT_up=FALSE TPH_down=FALSE
+  candidate_unmanaged site 12: HT_up=FALSE TPH_down=FALSE
+  candidate_unmanaged site 16: HT_up=FALSE TPH_down=FALSE
+  candidate_unmanaged site 20: HT_up=FALSE TPH_down=FALSE
+
+[1/7 Site ordering] HT and VOL ordered by site at each age:
+  base: HT inversions=0/160  VOL inversions=0/160
+  candidate_managed: HT inversions=2/160  VOL inversions=46/160
+  candidate_unmanaged: HT inversions=2/160  VOL inversions=46/160
+
+[4 Reineke] log(TPH)~log(QMD) self-thinning slope (target ~ -1.605):
+  base site 12: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  base site 16: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  base site 20: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  candidate_managed site 12: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  candidate_managed site 16: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  candidate_managed site 20: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  candidate_unmanaged site 12: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  candidate_unmanaged site 16: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  candidate_unmanaged site 20: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+
+[8 Eichhorn] volume-height site independence (CV of VOL across sites at matched HT):
+  base: mean CV=3.2% OK (site-independent)
+  candidate_managed: mean CV=9.7% OK (site-independent)
+  candidate_unmanaged: mean CV=9.7% OK (site-independent)
+
+================================================================
+FLAGS: 22
+  - HT not monotone up (base site 12)
+  - TPH not monotone down (base site 12)
+  - HT not monotone up (base site 16)
+  - TPH not monotone down (base site 16)
+  - HT not monotone up (base site 20)
+  - TPH not monotone down (base site 20)
+  - HT not monotone up (candidate_managed site 12)
+  - TPH not monotone down (candidate_managed site 12)
+  - HT not monotone up (candidate_managed site 16)
+  - TPH not monotone down (candidate_managed site 16)
+  - HT not monotone up (candidate_managed site 20)
+  - TPH not monotone down (candidate_managed site 20)
+  - HT not monotone up (candidate_unmanaged site 12)
+  - TPH not monotone down (candidate_unmanaged site 12)
+  - HT not monotone up (candidate_unmanaged site 16)
+  - TPH not monotone down (candidate_unmanaged site 16)
+  - HT not monotone up (candidate_unmanaged site 20)
+  - TPH not monotone down (candidate_unmanaged site 20)
+  - HT site-ordering inverted 2x (candidate_managed)
+  - VOL site-ordering inverted 46x (candidate_managed) [check self-thinning/SDImax]
+  - HT site-ordering inverted 2x (candidate_unmanaged)
+  - VOL site-ordering inverted 46x (candidate_unmanaged) [check self-thinning/SDImax]
+================================================================
