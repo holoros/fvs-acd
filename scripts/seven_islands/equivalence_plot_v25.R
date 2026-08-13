@@ -2,8 +2,8 @@
 # equivalence_plot_v25.R
 # v25 copy of equivalence_plot_v24.R -- same house r-analysis/advanced-viz
 # equivalence-plot convention, unchanged. Retargeted to the v25 equivalence
-# test outputs (six models: FVSACD_v1211_full and FVSACD_v131_full in place
-# of FVSACD_v1211_silc73).
+# test outputs (seven models: FVSACD_v1211_full, FVSACD_v131_full, and
+# FVSACD_v131_ship18 in place of FVSACD_v1211_silc73).
 
 suppressMessages({
   library(ggplot2)
@@ -14,7 +14,7 @@ plotdat <- readRDS("equivalence_plotdat_v25.rds")
 results <- readRDS("equivalence_test_results_v25.rds")
 
 pd <- do.call(rbind, plotdat)
-model_order <- c("AcadianGY v8.35","FVS-ACD v12.11 (full137)","FVS-ACD v13.1 (full137)","FVS-ACD default","FVS-NE default","OSM-ACD")
+model_order <- c("AcadianGY v8.35","FVS-ACD v12.11 (full137)","FVS-ACD v13.1 (full137)","FVS-ACD v13.1 ship18 (full137)","FVS-ACD default","FVS-NE default","OSM-ACD")
 pd$model <- factor(pd$model, levels = model_order)
 
 # per-panel pass/fail + smallest-region annotation
@@ -23,6 +23,7 @@ ann <- do.call(rbind, lapply(names(results), function(key) {
   parts <- strsplit(key, "__")[[1]]
   lab_map <- c(AGM_v835="AcadianGY v8.35", FVSACD_v1211_full="FVS-ACD v12.11 (full137)",
                FVSACD_v131_full="FVS-ACD v13.1 (full137)",
+               FVSACD_v131_ship18="FVS-ACD v13.1 ship18 (full137)",
                FVS_ACD_default="FVS-ACD default", FVS_NE_default="FVS-NE default", OSM_ACD="OSM-ACD")
   data.frame(model = lab_map[parts[1]], metric = parts[2],
              lab = sprintf("slope %.2f [%.2f, %.2f]\nintercept %s | slope %s\nsmallest region: %.0f%%",

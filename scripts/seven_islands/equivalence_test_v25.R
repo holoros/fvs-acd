@@ -4,6 +4,7 @@
 # equivalence (TOST) methodology, unchanged. Retargeted to the v25 by-plot
 # scorecard: FVSACD_v1211_silc73 retired (replaced by full-coverage
 # FVSACD_v1211_full), FVSACD_v131_full added (new model, not in v24 at all).
+# FVSACD_v131_ship18 added same day -- third v13.x candidate, addition only.
 
 suppressMessages({
   library(equivalence)   # pulls in boot, ggplot2, lattice, PairedData
@@ -21,8 +22,8 @@ by <- read.csv("silc_cfi_value_v25_byplot.csv", stringsAsFactors = FALSE)
 obs <- by[by$model_config == "OBSERVED", c("PLOT","tot_cd","tot_val")]
 names(obs) <- c("PLOT","tot_cd_obs","tot_val_obs")
 
-model_cfg <- c("AGM_v835","FVSACD_v1211_full","FVSACD_v131_full","FVS_ACD_default","FVS_NE_default","OSM_ACD")
-model_lab <- c("AcadianGY v8.35","FVS-ACD v12.11 (full137)","FVS-ACD v13.1 (full137)","FVS-ACD default","FVS-NE default","OSM-ACD")
+model_cfg <- c("AGM_v835","FVSACD_v1211_full","FVSACD_v131_full","FVSACD_v131_ship18","FVS_ACD_default","FVS_NE_default","OSM_ACD")
+model_lab <- c("AcadianGY v8.35","FVS-ACD v12.11 (full137)","FVS-ACD v13.1 (full137)","FVS-ACD v13.1 ship18 (full137)","FVS-ACD default","FVS-NE default","OSM-ACD")
 
 equiv_analysis <- function(pred, obsv, reps = REPS, alpha = ALPHA,
                             b0_prop = B0_PROP, b1_prop = B1_PROP) {

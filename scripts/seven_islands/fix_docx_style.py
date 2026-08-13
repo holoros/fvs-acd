@@ -23,22 +23,69 @@ def set_cell_border(cell, **kwargs):
             for k, v in kwargs[edge].items():
                 el.set(qn('w:{}'.format(k)), str(v))
 
-def style_table(table, header_rows=1, full_width_twips=9350):
+def style_table(table, header_rows=1, full_width_twips=10500):
+    # House style: widen text-heavy columns (long model/species labels),
+    # narrow numeric columns, rather than forcing all columns equal width --
+    # equal-width forcing on wide first-column tables (7+ model rows with
+    # long labels like "FVS-ACD v13.1 (ship18, new)") was found by the 13 Aug
+    # 2026 visual pass to wrap the first column into 4-5 lines, which pushed
+    # a row's height past a page boundary and caused LibreOffice to split
+    # the row mid-word across pages (a genuine corrupted-content bug, not
+    # cosmetic) -- caught only by rendering and looking, not by XML
+    # inspection. Fixed by (a) giving column 0 a wider share when it looks
+    # text-heavy (average cell text length > other columns) and (b) forcing
+    # cantSplit on every row so a row can no longer straddle a page break.
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = False
     ncols = len(table.columns)
-    colw = int(full_width_twips / ncols)
+    # 13 Aug 2026 visual-pass fix: wide tables (many numeric columns) wrap mid-number at
+    # the default font size against full_width_twips; shrink font for readability.
+    wide_table = ncols >= 7
+    cell_font_pt = 9 if wide_table else 11
+
+    # Decide whether column 0 needs extra width: compare its mean text
+    # length against the mean of the remaining columns.
+    def _mean_len(col_idx):
+        vals = [len(row.cells[col_idx].text) for row in table.rows]
+        return sum(vals) / max(len(vals), 1)
+
+    col0_len = _mean_len(0)
+    other_len = sum(_mean_len(c) for c in range(1, ncols)) / max(ncols - 1, 1) if ncols > 1 else col0_len
+
+    if ncols > 1 and col0_len > other_len * 1.3:
+        # widen column 0, narrow the rest, keep total == full_width_twips
+        col0_w = min(int(full_width_twips * 0.30), int(full_width_twips * 0.10 * ncols))
+        col0_w = max(col0_w, int(full_width_twips / ncols))  # never shrink below equal-share
+        rest_w = int((full_width_twips - col0_w) / (ncols - 1))
+        colwidths = [col0_w] + [rest_w] * (ncols - 1)
+    else:
+        colw = int(full_width_twips / ncols)
+        colwidths = [colw] * ncols
+
     tbl = table._tbl
     tblGrid = tbl.find(qn('w:tblGrid'))
     if tblGrid is not None:
-        for gc in tblGrid.findall(qn('w:gridCol')):
-            gc.set(qn('w:w'), str(colw))
+        for gc, w in zip(tblGrid.findall(qn('w:gridCol')), colwidths):
+            gc.set(qn('w:w'), str(w))
     for row in table.rows:
-        for cell in row.cells:
-            cell.width = Inches(colw/1440.0)
+        for cell, w in zip(row.cells, colwidths):
+            cell.width = Inches(w/1440.0)
             for p in cell.paragraphs:
                 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                for run in p.runs:
+                    run.font.size = Pt(cell_font_pt)
             cell.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        # cantSplit: never let a single row's content straddle a page break
+        trPr = row._tr.get_or_add_trPr()
+        cant_split = trPr.find(qn('w:cantSplit'))
+        if cant_split is None:
+            cant_split = OxmlElement('w:cantSplit')
+            trPr.append(cant_split)
+    # repeat header row on each page the table spans
+    header_trPr = table.rows[0]._tr.get_or_add_trPr()
+    if header_trPr.find(qn('w:tblHeader')) is None:
+        th = OxmlElement('w:tblHeader')
+        header_trPr.append(th)
     # bold + center header row
     for cell in table.rows[0].cells:
         for p in cell.paragraphs:
@@ -81,6 +128,9 @@ def add_header_footer(doc, header_text, footer_text_left="University of Maine  |
 
 def main(path, header_text):
     doc = Document(path)
+    for sec in doc.sections:
+        sec.left_margin = Inches(0.6); sec.right_margin = Inches(0.6)
+        sec.top_margin = Inches(0.75); sec.bottom_margin = Inches(0.75)
     add_header_footer(doc, header_text)
     for t in doc.tables:
         style_table(t)

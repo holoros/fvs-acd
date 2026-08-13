@@ -65,7 +65,7 @@ if (STRESS_MODEL == "v1211") {
   INGEST_TREELIST <- "/users/PUOM0008/crsfaaron/silc_cfi/v25_inputs/fvsacd_v1211_full137_treelist.csv"
 } else {
   Sys.setenv(MODEL_FILE="/users/PUOM0008/crsfaaron/AcadianGY_13.1.r",
-             USE_HIER_ING="TRUE", USE_HIER_MORT="TRUE", HIER_POSTDIR="/users/PUOM0008/crsfaaron/v13_subplot",
+             USE_HIER_ING="TRUE", USE_HIER_MORT="TRUE", HIER_POSTDIR="/users/PUOM0008/crsfaaron/v13_comb_post",
              SPLIT="TRUE", ONSET="0.30",BREAK="0.62",BG="0.020",BS="0.80",IRC="0.58",IRK="8",SDMAX="1.0",
              USE_BRMS="TRUE",USE_ANCHOR="TRUE",NB_BREAK="0.70",QC_BREAK="0.62",
              NB_AFAC="0.579",QC_AFAC="0.111",INDOMAIN="1",
