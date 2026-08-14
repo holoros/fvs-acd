@@ -145,3 +145,16 @@ above), the small-tree fix's rescore against the seven-source battery.
 4. If a merchantable-volume or sawlog product is ever built on this model, source
    `p8vol/calc_tree_volume_patch.R` then `p13merch/calc_merch_height_guard_patch.R` after the base
    model, in that order.
+
+## Decisions made, 14 August
+
+Aaron on Track G: does not know whether 1.22pp has a source outside the workspace, wants the track
+worked to resolution rather than left open. Reframes the task from provenance search (already run
+three times, negative) to independent derivation: pin down what the entry is supposed to represent
+from its context in `c4_adversarial.R` and the Chapter 10 documentation, then attempt to recompute
+it from current benchmark data rather than search further for a pre-existing document. New pass
+scoped separately.
+
+Aaron on plot_ba_incr: banks the reparameterization and diagnostics as done (recommended option).
+Sign problem reported as unresolved. Next real move on a2 is gated on the pooled multi-source refit
+(NS, CTRN, Baxter, PEF, SILC, staged in `multisrc/`), not attempted this pass.
