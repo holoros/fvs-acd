@@ -89,19 +89,78 @@ three of six pooled sources, with a validated fix deployed for ME_FIA_L and BAXT
 closed: the plot_ba_incr sign problem is real, not a data-quality artifact, and is narrower now than
 pass 16's estimate but not resolved.
 
+## Addendum, same day: SILC_L located, fixed, and folded back in; OSM regional benchmark scoped
+
+Aaron asked, mid-pass, whether the FVS-ACD vs OSM regional benchmark is worth rerunning given the
+data and v13.1 updates. Checked `osm_multisrc_run.py` and confirmed it builds the OSM head-to-head
+"observed" treelists directly from the same `bench_mefia_long_*` and `bench_baxter_*` files this
+pass found broken (`PFX = {"me_fia_l":"bench_mefia_long", ...}`), so the existing ME_FIA_L and
+Baxter regional scorecard entries were built against the same inflated observed growth, independent
+of any change to the model itself (v13.1 has not changed; the plot_ba_incr fix remains diagnosed,
+not deployed). NS, CTRN, and PEF regions were never affected. Aaron chose, via multiple choice, to
+wait for the SILC_L fix and rerun all three regions (ME_FIA_L, Baxter, SILC_L) together rather than
+rerun ME_FIA_L and Baxter now and SILC_L later.
+
+That put SILC_L's still-open item back in play immediately. The general `silc_cfi/pair_input/`
+sample checked earlier in this pass was too small (about two dozen files, missing the year-2000
+occasion entirely) to be the full137 source. Broader search on Cardinal found a partial lead
+(`silc_cfi_longhorizon_pairs_v16_full137.csv` pointing at `pair_input_long_v16.tar.gz`, real TREE_ID
+tags, but PREV-year-only, the older "SILC73" vintage, no CURR-year files for any plot) and stalled.
+Asked Aaron directly rather than continuing an open-ended file hunt; he uploaded `SILC CFI.accdb`,
+the source Microsoft Access database. Read it in the Cowork sandbox via the pure-Python
+`access_parser` package (no ODBC driver or root available for `mdbtools`; installed to `/tmp` per
+the standing ENOSPC workaround). It contains `CFI_TreeInit_<YEAR>` tables for 1981 to 2002 (1982
+empty), each carrying a `TREE_ID` field that is a genuine persistent tag, not a per-visit reindex:
+confirmed by matching 1990 to 2000 directly, giving 545 survivor pairs at 4.8 percent species
+mismatch and diameters that grow sensibly, in the same clean range as NS/CTRN/PEF, not the 48.9
+percent seen under the broken reindex.
+
+Matched all 137 full137 stand-pairs (`bench_silc_l_pairs_full137.csv`) against the corresponding
+year tables by `TREE_ID`. 123 of 137 stands produced at least one corrected survivor pair (1,462
+pairs total; the other 14 had no live-tree overlap for that plot/year in the source tables, treated
+as zero survivor growth rather than guessed at). Species mismatch on the corrected pairs is 17.4
+percent, better than the reindex bug's 48.9 percent by a wide margin but higher than ME_FIA_L and
+BAXTER's roughly 2 percent after their fixes; disclosed as a residual caveat rather than treated as
+fully clean, plausibly reflecting genuine tag turnover across SILC's longer multi-decade panels (up
+to 21 years between measurements) rather than a data pipeline defect. Zero of 137 stands now exceed
+the 3.0 m2/ha/yr plausibility ceiling. One separate, unresolved discrepancy surfaced and was
+deliberately NOT acted on: the existing SILC_L files use a fixed EXPF of 12.3553 (matching Baxter's
+1/5-acre convention), while the Access database's own `CFI_StandInit_<year>.INV_PLOT_SIZE` field
+reads 10, which would imply 24.7105 instead. Kept the existing 12.3553 to stay consistent with the
+rest of the pipeline and to avoid bundling an unrelated, unvalidated change into this fix; flagged
+below for pass 18.
+
+Reran the full six-source pooled fit (`p17b_pool_fit.R`, SLURM job 13578369, clean exit) with
+ME_FIA_L, BAXTER, and now SILC_L all corrected. The result is essentially unchanged from the
+ME_FIA_L+BAXTER-only rerun above, as expected given SILC_L is 1.1 percent of the pool: rt_surv a2 =
+-0.0487 (SE 0.0033, boot 95 percent CI [-0.0593, -0.0394], versus -0.0486 [-0.0592, -0.0391]
+without SILC_L and -0.0976 in pass 16); rt_lg a2 = +0.0072, essentially identical to before. The
+Bakuzis-lite check still flags inverted ordering in all four specifications. This is now the
+complete, fully-corrected six-source pooled dataset (every source genuinely persistent-tag
+matched), and the number to treat as current: a2 = -0.0487 [-0.0593, -0.0394] on rt_surv, +0.0072
+on rt_lg, both robust to the tree-matching defect and both still open on the sign problem itself.
+
+Also fixed, while rebuilding this script, the cosmetic headline bug noted above (`bm[,"a2"]` versus
+the real bootstrap column name `a2.a2`); `p17b_pool_fit.R` exits cleanly (0:0).
+
 ## Next steps, priority order
 
 1. Design and run a model that isolates a csi-by-size-class interaction in `plot_ba_incr`'s site
    term (tree-level or explicit interaction specification), rather than comparing separate
    plot-average fits on all-tree versus large-tree-only responses. This is pass 16's original item 2,
-   now unblocked and running on corrected data.
-2. Locate SILC_L's "full137" raw source, apply the same real-tag survivor fix validated here for
-   ME_FIA_L and BAXTER, and fold it back into the pool. Low priority given its small share of the
-   pooled sample and narrow, non-anchor csi range.
-3. Diagnose the rt_net gnls convergence failure if the net-BA-change sensitivity arm is needed for a
+   now unblocked and running on the complete, corrected six-source pool.
+2. Rebuild `osm_me_fia_l_treelist.csv`, `osm_baxter_treelist.csv`, and `osm_silc_l_treelist.csv`
+   from the corrected survivor data and rescore all three regions against OSM
+   (`osm_multisrc_run.py`, `osm_score_multisrc.R`), per Aaron's decision. NS, CTRN, PEF untouched.
+   Not attempted this session; a distinct piece of work from the plot_ba_incr refit.
+3. Resolve the SILC_L EXPF discrepancy (12.3553 currently in use, versus 24.7105 implied by the
+   Access database's own `INV_PLOT_SIZE` field) as its own scoped item, separate from the
+   survivor-matching fix. Changing it would move every SILC_L growth rate in the pipeline, not just
+   the ones this pass touched, so it needs its own dedicated check before being applied.
+4. Diagnose the rt_net gnls convergence failure if the net-BA-change sensitivity arm is needed for a
    future pass.
-4. Fold the pass 16 small-tree fix into the combined v13.1 candidate, with the roughly 1.2 pp BA cost
+5. Fold the pass 16 small-tree fix into the combined v13.1 candidate, with the roughly 1.2 pp BA cost
    at Maine FIA stated as a disclosed tradeoff (unchanged from pass 16, not touched this pass).
-5. If a merchantable-volume or sawlog product is ever built on this model, source
+6. If a merchantable-volume or sawlog product is ever built on this model, source
    `p8vol/calc_tree_volume_patch.R` then `p13merch/calc_merch_height_guard_patch.R` after the base
    model, in that order (unchanged from pass 13).
