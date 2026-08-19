@@ -1,9 +1,45 @@
 # FVS-ACD project MEMORY
 
 - Status: active
-- Last session: 2026-07-18
+- Last session: 2026-08-15 (pass 18; sections below the update block are older provenance)
 - Working directory: ~/Documents/Claude/CRSF-Cowork/repos/fvs-acd
 - Compute: OSC Cardinal (osc-cardinal MCP / hpc-cardinal), account PUOM0008, ~/magplot/verify
+
+## UPDATE 2026-08-15 (second session): deck SIMPLIFIED, ship18 composite computed
+
+- The main deck is now the 13-slide simplified broad-audience version focused on FVS-ACD vs OSM
+  with v13.1 (ship18) as a scored fourth model. The 20-slide technical version is preserved in
+  full as FVS-ACD_Hennigar_Aug2026_FULL_TECHNICAL_20260815.pptx. Diff:
+  20260815_deck_simplified_content_diff.md.
+- ship18 composite COMPUTED (job 13622727, results/p18osm/p19_composite_ship18.csv): NS 85.44
+  [79.07, 91.98], NS-long 106.47 [99.44, 113.24]; ties base, trails v12.11 (76.1/90.1) and OSM
+  (72.1/89.1); gains concentrated on developing Maine FIA (bias -16.6 to -12.5, RMSE 38.7 to
+  37.0). Per-source: p19_ship18_persource.csv. The pending-composite framing is retired.
+- Correction: v131ship_baxter_results.csv is the PRE-PAIRING config, not ship18; true ship18
+  Baxter is p9lev3/p9_bax_ship18_results.csv (28.80 %RMSE, +13.53 bias, corrected basis).
+- Open next steps unchanged from pass 18 except item 1 (ship18 composite) now closed.
+
+## UPDATE 2026-08-15 (pass 18): Tuesday deck FINAL, rescore complete
+
+- The 18 August CFS/Hennigar deck is FINAL: FVS-ACD_Hennigar_Aug2026.pptx (20 slides) + PDF,
+  backups _PREV_20260815. Content diff: 20260815_deck_p18_content_diff.md. Red team:
+  20260815_pretuesday_redteam_REVIEW.md (go with edits; all 12 items executed).
+- Pass 17 survivor-join defect fully resolved: three-region rescore on corrected staging
+  (p18osm). ME_FIA_L and SILC_L reproduce exactly; Baxter moves (base +13.56, cand +11.28,
+  OSM +16.85 bias; RMSE 28.72/28.47/32.22; no winner flips). Authoritative:
+  results/p18osm/p18_old_vs_new.csv.
+- Downstream refreshed: composite NS 85.9/76.1/72.1, NS-long 106.8/90.1/89.1 (base/v12.11/OSM);
+  all 12 equivalence verdicts hold; Table 34 ranks unchanged (pooled shifts <=0.33 pp,
+  figures/_data/p18/). Frozen fourway had mixed observed bases on Baxter; corrected basis ranks
+  cand 28.5, base 28.7, v13.1 30.6, OSM 32.2.
+- v13.1: ship18 is the designated shipping candidate (12 Aug, disclosed tradeoffs: Reineke
+  softwood -1.80 on the boundary; small-tree ~1.2 pp BA cost). Its composite rerun is the one
+  number stated as pending on the deck.
+- Next steps, priority order: ship18 composite rerun; csi-by-size-class interaction refit
+  (inverted BA-increment site gradient, a2 = -0.0487 on corrected data); SILC EXPF check
+  (12.3553 vs 24.7105); QC MagPlot fitted-height rescore and memat/medev reconciliation;
+  regenerate fig15/fig22/fig23 from corrected data to retire the three disclosed on-slide
+  staleness notes. Full ledger: 20260815_v131_pass18_handoff_FINAL.md.
 
 ## What this project is
 
