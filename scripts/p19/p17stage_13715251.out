@@ -1,0 +1,17 @@
+final chains (must equal build_mefia_long_bench's 933): 933
+tree records on kept chains (all panels, all status): 263069
+live trees at t1 endpoints: 37652 ; at t2 endpoints: 48624
+ambiguous troot at t1: 0 ; at t2: 0 (dropped from matching)
+
+TRUE survivor pairs: 24520 (t1 live trees on matched stands: 37652 -> survivor fraction 0.651)
+VALIDATION species agreement (SPCD exact): 0.9790 ; (AGY code): 0.9791
+VALIDATION shrinking survivors D2<D1: 0.0041 (measurement noise expected, few %)
+D1 quantiles:
+   0%    5%   25%   50%   75%   95%  100% 
+  2.5   3.0   6.6  15.2  21.3  33.3 106.2 
+annual diameter increment (D2-D1)/interval quantiles (cm/yr):
+    0%     1%     5%    25%    50%    75%    95%    99%   100% 
+-0.775  0.000  0.025  0.102  0.178  0.292  0.508  0.724  1.524 
+frame crossers (E1>100, E2<100): 1418 ; backcross (E1<100, E2>100): 0 of 24520
+
+wrote /users/PUOM0008/crsfaaron/magplot/verify/multisrc/bench_mefia_long_surv_pairs.csv : 24520 rows, 905 stands
