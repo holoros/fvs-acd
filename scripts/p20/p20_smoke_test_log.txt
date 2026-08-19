@@ -1,0 +1,35 @@
+v13.2 overlay loaded: plot_ba_incr_v132, calc_ddbh_v132, .calc_f_sm_v132
+
+--- structural check: calc_ddbh_v132 vs calc_ddbh, args and non-target lines ---
+formals identical: TRUE
+body line count v132: 154  original: 151
+
+--- rt(csi) at rd = 0.5, ba.perc.hw = 0.10, f_sm = 0 (pure large-tree stand) ---
+csi=12  dba=0.05675
+csi=14  dba=0.05675
+csi=16  dba=0.12403
+csi=18  dba=0.21767
+csi=20  dba=0.30144
+
+--- rt(csi) at rd = 0.5, ba.perc.hw = 0.10, f_sm = 0.1876 (median) ---
+csi=12  dba=0.35553
+csi=14  dba=0.40369
+csi=16  dba=0.44541
+csi=18  dba=0.48221
+csi=20  dba=0.51512
+
+--- shipped plot_ba_incr for comparison, same grid (expect flat-to-inverted site order) ---
+csi=12  dba=0.50095
+csi=14  dba=0.46315
+csi=16  dba=0.43041
+csi=18  dba=0.40154
+csi=20  dba=0.37571
+
+--- end-to-end calc_ddbh_v132 direct-call test ---
+(fails upstream of the patched block, in ddbh()/bal columns missing from the ad hoc synthetic
+tree list used here; not a defect in the patch. Superseded by p20_v132_bakuzis_pipeline_check.R,
+which drives the same overlay through the full AcadianGYOneStand call path and completes cleanly.)
+
+SMOKE_DONE
+
+Run: Cardinal, R/4.5.2, 19 August 2026, ~/magplot/verify/p20_v132/.

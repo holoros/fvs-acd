@@ -1,0 +1,36 @@
+v13.2 overlay loaded: plot_ba_incr_v132, calc_ddbh_v132, .calc_f_sm_v132, activate_v132()
+
+=== large-tree-dominated stand (low f_sm) (small_heavy=FALSE) ===
+t0 plot BA = 41.446, f_sm at t0 = 0.007
+  csi  ba_v131  ba_v132
+1  12 30.26536 30.24476
+2  14 30.32688 30.31060
+3  16 30.37714 30.36463
+4  18 30.41865 30.41506
+5  20 30.45181 30.46265
+Bakuzis-lite site ordering (BA at yr 10 increases monotonically with csi): v13.1 PASS | v13.2 PASS
+
+=== small-tree-dominated stand (high f_sm) (small_heavy=TRUE) ===
+t0 plot BA = 8.139, f_sm at t0 = 0.311
+  csi  ba_v131  ba_v132
+1  12 11.20690 11.20690
+2  14 11.26442 11.26442
+3  16 11.31446 11.31446
+4  18 11.35879 11.35879
+5  20 11.39863 11.39863
+Bakuzis-lite site ordering (BA at yr 10 increases monotonically with csi): v13.1 PASS | v13.2 PASS
+
+BAKUZIS_PIPELINE_CHECK_DONE
+
+Run: Cardinal, R/4.5.2, 19 August 2026, ~/magplot/verify/p20_v132/.
+
+Interpretation caveat (important, see pass 20 handoff section 2): this is a full 10-year
+AcadianGYOneStand projection, so rd.mod evolves endogenously through the SDImax machinery as the
+stand grows, which mixes the direct site-term effect being tested with rd's own csi-mediated
+response. It is a legitimate "does the overlay run end to end and produce sane numbers" check
+(pass, both structures, all five site indices, activate/deactivate toggling verified working) but
+it is NOT the controlled partial-effect test that resolves the diagnosed defect, because it does
+not hold rd and ba.perc.hw fixed while varying csi the way p19_refit.R's own Bakuzis-lite check
+and the p20_v132_smoke_test.R unit test do. That controlled test (p20_smoke_test_log.txt) is the
+one that reproduces p19_fit_log.txt's verdict: v13.1 inverted, v13.2 corrected at both f_sm = 0
+and f_sm = median.
