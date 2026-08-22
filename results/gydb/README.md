@@ -89,7 +89,12 @@ rows (266 Round 1, 101 Round 2, years 2004 to 2016) and 4,098 `S_Trees` rows wer
 remaining approximately 78 percent of visits left unbuilt rather than guessed. MNAP is therefore
 usable as a partial ninth scoring benchmark for the plots and years it now covers; closing the
 rest needs either a newer `EcoreserveMonitoring.accdb` than this 2018 copy (the untested
-TNC-only copy on Drive is the first thing to check) or MNAP/TNC confirming dates directly.
+TNC-only copy on Drive is the first thing to check) or MNAP/TNC confirming dates directly. Aaron's
+local `Documents/MAINE/DATA/TNC/` holdings were also checked same day: `StJohnEIM.mdb` is a real,
+dated (2005/2008/2009) survey of TNC's St. John River corridor preserve, but its plot layout and
+township keys do not match the smaller St. John Ponds reserve already in GYDB, and every row
+carries a single date rather than a Round 1/Round 2 pair, so it was confirmed not usable and no
+database change was made from it (full check in `results/gydb/mnap_pass24_writeup.md`).
 
 `S_PlotTreatments` loaded zero rows in pass 23 despite both CTRN and PEF having treatment source
 files; pass 24 fixed both. CTRN's file carried the year under `TRT_YR`, not the literal `YR` the

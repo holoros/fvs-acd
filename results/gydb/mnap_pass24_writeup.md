@@ -13,3 +13,32 @@ The join key turned out to be exact rather than approximate: ERM_ME_LiveTrees.cs
 With the resolvable subset, S_Visits and S_Trees were built for MNAP (Dataset 8) directly against the existing S_Locations and S_Plots rows, following the same conventions build_gydb.R's build_generic_source function uses elsewhere (Frame assigned from the tree's EXPF against the two frame constants already on file for MNAP's nested design, Status from the accdb's Condition crosswalk with 1 and 2 as live and 3 as dead, species mapped through the six letter MNAP code to the two letter AGY code to the existing AGY2SP crosswalk already used for every other GYDB source). The species crosswalk was parsed directly out of mnap_raw/ERM_ME_SpeciesCodes.R rather than retyped by hand, and every one of the 58 species codes observed in the tree data resolved cleanly to a SpeciesCD already present in Lookup_Species; the 16 rows coded .dead, .deadc, .deadd, .UNID, .DICOT, or blank fell to the standard T_X unknown placeholder, which is the correct, already established behavior for unidentifiable stems rather than a new gap. Height was nulled (not dropped) for 1,201 of 4,098 resolved tree rows because the source recorded a large block of zero or negative values, the same disclosed HT range rule build_gydb.R already applies uniformly to every other source; DBH needed no correction, with a full range of 12.7 to 119.0 cm across the source data. Tree identity used the accdb's own TP_ID directly rather than a synthetic renumbering, since it is a stable per-row key; a real cross-visit tree identity is also present in the source (a TreeLink column plus a New/status flag) that would support true survivor and ingrowth Membership coding in a future pass, but Membership was left NULL this pass rather than interpret ambiguous flag values (N, E, e, ?, n, 7) without confirmation.
 
 Before writing anything, the database was backed up to data/ALL/ALL_Standardized_PREV_20260822b.sqlite (a distinct suffix from the same day's ALL_Standardized_PREV_20260822.sqlite backup taken for the concurrent S_PlotTreatments work), and only S_Visits and S_Trees were touched; S_PlotTreatments and every other table were left exactly as found. The result is 367 new S_Visits rows for Dataset 8 (266 Round 1 visits, 101 Round 2 visits, real years spanning 2004 to 2016) and 4,098 new S_Trees rows, verified against zero foreign key violations on both tables after the insert. The next step to close the remaining gap is either locating a newer or more complete EcoreserveMonitoring accdb than the 2018 snapshot used here (the TNC-only copy is the first thing to check), or asking MNAP/TNC directly for visit dates on the roughly 1,250 PM_IDs that the current CSVs reference but this accdb never recorded.
+
+## Addendum, same day: St. John data on Aaron's local drive checked, does not extend coverage
+
+Aaron pointed at `Documents/MAINE/DATA/TNC/` as his only other TNC holding and invited a search of
+his data drive for anything that might close the remaining MNAP gap. That folder holds
+`StJohnEIM.mdb`, an older (pre-2018) Access database plus supporting analysis files
+(`TNC.r`, `TNC.xlsx`, SAS scripts) for a coarse-woody-debris and stand-structure survey on TNC's
+St. John River corridor preserve. It was uploaded to Cardinal, converted with the same
+mdbtools build from earlier this pass, and checked rather than assumed relevant.
+
+`TNC.xlsx` is a small output summary (volume and stems per acre with confidence intervals) with no
+plot identifiers or dates, not a source table. `StJohnEIM.mdb` itself does hold a dated
+`PlotLevel` table (407 rows, ReserveName "St John", real survey dates in 2005, 2008, and 2009),
+which is a genuine, previously untried lead worth checking against the "St. John Ponds" reserve
+already in GYDB's MNAP plots (37 plots, Plot_ID 1011 to roughly 1047, Transects 1 to 7 with up to
+5 plots per transect). The check does not support a join. Seventy of the 407 PlotLevel rows carry
+a transect-plot style code (`1-1` through `24-3`), but they span 24 transects of 3 plots each,
+a different layout from the 7-transect, up-to-5-plot design in `ERM_ME_Plots.csv`, and every one of
+the 407 rows carries exactly one survey date, never a Round 1 and Round 2 pair, so even a
+successful plot match would not resolve the Round-to-year mapping the MNAP GYDB rows actually need.
+The remaining 337 rows are unambiguously the same "St John" reserve but keyed to townships (T8 to
+T11, R16 to R18 WELS) covering the larger river-corridor landscape survey, not the smaller
+state-owned St. John Ponds Ecological Reserve. This is TNC's separate, single-occasion St. John
+corridor structure study, not an earlier phase of the MNAP St. John Ponds monitoring network, and
+using it to assign years to MNAP's St. John Ponds visits would be exactly the kind of
+same-name-different-population error the input validity firewall exists to catch. No database
+change was made from this lead. The disclosed path to closing the remaining MNAP gap is unchanged
+from above: a newer `EcoreserveMonitoring.accdb`, the untested TNC-only Drive copy, or MNAP/TNC
+confirming dates directly.
