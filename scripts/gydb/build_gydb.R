@@ -161,13 +161,25 @@ build_generic_source <- function(dataset_id, name, full_name, jurisdiction, owne
 
   if (!is.null(treat)) {
     treat <- treat[STAND %in% names(plot_id)]
+    ## pass 24 fix: some sources (CTRN) carry the treatment year as TRT_YR, not YR; fall back to
+    ## it rather than silently loading zero rows. PEF has no year column at all in this file (its
+    ## treatment years come from a separate compartment activity-dates source and are joined in
+    ## by the pass-24 follow-on script load_plot_treatments_pass24.R, not here).
+    if (!("YR" %in% names(treat)) && "TRT_YR" %in% names(treat)) {
+      treat[, YR := suppressWarnings(as.integer(TRT_YR))]
+    }
     if ("YR" %in% names(treat) && nrow(treat) > 0) {
+      ## pass 24 fix: S_PlotTreatments has no Comments column (Severity, FuzzyYR instead); the
+      ## original Comments=NA_integer_ would have thrown on the first dbAppendTable that ever
+      ## reached this line. Treatment=99 (Unknown treatment) replaces 1 (Stand tending), which
+      ## does not describe these regimes, pending a real treatment-code crosswalk.
       treat_dt <- data.table(Dataset=dataset_id, PlotID=plot_id[treat$STAND],
-                              YR=as.integer(treat$YR), Treatment=1L, Comments=NA_integer_)
+                              YR=as.integer(treat$YR), Treatment=99L,
+                              Severity=NA_integer_, FuzzyYR=NA)
       treat_dt <- treat_dt[is.finite(YR)]
       treat_dt <- unique(treat_dt, by=c("Dataset","PlotID","YR","Treatment"))
       if (nrow(treat_dt) > 0) dbAppendTable(con, "S_PlotTreatments", treat_dt)
-      logmsg(dataset_id, name, "INFO", sprintf("inserted %d treatment records (generic Treatment code, pending real crosswalk)", nrow(treat_dt)))
+      logmsg(dataset_id, name, "INFO", sprintf("inserted %d treatment records (generic Treatment code 99=Unknown, pending real crosswalk)", nrow(treat_dt)))
     }
   }
   logmsg(dataset_id, name, "INFO", "build complete")

@@ -1,0 +1,29 @@
+hybrid,source,n_ref,n_hyb,pass
+h1_v132_mortgate,"Baxter (mature, held-out)",91,91,TRUE
+h2_v132_dhthw,"Baxter (mature, held-out)",91,91,TRUE
+h3_v132_mortgate_dhthw,"Baxter (mature, held-out)",91,91,TRUE
+h4_v132_full1211,"Baxter (mature, held-out)",91,91,TRUE
+h1_v132_mortgate,CFRU CTRN (managed),1086,1086,TRUE
+h2_v132_dhthw,CFRU CTRN (managed),1086,1086,TRUE
+h3_v132_mortgate_dhthw,CFRU CTRN (managed),1086,1086,TRUE
+h4_v132_full1211,CFRU CTRN (managed),1086,1086,TRUE
+h1_v132_mortgate,PEF (developing),2853,2853,TRUE
+h2_v132_dhthw,PEF (developing),2853,2853,TRUE
+h3_v132_mortgate_dhthw,PEF (developing),2853,2853,TRUE
+h4_v132_full1211,PEF (developing),2853,2853,TRUE
+h1_v132_mortgate,Maine FIA whole-plot (= 20-yr long),918,918,TRUE
+h2_v132_dhthw,Maine FIA whole-plot (= 20-yr long),918,918,TRUE
+h3_v132_mortgate_dhthw,Maine FIA whole-plot (= 20-yr long),918,918,TRUE
+h4_v132_full1211,Maine FIA whole-plot (= 20-yr long),918,918,TRUE
+h1_v132_mortgate,Maine FIA mature (memat),1757,1757,TRUE
+h2_v132_dhthw,Maine FIA mature (memat),1757,1757,TRUE
+h3_v132_mortgate_dhthw,Maine FIA mature (memat),1757,1757,TRUE
+h4_v132_full1211,Maine FIA mature (memat),1757,1757,TRUE
+h1_v132_mortgate,Maine FIA developing (medev),1759,1759,TRUE
+h2_v132_dhthw,Maine FIA developing (medev),1759,1759,TRUE
+h3_v132_mortgate_dhthw,Maine FIA developing (medev),1759,1759,TRUE
+h4_v132_full1211,Maine FIA developing (medev),1759,1759,TRUE
+h1_v132_mortgate,"SILC/Seven Islands (calibration, managed)",73,73,TRUE
+h2_v132_dhthw,"SILC/Seven Islands (calibration, managed)",73,73,TRUE
+h3_v132_mortgate_dhthw,"SILC/Seven Islands (calibration, managed)",73,73,TRUE
+h4_v132_full1211,"SILC/Seven Islands (calibration, managed)",73,73,TRUE

@@ -1,4 +1,4 @@
-# GYDB build and v12.11 vs v13.2 comparison, 21 August 2026
+# GYDB build and v12.11 vs v13.2 comparison, 21 to 22 August 2026 (pass 23 to 24)
 
 ## What this is
 
@@ -32,7 +32,7 @@ below).
 | MEFIA_L | Maine FIA whole-plot (long interval) | 933 | 933 | 1,866 | 86,276 | 1999 to 2024 |
 | MEMAT | Maine FIA mature stratum | 1,760 | 1,760 | 3,520 | 168,902 | 1999 to 2024 |
 | MEDEV | Maine FIA developing stratum | 1,760 | 1,760 | 3,520 | 165,417 | 1999 to 2024 |
-| MNAP | Maine Ecological Reserves (MNAP/TNC) | 1,109 | 1,109 | 0 | 0 | not built, see below |
+| MNAP | Maine Ecological Reserves (MNAP/TNC) | 1,109 | 1,109 | 367 | 4,098 | 2004 to 2016, partial (pass 24) |
 
 Species are stored under gydb's own Lookup_Species table, keyed by USDA PLANTS symbol. The AGY
 two-letter codes used throughout the FVS-ACD scoring pipeline were cross-walked to PLANTS symbols
@@ -77,24 +77,36 @@ never had one.
 
 ## Known gaps, not yet resolved
 
-MNAP's `S_Visits` and `S_Trees` were deliberately not built. No calendar year exists anywhere in
-`ERM_ME_Plots.csv` or `ERM_ME_LiveTrees.csv`, only an ordinal Round 1/Round 2 label, and
-`S_Visits.YR` is schema-enforced NOT NULL with a 1900 to 2050 check constraint (confirmed directly
-against the DDL on Cardinal, not assumed). Rather than invent a year, only `S_Datasets`,
-`S_Blocks`, `S_Locations` (with real latitude, longitude, and elevation; MNAP is not FIA and is
-not coordinate-restricted), and `S_Plots` were built for MNAP. Locating real survey years needs
-either the source `EcoreserveMonitoring.accdb` (Windows-only conversion tool required to reach it
-from Cardinal or the sandbox) or Aaron confirming the Round 1/Round 2 dates directly. This is the
-single blocker keeping MNAP from being usable as a ninth scoring benchmark, which was the original
-motivation for including it.
+MNAP's `S_Visits` and `S_Trees` were partially built in pass 24. The blocker described in pass 23
+(no calendar year in `ERM_ME_Plots.csv` or `ERM_ME_LiveTrees.csv`, only an ordinal Round label,
+against a schema-enforced NOT NULL `S_Visits.YR`) was resolved by retrieving and converting
+`EcoreserveMonitoring.accdb` from Google Drive on Cardinal (mdbtools built from source; see
+`results/gydb/mnap_pass24_writeup.md` for the full method). Its `PlotMetrics` table ties `PM_ID`
+to a real date and Round, joining exactly against the PM_ID already present in the tree CSVs (zero
+Round mismatches across 3,564 checked rows). The recovered 2018 snapshot only covers 374 of the
+roughly 1,600 PM_IDs the current CSVs reference, so coverage is real but partial: 367 `S_Visits`
+rows (266 Round 1, 101 Round 2, years 2004 to 2016) and 4,098 `S_Trees` rows were added, with the
+remaining approximately 78 percent of visits left unbuilt rather than guessed. MNAP is therefore
+usable as a partial ninth scoring benchmark for the plots and years it now covers; closing the
+rest needs either a newer `EcoreserveMonitoring.accdb` than this 2018 copy (the untested
+TNC-only copy on Drive is the first thing to check) or MNAP/TNC confirming dates directly.
 
-`S_PlotTreatments` loaded zero rows despite both CTRN and PEF having treatment source files. CTRN's
-file uses `TRT_YR`, not `YR`, and is frequently blank for control-plot rows; PEF's treatment file
-has no year column at all (`STAND, MU, TREATMENT, interval_years`). The build script checks for a
-literal `YR` column and silently inserts nothing when it is absent, which is a real gap, not a
-silent success. Fixing this needs an explicit column-mapping decision (what PEF treatment applies
-in what year, if that is even recoverable) rather than a guessed mapping, so it was left disclosed
-and unfixed this pass.
+`S_PlotTreatments` loaded zero rows in pass 23 despite both CTRN and PEF having treatment source
+files; pass 24 fixed both. CTRN's file carried the year under `TRT_YR`, not the literal `YR` the
+build script checked for, so the loading branch's guard was always false; adding `TRT_YR` as a
+fallback recovered 901 of 1,086 rows (the other 185 are genuinely untreated control intervals with
+no TRT_YR to recover). PEF's treatment file has no year column of any kind; rather than guess one
+from the STAND interval suffix, the compartment-level activity log
+`PEF_CompartmentStudy_ActivityDates_TRMT.csv` (135 dated harvest and cultural-treatment events,
+1952 to 2024, already read elsewhere in the PEF build pipeline but never carried through to the
+treatments output) was joined against each interval-STAND's own measured t1-to-t2 window, resolving
+666 of 2,853 PEF interval-STANDs (23 percent); the match rate scales cleanly with cutting-cycle
+frequency (68 percent at 5-yr cycles down to 18 percent at 20-yr cycles) and is zero, correctly,
+for every Reference (unmanaged) compartment, which is the expected signature of a real signal
+rather than noise. `S_PlotTreatments` now holds 1,567 rows (901 CTRN, 666 PEF), with `Treatment`
+recorded under the placeholder code 99 (Unknown treatment) pending a real crosswalk of CTRN's
+regime and PEF's named silvicultural treatments onto `Lookup_Treatment`'s actual codes. Full method
+in `results/gydb/plottreatments_pass24_writeup.md`.
 
 SILC_L's real-tag t2 reconciliation remains unverified, carried unchanged from the pass 22 handoff
 (19 mismatched groups, 184 TREE collisions, traced to a species-crosswalk gap and at least one
@@ -125,6 +137,19 @@ sqlite3 ALL_Standardized.sqlite "SELECT * FROM SV_Datasets;"
 
 Country  Jurisdiction  Datasets  MinYR  MaxYR  Locations  Plots  Visits  DistinctTrees  TotalTrees
 USA      ME            8         1953   2024   5,253      8,620  17,236  585,685        1,084,941
+```
+
+After pass 24 (MNAP Visits/Trees and S_PlotTreatments added; `SV_Datasets` itself only aggregates
+`S_Trees`/`S_Visits` and does not carry a treatments column, so it is unchanged by the treatments
+load and updated only by the MNAP tree/visit rows):
+
+```
+S_Datasets         8
+S_Locations    6,362
+S_Plots        9,729
+S_Visits      17,603   (+367, all MNAP)
+S_Trees    1,089,039   (+4,098, all MNAP)
+S_PlotTreatments  1,567   (+1,567: 901 CTRN, 666 PEF)
 ```
 
 ## v12.11 vs v13.2, full head-to-head
@@ -181,6 +206,26 @@ contradicting it. Whether v12.11's config elements that help CTRN/NB/NS can be m
 base without reintroducing Baxter's over-prediction is the natural next question and is not
 answered by this pass.
 
+## Pass 24 additions (22 August 2026)
+
+Three tracks closed or partially closed the gaps pass 23 left open. MNAP's `S_Visits`/`S_Trees`
+were partially built (367 visits, 4,098 trees, 2004 to 2016) by recovering real survey dates from
+`EcoreserveMonitoring.accdb`; full method and the disclosed coverage shortfall are in
+`results/gydb/mnap_pass24_writeup.md`. `S_PlotTreatments` went from 0 to 1,567 rows (901 CTRN, 666
+PEF) by fixing a column-name mismatch (CTRN) and joining a compartment activity log (PEF); full
+method in `results/gydb/plottreatments_pass24_writeup.md`. A modeling question left open at the
+end of pass 23, whether v12.11's CTRN-favorable config elements can be merged into v13.2's base
+without reintroducing Baxter's over-prediction, was answered for the non-Canadian battery: yes, a
+single lever (density-dependent mortality scaling, gated on the managed flag) recovers CTRN in
+full while leaving Baxter, PEF, Maine FIA, and SILC numerically untouched. Full diff, hybrids, and
+verdict in `results/gydb/merge_v24/README.md`. NB MagPlot, QC MagPlot, NS, and NS-long were
+explicitly out of scope for pass 24 per instruction and remain exactly as pass 23 left them, not
+in GYDB and not part of the merge verdict; item 4 in the gaps list above is unchanged.
+
+`ALL_Standardized.sqlite` was backed up twice before these writes,
+`ALL_Standardized_PREV_20260822.sqlite` (pre-treatments) and `ALL_Standardized_PREV_20260822b.sqlite`
+(pre-MNAP), both retained on Cardinal alongside the live database.
+
 ## Files in this delivery
 
 `scripts/gydb/build_gydb.R`: the full build script (v3, the version that ran clean end to end),
@@ -191,5 +236,13 @@ results files, no new Cardinal compute.
 `results/gydb/build_log_full.csv`: the structured audit log (Dataset, Provider, Level, Message)
 from the full build, including MNAP.
 
-The 86 MB `ALL_Standardized.sqlite` itself stays on Cardinal at
+`scripts/gydb/load_plot_treatments_pass24.R`: follow-on loader that patches `S_PlotTreatments`
+without a full rebuild; the underlying fixes are also patched into `build_gydb.R` directly.
+`results/gydb/plottreatments_pass24_writeup.md`, `results/gydb/mnap_pass24_writeup.md`: full pass
+24 method writeups for the two data-gap tracks.
+`results/gydb/merge_v24/`: the config-merge experiment (README, lever block, runner, sbatch,
+scorecard script, and the two small aggregated result CSVs). The 40 per-stand hybrid result files
+(about 25 MB) stay on Cardinal at `magplot/verify/merge_v24/`.
+
+The 89 MB `ALL_Standardized.sqlite` itself stays on Cardinal at
 `~/gydb_ws/data/ALL/ALL_Standardized.sqlite`.
