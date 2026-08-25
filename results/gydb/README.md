@@ -157,99 +157,83 @@ S_Trees    1,089,039   (+4,098, all MNAP)
 S_PlotTreatments  1,567   (+1,567: 901 CTRN, 666 PEF)
 ```
 
-## v12.11 vs v13.2, full head-to-head
+## v12.11 vs v13.2 vs OSM-ACD v2.26.1, full head-to-head
 
 v12.11 (the CANDIDATE lineage from before the site-fsm work) and v13.2 (the patch validated and
 shipped at pass 20 to 21) are not the same lineage stacked at two points in time. v13.2 stacks the
 site-fsm fix on top of ship18/v13.1's base configuration, not on top of v12.11's configuration, so
-this comparison is not a simple "which is the newer, better model" question. It is a real
-tradeoff between two different configurations, and the results below say so plainly rather than
-picking a winner.
+this comparison is not a simple "which is the newer, better model" question. OSM-ACD v2.26.1 is a
+third, independently developed model already scored on every source in the same pass 21/22
+harness; it was omitted from this table through pass 25 (see the pass 25 note below) and is
+restored here as of pass 26.
 
-| Source | n | RMSE v12.11 | Bias v12.11 | RMSE v13.2 | Bias v13.2 | Slope v13.2 | Delta RMSE | Delta bias |
-|---|---|---|---|---|---|---|---|---|
-| Baxter (mature, held-out) | 91 | 28.47 | 11.28 | 25.72 | -0.22 | 1.087 | -2.75 | -11.50 |
-| CTRN (managed) | 1,086 | 18.06 | -2.24 | 24.60 | -9.12 | 1.205 | +6.54 | -6.88 |
-| Maine FIA whole-plot (20-yr) | 918 | 38.56 | -16.13 | 38.21 | -12.92 | 1.109 | -0.35 | +3.21 |
-| NB MagPlot (managed) | 355 | 41.85 | -5.96 | 48.80 | -11.13 | 1.181 | +6.95 | -5.17 |
-| NS, NS scenario | 4,504 | 156.69 | -30.61 | 182.38 | -41.54 | 0.120 | +25.69 | -10.93 |
-| NS, NS-long scenario | 5,348 | 127.35 | -30.41 | 153.67 | -38.34 | 0.220 | +26.32 | -7.93 |
-| PEF (developing) | 2,853 | 17.91 | 1.37 | 18.81 | 3.37 | 0.918 | +0.90 | +2.00 |
-| QC MagPlot | 378 | 58.50 | 9.46 | 58.58 | 3.43 | 0.538 | +0.08 | -6.03 |
-| SILC/Seven Islands (calibration) | 73 | 64.24 | -5.65 | 63.90 | -5.29 | 0.580 | -0.34 | +0.36 |
-| memat | 1,757 | no v12.11 run | -- | 18.47 | -6.83 | 1.183 | -- | -- |
-| medev | 1,759 | no v12.11 run | -- | 20.77 | -4.05 | 1.061 | -- | -- |
+| Source | n | RMSE v12.11 | Bias v12.11 | RMSE v13.2 | Bias v13.2 | Slope v13.2 | RMSE OSM-ACD | Bias OSM-ACD | Best RMSE model |
+|---|---|---|---|---|---|---|---|---|---|
+| Baxter (mature, held-out) | 91 | 28.47 | 11.28 | 25.72 | -0.22 | 1.087 | 32.22 | 16.85 | v13.2 site-fsm |
+| CTRN (managed) | 1,086 | 18.06 | -2.24 | 24.60 | -9.12 | 1.205 | 20.51 | -4.81 | CANDIDATE v12.11 |
+| Maine FIA whole-plot (20-yr) | 918 | 38.56 | -16.13 | 38.21 | -12.92 | 1.109 | 31.93 | -6.29 | OSM-ACD v2.26.1 |
+| NB MagPlot (managed) | 355 | 41.85 | -5.96 | 48.80 | -11.13 | 1.181 | 43.77 | -8.07 | CANDIDATE v12.11 |
+| NS, NS scenario | 4,504 | 156.69 | -30.61 | 182.38 | -41.54 | 0.120 | 153.05 | -29.22 | OSM-ACD v2.26.1 |
+| NS, NS-long scenario | 5,348 | 127.35 | -30.41 | 153.67 | -38.34 | 0.220 | 128.34 | -31.99 | CANDIDATE v12.11 |
+| PEF (developing) | 2,853 | 17.91 | 1.37 | 18.81 | 3.37 | 0.918 | 14.65 | 0.26 | OSM-ACD v2.26.1 |
+| QC MagPlot | 378 | 58.50 | 9.46 | 58.58 | 3.43 | 0.538 | not scored | not scored | -- |
+| SILC/Seven Islands (calibration) | 73 | 64.24 | -5.65 | 63.90 | -5.29 | 0.580 | 62.99 | -18.07 | OSM-ACD v2.26.1 |
+| memat | 1,757 | no v12.11 run | -- | 18.47 | -6.83 | 1.183 | no OSM run | -- | -- |
+| medev | 1,759 | no v12.11 run | -- | 20.77 | -4.05 | 1.061 | no OSM run | -- | -- |
 
-Delta columns are v13.2 minus v12.11 (RMSE and bias in percent of observed mean, as scored by the
-pass 21/22 harness); positive means v13.2 is worse.
+RMSE and bias are in percent of observed mean, as scored by the pass 21/22 harness.
 
-v13.2 wins decisively, and by design, on exactly one source: Baxter. This is the source v13.2 was
-built to fix. RMSE drops 2.75 points and bias collapses from +11.28 percent (ship18's known
-over-prediction problem) to -0.22 percent, with a slope of 1.087, close to the 1:1 line. On every
-other source, v13.2 either loses outright or is a wash.
+v13.2 wins decisively, and by design, on exactly one source: Baxter, the source it was built to
+fix. RMSE drops 2.75 points against v12.11 and bias collapses from +11.28 percent to -0.22
+percent, with a slope of 1.087, close to the 1:1 line. OSM-ACD trails badly here (32.22 percent
+RMSE, +16.85 percent bias), so Baxter is the one source where the two AGY candidates both beat the
+external reference outright.
 
-v12.11 wins substantially on three sources. CTRN is the clearest: v13.2 is 6.54 RMSE points worse
-and its bias more than triples in magnitude, from -2.24 to -9.12 percent. NB MagPlot moves the
-same direction, v13.2 6.95 RMSE points worse with bias nearly doubling. NS is the most severe:
-under both the NS and NS-long scoring scenarios, v13.2's RMSE is 20 to 26 points worse than
-v12.11's, bias is 8 to 11 points worse, and the observed-on-predicted slope collapses to 0.12 to
-0.22, a level of attenuation that means v13.2's predictions are barely tracking the observed
-spread at all on this source, not merely biased.
+Everywhere else, OSM-ACD is the source of the real headline. It is the outright best RMSE model on
+four of eight comparable sources: Maine FIA whole-plot (31.93 percent against v12.11's 38.56 and
+v13.2's 38.21, roughly 6.3 to 6.6 points better than either AGY candidate), PEF (14.65 percent
+against 17.91 and 18.81, about 3 to 4 points better), SILC (62.99 percent against 64.24 and 63.90,
+a smaller margin), and NS under the NS scenario (153.05 percent against 156.69 and 182.38). It is
+close behind the winner on two more: CTRN (20.51 percent, second to v12.11's 18.06 but well ahead
+of v13.2's 24.60) and NS-long (128.34 percent, essentially tied with v12.11's 127.35). It trails
+clearly only on Baxter and NB MagPlot (43.77 percent, between the two AGY candidates). QC MagPlot
+and the two FIA strata (memat, medev) have no OSM-ACD run to compare.
 
-The remaining five sources (Maine FIA whole-plot, PEF, QC MagPlot, SILC, and the two FIA strata
-with no v12.11 comparison run available) are close to a wash, within 1 RMSE point either direction
-except PEF's 2-point bias shift, none large enough to call a clear winner on their own.
+Read together, the practical question on most of this battery is not only which AGY configuration
+to ship, but whether either currently beats an existing external reference model. Between the two
+AGY candidates alone, v12.11 wins substantially on CTRN, NB MagPlot, and especially NS, where
+v13.2's observed-on-predicted slope collapses to 0.12 to 0.22, severe attenuation rather than
+simple bias; the remaining sources are close to a wash between the two. The pass 21/22 conclusion
+that v13.2 is the shipping candidate was validated against ship18 and the rest of the eight-source
+battery, not against v12.11 or OSM-ACD, and that conclusion stands on its own grounds; this table
+answers a different question and should not be read as contradicting it. Pass 24's
+`h1_v132_mortgate` config merge (below) already closes most of the CTRN gap between v13.2 and
+v12.11 without touching Baxter; whether it also closes the gap to OSM-ACD on CTRN, or whether a
+similar merge could close the gap to OSM-ACD on Maine FIA whole-plot, PEF, or SILC, is not answered
+by this pass.
 
-Read together, this does not support treating v13.2 as a strict upgrade over v12.11. It supports
-treating them as two different configurations with different strengths: v13.2 for anything close
-to Baxter's mature, held-out stand structure, v12.11 for CTRN-like managed stands, NB, and
-especially NS, where v13.2's attenuation is severe enough to be disqualifying on its own. The
-pass 21/22 conclusion that v13.2 is the shipping candidate was validated against ship18 and the
-rest of the eight-source battery, not against v12.11, and that conclusion stands on its own
-grounds; this comparison answers a different question (v12.11 vs v13.2) and should not be read as
-contradicting it. Whether v12.11's config elements that help CTRN/NB/NS can be merged into v13.2's
-base without reintroducing Baxter's over-prediction is the natural next question and is not
-answered by this pass.
+## Pass 25 to 26: an omission found and fixed, and independent verification of pass 24
 
-## Pass 25 review: an omission in the v12.11 vs v13.2 table, and independent verification of pass 24
-
-A review of this comparison (F9 firewall, re-deriving every number against primary sources rather
-than trusting the composite) found the pairwise v12.11-vs-v13.2 figures above to be accurate: every
+A pass 25 review of this comparison (F9 firewall, re-deriving every number against primary sources
+rather than trusting the composite) found the pairwise v12.11-vs-v13.2 figures accurate: every
 cell was re-checked against `p21/p21_v132_persource.csv`, `p22/p22_qc_reconciled.csv`, and
-`p22/p22_memat_medev_reduced.csv` directly and matched exactly, with zero discrepancies.
+`p22/p22_memat_medev_reduced.csv` directly and matched exactly, with zero discrepancies. It also
+found that `p21_v132_persource.csv`, the same file the comparison script draws from, already
+carried OSM-ACD v2.26.1 and a `best_rmse_model` column that had never been selected into the
+published table. That omission was flagged rather than fixed silently in pass 25, since whether
+OSM-ACD is an appropriate reference for this table was a judgment call for Aaron, not a data bug;
+Aaron confirmed adding it, and pass 26 (`build_v1211_vs_v132_osm.R`) restores the OSM-ACD and
+best-model columns into the table above.
 
-It also found a real omission. `p21_v132_persource.csv`, the same file `build_v1211_vs_v132.R`
-draws from, already carries a third model, OSM-ACD v2.26.1, scored alongside v12.11 and v13.2 on
-every source, plus a `best_rmse_model` column naming the outright RMSE winner per source. That
-column was never selected into the comparison table above, so the table silently omits it. OSM-ACD
-v2.26.1 is the outright best RMSE model on four of eight comparable sources: Maine FIA whole-plot
-(31.93% versus v12.11's 38.56% and v13.2's 38.21%, roughly 6.3 to 6.6 points better than either),
-PEF (14.65% versus 17.91% and 18.81%, about 3 to 4 points better), SILC (62.99% versus 64.24% and
-63.90%, a smaller margin), and NS under the NS scenario (153.05% versus 156.69% and 182.38%). It is
-also close behind the winner on two more, CTRN (20.51%, second to v12.11's 18.06% but well ahead of
-v13.2's 24.60%) and NS-long (128.34%, essentially tied with v12.11's 127.35%). It trails clearly
-only on Baxter (32.22% against v13.2's 25.72%) and NB MagPlot (43.77%, between the two AGY
-candidates).
-
-This does not change the v12.11-vs-v13.2 conclusion itself, which remains numerically correct as a
-pairwise comparison. It changes what that conclusion is worth in practice: on the majority of
-non-Baxter sources, the real question is not only which AGY configuration to ship, but whether
-either currently beats an existing external reference model that was already sitting in the same
-results file. `build_v1211_vs_v132.R` is a two-line fix (select `rmse_osm`, `bias_osm`, and
-`best_rmse_model` alongside the existing columns); flagged here rather than fixed silently, since
-the choice of whether OSM-ACD is an appropriate reference for this table, or is scored under
-different assumptions that make the comparison unfair, is a modeling judgment call, not a data bug.
-
-Separately, this review independently re-derived two of pass 24's headline numbers directly from
-the primary per-stand hybrid result files on Cardinal, rather than trusting
+Separately, pass 25 independently re-derived two of pass 24's headline numbers directly from the
+primary per-stand hybrid result files on Cardinal, rather than trusting
 `merge_v24_results_noncanadian.csv`. `h1_v132_mortgate_ctrn_results.csv` (n = 1,086) recomputes to
-RMSE 17.76%, bias -1.54%, slope 1.005, matching the README's verdict table exactly.
-`h1_v132_mortgate_baxter_results.csv` (n = 91) recomputes to RMSE 25.72%, bias -0.22%, confirming
-the lever is genuinely bit-identical to v13.2 on Baxter, not merely close. Pass 24's MNAP figures
-were also cross-checked directly against the live database (367 visits, 4,098 trees, years 2004 to
-2016) and matched. No defect was found in pass 24's work; the recommendation to adopt
-h1_v132_mortgate for the non-Canadian battery stands on independently verified numbers, not only
-on the run's own report of itself.
+RMSE 17.76 percent, bias -1.54 percent, slope 1.005, matching the merge verdict table exactly.
+`h1_v132_mortgate_baxter_results.csv` (n = 91) recomputes to RMSE 25.72 percent, bias -0.22
+percent, confirming the lever is genuinely bit-identical to v13.2 on Baxter, not merely close.
+Pass 24's MNAP figures were also cross-checked directly against the live database (367 visits,
+4,098 trees, years 2004 to 2016) and matched. No defect was found in pass 24's work.
+
 
 ## Pass 24 additions (22 August 2026)
 
@@ -275,9 +259,13 @@ in GYDB and not part of the merge verdict; item 4 in the gaps list above is unch
 
 `scripts/gydb/build_gydb.R`: the full build script (v3, the version that ran clean end to end),
 with the three fixes documented inline in its header comment.
-`scripts/gydb/build_v1211_vs_v132.R`: builds the comparison table above from already-scored
-results files, no new Cardinal compute.
-`results/gydb/v1211_vs_v132_comparison.csv`: the comparison table as CSV.
+`scripts/gydb/build_v1211_vs_v132.R`: pass 23's original comparison script (v12.11 vs v13.2
+only), kept for reference; superseded by the script below.
+`scripts/gydb/build_v1211_vs_v132_osm.R`: pass 26 version, adds the OSM-ACD v2.26.1 and
+best-model columns pass 25 found omitted. Builds the table above from already-scored results
+files, no new Cardinal compute.
+`results/gydb/v1211_vs_v132_comparison.csv`: pass 23's two-model table, kept for reference.
+`results/gydb/v1211_vs_v132_vs_osm_comparison.csv`: the three-model table as published above.
 `results/gydb/build_log_full.csv`: the structured audit log (Dataset, Provider, Level, Message)
 from the full build, including MNAP.
 

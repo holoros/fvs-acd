@@ -1,0 +1,12 @@
+source,n,rmse_cand,bias_cand,rmse_v132,bias_v132,slope_v132,rmse_osm,bias_osm,best_rmse_model,d_rmse_v132_minus_cand,d_bias_v132_minus_cand,note
+"Baxter (mature, held-out)",91,28.47,11.28,25.72,-0.22,1.0874,32.22,16.85,v13.2 site-fsm (pass 20),-2.75,-11.5,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20) vs OSM-ACD v2.26.1"
+CFRU CTRN (managed),1086,18.06,-2.24,24.6,-9.12,1.205,20.51,-4.81,CANDIDATE v12.11,6.54,-6.88,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20) vs OSM-ACD v2.26.1"
+Maine FIA whole-plot (= 20-yr long),918,38.56,-16.13,38.21,-12.92,1.1088,31.93,-6.29,OSM-ACD v2.26.1,-0.35,3.21,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20) vs OSM-ACD v2.26.1"
+NB MagPlot (managed),355,41.85,-5.96,48.8,-11.13,1.1813,43.77,-8.07,CANDIDATE v12.11,6.95,-5.17,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20) vs OSM-ACD v2.26.1"
+NS (overall) [NS scenario],4504,156.69,-30.61,182.38,-41.54,0.1202,153.05,-29.22,OSM-ACD v2.26.1,25.69,-10.93,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20) vs OSM-ACD v2.26.1"
+NS (overall) [NS-long scenario],5348,127.35,-30.41,153.67,-38.34,0.2198,128.34,-31.99,CANDIDATE v12.11,26.32,-7.93,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20) vs OSM-ACD v2.26.1"
+PEF (developing),2853,17.91,1.37,18.81,3.37,0.9179,14.65,0.26,OSM-ACD v2.26.1,0.9,2,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20) vs OSM-ACD v2.26.1"
+QC MagPlot,378,58.5,9.46,58.58,3.43,0.5383,,,,0.08,-6.03,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20); OSM never scored QC"
+"SILC/Seven Islands (calibration, managed)",73,64.24,-5.65,63.9,-5.29,0.5796,62.99,-18.07,OSM-ACD v2.26.1,-0.34,0.36,"full comparison: v12.11 (candidate) vs v13.2 (site-fsm, pass 20) vs OSM-ACD v2.26.1"
+medev,1759,,,20.77,-4.05,1.0608,,,,,,no v12.11 (candidate) or OSM run exists for this source
+memat,1757,,,18.47,-6.83,1.1827,,,,,,no v12.11 (candidate) or OSM run exists for this source
