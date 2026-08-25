@@ -346,3 +346,71 @@ against an existing database (does not recreate it); the version with both pass-
 
 The 89 MB `ALL_Standardized.sqlite` itself stays on Cardinal at
 `~/gydb_ws/data/ALL/ALL_Standardized.sqlite`.
+
+## Pass 28: closing the NS-long and QC benchmark-coverage gaps, and why SILC-L stays open
+
+A request to run the FVS-ACD benchmark against GYDB's complete pair sets turned up three real
+coverage gaps rather than a single uniform shortfall, and each needed its own diagnosis before
+any new compute was justified.
+
+NS-long's 176 excluded stands turned out to be a deliberate scope filter, not a bug. The source
+pairs file `bench_ns_long_pairs.csv` carries its own `SINGLE_REGIME` flag, and the harness had
+only ever been wired to score `SINGLE_REGIME == 1` managed stands (1,334) plus every unmanaged
+stand (4,419), which sums exactly to the 5,753 previously scored. The 176 missing rows are
+`MANAGED == 1 & SINGLE_REGIME == 0`, meaning managed stands measured under more than one
+overlapping management regime, confirmed by matching STAND names against the flag directly. Their
+tree chains were already built and validated by `lk2_build_ns.R`, since that script never filtered
+on the regime flag in the first place, so closing this gap needed only a new pairs file
+(`bench_ns_long_pairs_managed_multiregime.csv`) and one more scoring pass under the same v13.2
+config already used for the rest of NS-long. Scored as `p9_v132_ns_long_multiregime_results.csv`,
+176 of 176 stands.
+
+QC's gap looked at first like a missing-data problem (378 of 2,200 pairs scored, the rest dropped
+by the harness's `esi_cov` domain filter) but turned out to be a raster-extent problem instead.
+`magp_qcnb_site_esi8.csv` already carries a real ESI extraction for every QC and NB site, pulled
+from `Acadian_ESI_v8_30m.tif` by `extract_esi8_qcnb.py`, and NB's 203 sites are all inside that
+raster's footprint. QC.s 2,028 sites mostly are not, as only 346 fall inside it, since the raster was
+rendered over `ME + NB + NS + PEI` and cropped to `-72 to -59` longitude, well short of most of
+Quebec's magplot network. The gap was closeable without a new model, since `acadian_v8_model.rds`
+(the ranger random forest behind that raster, trained on ClimateNA climate normals plus Copernicus
+DEM terrain, neither of which is Acadian-limited) could be applied pointwise at each uncovered
+site's own coordinates. Fetched 108 one-degree Copernicus GLO-30 DEM tiles covering the 1,682
+uncovered sites via `/vsicurl/`, computed slope and aspect per tile, pulled the same 32 ClimateNA
+derived predictors used at render time, and predicted site index directly with the existing model,
+no refit. 1,674 of 1,682 sites returned a valid prediction (2 < SI < 60), the other 8 left blank
+rather than forced. QC now scores 2,192 of 2,200 pairs under v13.2, up from 378, written as
+`p9_v132_nb_v2_results.csv` alongside NB's unchanged 355.
+
+SILC-L's 64 unreconciled pairs, carried open since pass 22, stay open. A wider search this pass,
+extending into `~/silc_cfi` rather than stopping at `~/magplot/verify`, found the actual source of
+the "full137" expansion (`build_tree_init_pairs.py`, 12 August), which builds a t1 tree list from
+real per-stand files but assigns TREE as a synthetic row count rather than the source's own tag.
+More importantly, `bench_silc_l_tree_t2_full137.csv`, the t2 half of the same expansion, has no
+build script anywhere in either directory, no `.py`, `.R`, or log that writes it. It is an orphan
+file of unverified provenance, and scoring against it would mean trusting data with no traceable
+source, not reconciling a real one. The 73 pairs with a verified real-identity source (via
+`silc_cfi_longhorizon_pairs_v16.csv`) remain the usable subset until a real source for the other 64
+turns up.
+
+The table below adds v13.2's expanded coverage for QC and NS-long next to the original, narrower
+figures already published above. v12.11 and OSM-ACD were not rescored under the wider coverage,
+since neither run was resourced this pass, so their rows are left at the original basis and marked
+accordingly rather than implied to match. Widening QC's coverage moved its v13.2 bias from +3.4
+percent to +10.8 percent, worse, since the newly added stands sit outside the calibration domain
+the narrower fit had implicitly relied on. NS-long's picture worsens too, RMSE from 153.7 to 158.4
+percent and the observed-on-predicted slope from 0.220 to 0.075, the added multi-regime stands
+pulling further into the same severe-attenuation pattern already flagged for NS-long under v13.2.
+Neither result changes the standing conclusion that v13.2's site-fsm patch is a real fix for Baxter
+and a real regression for NS and NS-long, it only sharpens the size of the regression now that the
+coverage is closer to complete.
+
+| Source | Coverage | n | RMSE v13.2 | Bias v13.2 | Slope v13.2 |
+|---|---|---|---|---|---|
+| QC MagPlot, original | esi_cov = 1 only | 378 | 58.58 | 3.43 | 0.538 |
+| QC MagPlot, expanded | + pointwise-predicted SI | 2,192 | 61.03 | 10.83 | 0.657 |
+| NS-long, original | singleregime + unmanaged | 5,753 | 153.67 | -38.34 | 0.220 |
+| NS-long, expanded | + 176 multiregime managed | 5,929 | 158.38 | -40.91 | 0.075 |
+
+RMSE and bias are in percent of observed mean total volume, slope is the observed-on-predicted OLS
+slope, both computed the same way as the published table above. v12.11 and OSM-ACD figures for
+these two sources are not repeated here since neither was rescored against the expanded coverage.
