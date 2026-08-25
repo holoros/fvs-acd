@@ -1,4 +1,4 @@
-# GYDB build and v12.11 vs v13.2 comparison, 21 to 22 August 2026 (pass 23 to 24)
+# GYDB build and v12.11 vs v13.2 comparison, 21 to 25 August 2026 (pass 23 to 27)
 
 ## What this is
 
@@ -18,10 +18,10 @@ documentation, and small result CSVs go to git.
 
 ## What got built
 
-Eight datasets, 5,253 locations, 8,620 plots, 17,236 visits, 1,084,941 tree records (585,685
-distinct trees across both occasions), spanning 1953 to 2024, all in Maine except for the
-cross-border NB and QC sources folded into other passes' composites (not yet in GYDB, see gaps
-below).
+Twelve datasets, 12,918 locations, 23,213 plots, 44,571 visits, 2,502,807 tree records
+(1,363,750 distinct trees across both occasions), spanning 1953 to 2024: eight USA (Maine)
+datasets (1,089,039 trees) plus four Canadian datasets added in pass 27, NS, NS-long, NB, and QC
+(1,413,768 trees). See the pass 27 section below for the Canadian sources.
 
 | Dataset | Full name | Locations | Plots | Visits | Trees | Years |
 |---|---|---|---|---|---|---|
@@ -33,6 +33,10 @@ below).
 | MEMAT | Maine FIA mature stratum | 1,760 | 1,760 | 3,520 | 168,902 | 1999 to 2024 |
 | MEDEV | Maine FIA developing stratum | 1,760 | 1,760 | 3,520 | 165,417 | 1999 to 2024 |
 | MNAP | Maine Ecological Reserves (MNAP/TNC) | 1,109 | 1,109 | 367 | 4,098 | 2004 to 2016, partial (pass 24) |
+| NS | Nova Scotia permanent sample plot network (overall) | 2,193 | 5,000 | 10,000 | 544,444 | 1965 to 2006 (pass 27) |
+| NS_LONG | Nova Scotia permanent sample plot network (long horizon) | 2,132 | 5,929 | 11,858 | 705,997 | 1965 to 2006 (pass 27) |
+| NB | New Brunswick MagPlot network | 203 | 355 | 710 | 28,955 | 2016 to 2022 (pass 27) |
+| QC | Quebec MagPlot network | 2,028 | 2,200 | 4,400 | 134,372 | 1970 to 2023 (pass 27) |
 
 Species are stored under gydb's own Lookup_Species table, keyed by USDA PLANTS symbol. The AGY
 two-letter codes used throughout the FVS-ACD scoring pipeline were cross-walked to PLANTS symbols
@@ -118,9 +122,10 @@ SILC_L's real-tag t2 reconciliation remains unverified, carried unchanged from t
 stand with NA raw TREE ids). SILC_L was loaded into GYDB using the existing non-real-tag
 (sequentially renumbered) tree lists, not the unverified real-tag ones.
 
-NB MagPlot, QC MagPlot, NS, and NS-long are not in GYDB. Only their scored RESULTS files were
-located this session, not tree-level init/t2 sources with the shape the generic builder expects;
-adding them needs locating or rebuilding their staged tree lists first.
+NB MagPlot, QC MagPlot, NS, and NS-long were added to GYDB in pass 27 (see below); the claim in
+this paragraph through pass 26, that only scored results existed and not tree-level sources, was
+not re-derived before being carried forward and turned out to be wrong. A fresh search found the
+tree-level files in the expected shape on the first try.
 
 ## A build-time bug worth flagging for anyone reusing this script
 
@@ -255,6 +260,63 @@ in GYDB and not part of the merge verdict; item 4 in the gaps list above is unch
 `ALL_Standardized_PREV_20260822.sqlite` (pre-treatments) and `ALL_Standardized_PREV_20260822b.sqlite`
 (pre-MNAP), both retained on Cardinal alongside the live database.
 
+## Pass 27: NS, NS_LONG, NB, and QC added as datasets 9 to 12
+
+The pass 23 handoff stated that NB MagPlot, QC MagPlot, NS, and NS-long were not in GYDB because
+only their scored results, not tree-level init/t2 sources, had been located. That claim was not
+re-derived before being carried forward through passes 24 to 26. A fresh search this pass found
+tree-level sources for all four in the same shape the generic builder already expects:
+`multisrc/bench_ns_pairs.csv` / `bench_ns_tree_init.csv` / `bench_ns_tree_t2.csv` for NS, the
+equivalent `bench_ns_long_*` files for NS-long, and `magp_qcnb_pairs.csv` /
+`magp_qcnb_tree_init.csv` / `magp_qcnb_tree_t2.csv` for NB and QC combined, distinguished by a
+`PROV` column (NB: 355 pairs, matching the externally verified n = 355 already used throughout
+the v12.11-vs-v13.2 comparison; QC: 2,200 pairs).
+
+NS and NS-long carry over 100 distinct EXPF values, which raised a real question before any code
+was written: is this a point-sampled (BAF, variable-radius) design, which GYDB's schema supports
+through `S_Frames.BAF` and would need entirely different handling than the fixed-radius Frame
+tiers used for every other source in this database? A cheap prototype settled it: EXPF is
+constant within 4,718 of 4,956 sampled stands (95 percent) and does not scale with 1/DBH^2 the
+way a BAF design would. The many distinct EXPF values reflect many different plot-size
+conventions pooled into one composite "NS (overall)" source, not point sampling, so the existing
+fixed-radius Frame-tier approach applies unchanged.
+
+Two real defects surfaced building these four and are logged with exact counts in
+`build_log_pass27.csv`. NS's t2 file carries 57 rows at EXPF 13.33, a value absent from init's
+EXPF set; a Frame lookup built from init alone left those rows with no Frame, which the schema
+rejects. Fixed by building the Frame lookup from the union of init and t2 EXPF values, not init
+alone. QC's pairs file uses STAND as a location identifier, not an interval identifier, so 131 of
+2,200 STANDs cover a location measured on 3 or more occasions and appear twice, once per interval,
+each pair carrying its own y1/y2; unlike CTRN, this source's STAND does not embed the interval,
+so plain STAND matching could not tell which interval's tree records belonged to which pairs row,
+and a first attempt failed on a duplicate (Dataset, PlotID). Fixed by keying plots and tree
+matching on (STAND, YEAR) against each pairs row's own y1/y2 rather than STAND membership plus
+the overall minimum year. Verified NOT needed for NB (zero duplicate STANDs, and independently
+spot-checked zero mismatches between the pairs file's declared y1/y2 and the tree files' own
+min(YEAR) for every one of NB's 355 stands) or for NS/NS-long (STAND is already unique per pairs
+row in both). A worked example: QC plot `30000602L2_I01` is now correctly split into
+`30000602L2_I01_y1970_1978` (25 trees at t1, 22 at t2) and `30000602L2_I01_y1978_1985` (22 trees
+at t1, 15 at t2), matching the raw tree files exactly.
+
+A third, unrelated defect: `build_gydb.R`'s `S_Datasets` insert hardcoded `Country = 'USA'`,
+harmless for the 8 Maine sources but wrong for these four (Nova Scotia, Nova Scotia, New
+Brunswick, Quebec, all Canada). Parameterized in the pass 27 script; worth back-porting into
+`build_gydb.R` itself so a future full rebuild does not reintroduce it. `Owner` is recorded as
+"Not documented in source files" for all four rather than guessed, since no README, header
+comment, or accompanying metadata file names the administering agency anywhere in
+`magplot/verify`.
+
+The database now holds 12 datasets, 12,918 locations, 23,213 plots, 44,571 visits, and 2,502,807
+tree records, 1953 to 2024. `SV_Datasets` confirms the country split is now correct: 8 USA (Maine)
+datasets at 1,089,039 trees, unchanged from before this pass, and 4 Canada datasets (NS, NS-long,
+NB, QC) at 1,413,768 trees. As with QC MagPlot and NS/NS-long in earlier passes, the pairs files
+here (5,000 for NS, 5,929 for NS-long, 2,200 for QC) exceed the stand counts that made it into
+prior FVS-ACD scoring runs (4,504, 5,348, and 378 respectively); GYDB loads every available pair,
+not only the previously scored subset, and this size difference is expected, not an error.
+
+`ALL_Standardized.sqlite` was backed up to `ALL_Standardized_PREV_20260825.sqlite` before this
+pass's writes.
+
 ## Files in this delivery
 
 `scripts/gydb/build_gydb.R`: the full build script (v3, the version that ran clean end to end),
@@ -276,6 +338,11 @@ without a full rebuild; the underlying fixes are also patched into `build_gydb.R
 `results/gydb/merge_v24/`: the config-merge experiment (README, lever block, runner, sbatch,
 scorecard script, and the two small aggregated result CSVs). The 40 per-stand hybrid result files
 (about 25 MB) stay on Cardinal at `magplot/verify/merge_v24/`.
+
+`scripts/gydb/build_gydb_extend_pass27.R`: adds NS, NS_LONG, NB, and QC as datasets 9-12
+against an existing database (does not recreate it); the version with both pass-27 fixes
+(Frame lookup union, STAND+YEAR plot keying) applied from the start.
+`results/gydb/build_log_pass27.csv`: structured audit log for the four pass-27 sources.
 
 The 89 MB `ALL_Standardized.sqlite` itself stays on Cardinal at
 `~/gydb_ws/data/ALL/ALL_Standardized.sqlite`.
