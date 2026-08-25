@@ -211,6 +211,46 @@ contradicting it. Whether v12.11's config elements that help CTRN/NB/NS can be m
 base without reintroducing Baxter's over-prediction is the natural next question and is not
 answered by this pass.
 
+## Pass 25 review: an omission in the v12.11 vs v13.2 table, and independent verification of pass 24
+
+A review of this comparison (F9 firewall, re-deriving every number against primary sources rather
+than trusting the composite) found the pairwise v12.11-vs-v13.2 figures above to be accurate: every
+cell was re-checked against `p21/p21_v132_persource.csv`, `p22/p22_qc_reconciled.csv`, and
+`p22/p22_memat_medev_reduced.csv` directly and matched exactly, with zero discrepancies.
+
+It also found a real omission. `p21_v132_persource.csv`, the same file `build_v1211_vs_v132.R`
+draws from, already carries a third model, OSM-ACD v2.26.1, scored alongside v12.11 and v13.2 on
+every source, plus a `best_rmse_model` column naming the outright RMSE winner per source. That
+column was never selected into the comparison table above, so the table silently omits it. OSM-ACD
+v2.26.1 is the outright best RMSE model on four of eight comparable sources: Maine FIA whole-plot
+(31.93% versus v12.11's 38.56% and v13.2's 38.21%, roughly 6.3 to 6.6 points better than either),
+PEF (14.65% versus 17.91% and 18.81%, about 3 to 4 points better), SILC (62.99% versus 64.24% and
+63.90%, a smaller margin), and NS under the NS scenario (153.05% versus 156.69% and 182.38%). It is
+also close behind the winner on two more, CTRN (20.51%, second to v12.11's 18.06% but well ahead of
+v13.2's 24.60%) and NS-long (128.34%, essentially tied with v12.11's 127.35%). It trails clearly
+only on Baxter (32.22% against v13.2's 25.72%) and NB MagPlot (43.77%, between the two AGY
+candidates).
+
+This does not change the v12.11-vs-v13.2 conclusion itself, which remains numerically correct as a
+pairwise comparison. It changes what that conclusion is worth in practice: on the majority of
+non-Baxter sources, the real question is not only which AGY configuration to ship, but whether
+either currently beats an existing external reference model that was already sitting in the same
+results file. `build_v1211_vs_v132.R` is a two-line fix (select `rmse_osm`, `bias_osm`, and
+`best_rmse_model` alongside the existing columns); flagged here rather than fixed silently, since
+the choice of whether OSM-ACD is an appropriate reference for this table, or is scored under
+different assumptions that make the comparison unfair, is a modeling judgment call, not a data bug.
+
+Separately, this review independently re-derived two of pass 24's headline numbers directly from
+the primary per-stand hybrid result files on Cardinal, rather than trusting
+`merge_v24_results_noncanadian.csv`. `h1_v132_mortgate_ctrn_results.csv` (n = 1,086) recomputes to
+RMSE 17.76%, bias -1.54%, slope 1.005, matching the README's verdict table exactly.
+`h1_v132_mortgate_baxter_results.csv` (n = 91) recomputes to RMSE 25.72%, bias -0.22%, confirming
+the lever is genuinely bit-identical to v13.2 on Baxter, not merely close. Pass 24's MNAP figures
+were also cross-checked directly against the live database (367 visits, 4,098 trees, years 2004 to
+2016) and matched. No defect was found in pass 24's work; the recommendation to adopt
+h1_v132_mortgate for the non-Canadian battery stands on independently verified numbers, not only
+on the run's own report of itself.
+
 ## Pass 24 additions (22 August 2026)
 
 Three tracks closed or partially closed the gaps pass 23 left open. MNAP's `S_Visits`/`S_Trees`
