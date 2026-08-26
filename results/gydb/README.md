@@ -1020,3 +1020,119 @@ source-level site-response claim is treated as settled.
 `scripts/p21/2026-08-26_p35ship_matgatedefault_bax_mef.sbatch`, the pass 35 production battery, both
 syntax-checked and unsubmitted. No new measurement artifacts, since this pass adopts a configuration
 already measured in passes 33 and 34 rather than producing new results.
+
+## Pass 36 (26 August 2026): the three input defects repaired, and the three-model comparison rebuilt on the corrected basis
+
+All three input defects this pass opened are now closed and the comparison carried since pass 30 is
+rebuilt on the corrected inputs rather than patched around them. Thirteen benchmark cells were scored
+under plain v13.2, the v12.11 candidate and the production default h2_matgate by one run of
+`2026-08-26_p36_score.R` (job 13977091) against a twelve task NS array (job 13977045). Every point
+estimate travels with a 5,000 replicate cluster bootstrap interval under a cluster rule declared per
+source in the scorer, and equivalence is decided by bootstrap TOST on the intercept and slope of
+observed on predicted with the region of equivalence declared a priori at 25 percent.
+
+**The corrected NS basis moves the NS result further than any configuration lever in this document
+has moved anything.** On the defective pooled basis, passes 33 and 35 recorded NS managed at 156.5
+percent RMSE with a slope of 2.087. On the rebuilt basis the same cell under the same production
+configuration scores 38.08 percent and 1.132, and NS-long managed single-regime coverage rises from
+1,334 to 3,267 pairs, since splitting on (stand, plot) creates genuine units rather than discarding
+them. The check that the repair reaches only what it should is NS unmanaged, untouched by subplot
+pooling, which reproduces pass 35 to two decimals, 34.61 against 34.605 under plain v13.2 and 34.68
+against 34.683 under production, and Baxter reproduces as well at 25.72 and 24.86 against pass 35's
+25.725 and 24.860.
+
+**Two gates run on every cell and three cells do not clear them.** QC fails the observed-basis gate,
+and the cause needs naming because the gate's own note reaches the wrong branch of its explanation
+ladder. QC carries 2,192 scored rows across 2,061 unique STAND keys, so 131 keys repeat, identically
+in all three configurations, which trips the no-duplicate condition rather than the
+population-difference or non-finite-prediction conditions. The three are still compared on one
+population, and what the gate declines to certify is the assumption that one row is one stand. NS
+managed and NS-long managed clear the basis gate and flag the physical validity screen
+instead. Thirty-two of 2,500 records at NS managed and 75 of 3,267 at NS-long managed exceed the
+64 m² ha⁻¹ self-thinning ceiling, reaching 148.6 m² ha⁻¹, and two and four respectively exceed
+1,000 m³ ha⁻¹, reaching 1,312.3 m³ ha⁻¹. Every one sits at an NS_RS research key and survives the
+(stand, plot) repair, so this is a residual to diagnose on its own terms rather than a recurrence of
+the pooling defect, and the stand-flag file cannot adjudicate it, as it predates the rebuild and its
+keys no longer match. All three cells keep their numbers below, marked with a dagger, and every
+summary count here is computed over the ten cells that clear both gates.
+
+| Source | n | RMSE % v13.2 plain | RMSE % v12.11 | RMSE % production | Slope production [95% CI] | TOST production |
+|---|---:|---:|---:|---:|---|---|
+| Baxter | 91 | 25.72 | 28.47 | 24.86 | 1.044 [0.850, 1.211] | pass / pass |
+| CTRN | 1,086 | 24.60 | 18.06 | 17.76 | 1.004 [0.958, 1.048] | pass / pass |
+| PEF | 2,853 | 18.81 | 17.91 | 18.84 | 0.917 [0.878, 0.958] | pass / pass |
+| SILC-L | 120 | 86.95 | 86.88 | 87.66 | 0.358 [0.125, 0.649] | FAIL / FAIL |
+| MEFIA-L | 918 | 38.21 | 38.56 | 38.32 | 1.100 [1.019, 1.176] | pass / pass |
+| NB | 339 | 47.68 | 40.89 | 40.98 | 1.080 [1.011, 1.160] | pass / pass |
+| QC † | 2,192 | 61.03 | 58.14 | 57.62 | 0.683 [0.619, 0.747] | FAIL / FAIL |
+| memat | 1,757 | 18.47 | 18.25 | 18.50 | 1.183 [1.139, 1.227] | pass / pass |
+| medev | 1,759 | 20.77 | 21.35 | 20.75 | 1.060 [1.035, 1.086] | pass / pass |
+| NS managed † | 2,500 | 55.63 | 39.27 | 38.08 | 1.132 [1.066, 1.213] | pass / pass |
+| NS unmanaged | 2,500 | 34.61 | 33.17 | 34.68 | 1.181 [1.135, 1.228] | pass / pass |
+| NS-long managed † | 3,267 | 59.81 | 45.37 | 43.52 | 1.094 [1.003, 1.196] | pass / pass |
+| NS-long unmanaged | 4,419 | 39.48 | 39.20 | 38.64 | 1.091 [1.051, 1.132] | pass / pass |
+
+**The production default is the strongest of the three on equivalence while the accuracy comparison
+stays close.** Across the ten cells clearing both gates, production is equivalent on both components
+in nine, the v12.11 candidate in eight and plain v13.2 in seven, and the two cells that separate them
+are Baxter and CTRN, where plain v13.2 fails on slope while both others pass. Lowest RMSE is more
+evenly divided, five cells to v12.11, four to production and one to plain v13.2, yet almost every
+margin sits inside overlapping bootstrap intervals and should not be read as a ranking. The
+one accuracy separation among the clean cells that survives its intervals is CTRN, where plain v13.2
+scores 24.60 percent with an interval of [21.39, 27.60] against production's 17.76 and [15.59, 20.10],
+and the same separation appears at both quarantined NS managed cells in the same direction.
+
+**SILC-L is the single clean equivalence failure and it is a property of the source rather than of
+any configuration.** All three land within 0.8 RMSE points of one another near 87 percent, carry a
+slope near 0.36, and fail TOST on both components together, and a result invariant to the lever under
+test is not evidence about the lever. The pass 28 disclosure applies in full, as
+SILC-L at n = 120 is a methodology break rather than an expansion, its full-coverage esi8 sits on a
+resampled 30 m basis shifting all 137 sites by +3.42 m with none of the original 73 matching, and a
+T2 species crosswalk correction moves observed volume on those 73 from 85.80 to 80.24 m³ ha⁻¹.
+
+**The OSM-ACD comparison is a separate common-basis panel rather than a column in the table above.**
+OSM-ACD scored eight of the thirteen cells, with nothing at memat, medev or QC, so every model in the
+panel is restricted to the stand set OSM-ACD scored, and NS and NS-long are pooled across regime
+because that is the grain OSM-ACD reports. On that basis OSM-ACD is more accurate at four sources and
+less accurate at four, and equivalent on both components at six of eight, failing at Baxter and
+SILC-L, against production's seven of eight on the same restriction.
+
+| Source | n | RMSE % production | RMSE % OSM-ACD | Slope OSM-ACD [95% CI] | TOST OSM-ACD |
+|---|---:|---:|---:|---|---|
+| Baxter | 91 | 24.86 | 50.81 | 0.719 [0.538, 0.927] | FAIL / FAIL |
+| CTRN | 1,033 | 18.01 | 20.51 | 1.017 [0.965, 1.066] | pass / pass |
+| PEF | 2,853 | 18.84 | 14.65 | 0.951 [0.930, 0.971] | pass / pass |
+| SILC-L | 69 | 57.98 | 62.99 | 0.652 [0.289, 1.188] | FAIL / FAIL |
+| MEFIA-L | 918 | 38.32 | 31.93 | 0.957 [0.907, 1.003] | pass / pass |
+| NB | 339 | 40.98 | 42.77 | 1.145 [1.069, 1.217] | pass / pass |
+| NS overall † | 2,885 | 36.08 | 28.38 | 1.012 [0.982, 1.040] | pass / pass |
+| NS-long overall † | 4,012 | 39.11 | 35.54 | 1.044 [1.016, 1.075] | pass / pass |
+
+**The two supporting repairs are done rather than pending.** GYDB datasets 9 and 10 were reloaded
+from the corrected NS inputs after backing up `ALL_Standardized.sqlite`, reinserting 384,726 NS and
+680,605 NS_LONG tree records against the corrected row counts, with the worst former case,
+`NS_RS_8253`, now reaching about 65 m² ha⁻¹ per subplot rather than 1,076. Baxter was then rescored
+on a GYDB basis under all three configurations, retiring defect 3, as the maturity gate's effect on
+the repaired tag correspondence, 0.86 RMSE points with bias moving from -0.19 to +3.26 percent,
+matches the staged-basis pass 35 evidence of 0.865 points and -0.22 to +3.23 to within bootstrap
+noise. The pass 35 adoption survives the repair, which also adds one finding the staged basis could
+not report, namely that TOST on slope moves from fail to pass under the gate.
+
+**What this pass does not settle.** The TOST decisions are per comparison and uncorrected for
+multiplicity, which across thirteen cells, three configurations and two components is the permissive
+framing, since a Type I error in an equivalence test is a spurious pass. Coverage is not reported, as
+these runs emit point predictions with no interval to check. QC stays quarantined until its duplicate
+STAND key convention is settled, and the two NS managed cells until the research-plot exceedances
+above the self-thinning ceiling are diagnosed at source.
+
+### Files added this pass
+
+`scripts/p36/2026-08-26_p36_comparison_build.R`, the deliverable builder, which reads only the four
+scorer artifacts and re-derives every presented number from them. In `results/gydb/`,
+`p36-model-comparison_DATA_2026-08-26.csv` and `p36-osm-common-basis_DATA_2026-08-26.csv` carry the
+assembled tables with both gate states joined to every row, `p36-comparison-tables_2026-08-26.md`
+their full form at all thirteen cells and all four models, `p36-gate-report_DATA_2026-08-26.csv` and
+`p36-physical-validity_DATA_2026-08-26.csv` the two gates as emitted, and
+`p36-equivalence-main_FIG_2026-08-26.png` and `p36-equivalence-osm_FIG_2026-08-26.png` the bootstrap
+equivalence figures, which plot each TOST interval standardized by its own region of equivalence so
+both components share one band and equivalence holds exactly when an interval lies inside [-1, 1].
