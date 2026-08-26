@@ -216,6 +216,11 @@ answers a different question and should not be read as contradicting it. Pass 24
 v12.11 without touching Baxter; whether it also closes the gap to OSM-ACD on CTRN, or whether a
 similar merge could close the gap to OSM-ACD on Maine FIA whole-plot, PEF, or SILC, is not answered
 by this pass.
+Pass 31 later settled the practical question this paragraph leaves open only in part, adopting
+`h1_v132_mortgate` as the default configuration across the full battery on August 25, 2026, on the
+strength of the RMSE evidence in the Pass 30 and Pass 31 sections below. That adoption does not
+change which model is the shipping candidate on the v12.11 versus OSM-ACD axis this table
+addresses, since v13.2 versus h1 is a different comparison.
 
 ## Pass 25 to 26: an omission found and fixed, and independent verification of pass 24
 
@@ -506,3 +511,79 @@ NS managed and NS unmanaged h1 results are not re-copied here since they are unc
 `merge_v24/h1_v132_mortgate_ns_managed_results.csv` and `..._ns_unmanaged_results.csv`, already on
 Cardinal from pass 24 and confirmed this pass to match the current baseline exactly, both files stay
 on Cardinal only, consistent with the standing convention for the other merge_v24 per-stand files.
+
+## Pass 31: h1_v132_mortgate adopted as the default configuration (August 25, 2026)
+
+Aaron reviewed pass 30's verdict and decided, on August 25, 2026, to adopt `h1_v132_mortgate`
+broadly as the new default configuration across all eleven sources this database and its scoring
+harness cover, namely Baxter, PEF, MEFIA_L, memat, medev, SILC, CTRN, NB, QC, NS, and NS_LONG. This
+extends the pass 24 non-Canadian verdict and the pass 30 Canadian verdict into a single standing
+recommendation rather than adding a third, separate one.
+
+h1_v132_mortgate never loses to v13.2 on RMSE at any of the eleven sources tested to date. The
+table below repeats every RMSE, bias, and slope pair from the pass 24 non-Canadian battery and the
+pass 30 Canadian battery in one place for the first time, since no earlier section in this document
+puts the full eleven-source comparison side by side.
+
+| Model | Source | n | RMSE% | Bias% | Slope obs-on-pred |
+|---|---|---|---|---|---|
+| v13.2 baseline | Baxter | 91 | 25.72 | -0.22 | 1.087 |
+| h1 mortgate | Baxter | 91 | 25.72 | -0.22 | 1.087 |
+| v13.2 baseline | CTRN | 1,086 | 24.60 | -9.12 | 1.205 |
+| h1 mortgate | CTRN | 1,086 | 17.76 | -1.54 | 1.005 |
+| v13.2 baseline | PEF | 2,853 | 18.81 | 3.37 | 0.918 |
+| h1 mortgate | PEF | 2,853 | 18.81 | 3.37 | 0.918 |
+| v13.2 baseline | MEFIA_L | 918 | 38.21 | -12.92 | 1.109 |
+| h1 mortgate | MEFIA_L | 918 | 38.21 | -12.92 | 1.109 |
+| v13.2 baseline | memat | 1,757 | 18.47 | -6.83 | 1.183 |
+| h1 mortgate | memat | 1,757 | 18.47 | -6.83 | 1.183 |
+| v13.2 baseline | medev | 1,759 | 20.77 | -4.05 | 1.061 |
+| h1 mortgate | medev | 1,759 | 20.77 | -4.05 | 1.061 |
+| v13.2 baseline | SILC | 73 | 63.90 | -5.29 | 0.580 |
+| h1 mortgate | SILC | 73 | 63.90 | -5.29 | 0.580 |
+| v13.2 baseline | NB | 355 | 48.80 | -11.13 | 1.181 |
+| h1 mortgate | NB | 355 | 41.86 | -5.84 | 1.082 |
+| v13.2 baseline | QC | 2,192 | 61.03 | 10.83 | 0.657 |
+| h1 mortgate | QC | 2,192 | 57.95 | 15.55 | 0.684 |
+| v13.2 baseline | NS | 5,000 | 177.77 | -38.79 | 0.203 |
+| h1 mortgate | NS | 5,000 | 152.32 | -28.55 | 1.838 |
+| v13.2 baseline | NS_LONG | 5,929 | 158.38 | -40.91 | 0.075 |
+| h1 mortgate | NS_LONG | 5,929 | 130.64 | -30.68 | 2.042 |
+
+RMSE and bias are in percent of observed mean total volume, slope is the observed-on-predicted OLS
+slope, computed the same way throughout this document. Non-Canadian rows (Baxter through SILC)
+carry forward pass 24's `merge_v24_results_noncanadian.csv`, independently re-derived for Baxter
+and CTRN in pass 25 and found to match exactly. Canadian rows (NB through NS_LONG) carry forward
+pass 30's `pass30_h1_vs_v132_canadian.csv`.
+
+Two caveats from pass 30 carry forward unresolved and are recorded here as known, accepted
+tradeoffs rather than blockers, since RMSE, the primary adoption criterion, never regresses at any
+of the eleven sources. QC's bias worsens under h1, from +10.83% to +15.55%, even as its RMSE
+improves 3.08 points and its slope moves closer to 1 from below, 0.657 to 0.684. NS and NS_LONG's
+slopes invert under h1 rather than correct, moving from severe attenuation well below 1 (0.203 and
+0.075) to overshoot well above 1 (1.838 and 2.042), even as both sources gain sharply on RMSE
+(25.45 and 27.74 points) and bias (10.24 and 10.23 points). What drives the NS-family inversion is
+still not established by aggregate metrics alone, exactly as pass 30 left it, and remains an open
+question for a follow-up pass rather than a reason to withhold adoption.
+
+Two new SLURM array scripts establish h1_v132_mortgate as the production default, mirroring the
+existing production battery's own two-script split. `scripts/p21/2026-08-25_p21ship_h1default.sbatch`
+(10 tasks) mirrors `2026-08-19_p21ship_full.sbatch` for memat, medev, pef, ctrn, silc_l, nb,
+ns_managed, ns_unmanaged, ns_long_managed, and ns_long_unmanaged, replacing the plain v13.2 harness
+with `scripts/gydb/merge_v24/2026-08-21_merge-v24-runner.R` (the same v13.2 harness plus the
+MERGE_V24 `V1211_*` lever block) and adding `V1211_MORTGATE=TRUE`, with `V1211_MANAGED` set per
+task to match exactly how pass 24 and pass 30 scored each source under h1, confirmed against the
+`mv24hyb`/`mv24ext` job logs and the pass 30 rerun sbatch rather than reconstructed from memory.
+`scripts/p21/2026-08-25_p21ship_h1default_bax_mef.sbatch` (2 tasks) mirrors
+`2026-08-19_p21ship_bax_mef.sbatch` for Baxter and MEFIA_L. Neither array needed to run to
+establish this pass's verdict, since every one of the eleven sources already has a matching
+`h1_v132_mortgate` result file on Cardinal from pass 24 (Baxter, CTRN, PEF, MEFIA_L, memat, medev,
+SILC, at `~/magplot/verify/merge_v24/`) or pass 30 (NB, QC via NB's PROV split, NS, NS_LONG). Both
+new scripts were syntax-checked with `bash -n` and left on Cardinal at `~/magplot/verify/p21/` so a
+future full rebuild has an h1-default battery ready to submit directly, exactly parallel to the
+existing v13.2 baseline scripts' role.
+
+`2026-08-19_p21ship_full.sbatch` and `2026-08-19_p21ship_bax_mef.sbatch` stay on Cardinal and in
+this repo unchanged, as the frozen v13.2-without-h1 baseline reference, not deleted, since h1's own
+gains are measured against them throughout this document. The production default as of August 25,
+2026, is the h1-default pair of scripts named above, not the plain v13.2 pair.
