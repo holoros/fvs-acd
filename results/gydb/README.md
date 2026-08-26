@@ -690,3 +690,110 @@ trajectory CSVs, check reports, and matrix figures for CTRN/NB/QC/NS/memat/MEFIA
 trajectory-builder scripts plus both sbatch arrays (`scripts/`), including the new
 `bakuzis_v132baseline_traj.R` and `2026-08-26_bakuzis_v132baseline.sbatch` (job 13972248, six tasks,
 all COMPLETED exit 0:0).
+
+## Pass 33 (26 August 2026): maturity-gated ingrowth release, and the residual site-ordering driver
+
+Pass 32 closed by naming a mechanism and scoping a fix. The mechanism was `ops$use.ingrowth.release`
+recruiting stems on density recovery alone, so a crashed stand rebuilds stem count without rebuilding
+volume. The scoped fix was to condition that release on canopy or volume recovery. Pass 33 built the
+fix, measured it, and measured alongside it the ceiling any ingrowth-side change could reach. The
+result splits: the fix works and materially improves long-horizon behavior, and the ceiling probe
+shows that the site-ordering violation pass 32 attributed to this mechanism is only partly caused by
+it, with the residual attributable to a maximum stand density index that does not vary with site.
+
+**The lever.** `ops$use.ingrowth.matgate`, added to `AcadianGY_13.1.r` inside the density-release
+block and defaulting to FALSE. When on, the release multiplier is further scaled by
+g(QMD) = 1/(1 + exp(k*(QMD - qc))), with qc defaulting to 12.7 cm, the FIA seedling-sapling to
+poletimber stand-size boundary of 5 in, and k to 0.6. Quadratic mean diameter is used because
+`AcadianGYOneStand` is stateless across annual calls and carries no memory of a stand's pre-crash
+peak, so a literal recovery gate would require changing the engine's call contract. The gate reserves
+the release pulse for juvenile size structures and withholds it from crashed mature stands. The whole
+edit is 25 diff lines, kept as `results/p33_ingrowth_gating/scripts/p33_matgate_lever.patch`, applied
+by an idempotent patcher rather than by hand.
+
+**Inertness verified, not asserted.** Running the pass 33 trajectory builder at CTRN with the lever
+off reproduces pass 32's `ctrn_h1default_traj.csv` byte for byte, MD5
+1502120f0eb28a1df3e61dedfabe90e1 on both. The pass 31 production configuration is unchanged by the
+presence of this code.
+
+**Long-horizon result.** At CTRN, h1 leaves the representative stand at age 100 with 961 trees ha⁻¹,
+quadratic mean diameter 16.6 cm and 187 m³ ha⁻¹, below its own age-40 volume of 224. The gate leaves
+it at 383 trees ha⁻¹, 27.9 cm and 245 m³ ha⁻¹, against a zero-recruitment bound of 370, 28.2 cm and
+242. The gate reaches the ingrowth-free ceiling while still recruiting, confirmed by stem-count
+differences from that bound of 59 to 2,652 trees ha⁻¹ across the six sources, so it is a gate and not
+a shutoff. On terminal-age site ordering, measured as rank correlation between site index and
+standing volume at age 100:
+
+| Source | rho, h1 | rho, matgate | rho, zero recruitment |
+|---|---|---|---|
+| CTRN | -0.400 | 0.800 | 0.800 |
+| NB | 0.400 | 0.400 | 0.400 |
+| QC | 0.800 | 0.800 | 0.800 |
+| NS | 0.400 | 0.400 | 1.000 |
+| memat | -0.600 | 0.400 | 0.400 |
+| MEFIA_L | 0.800 | 0.400 | 0.400 |
+
+Both sources where h1 produced an outright inverted ordering, CTRN and memat, flip positive under the
+gate and land exactly on the ingrowth-free bound. MEFIA_L is a genuine regression. The
+`bakuzis_check.R` all-ages inversion counts move much less, 100 of 100 to 95 at CTRN and unchanged at
+100 at NB, QC and memat, because that statistic counts juvenile ages where ordering is uninformative;
+total flags across the six sources go 10/10/10/10/11/8 under h1 to 9/10/8/11/10/9 under the gate, a
+wash by that measure, with QC's height-ordering inversions falling 59 of 100 to 11 of 100.
+
+**The ceiling, and where the residual lives.** The zero-recruitment run was included specifically so
+that a gate improving trajectories but not ordering could be distinguished from one merely needing
+better parameters. With recruitment removed entirely, the maximum any ingrowth-side intervention can
+achieve, the site-volume rank correlation still sits at 0.400 at NB, memat and MEFIA_L and the
+all-ages inversion count stays at 100 of 100 at NB, QC and memat. A residual violation survives
+complete removal of the mechanism pass 32 held responsible, and the gate already reaches that bound
+at five of six sources, so the ingrowth-side work is finished rather than underparameterized.
+
+A follow-up probe locates the residual. Maximum stand density index enters per stand through
+`v129x_brms_sdimax_map.csv`, 2,424 stands covering New Brunswick and Quebec only. Across the
+Bakuzis-selected stands the rank correlation between site index and mapped SDImax is 0.400 at NB and
+negative 0.400 at QC; at CTRN, NS, memat and MEFIA_L the map returns nothing and the ceiling falls
+back to a site-independent default. Peak Reineke stand density index actually reached in the h1
+trajectories varies 13 to 37 percent across sites within a source while correlating with site index at
+only plus or minus 0.400. A self-thinning ceiling that varies stand to stand without rising with
+productivity means the more productive stands reach it sooner and are thinned from harder and younger,
+which is a direct route to standing volume ordered inversely with productivity, and it sits upstream
+of ingrowth entirely.
+
+**Short-interval regression check.** Scored against the same GYDB pair sets the pass 31 adoption rests
+on, comparing to the existing pass 24 and 30 h1 result files rather than a rerun, with an
+observed-basis gate (STAND key sets and observed TOTVOL must match exactly) passed before any metric
+was trusted. Baxter, n = 91, RMSE 25.73 to 24.86 percent, a 0.87 point improvement, with bias moving
+from -0.22 to +3.23 percent. CTRN, n = 1,086, RMSE 17.760 to 17.757 percent and bias -1.54 to -1.58,
+both differences below noise. The Baxter bias movement has the same mechanism as the long-horizon
+result, since fewer recruits lower stand density index and therefore self-thinning removal, retaining
+more survivor volume. NB, NS managed and NS unmanaged were still running when this section was written
+and are logged as `[UNKNOWN: NB and NS-family short-interval delta not yet measured]`.
+
+**Verdict.** `h1_v132_mortgate` remains the production default, unchanged. The maturity gate ships
+implemented, documented and gated off, recommended for long-horizon and full-rotation projection where
+its trajectory realism and its ordering repair at CTRN and memat matter, and not adopted as the
+short-interval default pending the remaining three sources. The pass 32 long-horizon caveat stands
+with its attribution now split three ways. The crash is `ops$use.sdimort` behavior. The failure to
+recover from the crash is `ops$use.ingrowth.release` behavior and this lever fixes it. The residual
+site-ordering violation is neither, and belongs to an SDImax surface that does not vary with site
+index. That is the next refinement pass.
+
+**Amendment to the Pass 32 section above.** Pass 32's closing sentence attributes the site-ordering
+inversion to the ingrowth-release gating and scopes revising that gating as the repair. Pass 33's
+zero-recruitment ceiling probe shows this attribution is incomplete: revising the gating repairs the
+volume-recovery failure and repairs ordering at two sources, and a residual inversion survives at NB,
+QC and memat even with recruitment removed entirely. The pass 32 mechanism description remains
+correct as a description of what ingrowth-release does; its causal claim about the site-ordering flag
+is narrowed by this pass rather than reversed.
+
+### Files added this pass
+
+`results/p33_ingrowth_gating/` (new directory): the pass 33 memo
+(`20260826_fvsacd_pass33_ingrowth_gating.md`), the OODA technical report
+(`20260826_fvsacd_pass33_ooda_technical_report.md`), and under `data/`, `figures/` and `scripts/` the
+twelve probe trajectory CSVs with standlogs, check reports and matrix figures for the six sources by
+two variants, the regression-check trajectory proving inertness when off, the consolidated readout,
+ceiling probe and SDImax probe outputs, the short-interval comparison CSV, the 25-line engine patch
+and its idempotent patcher, the three derivation scripts (`p33_make_traj.py`, `p33_make_runner.py`,
+`p33_engine_patch.py`), the pre-registered gate script (`p33_gates.R`), and both sbatch arrays
+(job 13972775, 13 tasks, and job 13972869, 5 tasks).

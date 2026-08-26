@@ -1,0 +1,129 @@
+=== A. FLAGS and VOL/HT inversion counts, h1 (pass 32) vs noing vs matgate ===
+SOURCE    VARIANT   FLAGS   INVERSIONS      
+ctrn      h1        10      h1_v132_mortgate: HT inversions=100/100  VOL inversions=100/100
+ctrn      noing     5       h1_noingrowth: HT inversions=100/100  VOL inversions=94/100
+ctrn      matgate   9       h2_matgate: HT inversions=100/100  VOL inversions=95/100
+nb        h1        10      h1_v132_mortgate: HT inversions=100/100  VOL inversions=100/100
+nb        noing     6       h1_noingrowth: HT inversions=100/100  VOL inversions=100/100
+nb        matgate   10      h2_matgate: HT inversions=100/100  VOL inversions=100/100
+qc        h1        10      h1_v132_mortgate: HT inversions=59/100  VOL inversions=100/100
+qc        noing     4       h1_noingrowth: HT inversions=10/100  VOL inversions=100/100
+qc        matgate   8       h2_matgate: HT inversions=11/100  VOL inversions=100/100
+ns        h1        10      h1_v132_mortgate: HT inversions=79/100  VOL inversions=100/100
+ns        noing     8       h1_noingrowth: HT inversions=82/100  VOL inversions=94/100
+ns        matgate   11      h2_matgate: HT inversions=82/100  VOL inversions=95/100
+memat     h1        11      h1_v132_mortgate: HT inversions=100/100  VOL inversions=100/100
+memat     noing     9       h1_noingrowth: HT inversions=100/100  VOL inversions=100/100
+memat     matgate   10      h2_matgate: HT inversions=100/100  VOL inversions=100/100
+mefia_l   h1        8       h1_v132_mortgate: HT inversions=100/100  VOL inversions=97/100
+mefia_l   noing     8       h1_noingrowth: HT inversions=100/100  VOL inversions=100/100
+mefia_l   matgate   9       h2_matgate: HT inversions=100/100  VOL inversions=100/100
+
+=== B. Eichhorn CV line per source/variant ===
+ctrn      h1        h1_v132_mortgate: mean CV=9.1% OK (site-independent)
+ctrn      noing     h1_noingrowth: mean CV=9.6% OK (site-independent)
+ctrn      matgate   h2_matgate: mean CV=10.5% OK (site-independent)
+nb        h1        
+nb        noing     
+nb        matgate   
+qc        h1        
+qc        noing     
+qc        matgate   
+ns        h1        
+ns        noing     h1_noingrowth: mean CV=21.2% FLAG (site-dependent V-H)
+ns        matgate   h2_matgate: mean CV=22.1% FLAG (site-dependent V-H)
+memat     h1        h1_v132_mortgate: mean CV=33.1% FLAG (site-dependent V-H)
+memat     noing     h1_noingrowth: mean CV=25.6% FLAG (site-dependent V-H)
+memat     matgate   h2_matgate: mean CV=27.3% FLAG (site-dependent V-H)
+mefia_l   h1        
+mefia_l   noing     h1_noingrowth: mean CV=31.5% FLAG (site-dependent V-H)
+mefia_l   matgate   h2_matgate: mean CV=24.9% FLAG (site-dependent V-H)
+
+=== C. CTRN trajectory comparison, first selected stand, every 8 years ===
+--- h1 (stand CTRN_AP_80_I2014_2015) ---
+  age=  8 TPH=   3165 BA= 40.6 QMD= 12.8 VOL= 172.5
+  age= 16 TPH=   2477 BA= 38.4 QMD= 14.1 VOL= 185.2
+  age= 24 TPH=   1961 BA= 37.0 QMD= 15.5 VOL= 199.6
+  age= 32 TPH=   1574 BA= 35.1 QMD= 16.9 VOL= 210.3
+  age= 40 TPH=   1325 BA= 34.0 QMD= 18.1 VOL= 223.8
+  age= 48 TPH=    982 BA= 25.7 QMD= 18.3 VOL= 183.2
+  age= 56 TPH=    876 BA= 22.2 QMD= 18.0 VOL= 168.8
+  age= 64 TPH=    874 BA= 21.5 QMD= 17.7 VOL= 172.3
+  age= 72 TPH=    865 BA= 20.6 QMD= 17.4 VOL= 172.0
+  age= 80 TPH=    909 BA= 20.7 QMD= 17.0 VOL= 177.4
+  age= 88 TPH=    900 BA= 20.2 QMD= 16.9 VOL= 177.1
+  age= 96 TPH=    955 BA= 20.8 QMD= 16.7 VOL= 184.8
+--- noing (stand CTRN_AP_80_I2014_2015) ---
+  age=  8 TPH=   3144 BA= 40.5 QMD= 12.8 VOL= 172.4
+  age= 16 TPH=   2437 BA= 38.3 QMD= 14.2 VOL= 184.9
+  age= 24 TPH=   1904 BA= 36.8 QMD= 15.7 VOL= 199.2
+  age= 32 TPH=   1496 BA= 34.8 QMD= 17.2 VOL= 209.6
+  age= 40 TPH=   1093 BA= 29.4 QMD= 18.5 VOL= 194.7
+  age= 48 TPH=    784 BA= 24.1 QMD= 19.8 VOL= 173.7
+  age= 56 TPH=    614 BA= 22.1 QMD= 21.4 VOL= 172.8
+  age= 64 TPH=    543 BA= 22.5 QMD= 22.9 VOL= 188.4
+  age= 72 TPH=    471 BA= 22.1 QMD= 24.5 VOL= 198.0
+  age= 80 TPH=    428 BA= 22.6 QMD= 25.9 VOL= 214.2
+  age= 88 TPH=    389 BA= 22.8 QMD= 27.3 VOL= 227.5
+  age= 96 TPH=    370 BA= 23.2 QMD= 28.2 VOL= 242.4
+--- matgate (stand CTRN_AP_80_I2014_2015) ---
+  age=  8 TPH=   3156 BA= 40.5 QMD= 12.8 VOL= 172.5
+  age= 16 TPH=   2456 BA= 38.4 QMD= 14.1 VOL= 185.1
+  age= 24 TPH=   1925 BA= 36.8 QMD= 15.6 VOL= 199.4
+  age= 32 TPH=   1516 BA= 34.9 QMD= 17.1 VOL= 209.8
+  age= 40 TPH=   1113 BA= 29.6 QMD= 18.4 VOL= 195.4
+  age= 48 TPH=    805 BA= 24.3 QMD= 19.6 VOL= 175.1
+  age= 56 TPH=    633 BA= 22.4 QMD= 21.2 VOL= 174.4
+  age= 64 TPH=    561 BA= 22.7 QMD= 22.7 VOL= 190.2
+  age= 72 TPH=    487 BA= 22.4 QMD= 24.2 VOL= 199.9
+  age= 80 TPH=    422 BA= 21.9 QMD= 25.7 VOL= 207.1
+  age= 88 TPH=    402 BA= 23.0 QMD= 27.0 VOL= 228.7
+  age= 96 TPH=    383 BA= 23.5 QMD= 27.9 VOL= 245.1
+
+=== D. Terminal-age (age 100) VOL by site, per variant, CTRN ===
+--- h1 ---
+  site= 14.3 VOL=  186.5 BA= 20.9 TPH=    961
+  site= 15.8 VOL=  159.8 BA= 20.7 TPH=   1224
+  site= 17.2 VOL=  126.2 BA= 18.6 TPH=   1489
+  site= 18.1 VOL=  177.2 BA= 21.2 TPH=   1066
+--- noing ---
+  site= 14.3 VOL=  254.6 BA= 23.8 TPH=    370
+  site= 15.8 VOL=  295.3 BA= 23.6 TPH=    284
+  site= 17.2 VOL=  288.9 BA= 19.3 TPH=    217
+  site= 18.1 VOL=  326.8 BA= 28.3 TPH=    328
+--- matgate ---
+  site= 14.3 VOL=  247.6 BA= 23.2 TPH=    365
+  site= 15.8 VOL=  289.3 BA= 23.4 TPH=    289
+  site= 17.2 VOL=  278.9 BA= 18.7 TPH=    215
+  site= 18.1 VOL=  319.1 BA= 28.0 TPH=    331
+
+=== E. G5 anti-shutoff: max |TPH matgate - TPH noing| per source ===
+  ctrn      maxTPHdelta=59.30 over n=400 matched rows
+  nb        maxTPHdelta=2651.59 over n=400 matched rows
+  qc        maxTPHdelta=1339.13 over n=400 matched rows
+  ns        maxTPHdelta=163.70 over n=400 matched rows
+  memat     maxTPHdelta=156.91 over n=400 matched rows
+  mefia_l   maxTPHdelta=711.37 over n=400 matched rows
+
+=== F. G2 physical bounds over all p33 trajectories ===
+  ctrn_h1check_traj.csv              out-of-range rows=0
+  ctrn_matgate_traj.csv              out-of-range rows=0
+  ctrn_noing_traj.csv                out-of-range rows=0
+  mefia_l_matgate_traj.csv           out-of-range rows=0
+  mefia_l_noing_traj.csv             out-of-range rows=0
+  memat_matgate_traj.csv             out-of-range rows=0
+  memat_noing_traj.csv               out-of-range rows=0
+  nb_matgate_traj.csv                out-of-range rows=0
+  nb_noing_traj.csv                  out-of-range rows=0
+  ns_matgate_traj.csv                out-of-range rows=0
+  ns_noing_traj.csv                  out-of-range rows=0
+  qc_matgate_traj.csv                out-of-range rows=0
+  qc_noing_traj.csv                  out-of-range rows=0
+
+=== G. G3 pre-crash inertness: max pct VOL dev matgate vs h1, ages<=40 ===
+  ctrn      maxVOLdev=20.73 pct over n=160
+  nb        maxVOLdev=28.92 pct over n=160
+  qc        maxVOLdev=44.64 pct over n=160
+  ns        maxVOLdev=44.15 pct over n=160
+  memat     maxVOLdev=35.80 pct over n=160
+  mefia_l   maxVOLdev=5.13 pct over n=160

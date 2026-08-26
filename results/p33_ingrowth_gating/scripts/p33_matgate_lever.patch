@@ -1,0 +1,25 @@
+--- AcadianGY_13.1.r_PREV_20260826	2026-08-13 06:33:40.497008163 -0400
++++ AcadianGY_13.1.r	2026-08-26 07:03:38.773466515 -0400
+@@ -3052,6 +3052,22 @@
+         .ir_c = tryCatch(if (!is.null(ops$ingrowth.rd.center) && !is.na(ops$ingrowth.rd.center)) ops$ingrowth.rd.center else 0.58, error=function(e) 0.58)
+         .ir_k = tryCatch(if (!is.null(ops$ingrowth.rd.k) && !is.na(ops$ingrowth.rd.k)) ops$ingrowth.rd.k else 8, error=function(e) 8)
+         .rel = 1 / (1 + exp(.ir_k * (dplyr::coalesce(plot.data$rd.mod, 0) - .ir_c)))
++        # v13.3 CANDIDATE (pass 33): size-structure (maturity) gate on density-released
++        # ingrowth. Gated ops$use.ingrowth.matgate (default FALSE => .rel unchanged, this
++        # block byte-identical to pass 31/32 behavior). When TRUE, .rel is further scaled by
++        # g(QMD) = 1/(1+exp(k*(qmd - qc))), qc default 12.7 cm (the FIA seedling-sapling to
++        # poletimber stand-size boundary, 5 in), k default 0.6. Rationale (pass 32 Bakuzis
++        # diagnosis, results/bakuzis/): after an sdimort-driven mid-rotation crash, the RD-only
++        # release refills the freed density headroom with volume-free recruits, so stem count
++        # rebuilds while volume does not and the stand stagnates below its pre-crash volume.
++        # Reserving the release pulse for juvenile size structures (QMD near or below qc)
++        # leaves a crashed mature stand's headroom to survivor BA/volume recovery instead.
++        .mg_on = tryCatch(if (!is.null(ops$use.ingrowth.matgate)) isTRUE(ops$use.ingrowth.matgate) else FALSE, error=function(e) FALSE)
++        if (.mg_on) {
++          .mg_qc = tryCatch(if (!is.null(ops$ingrowth.matgate.qc) && !is.na(ops$ingrowth.matgate.qc)) ops$ingrowth.matgate.qc else 12.7, error=function(e) 12.7)
++          .mg_k  = tryCatch(if (!is.null(ops$ingrowth.matgate.k)  && !is.na(ops$ingrowth.matgate.k))  ops$ingrowth.matgate.k  else 0.6,  error=function(e) 0.6)
++          .rel = .rel * (1 / (1 + exp(.mg_k * (dplyr::coalesce(plot.data$qmd, 0) - .mg_qc))))
++        }
+         plot.data$ingrowth.ph = plot.data$ingrowth.ph * .rel
+       }
+ 

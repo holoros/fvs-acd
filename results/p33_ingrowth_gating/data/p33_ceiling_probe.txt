@@ -1,0 +1,119 @@
+=== Peak Reineke SDI reached per site, by source and variant ===
+SDI computed from trajectory as TPH*(QMD/25.4)^1.605. If SDImax is site-FLAT, every site
+in a source rides the same ceiling, i.e. peak SDI is ~equal across sites. If SDImax were
+site-ordered, peak SDI would increase with site index.
+
+---------- ctrn ----------
+    variant  site peakSDI ageAtPeakSDI peakVOL termVOL
+     <char> <num>   <num>        <int>   <num>   <num>
+ 1:      h1  14.3    1122            1   223.8   186.5
+ 2:      h1  15.8     730           17   197.2   159.8
+ 3:      h1  17.2     657           11   189.8   126.2
+ 4:      h1  18.1     730           14   218.6   177.2
+ 5: matgate  14.3    1122            1   251.2   247.6
+ 6: matgate  15.8     706           13   289.3   289.3
+ 7: matgate  17.2     635           10   285.6   278.9
+ 8: matgate  18.1     710           11   321.8   319.1
+ 9:   noing  14.3    1122            1   254.6   254.6
+10:   noing  15.8     696           11   295.3   295.3
+11:   noing  17.2     632           10   288.9   288.9
+12:   noing  18.1     698           11   326.8   326.8
+  h1 peakSDI CV across sites = 26.1 pct ; spearman(site, peakSDI) = -0.400 ; spearman(site, termVOL) = -0.400
+  matgate spearman(site, termVOL) = 0.800
+  noing   spearman(site, termVOL) = 0.800  <-- ingrowth-free ceiling on ordering
+
+---------- nb ----------
+    variant  site peakSDI ageAtPeakSDI peakVOL termVOL
+     <char> <num>   <num>        <int>   <num>   <num>
+ 1:      h1  17.4     796           36   208.6   208.6
+ 2:      h1  18.2     897            1   242.3   102.6
+ 3:      h1  18.8     745           53   117.7   117.7
+ 4:      h1  19.4    1003            1   507.5   481.1
+ 5: matgate  17.4     792           36   201.6   201.6
+ 6: matgate  18.2     897            1   303.5   303.5
+ 7: matgate  18.8     732           54   115.7   115.7
+ 8: matgate  19.4    1002            1   620.6   620.6
+ 9:   noing  17.4     660           49   192.0   192.0
+10:   noing  18.2     897            1   312.4   312.4
+11:   noing  18.8     171          100    42.0    42.0
+12:   noing  19.4    1002            1   620.6   620.6
+  h1 peakSDI CV across sites = 13.3 pct ; spearman(site, peakSDI) = 0.400 ; spearman(site, termVOL) = 0.400
+  matgate spearman(site, termVOL) = 0.400
+  noing   spearman(site, termVOL) = 0.400  <-- ingrowth-free ceiling on ordering
+
+---------- qc ----------
+    variant  site peakSDI ageAtPeakSDI peakVOL termVOL
+     <char> <num>   <num>        <int>   <num>   <num>
+ 1:      h1  17.3     506           84    92.5    92.5
+ 2:      h1  18.5     817           59   189.3   189.3
+ 3:      h1  19.0     765           57   236.8   236.8
+ 4:      h1  19.5     774           57   203.5   203.5
+ 5: matgate  17.3     248            1    53.3    43.6
+ 6: matgate  18.5     730           78   179.7   179.7
+ 7: matgate  19.0     607          100   241.4   241.4
+ 8: matgate  19.5     392          100   193.5   193.5
+ 9:   noing  17.3     247            1    53.3    46.8
+10:   noing  18.5     267          100    89.1    89.1
+11:   noing  19.0     566          100   226.1   226.1
+12:   noing  19.5     392          100   193.4   193.4
+  h1 peakSDI CV across sites = 19.7 pct ; spearman(site, peakSDI) = 0.400 ; spearman(site, termVOL) = 0.800
+  matgate spearman(site, termVOL) = 0.800
+  noing   spearman(site, termVOL) = 0.800  <-- ingrowth-free ceiling on ordering
+
+---------- ns ----------
+    variant  site peakSDI ageAtPeakSDI peakVOL termVOL
+     <char> <num>   <num>        <int>   <num>   <num>
+ 1:      h1   8.9     426           99    82.2    81.6
+ 2:      h1  12.1     749          100   370.0   370.0
+ 3:      h1  14.7     671            1   237.5   178.0
+ 4:      h1  17.8     702            1   219.8   219.8
+ 5: matgate   8.9     395           22   212.2   203.3
+ 6: matgate  12.1     721           35   383.0   383.0
+ 7: matgate  14.7     669            1   383.5   383.5
+ 8: matgate  17.8     700            1   388.7   376.7
+ 9:   noing   8.9     385           22   219.4   219.4
+10:   noing  12.1     685           35   376.0   376.0
+11:   noing  14.7     669            1   383.4   383.4
+12:   noing  17.8     700            1   392.9   392.9
+  h1 peakSDI CV across sites = 22.7 pct ; spearman(site, peakSDI) = 0.400 ; spearman(site, termVOL) = 0.400
+  matgate spearman(site, termVOL) = 0.400
+  noing   spearman(site, termVOL) = 1.000  <-- ingrowth-free ceiling on ordering
+
+---------- memat ----------
+    variant  site peakSDI ageAtPeakSDI peakVOL termVOL
+     <char> <num>   <num>        <int>   <num>   <num>
+ 1:      h1  12.9     765            1   235.5   235.5
+ 2:      h1  13.6     983           37   328.9   328.9
+ 3:      h1  15.4    1146           12   189.3   139.7
+ 4:      h1  18.2     797            1   303.3   224.7
+ 5: matgate  12.9     764            1   309.0   309.0
+ 6: matgate  13.6     953           37   326.6   326.6
+ 7: matgate  15.4    1146           12   189.1   185.6
+ 8: matgate  18.2     796            1   470.6   470.6
+ 9:   noing  12.9     764            1   307.3   297.1
+10:   noing  13.6     935           37   322.4   322.4
+11:   noing  15.4    1145           12   193.8   192.1
+12:   noing  18.2     796            1   471.2   471.2
+  h1 peakSDI CV across sites = 19.2 pct ; spearman(site, peakSDI) = 0.400 ; spearman(site, termVOL) = -0.600
+  matgate spearman(site, termVOL) = 0.400
+  noing   spearman(site, termVOL) = 0.400  <-- ingrowth-free ceiling on ordering
+
+---------- mefia_l ----------
+    variant  site peakSDI ageAtPeakSDI peakVOL termVOL
+     <char> <num>   <num>        <int>   <num>   <num>
+ 1:      h1  12.4    1529           25   146.1   135.4
+ 2:      h1  13.5     833            6   164.4   149.0
+ 3:      h1  14.9     720           28   265.3   265.3
+ 4:      h1  17.9     894           35   209.1   209.1
+ 5: matgate  12.4    1529           25   141.0   139.1
+ 6: matgate  13.5     833            6   225.0   225.0
+ 7: matgate  14.9     677           28   381.8   381.8
+ 8: matgate  17.9     885           35   201.0   201.0
+ 9:   noing  12.4    1526           25   143.7   143.7
+10:   noing  13.5     830            6   227.2   227.0
+11:   noing  14.9     611          100   378.0   378.0
+12:   noing  17.9     801           36   200.8   200.8
+  h1 peakSDI CV across sites = 36.6 pct ; spearman(site, peakSDI) = -0.400 ; spearman(site, termVOL) = 0.800
+  matgate spearman(site, termVOL) = 0.400
+  noing   spearman(site, termVOL) = 0.400  <-- ingrowth-free ceiling on ordering
+

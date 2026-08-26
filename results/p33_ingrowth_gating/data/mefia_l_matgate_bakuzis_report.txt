@@ -1,0 +1,35 @@
+================================================================
+BAKUZIS ASSESSMENT:/users/PUOM0008/crsfaaron/magplot/verify/bakuzis_p33/mefia_l_matgate_traj.csv
+================================================================
+
+[1/3 Monotonicity] HT increasing, TPH decreasing with age:
+  h2_matgate site 12.4: HT_up=TRUE TPH_down=FALSE
+  h2_matgate site 13.5: HT_up=FALSE TPH_down=FALSE
+  h2_matgate site 14.9: HT_up=TRUE TPH_down=FALSE
+  h2_matgate site 17.9: HT_up=FALSE TPH_down=FALSE
+
+[1/7 Site ordering] HT and VOL ordered by site at each age:
+  h2_matgate: HT inversions=100/100  VOL inversions=100/100
+
+[4 Reineke] log(TPH)~log(QMD) self-thinning slope (target ~ -1.605):
+  h2_matgate site 12.4: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  h2_matgate site 13.5: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  h2_matgate site 14.9: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  h2_matgate site 17.9: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+
+[8 Eichhorn] volume-height site independence (CV of VOL across sites at matched HT):
+  h2_matgate: mean CV=24.9% FLAG (site-dependent V-H)
+
+================================================================
+FLAGS: 9
+  - TPH not monotone down (h2_matgate site 12.4)
+  - HT not monotone up (h2_matgate site 13.5)
+  - TPH not monotone down (h2_matgate site 13.5)
+  - TPH not monotone down (h2_matgate site 14.9)
+  - HT not monotone up (h2_matgate site 17.9)
+  - TPH not monotone down (h2_matgate site 17.9)
+  - HT site-ordering inverted 100x (h2_matgate)
+  - VOL site-ordering inverted 100x (h2_matgate) [check self-thinning/SDImax]
+  - Eichhorn: V-H site-dependent CV 25% (h2_matgate)
+================================================================
+Interpret with references/bakuzis-method.md: map each flag to the responsible submodel and a refinement.
