@@ -78,3 +78,57 @@ first pooled attempt as a verdict on the idea either way.
 `2026-08-26_garcia_fit_bounded.R` (the bounded multi-start fit), `garcia_stand_pairs_2026-08-26.csv`
 (11,356 stand-interval pairs across eleven sources), and `garcia_fit_by_source_mortonly_2026-08-26.csv`
 (the eight attempted fits with their convergence status).
+
+## Update: broad-scale grouping (forest type, jurisdiction, network type), same day
+
+Aaron asked whether pooling at a broader scale, ecoregion, forest type, or jurisdiction, would
+stabilize the identification problem above rather than fitting source by source. Ecoregion was
+checked first and set aside honestly: none of the staged benchmark files carry stand coordinates,
+only `SITE`, `esi8`, and (for a few sources) `ELEV` and `PROV`, so a real ecoregion join would mean
+going back to unstaged raw source files, which was not attempted here rather than approximated.
+
+Forest type was built from the engine's own species table rather than invented fresh: every tree at
+the initial occasion was classified HW or SW using `sp.attr$sp.type` from `AcadianGY_13.1_DRAFT.r`
+(the exact table `ddbh_hw_mod`, `stand_mort_ba`, and `ba.ihw` already use), basal area was summed by
+type per stand, and a stand was called HW_dominated, SW_dominated, or Mixedwood at a two-thirds BA
+threshold. Jurisdiction used the source's actual country/province rather than the `PROV` field
+(which turned out to be a network label, CTRN, PEF, SILC, and so on, not a true jurisdiction): nine
+sources are Maine, two (NS, NS_LONG) are Nova Scotia; NB and QC were never present in these staged
+files to begin with. Network type split the two sources with a confirmed silvicultural treatment
+schedule on file (`bench_ctrn_treatments.csv`, `bench_pef_treatments.csv`) from every other source,
+an evidence-based proxy for management intensity rather than a guess.
+
+None of the three broad groupings rescued identification the way the single-source result might
+have suggested they would. Pooling by forest type across all eleven sources hit the optimizer's
+upper bound on beta in every one of the three type groups (SW_dominated n=3,871, Mixedwood n=1,887,
+HW_dominated n=1,895, all boundary_hit=TRUE). Pooling by network type did the same, both for the
+225 experimental-source pairs (alpha pinned at its upper bound) and the 7,428 operational-or-natural
+pairs (beta pinned again). Crossing network type with forest type did not help either. The one
+broad grouping that did identify cleanly was jurisdiction, and only on the Nova Scotia side: pooling
+NS and NS_LONG together (n=2,666) gave an interior optimum, beta=0.0813 (again close to Garcia's own
+0.0721), gamma=8.19, alpha=5.17, self-thinning slope 3.17, log-scale RMSE 0.215, no boundary hit.
+Maine pooled across all nine of its sources (n=4,987) did not identify, hitting the same beta
+boundary as the forest-type and network-type cuts.
+
+The pattern across all of this points at the data-collection design, not geography, composition, or
+a coarse management label, as the actual axis that matters. NS and NS_LONG are the same underlying
+Nova Scotia network at two levels of aggregation, and pooling them worked. Every grouping that
+pooled genuinely different designs together, an FIA-style survey network with a CFI network with a
+treated research installation, failed to identify regardless of whether they shared a forest type,
+a jurisdiction label, or a management-intensity bucket. mefia_subp identified cleanly on its own in
+the first diagnostic pass; folding it into any broader Maine grouping broke that. A demographic or
+geographic stratum is not a substitute for sharing a measurement design, at least not in this data.
+
+**What this recommends now.** Simple broad-scale stratification, as tried here, is not the fix.
+The methodologically right next step is a hierarchical fit, Garcia's alpha, beta, and gamma (or at
+minimum beta, the parameter closest to a physical asymptote) estimated as population-level terms
+with a per-source random effect, rather than either one global pooled fit or a separate fit per
+stratum. That is a real new model, not a regrouping, and is a meaningful enough commitment of design
+and compute to flag before starting rather than to launch as a fourth silent regrouping attempt.
+
+**Additional files.** `garcia_stand_pairs_with_fortype_2026-08-26.csv` (the same 11,356 pairs with
+forest type, jurisdiction, and network type attached), `2026-08-26_garcia_fortype_prep.R` (the
+HW/SW classification and join), `2026-08-26_garcia_fortype_fit.R` and
+`2026-08-26_garcia_networktype_fit.R` (the broad-scale fits), and
+`garcia_fit_by_fortype_juris_2026-08-26.csv` / `garcia_fit_by_networktype_2026-08-26.csv` (results,
+all with a `boundary_hit` flag so a non-identified fit is never mistaken for a converged one).
