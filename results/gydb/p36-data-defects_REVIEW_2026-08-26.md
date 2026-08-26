@@ -164,3 +164,37 @@ shared the same corrupt column. The physical validity screen added in this pass 
 Any future gate suite needs at least four: location, value range, total magnitude against an external
 quantity, and cross-model consistency. A suite that has never rejected anything is untested rather
 than clean.
+
+## Defect 3, retired: GYDB-basis Baxter rescore confirms the pass 35 adoption survives
+
+Later the same day. Datasets 9 and 10 were reloaded in `ALL_Standardized.sqlite` from the corrected
+`bench_ns_tree_init.csv` / `bench_ns_tree_t2.csv` / `bench_ns_long_*` files (backup taken first as
+`ALL_Standardized_PREV_20260826.sqlite`). The reload deleted every child row for datasets 9 and 10
+and reran the unmodified `build_gydb_extend_pass27.R` against the corrected inputs; NS reinserted
+384,726 tree records and NS_LONG 680,605, both matching the corrected CSVs exactly, and the worst
+former case, `NS_RS_8253`, now maxes near 65 m2 ha-1 per subplot rather than 1,076 or 966.7. Datasets
+11 and 12 (NB, QC) were untouched and never re-run.
+
+Baxter was then rescored on the GYDB basis across all three benchmark configurations
+(`p36gydb_v1211cand_baxter_results.csv`, `p36gydb_v132plain_baxter_results.csv`,
+`p36gydb_prod_baxter_results.csv`, `scripts/p36/2026-08-26_p36gydb_baxter.sbatch`), and scored with
+the same cluster-bootstrap TOST machinery as the main scorer, restricted to the single new cell
+`baxter_gydb` (`scripts/p36/2026-08-26_p36_score_gydbbax.R`, a scope reduction of
+`2026-08-26_p36_score.R` rather than a parallel reimplementation, so no statistic here is computed by
+different code than the rest of the battery). The observed-basis gate passes (n=91, identical basis
+across all three models) and the physical validity screen passes (max BA_o 44.2, max TOTVOL_o 385.7,
+both inside ceiling).
+
+Result. Plain v13.2: RMSE 25.74 percent, bias -0.19 percent, slope 1.089, TOST fails on slope.
+Production (h1_v132_mortgate plus h2_matgate): RMSE 24.87 percent, bias +3.26 percent, slope 1.045,
+TOST passes on both intercept and slope. The maturity gate's effect is an 0.86 RMSE-point
+improvement and a bias shift from -0.19 to +3.26 percent, against the staged-basis pass 35 numbers
+of 0.865 points and -0.22 to +3.23 percent. The two are the same finding to within bootstrap noise.
+Repairing 47.3 percent of the linked trees' broken tag correspondence down to 2.1 percent changes
+which trees a growth increment is computed from, and it does not change the conclusion the pass 35
+adoption rests on for Baxter. The TOST slope decision does newly flip from FAIL to PASS under the
+maturity gate on this corrected basis, which the staged-basis evidence could not report since no
+TOST had been run against a trustworthy Baxter tag correspondence before now.
+
+Status of all three defects as of this entry: fixed at source (1), fixed at source (2), retired by
+independent rescore and confirmed non-material to the adoption decision (3).
