@@ -809,3 +809,88 @@ ceiling probe and SDImax probe outputs, the short-interval comparison CSV, the 2
 and its idempotent patcher, the three derivation scripts (`p33_make_traj.py`, `p33_make_runner.py`,
 `p33_engine_patch.py`), the pre-registered gate script (`p33_gates.R`), and both sbatch arrays
 (job 13972775, 13 tasks, and job 13972869, 5 tasks).
+
+## Pass 34 (26 August 2026): the site-ordering inversion is an artifact of the test
+
+Pass 33 closed by naming a site-independent maximum stand density index as the residual driver of
+the Bakuzis standing-volume site-ordering inversion, and scoped a refit making SDImax rise with site
+index. Pass 34 was commissioned to do that refit. Two measurements stopped it before any fitting,
+and a third showed the violation it was meant to repair does not exist under a controlled design.
+
+**The engine already has the term, and it points the other way.** `calc_sdi_max` implements the
+Weiskittel and Kuehne (2019) surface whose site component is 222.7836 divided by csi when
+`ops$sdimax.site.term` is TRUE, and the constant 15.6 otherwise, 15.6 being its value at csi 14.28.
+Production sets it FALSE. The term decreases in csi, so enabling it lowers the self-thinning ceiling
+on productive sites, opposite to the pass 33 proposal, and its full swing over csi 8 to 20 is
+16.7 SDI units against a base of 650 to 1300. Measured across all six sources, switching it on moves
+terminal volume by 0.14 to 2.48 percent.
+
+**The test was confounded.** The Bakuzis site-ordering statistic used in passes 32 and 33 compares
+four different real stands picked at site-index quantiles, and those stands differ in much more than
+site. At CTRN the four differ in initial basal area with a rank correlation against site index of
+negative 0.80, from 41.9 down to 24.8 m² ha⁻¹, and in composition from 78 to 100 percent softwood,
+one stratum a single-species stand of 111 trees against another's 326. A high-site stand starting
+with 40 percent less basal area finishes with less volume for reasons that have nothing to do with
+the model's site response.
+
+**The controlled experiment.** Pass 34 holds one real stand fixed per source and varies csi alone
+over 10, 12, 14, 16, 18 and 20, keeping the tree list, elevation, region, managed flag, ecobucket and
+height multiplier identical on every rung. Three arms at six sources, 18 tasks, job 13974783, all
+completed. Rank correlation between site index and standing volume at age 100:
+
+| Source | production | pass 33 maturity gate | SDImax site term on |
+|---|---|---|---|
+| CTRN | +1.00 | +1.00 | +1.00 |
+| NB | +1.00 | +1.00 | +1.00 |
+| QC | +1.00 | +1.00 | +1.00 |
+| NS | +1.00 | +1.00 | +1.00 |
+| memat | +0.31 | +1.00 | +0.09 |
+| MEFIA_L | +0.94 | +1.00 | +1.00 |
+
+Under production the model orders standing volume perfectly by site at four of six sources and near
+perfectly at MEFIA_L, whose peak-volume ordering is a clean +1.00 and whose terminal figure is
+depressed only by where each rung sits in its density cycle at exactly age 100. Magnitudes are
+sensible and monotone throughout, CTRN 275 to 320 m³ ha⁻¹ across the ladder, QC 66 to 104, NS 230 to
+259, with top height rising monotonically with site at every source. The one source not clean under
+production is memat at +0.31, where terminal volume plateaus near 440 m³ ha⁻¹ from csi 12 upward.
+Under the pass 33 maturity gate memat becomes +1.00, as does every source.
+
+**Verdict.** `h1_v132_mortgate` remains the production default. The SDImax refinement is withdrawn
+rather than deferred, since the existing term points the wrong way, its magnitude is under 2.5
+percent, and the violation motivating it does not survive a controlled test. The Bakuzis
+site-ordering statistic should not be quoted as evidence about model behavior unless the compared
+trajectories differ only in site; the fixed-stand csi ladder added here is the instrument for that.
+
+**Limitations.** NB's anchor stand carries six initial trees and reaches age 1 at 46 trees ha⁻¹ and
+0.1 m² ha⁻¹, so its ladder measures the site response of a stand grown from near-bare ground, valid
+but unrepresentative, and the anchor rule should carry a minimum initial tree count. Gate G1, which
+required age-1 conditions to match across rungs, was mis-specified, since age 1 already contains a
+full year of csi-dependent growth, mortality and recruitment; it failed at NB for that reason and is
+recorded as a failed design assumption rather than a defect. One anchor stand per source is a small
+basis for a source-level claim. PEF, Baxter, NS_LONG, SILC_L and medev were not run.
+
+**Amendment to the Pass 32 section.** Pass 32 reported standing-volume site-ordering inversions at
+97 to 100 of 100 simulated ages at nearly every source and treated them as evidence of a
+biological-consistency defect. That statistic is measured across four different real stands and
+cannot separate site response from stand-to-stand differences in initial density, structure and
+composition. The description of what those trajectories did stands; the inference about the model
+does not. Pass 32's within-trajectory findings, the mid-rotation crash and its attribution to
+`ops$use.sdimort`, need no cross-stand comparison and are unaffected.
+
+**Amendment to the Pass 33 section.** Pass 33's residual-inversion finding, that a site-ordering
+violation survives complete removal of recruitment, and its attribution of that residual to a
+site-independent SDImax, both rest on the same confounded statistic and are withdrawn. Pass 33's
+other findings are unaffected and one is strengthened: the maturity gate's repair of the
+post-crash volume-recovery failure stands as measured, and pass 34 adds that the gate delivers a
+perfect site response at all six sources against four of six for production, repairing memat
+outright.
+
+### Files added this pass
+
+`results/p34_site_response/` (new directory): the pass 34 memo
+(`20260826_fvsacd_pass34_site_response.md`), the OODA technical report, implementation notes
+recording the discarded first battery and both mis-specified gates, and under `data/` and
+`scripts/` the 18 ladder trajectory CSVs and standlogs across three arms, the terminal-condition
+summary, the gate output, the OBSERVE probe measuring the stand-selection confound and the SDImax
+term magnitude, the ladder builder (`bakuzis_p34_traj.R`) and its counted derivation script, the
+pre-registered gate script, and the sbatch array.
