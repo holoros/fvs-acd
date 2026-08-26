@@ -761,13 +761,25 @@ of ingrowth entirely.
 
 **Short-interval regression check.** Scored against the same GYDB pair sets the pass 31 adoption rests
 on, comparing to the existing pass 24 and 30 h1 result files rather than a rerun, with an
-observed-basis gate (STAND key sets and observed TOTVOL must match exactly) passed before any metric
-was trusted. Baxter, n = 91, RMSE 25.73 to 24.86 percent, a 0.87 point improvement, with bias moving
-from -0.22 to +3.23 percent. CTRN, n = 1,086, RMSE 17.760 to 17.757 percent and bias -1.54 to -1.58,
-both differences below noise. The Baxter bias movement has the same mechanism as the long-horizon
+observed-basis gate (STAND key sets and observed TOTVOL must match exactly) passed at all five
+sources before any metric was trusted.
+
+| Source | n | RMSE h1 | RMSE matgate | d RMSE | bias h1 | bias matgate | slope h1 | slope matgate |
+|---|---|---|---|---|---|---|---|---|
+| Baxter | 91 | 25.725 | 24.860 | -0.865 | -0.224 | 3.226 | 1.087 | 1.044 |
+| CTRN | 1,086 | 17.760 | 17.757 | -0.003 | -1.536 | -1.582 | 1.005 | 1.004 |
+| NB | 717 | 51.700 | 51.586 | -0.113 | 2.779 | 2.245 | 0.917 | 0.917 |
+| NS managed | 2,500 | 156.535 | 156.540 | +0.006 | -38.762 | -38.848 | 2.087 | 2.083 |
+| NS unmanaged | 2,500 | 34.605 | 34.683 | +0.078 | -6.378 | -6.613 | 1.186 | 1.181 |
+
+The gate is short-interval neutral. Worst regression is NS unmanaged at +0.078 RMSE points, well
+inside the 0.5 point adoption gate, and three of five sources improve. The Baxter bias movement,
+-0.22 to +3.23 percent, is the largest single change and has the same mechanism as the long-horizon
 result, since fewer recruits lower stand density index and therefore self-thinning removal, retaining
-more survivor volume. NB, NS managed and NS unmanaged were still running when this section was written
-and are logged as `[UNKNOWN: NB and NS-family short-interval delta not yet measured]`.
+more survivor volume. Baxter is the source where h1 itself was inert, so the gate is the only lever
+acting there. NS managed's RMSE of roughly 156 percent with bias -38.8 percent and slope 2.09 is a
+pre-existing property of the h1 configuration at that source, unchanged by the gate to three decimal
+places, and is not a pass 33 finding.
 
 **Verdict.** `h1_v132_mortgate` remains the production default, unchanged. The maturity gate ships
 implemented, documented and gated off, recommended for long-horizon and full-rotation projection where
