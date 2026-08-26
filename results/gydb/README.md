@@ -516,6 +516,8 @@ on Cardinal only, consistent with the standing convention for the other merge_v2
 
 > AMENDED by Pass 32 (August 26, 2026), see the full section below. A long-horizon Bakuzis biological-consistency assessment found a genuine mid-rotation basal area and volume crash and standing-volume site-order inversion under h1_v132_mortgate at 9 of the 11 sources tested. Pass 32 also reran the identical long-horizon procedure under plain v13.2 baseline (no h1 lever) at six of those sources and found the crash present in statistically indistinguishable magnitude and timing, meaning it is inherited unchanged from v13.2's own density-dependent mortality mechanism rather than introduced or worsened by h1. The adoption decision below stands. It now carries an explicit long-horizon caveat that applies to plain v13.2 generally, not specifically to h1, since the short-interval RMSE evidence this section documents is unaffected by a finding about 100-year extrapolation behavior far outside the 1- to 25-year calibration intervals every source here was actually scored against.
 
+> EXTENDED by Pass 35 (August 26, 2026), see the full section below. The `h1_v132_mortgate` configuration adopted here remains in force and is not withdrawn. Pass 35 layers the pass 33 maturity-gated ingrowth release on top of it, so the production default as of August 26, 2026 is h1 plus `ops$use.ingrowth.matgate`, and the production battery is the pass 35 sbatch pair rather than the pass 31 pair named at the end of this section. Every measurement in this section is unaffected, since the gate is short-interval neutral at the five sources it was checked against.
+
 Aaron reviewed pass 30's verdict and decided, on August 25, 2026, to adopt `h1_v132_mortgate`
 broadly as the new default configuration across all eleven sources this database and its scoring
 harness cover, namely Baxter, PEF, MEFIA_L, memat, medev, SILC, CTRN, NB, QC, NS, and NS_LONG. This
@@ -692,6 +694,8 @@ trajectory-builder scripts plus both sbatch arrays (`scripts/`), including the n
 all COMPLETED exit 0:0).
 
 ## Pass 33 (26 August 2026): maturity-gated ingrowth release, and the residual site-ordering driver
+
+> SUPERSEDED IN PART by Pass 35 (26 August 2026), see the full section below. This section's verdict leaves the maturity gate implemented but gated off and declines to adopt it as the short-interval default pending the remaining sources. That verdict was overtaken by the pass 33 addendum, which completed the five-source short-interval check, and by pass 34's controlled site-response ladder, and Aaron adopted `ops$use.ingrowth.matgate` as the production default on August 26, 2026. Every measurement in this section stands unchanged, including the residual-inversion finding already withdrawn by the pass 34 amendment at the end of that section, and only the closing adoption recommendation is superseded.
 
 Pass 32 closed by naming a mechanism and scoping a fix. The mechanism was `ops$use.ingrowth.release`
 recruiting stems on density recovery alone, so a crashed stand rebuilds stem count without rebuilding
@@ -894,3 +898,119 @@ recording the discarded first battery and both mis-specified gates, and under `d
 summary, the gate output, the OBSERVE probe measuring the stand-selection confound and the SDImax
 term magnitude, the ladder builder (`bakuzis_p34_traj.R`) and its counted derivation script, the
 pre-registered gate script, and the sbatch array.
+
+## Pass 35 (26 August 2026): h2_matgate adopted as the production default
+
+Aaron reviewed the pass 34 evidence and decided, on August 26, 2026, to adopt the pass 33
+maturity-gated ingrowth release, `ops$use.ingrowth.matgate`, as the production default. It layers on
+top of the `h1_v132_mortgate` configuration pass 31 adopted rather than replacing it, so the
+production default as of August 26, 2026 is h1 plus the gate, referred to here as h2_matgate after
+the candidate label the pass 33 result files carry. Pass 33 declined to adopt on an incomplete
+short-interval check, and the two things it was waiting on have since arrived, namely the pass 33
+addendum that completed the five-source check and pass 34's controlled site-response ladder. This
+section records a decision and carries the supporting evidence into one place. Nothing here is
+recomputed, and every figure below is reproduced from the Pass 33 or Pass 34 section above.
+
+**The short-interval case is neutrality, not improvement.** The gate was scored against the same
+GYDB pair sets the pass 31 adoption rests on, comparing to the existing pass 24 and pass 30 h1
+result files rather than a rerun, with an observed-basis gate requiring STAND key sets and observed
+total volume to match exactly passed at all five sources before any metric was trusted. The table is
+reproduced from the Pass 33 section unchanged.
+
+| Source | n | RMSE h1 | RMSE matgate | d RMSE | bias h1 | bias matgate | slope h1 | slope matgate |
+|---|---|---|---|---|---|---|---|---|
+| Baxter | 91 | 25.725 | 24.860 | -0.865 | -0.224 | 3.226 | 1.087 | 1.044 |
+| CTRN | 1,086 | 17.760 | 17.757 | -0.003 | -1.536 | -1.582 | 1.005 | 1.004 |
+| NB | 717 | 51.700 | 51.586 | -0.113 | 2.779 | 2.245 | 0.917 | 0.917 |
+| NS managed | 2,500 | 156.535 | 156.540 | +0.006 | -38.762 | -38.848 | 2.087 | 2.083 |
+| NS unmanaged | 2,500 | 34.605 | 34.683 | +0.078 | -6.378 | -6.613 | 1.186 | 1.181 |
+
+The worst regression is NS unmanaged at plus 0.078 RMSE points, well inside the 0.5 point adoption
+gate, and three of five sources improve. Baxter gains the most at 0.865 points while its bias moves
+from negative 0.224 to plus 3.226 percent, the largest single change anywhere in the table, and it
+shares a mechanism with the long-horizon result, since fewer recruits lower stand density index and
+therefore self-thinning removal, retaining more survivor volume. Baxter is also the source where h1
+itself is inert, so the gate is the only lever acting there. The sources this table does not cover
+are unscored under the gate at short interval rather than scored and found wanting, and the pass 35
+sbatch pair described below is what would score them.
+
+**The long-horizon case is a volume-recovery repair the production default does not deliver.** At
+CTRN the production configuration leaves the representative stand at age 100 with 961 trees ha⁻¹,
+quadratic mean diameter 16.6 cm and 187 m³ ha⁻¹, below its own age-40 volume of 224 m³ ha⁻¹. Under
+the gate the same stand finishes at 383 trees ha⁻¹, 27.9 cm and 245 m³ ha⁻¹, against a
+zero-recruitment bound of 370 trees ha⁻¹, 28.2 cm and 242 m³ ha⁻¹. The gate therefore reaches the
+ingrowth-free ceiling on volume recovery while still recruiting, which is what distinguishes it from
+a recruitment shutoff, confirmed by stem-count differences from that bound of 59 to 2,652 trees ha⁻¹
+across the six sources probed.
+
+**The site-response case is pass 34's controlled ladder.** Holding one real stand fixed per source
+and varying csi alone over 10, 12, 14, 16, 18 and 20, with the tree list, elevation, region, managed
+flag, ecobucket and height multiplier identical on every rung, the rank correlation between site
+index and standing volume at age 100 is perfect at all six sources under the gate and perfect at
+four of six under production.
+
+| Source | production | pass 33 maturity gate |
+|---|---|---|
+| CTRN | +1.00 | +1.00 |
+| NB | +1.00 | +1.00 |
+| QC | +1.00 | +1.00 |
+| NS | +1.00 | +1.00 |
+| memat | +0.31 | +1.00 |
+| MEFIA_L | +0.94 | +1.00 |
+
+The one source not clean under production is memat at plus 0.31, where terminal volume plateaus near
+440 m³ ha⁻¹ from csi 12 upward, and the gate repairs it outright. MEFIA_L's plus 0.94 under
+production is not a genuine ordering failure, since its peak-volume ordering is a clean plus 1.00 and
+its terminal figure is depressed only by where each rung sits in its density cycle at exactly age
+100, yet the gate returns plus 1.00 there as well. Taken with the short-interval table, the decision
+rests on a configuration that costs nothing measurable inside the calibration window and gains
+materially outside it.
+
+**What this changes in practice.** Two new SLURM array scripts establish h2_matgate as the
+production default, mirroring the pass 31 pair one for one.
+`scripts/p21/2026-08-26_p35ship_matgatedefault.sbatch` (10 tasks) mirrors
+`2026-08-25_p21ship_h1default.sbatch` for memat, medev, pef, ctrn, silc_l, nb, ns_managed,
+ns_unmanaged, ns_long_managed and ns_long_unmanaged, and
+`scripts/p21/2026-08-26_p35ship_matgatedefault_bax_mef.sbatch` (2 tasks) mirrors
+`2026-08-25_p21ship_h1default_bax_mef.sbatch` for Baxter and MEFIA_L. Both swap the merge_v24 runner
+for `scripts/p33/2026-08-26_p33-matgate-runner.R`, which is the merge_v24 runner plus the P33 lever
+block, since only that runner wires the environment to `ops$use.ingrowth.matgate`, and both add
+exactly three exports, `P33_MATGATE=TRUE`, `MATGATE_QC=12.7` and `MATGATE_K=0.6`. Every other
+environment variable, source mapping and `V1211_MANAGED` assignment is byte-identical to the pass 31
+pair, verified by diff, so the only configuration difference between the pass 31 default and the
+pass 35 default is those three exports. `CONFIG_TAG` is namespaced `matgatedefault_v132_<src>` so
+output never collides with the pass 31 `h1default_v132_<src>` files or the `p9_v132_<src>` v13.2
+baseline files, which both stay on disk as comparison references. Both scripts were syntax-checked
+with `bash -n` and neither was submitted, exactly as with the pass 31 pair, since the pass 33
+battery already wrote `h2_matgate` result files for Baxter, CTRN, NB, NS managed and NS unmanaged at
+`~/magplot/verify/p33/` on Cardinal.
+
+The engine is unmodified. `ops$use.ingrowth.matgate` stays default FALSE in `AcadianGY_13.1.r`,
+verified again this pass, because it is never assigned in `make_ops` and the density-release block
+resolves an unset value to FALSE. This deliberately mirrors how `ops$mort.dens.scale` carries the
+pass 31 default, where the engine ships the lever off and the production sbatch turns it on, which
+keeps a bare `source` of the model file reproducing frozen behavior for anyone comparing against an
+older run. The pass 31 and pass 33 pairs of scripts stay in this repo unchanged as frozen reference
+configurations rather than being deleted, since h2_matgate's own gains are measured against them
+throughout this document.
+
+**Standing caveats, carried forward unresolved.** The mid-rotation basal area and volume crash
+documented in pass 32 is not removed by this adoption. It is `ops$use.sdimort` behavior, present in
+statistically indistinguishable magnitude and timing under plain v13.2 without the h1 lever, and the
+gate repairs the failure to recover from the crash rather than the crash itself. MEFIA_L regresses
+on terminal-age site ordering under the gate in the four-stand pass 33 measurement, from rho 0.800
+to 0.400, and that regression is recorded here rather than dropped, with the qualification that pass
+34 withdrew the four-stand statistic as confounded, so it is a regression on an instrument this
+document no longer treats as evidence about model behavior. Pass 34's own limitations apply in full
+to the site-response evidence above. It rests on one anchor stand per source, NB's anchor carries
+six initial trees and reaches age 1 at 46 trees ha⁻¹, and PEF, Baxter, NS_LONG, SILC_L and medev
+were not run in the ladder. The next refinement pass should extend the ladder to several anchor
+stands per source under a minimum initial tree count and run the five missing sources before any
+source-level site-response claim is treated as settled.
+
+### Files added this pass
+
+`scripts/p21/2026-08-26_p35ship_matgatedefault.sbatch` and
+`scripts/p21/2026-08-26_p35ship_matgatedefault_bax_mef.sbatch`, the pass 35 production battery, both
+syntax-checked and unsubmitted. No new measurement artifacts, since this pass adopts a configuration
+already measured in passes 33 and 34 rather than producing new results.
