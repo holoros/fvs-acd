@@ -514,6 +514,8 @@ on Cardinal only, consistent with the standing convention for the other merge_v2
 
 ## Pass 31: h1_v132_mortgate adopted as the default configuration (August 25, 2026)
 
+> AMENDED by Pass 32 (August 26, 2026), see the full section below. A long-horizon Bakuzis biological-consistency assessment found a genuine mid-rotation basal area and volume crash and standing-volume site-order inversion under h1_v132_mortgate at 9 of the 11 sources tested. Pass 32 also reran the identical long-horizon procedure under plain v13.2 baseline (no h1 lever) at six of those sources and found the crash present in statistically indistinguishable magnitude and timing, meaning it is inherited unchanged from v13.2's own density-dependent mortality mechanism rather than introduced or worsened by h1. The adoption decision below stands. It now carries an explicit long-horizon caveat that applies to plain v13.2 generally, not specifically to h1, since the short-interval RMSE evidence this section documents is unaffected by a finding about 100-year extrapolation behavior far outside the 1- to 25-year calibration intervals every source here was actually scored against.
+
 Aaron reviewed pass 30's verdict and decided, on August 25, 2026, to adopt `h1_v132_mortgate`
 broadly as the new default configuration across all eleven sources this database and its scoring
 harness cover, namely Baxter, PEF, MEFIA_L, memat, medev, SILC, CTRN, NB, QC, NS, and NS_LONG. This
@@ -587,3 +589,104 @@ existing v13.2 baseline scripts' role.
 this repo unchanged, as the frozen v13.2-without-h1 baseline reference, not deleted, since h1's own
 gains are measured against them throughout this document. The production default as of August 25,
 2026, is the h1-default pair of scripts named above, not the plain v13.2 pair.
+
+
+## Pass 32: Bakuzis biological-consistency re-verification of h1_v132_mortgate (August 26, 2026)
+
+The Bakuzis biological-consistency assessment referenced but not completed in the pass 25 OODA
+handoff (`_context/handoffs/20260825_gydb_pass25_ooda_review_handoff.md`) was interrupted mid-run
+on August 25, 2026, after an 11-task SLURM array (job 13965767) had already produced long-horizon
+(100-year, chained-annual) trajectory tables and check-script output for all eleven sources under
+h1_v132_mortgate at `~/magplot/verify/bakuzis_h1/` on Cardinal. Its headline finding, a mid-rotation
+basal area and volume crash and standing-volume site-order inversion at nearly every source except
+PEF, was reported by a subagent whose work was interrupted before independent verification. Pass 32
+re-derives this finding from primary data per the OODA firewall's F9 rule (an inherited number is
+re-derived, not trusted), closes the one analysis gap the interrupted run left open, and issues a
+verdict on the pass 31 adoption decision.
+
+**Re-verification.** The crash is confirmed real and widespread, not an artifact of the interrupted
+run or the check script. Six sources beyond CTRN (already independently confirmed before the
+interruption) were checked directly against primary trajectory and check-script data this pass, NB,
+QC, NS, memat, MEFIA_L, and SILC_L, all showing standing-volume site-ordering inversions at 97 to 100
+of 100 simulated ages. The exception count is corrected from the interrupted run's framing. PEF shows
+a genuine, multi-site clean pass (0 of 100 volume-ordering inversions across four real site-index
+strata). Baxter, listed alongside PEF as a second clean exception in the interrupted framing, is not
+assessable on this relation at all, since its 91 held-out mature stands carry a single real
+site-index value with zero spread, so the site-ordering test on a length-one comparison is vacuously
+true rather than evidence of consistency, and the companion Eichhorn test halted on an unhandled NA
+rather than silently returning a passing number. medev shows a near-miss on volume ordering
+specifically (3 of 100 inversions) but is not a clean source overall, carrying 11 total flags
+including a severe Eichhorn site-dependence violation (41.4 percent CV) and 55 of 100 height-ordering
+inversions.
+
+**The critical gap closed this pass.** The interrupted run never tested the same long-horizon
+procedure under plain v13.2 baseline (no h1 overlay), the single most decision-relevant fact left
+open, whether the crash is a pre-existing v13.2 behavior h1 inherits, or a new problem h1 introduces
+or worsens. `bakuzis_h1default_traj.R` was adapted into `bakuzis_v132baseline_traj.R` by removing
+exactly the three lines that set `ops$mort.dens.scale`, `ops$mort.dens.fmin`, `ops$mort.dens.k`, and
+`ops$mort.dens.rd0` (the h1-specific block), leaving `V1211_MORTGATE` at its production default of
+FALSE per `scripts/gydb/merge_v24/2026-08-21_merge-v24-runner_WIP.R` line 252, so `ops$mort.dens.scale`
+is never set and stays at `AcadianGY_13.1.r`'s own coded default of OFF (confirmed at line 4137's own
+comment, "Gated ops$mort.dens.scale (default OFF => attenuation factor is exactly 1,
+byte-identical..."). Every other ops setting, including the v13.2 site-fsm overlay, `ops$use.sdimort`
+(onset at relative density 0.55, break at 0.62), the ingrowth-release block, and the LEV3
+stand-density constraint, is identical between the two configurations, isolating exactly what the h1
+lever contributes.
+
+A new six-task SLURM array (job 13972248, `results/bakuzis/scripts/2026-08-26_bakuzis_v132baseline.sbatch`)
+reran CTRN, NB, QC, NS, memat, and MEFIA_L under this baseline. The result is unanimous. NB and memat
+reproduce byte-identical check-script output between h1 and baseline. MEFIA_L matches identically.
+CTRN, QC, and NS match within one to three ages out of 100 on the height-ordering count, noise-level
+agreement, with volume-ordering counts matching exactly (100 of 100 at all three). A direct
+age-by-age numeric comparison at CTRN (age 38 through 56) shows tree density, basal area, and volume
+diverging by roughly 1 to 2 percent between h1 and baseline through the crash window, with h1
+producing a marginally deeper trough, not a shallower one. The mid-rotation crash is therefore a
+plain v13.2 baseline behavior, driven by `ops$use.sdimort`, present in both configurations and not
+part of the h1 lever, which h1_v132_mortgate inherits unchanged rather than introduces or
+meaningfully worsens.
+
+**Mechanism.** `ops$use.sdimort`'s onset threshold, relative stand density 0.55, sits inside Long
+(1985)'s published zone of imminent competition-induced mortality (about 0.55 to 0.60), so the
+timing of crash onset is a defensible, literature-consistent value, not an anomaly. The locus of the
+biological-consistency problem is what happens after onset. `ops$use.ingrowth.release` recruits new
+stems once relative density falls back below a center point of 0.58, and that recruitment is gated
+only on density falling, not on basal area or volume recovery. At CTRN, tree density troughs around
+simulated age 54 and then creeps back up in small, repeated pulses roughly every 4 to 5 years, while
+basal area and volume do not recover in step, continuing to decline or plateauing well below their
+pre-crash level. This is the specific submodel behavior responsible for the site-ordering inversion.
+
+**Extrapolation domain.** Every one of the eleven sources' pair-validation intervals, the data
+h1_v132_mortgate was actually scored and adopted against in passes 24 through 31, runs 1 to 25 years,
+none approaching the 100-year Bakuzis horizon. The crash is a finding about FVS-ACD's long-horizon
+extrapolation behavior, well outside the domain the RMSE adoption decision was validated against, not
+a defect in the short-interval calibration itself.
+
+**Verdict.** Keep h1_v132_mortgate as the pass 31 default, with a documented long-horizon caveat that
+applies to plain v13.2 generally, not specifically to h1. The short-interval RMSE case for adoption
+(passes 24 through 31) is unaffected, since it was never in question here and never regresses at any
+of the eleven sources. The long-horizon Bakuzis finding is a real, disclosed limitation of FVS-ACD
+v13.2's ingrowth-release gating, present with or without the h1 lever, and should accompany any
+full-rotation or long-horizon projection use of either configuration until the gating is revised to
+condition recruitment on canopy or volume recovery rather than density alone.
+
+**Open items.** Three sources, NS_LONG, SILC_L, and medev, were not rerun under plain v13.2 baseline
+this pass. The six sources that were rerun span the full severity range observed (total flags 8 to
+11, volume inversions 97 to 100 of 100) and unanimously show inheritance rather than introduction, so
+the same conclusion is expected to hold at the remaining three on the mechanism identified, but this
+is an inference from the rerun sources, not a directly re-derived number for these three, logged as
+`[UNKNOWN: NS_LONG/SILC_L/medev baseline-vs-h1 delta not directly measured, cost low given 6 of 6
+unanimous rerun sources]` rather than assumed silently. What specifically would revise the
+ingrowth-release gating to condition recruitment on canopy or volume recovery is scoped as follow-up
+model-development work, not attempted this pass, which falsifies and diagnoses rather than refits.
+
+### Files added this pass
+
+`results/bakuzis/` (new directory): eleven per-source memos
+(`20260826_fvsacd_<source>_bakuzis_assessment.md`), one synthesis memo
+(`20260826_fvsacd_synthesis_bakuzis_assessment.md`), one OODA technical report
+(`20260826_fvsacd_pass32_ooda_technical_report.md`), all eleven sources' h1 trajectory CSVs, check
+reports, standlogs, and matrix figures (`data/`, `figures/`), the six new plain-v13.2-baseline
+trajectory CSVs, check reports, and matrix figures for CTRN/NB/QC/NS/memat/MEFIA_L, and both
+trajectory-builder scripts plus both sbatch arrays (`scripts/`), including the new
+`bakuzis_v132baseline_traj.R` and `2026-08-26_bakuzis_v132baseline.sbatch` (job 13972248, six tasks,
+all COMPLETED exit 0:0).
