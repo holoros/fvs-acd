@@ -169,10 +169,38 @@ too sparse to identify.
 should, and unlike a fixed SDImax constant, this ceiling is conditioned on the height trajectory
 already being tracked rather than imposed as a separate number.
 
-**Scope, stated plainly.** This pooled curve is fit and validated only for ns, ns_long, and
-mefia_subp, natural or lightly-managed permanent-sample-plot networks. It has not been shown to
+**Scope, corrected 26 August 2026, and the correction matters.** The sentence this section
+originally carried, that the pooled curve is fit and validated only for ns, ns_long and mefia_subp as
+natural or lightly managed permanent-sample-plot networks, is wrong on its second half and must not be
+cited. A management filter is never applied anywhere in the chain that produced the fitted pairs, and
+it is dropped specifically at `2026-08-26_garcia_stand_extraction.R` line 49, which selects only
+`STAND` and `interval_years` off the pairs file. Pre-split managed and unmanaged files already existed
+in this same directory and were not used. Of the 2,987 pairs that entered the pooled fit, 627 come
+from stands labelled managed, 20.99 percent, as ns 468 and ns_long 159, independently re-derived twice
+on 26 August 2026. The correct reading is that mefia_subp contributes zero labelled managed pairs only
+because `bench_mefia_subp_pairs.csv` carries no `MANAGED` column at all, so for Maine FIA data the
+21 percent figure is a floor rather than a point estimate.
+
+The coefficients themselves survive the correction, which is why this is a re-description rather than
+a replacement. Refitting the identical specification after dropping the 627 labelled managed pairs
+moves alpha from 3.217 to 2.721 and the implied density ceilings from about 38,900, 3,370 and 805
+trees ha⁻¹ to about 46,600, 3,480 and 764 trees ha⁻¹ at 10, 20 and 30 m top height, and every one of
+those, along with all three parameters and the asymptote slope, falls inside the pooled fit's own 95
+percent bootstrap interval. Two findings from that refit belong here rather than in a footnote. The
+committed `nlme` fit does not converge on any subset of its own data, failing with step halving below
+minimum on the unmanaged subsets and a backsolve singularity on the managed one, and it is already
+carrying ns at a degenerate optimum near alpha 14.1 and gamma 14.9, so its convergence is a property
+of that exact pooled sample rather than of the model. And the unmanaged curve depends heavily on the
+unlabelled mefia_subp source, since dropping those 321 pairs moves the 20 m ceiling to 1,736 trees
+ha⁻¹, roughly half the pooled value and outside the pooled interval. The defensible published
+statement is therefore that the curve is fit to all available pairs including at least 21 percent
+managed stands, that removing the labelled managed pairs does not move it beyond its own uncertainty,
+and that the estimator and the unlabelled Maine source are what actually control the answer. Detail is
+in `2026-08-26_garcia_managed_split_DRAFT.md`.
+
+What stands unchanged is the negative half of the original scope claim. The curve has not been shown to
 apply to CTRN, PEF, Baxter, mefia, or mefia_long, and Garcia's own paper gives the reason not to
-force it there: managed stands with divergent thinning histories only guarantee a limiting plane,
+force it there, since managed stands with divergent thinning histories only guarantee a limiting plane,
 not a shared line. Using this curve as an engine-level density ceiling, rather than a validated
 research finding, would be the next real step and a bigger one, translating N(H) into a modifier or
 constraint FVS-ACD's stand-mortality submodel can consume, then testing it specifically against the
