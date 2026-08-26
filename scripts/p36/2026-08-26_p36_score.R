@@ -55,19 +55,26 @@
 ##      ingrowth. That, not model behaviour, is NS managed's 156 percent RMSE and 0.12 slope, which
 ##      results/gydb/README.md line 784 records as a property of the h1 configuration there.
 ##
-##      Two things follow for the code. Every cell now reports its observed record against physical
-##      bounds, so the value axis is gated rather than assumed. And the two affected cells are
-##      scored TWICE, once on the full record and once with pooled stands screened out, per Aaron's
-##      decision of 26 August 2026, so the size of the defect is visible rather than buried in a
-##      footnote. Both variants carry basis_variant and both are marked provisional.
+##      AMENDED later the same day. The defect was first handled here by screening the affected
+##      stands out of the scored set, which was the right move while the subplot identity was
+##      unrecoverable. It then became recoverable. The raw NS_PSP_research_tree.csv carries the
+##      `plot` column that build_ns_bench.py was discarding at its groupby, so the defect is now
+##      fixed at its origin: both NS builders key on (stand, plot), the NS and NS-long inputs were
+##      rebuilt, and the four NS cells were rescored under all three configurations. Observed basal
+##      area at the research stands falls from a maximum of 1,076 to 86.1 m2 ha-1 at the initial
+##      occasion and 148.6 at remeasurement, reproducing the raw per-subplot distribution rather
+##      than beating it down, and NS-long managed single-regime coverage rises from 1,334 to 3,267
+##      pairs because the subplot split creates genuine units. SCREEN_CELLS is therefore empty and
+##      no cell is screened. The physical validity report stays, and is now a live gate rather than
+##      a diagnostic, since it is what would catch a recurrence.
 ##
-##      The screen is confined to NS on evidence, not on assumption. Running the structural flag
-##      across all ten sources flags 44 percent of PEF stands and 5 percent of NB and QC, yet PEF's
-##      maximum observed basal area is 64.4 m2 ha-1 and NB and QC's is 76.8, both physically real.
-##      Those sources pool subplots with the expansion factor correctly scaled, so the structural
-##      flag alone would have discarded 1,256 clean PEF stands. Screening therefore requires both
-##      the structural flag and a demonstrated physical impossibility at the source, which is true
-##      only of NS managed and NS-long managed.
+##      Keeping the screening machinery rather than deleting it is deliberate. It cost a full pass
+##      to establish that the structural flag alone is not a sufficient rule: it flags 44 percent of
+##      PEF stands and 5 percent of NB and QC, yet PEF's maximum observed basal area is 64.4 m2 ha-1
+##      and NB and QC's is 76.8, both physically real, so those sources pool subplots with the
+##      expansion factor correctly scaled and the flag alone would have discarded 1,256 clean PEF
+##      stands. Any future screen must require both the structural flag and a demonstrated physical
+##      impossibility at the source.
 ##
 ## Known limitations, stated rather than hidden. Empirical interval coverage is not reported because
 ## these scoring runs emit point predictions only, with no prediction interval to check coverage
@@ -103,9 +110,12 @@ STAMP   <- "2026-08-26"
 BA_CEILING  <- 64
 VOL_CEILING <- 1000
 
-## Cells scored twice, once full and once with structurally pooled stands screened out. Confined to
-## the two cells that demonstrate physical impossibility, never applied on the structural flag alone.
-SCREEN_CELLS <- c("ns_managed", "ns_long_managed")
+## Cells scored twice, once full and once with structurally pooled stands screened out. EMPTY since
+## the NS pooling defect was fixed at its origin in build_ns_bench.py and build_ns_long_bench.py
+## rather than screened downstream, so there is nothing left to screen. Left in place, with the
+## machinery below intact, because a screen must require both the structural flag and a demonstrated
+## physical impossibility at the source, and that lesson is worth keeping executable.
+SCREEN_CELLS <- character(0)
 
 V   <- "/users/PUOM0008/crsfaaron/magplot/verify"
 P21 <- file.path(V, "p21")
@@ -163,43 +173,43 @@ reg <- rbindlist(list(
   data.table(model="v1211cand", cell="baxter",            file=file.path(P36,"p36_v1211cand_baxter_results.csv")),
   data.table(model="v1211cand", cell="ctrn",              file=file.path(V,"cand_ctrn_results.csv")),
   data.table(model="v1211cand", cell="pef",               file=file.path(V,"cand_pef_results.csv")),
-  data.table(model="v1211cand", cell="silc_l",            file=file.path(V,"cand_silc_l_results.csv")),
+  data.table(model="v1211cand", cell="silc_l",            file=file.path(P36,"p36silc137_v1211cand_silc_l_results.csv")),
   data.table(model="v1211cand", cell="mef",               file=file.path(V,"cand_mefia_l_results.csv")),
   data.table(model="v1211cand", cell="nb_v2",             file=file.path(P36,"p36_v1211cand_nb_v2_results.csv")),
   data.table(model="v1211cand", cell="memat",             file=file.path(P36,"p36_v1211cand_memat_results.csv")),
   data.table(model="v1211cand", cell="medev",             file=file.path(P36,"p36_v1211cand_medev_results.csv")),
-  data.table(model="v1211cand", cell="ns_managed",        file=file.path(P36,"p36_v1211cand_ns_managed_results.csv")),
-  data.table(model="v1211cand", cell="ns_unmanaged",      file=file.path(P36,"p36_v1211cand_ns_unmanaged_results.csv")),
-  data.table(model="v1211cand", cell="ns_long_managed",   file=file.path(P36,"p36_v1211cand_ns_long_managed_results.csv")),
-  data.table(model="v1211cand", cell="ns_long_unmanaged", file=file.path(P36,"p36_v1211cand_ns_long_unmanaged_results.csv")),
+  data.table(model="v1211cand", cell="ns_managed",        file=file.path(P36,"p36ns_v1211cand_ns_managed_results.csv")),
+  data.table(model="v1211cand", cell="ns_unmanaged",      file=file.path(P36,"p36ns_v1211cand_ns_unmanaged_results.csv")),
+  data.table(model="v1211cand", cell="ns_long_managed",   file=file.path(P36,"p36ns_v1211cand_ns_long_managed_results.csv")),
+  data.table(model="v1211cand", cell="ns_long_unmanaged", file=file.path(P36,"p36ns_v1211cand_ns_long_unmanaged_results.csv")),
 
   ## plain v13.2. Ten cells reused from the p9_v132 family at current coverage, two fresh.
   data.table(model="v132plain", cell="baxter",            file=file.path(P36,"p36_v132plain_baxter_results.csv")),
   data.table(model="v132plain", cell="mef",               file=file.path(P36,"p36_v132plain_mef_results.csv")),
   data.table(model="v132plain", cell="ctrn",              file=file.path(P21,"p9_v132_ctrn_results.csv")),
   data.table(model="v132plain", cell="pef",               file=file.path(P21,"p9_v132_pef_results.csv")),
-  data.table(model="v132plain", cell="silc_l",            file=file.path(P21,"p9_v132_silc_l_results.csv")),
+  data.table(model="v132plain", cell="silc_l",            file=file.path(P36,"p36silc137_v132plain_silc_l_results.csv")),
   data.table(model="v132plain", cell="nb_v2",             file=file.path(P21,"p9_v132_nb_v2_results.csv")),
   data.table(model="v132plain", cell="memat",             file=file.path(P21,"p9_v132_memat_results.csv")),
   data.table(model="v132plain", cell="medev",             file=file.path(P21,"p9_v132_medev_results.csv")),
-  data.table(model="v132plain", cell="ns_managed",        file=file.path(P21,"p9_v132_ns_managed_results.csv")),
-  data.table(model="v132plain", cell="ns_unmanaged",      file=file.path(P21,"p9_v132_ns_unmanaged_results.csv")),
-  data.table(model="v132plain", cell="ns_long_managed",   file=file.path(P21,"p9_v132_ns_long_managed_results.csv")),
-  data.table(model="v132plain", cell="ns_long_unmanaged", file=file.path(P21,"p9_v132_ns_long_unmanaged_results.csv")),
+  data.table(model="v132plain", cell="ns_managed",        file=file.path(P36,"p36ns_v132plain_ns_managed_results.csv")),
+  data.table(model="v132plain", cell="ns_unmanaged",      file=file.path(P36,"p36ns_v132plain_ns_unmanaged_results.csv")),
+  data.table(model="v132plain", cell="ns_long_managed",   file=file.path(P36,"p36ns_v132plain_ns_long_managed_results.csv")),
+  data.table(model="v132plain", cell="ns_long_unmanaged", file=file.path(P36,"p36ns_v132plain_ns_long_unmanaged_results.csv")),
 
   ## current production. All twelve fresh under one provenance.
   data.table(model="prod", cell="baxter",            file=file.path(P36,"p36_prod_baxter_results.csv")),
   data.table(model="prod", cell="ctrn",              file=file.path(P36,"p36_prod_ctrn_results.csv")),
   data.table(model="prod", cell="pef",               file=file.path(P36,"p36_prod_pef_results.csv")),
-  data.table(model="prod", cell="silc_l",            file=file.path(P36,"p36_prod_silc_l_results.csv")),
+  data.table(model="prod", cell="silc_l",            file=file.path(P36,"p36silc137_prod_silc_l_results.csv")),
   data.table(model="prod", cell="mef",               file=file.path(P36,"p36_prod_mef_results.csv")),
   data.table(model="prod", cell="nb_v2",             file=file.path(P36,"p36_prod_nb_v2_results.csv")),
   data.table(model="prod", cell="memat",             file=file.path(P36,"p36_prod_memat_results.csv")),
   data.table(model="prod", cell="medev",             file=file.path(P36,"p36_prod_medev_results.csv")),
-  data.table(model="prod", cell="ns_managed",        file=file.path(P36,"p36_prod_ns_managed_results.csv")),
-  data.table(model="prod", cell="ns_unmanaged",      file=file.path(P36,"p36_prod_ns_unmanaged_results.csv")),
-  data.table(model="prod", cell="ns_long_managed",   file=file.path(P36,"p36_prod_ns_long_managed_results.csv")),
-  data.table(model="prod", cell="ns_long_unmanaged", file=file.path(P36,"p36_prod_ns_long_unmanaged_results.csv")),
+  data.table(model="prod", cell="ns_managed",        file=file.path(P36,"p36ns_prod_ns_managed_results.csv")),
+  data.table(model="prod", cell="ns_unmanaged",      file=file.path(P36,"p36ns_prod_ns_unmanaged_results.csv")),
+  data.table(model="prod", cell="ns_long_managed",   file=file.path(P36,"p36ns_prod_ns_long_managed_results.csv")),
+  data.table(model="prod", cell="ns_long_unmanaged", file=file.path(P36,"p36ns_prod_ns_long_unmanaged_results.csv")),
 
   ## OSM-ACD. Panel only. NS and NS-long are scored overall rather than split by regime, so they are
   ## matched against the union of the two regime cells in the panel and nowhere else.
@@ -310,10 +320,11 @@ TOL <- 1e-6
 ## scaled multi-subplot designs and marks a defect only where the source also breaches the physical
 ## ceiling.
 flag_file <- file.path(OUT, sprintf("p36-stand-flags_DATA_%s.csv", STAMP))
-if (!file.exists(flag_file))
-  stop("stand flag table not found at ", flag_file, "; run 2026-08-26_p36_stand_flags.R first")
-FLAGS  <- fread(flag_file)
-POOLED <- FLAGS[pooled_subplots == TRUE & source %in% c("ns","ns_long"), unique(STAND)]
+POOLED <- character(0)
+if (file.exists(flag_file) && length(SCREEN_CELLS)) {
+  FLAGS  <- fread(flag_file)
+  POOLED <- FLAGS[pooled_subplots == TRUE & source %in% c("ns","ns_long"), unique(STAND)]
+}
 cat(sprintf("[screen] %d structurally pooled NS stand keys loaded for the screened variant\n\n",
             length(POOLED)))
 

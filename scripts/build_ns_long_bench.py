@@ -67,8 +67,18 @@ import numpy as np
 import os
 import random
 
-NS_DIR = "/sessions/fervent-pensive-goodall/mnt/Nova Scotia"
-OUTDIR = "/sessions/fervent-pensive-goodall/mnt/CRSF-Cowork/repos/fvs-acd/figures/_data/ns_bench_build"
+NS_DIR = os.environ.get("NS_DIR", "/sessions/fervent-pensive-goodall/mnt/Nova Scotia")
+if not os.path.isdir(NS_DIR):
+    # The Cowork session mount changes every session, so a hardcoded /sessions/<name>/ path goes
+    # stale the moment the session ends. Resolve the attached Nova Scotia folder by searching the
+    # live mount root, and fall back to the environment variable NS_DIR when it sits elsewhere.
+    import glob as _glob
+    _cands = sorted(_glob.glob("/sessions/*/mnt/Nova Scotia"))
+    if _cands:
+        NS_DIR = _cands[-1]
+    else:
+        raise SystemExit("Nova Scotia source folder not found; set NS_DIR")
+OUTDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/figures/_data/ns_bench_build"
 os.makedirs(OUTDIR, exist_ok=True)
 
 MIN_TREES = 3
@@ -162,7 +172,12 @@ op_esi_raw = op_esi_raw[op_esi_raw > 2]
 # -------------------------------------------------------------------------------------------
 print("Loading NS_PSP_research_tree.csv ...", flush=True)
 rs = pd.read_csv(os.path.join(NS_DIR, "NS_PSP_research_tree.csv"), low_memory=False)
-rs["stand_key"] = "NS_RS_" + rs["stand"].astype(int).astype(str)
+# Keyed on (stand, plot) since 26 August 2026. See the long comment in build_ns_bench.py: one
+# `stand` carries several `plot` subplots, each an independent treatment unit with its own
+# already-per-hectare `expf`, so keying on the stand alone summed their expansion factors and
+# inflated observed basal area to 1,076 m2/ha against a ceiling near 64.
+rs["stand_key"] = ("NS_RS_" + rs["stand"].astype(int).astype(str)
+                   + "P" + rs["plot"].astype(int).astype(str))
 rs["actual_year"] = rs["year"].apply(decode_year)
 
 print("Loading psp_qplot.sas7bdat (ESI proxy) ...", flush=True)
@@ -172,7 +187,11 @@ def key4_to_int(v):
         v = v.decode("latin1")
     return int(str(v).strip())
 qp["stand"] = qp["KEY4"].apply(key4_to_int)
-qp["stand_key"] = "NS_RS_" + qp["stand"].astype(str)
+# qplot is already per subplot, KEY4 the stand and KEY5 the plot, 5,021 rows against 5,021
+# (stand, plot, year) groups in the tree table, so the ESI proxy gains resolution here rather than
+# losing it, and it has to be keyed this way to join the new stand key at all.
+qp["plot"] = qp["KEY5"].apply(key4_to_int)
+qp["stand_key"] = "NS_RS_" + qp["stand"].astype(str) + "P" + qp["plot"].astype(str)
 rs_esi_raw = qp.groupby("stand_key")["AVGTOPHTM"].median(numeric_only=True).dropna()
 rs_esi_raw = rs_esi_raw[rs_esi_raw > 2]
 
@@ -239,7 +258,11 @@ def build_long_pairs(df, dist_years_lookup, managed_flag, key_field="stand"):
         raw_years = sorted(raw_years)
         if len(raw_years) < 2:
             continue
-        stand_num = int(sk.split("_")[-1])
+        # Disturbance and treatment years are recorded per stand, not per subplot, so the lookup
+        # stays keyed on the stand number even though the stand key is now NS_RS_<stand>P<plot> for
+        # research and NS_OP_<stand> for operational. Take the token after the prefix and cut at the
+        # P, which is a no-op for operational keys since they carry no P.
+        stand_num = int(sk.split("_")[-1].split("P")[0])
         dyears = dist_years_lookup.get(stand_num, set())
         actual_years = [decode_year(y) for y in raw_years]
 
@@ -330,9 +353,14 @@ pairs_df = pd.DataFrame(pairs, columns=["STAND","SITE","PROV","interval_years","
 # mark research pairs from multi-TYEAR stands as SINGLE_REGIME=0 (excluded from the "single
 # regime" managed long set downstream, kept in the raw file for transparency)
 def is_multi_regime(site):
+    # Treatment regime is a property of the stand, not of the subplot, and `rs_multi_regime_stands`
+    # is keyed on the stand (KEY4). Since 26 August 2026 the site key is NS_RS_<stand>P<plot>, so
+    # the stand is the token between the prefix and the P. The previous `site.split("_")[-1]` would
+    # now raise on every research site rather than fail quietly, which is the preferable failure,
+    # but it is fixed here rather than relied on.
     if not site.startswith("NS_RS_"):
         return False
-    return int(site.split("_")[-1]) in rs_multi_regime_stands
+    return int(site[len("NS_RS_"):].split("P")[0]) in rs_multi_regime_stands
 pairs_df.loc[pairs_df["SITE"].apply(is_multi_regime), "SINGLE_REGIME"] = 0
 
 n_raw = {(m, t): int(((pairs_df.MANAGED == m) & (pairs_df.PAIR_TYPE == t)).sum())

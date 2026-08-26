@@ -74,8 +74,18 @@ import os
 import sys
 import random
 
-NS_DIR = "/sessions/fervent-pensive-goodall/mnt/Nova Scotia"
-OUTDIR = "/sessions/fervent-pensive-goodall/mnt/CRSF-Cowork/repos/fvs-acd/figures/_data/ns_bench_build"
+NS_DIR = os.environ.get("NS_DIR", "/sessions/fervent-pensive-goodall/mnt/Nova Scotia")
+if not os.path.isdir(NS_DIR):
+    # The Cowork session mount changes every session, so a hardcoded /sessions/<name>/ path goes
+    # stale the moment the session ends. Resolve the attached Nova Scotia folder by searching the
+    # live mount root, and fall back to the environment variable NS_DIR when it sits elsewhere.
+    import glob as _glob
+    _cands = sorted(_glob.glob("/sessions/*/mnt/Nova Scotia"))
+    if _cands:
+        NS_DIR = _cands[-1]
+    else:
+        raise SystemExit("Nova Scotia source folder not found; set NS_DIR")
+OUTDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/figures/_data/ns_bench_build"
 os.makedirs(OUTDIR, exist_ok=True)
 
 MIN_IV, MAX_IV = 4, 15
@@ -149,7 +159,25 @@ op_esi = op_esi[op_esi > 2]
 # ---------------------------------------------------------------------------------------------
 print("Loading NS_PSP_research_tree.csv ...", flush=True)
 rs = pd.read_csv(os.path.join(NS_DIR, "NS_PSP_research_tree.csv"), low_memory=False)
-rs["stand_key"] = "NS_RS_" + rs["stand"].astype(int).astype(str)
+# The research network is a thinning-trial design in which one `stand` carries several `plot`
+# subplots, each an independent treatment unit with its own already-per-hectare `expf`. Keying on
+# `stand` alone, as this line did before 26 August 2026, pools those subplots under one key and
+# sums their expansion factors, which multiplies stand density by the subplot count. The measured
+# consequence was observed basal area to 1,076 m2/ha against a self-thinning ceiling near 64, in
+# 213 of 2,500 NS managed rows and 265 of 1,334 NS-long managed rows, whereupon the model's
+# density-dependent mortality collapsed the stand and predicted mostly ingrowth. That is the origin
+# of NS managed's 156 percent RMSE and 0.12 slope, which results/gydb/README.md line 784 recorded as
+# a property of the h1 configuration.
+#
+# The subplot is the correct experimental unit and it is not merely a matter of scale. Of the 515
+# stand-years carrying more than one subplot, 238 contain subplots with different basal area removed
+# and 102 with different treatment years, so averaging across them would mix treatment units rather
+# than replicate them. Keying on (stand, plot) gives 1,251 units against 422, with per-subplot basal
+# area at median 24.6 and 99th percentile 67.6 m2/ha, against 42.6 and 488.2 pooled.
+#
+# `P` separates the two identifiers so the trailing `_<year>` the pair id appends stays unambiguous.
+rs["stand_key"] = ("NS_RS_" + rs["stand"].astype(int).astype(str)
+                   + "P" + rs["plot"].astype(int).astype(str))
 rs["actual_year"] = rs["year"].apply(decode_year)
 
 print("Loading psp_qplot.sas7bdat (ESI proxy for research stands) ...", flush=True)
@@ -159,7 +187,12 @@ def key4_to_int(v):
         v = v.decode("latin1")
     return int(str(v).strip())
 qp["stand"] = qp["KEY4"].apply(key4_to_int)
-qp["stand_key"] = "NS_RS_" + qp["stand"].astype(str)
+# qplot is already per subplot, KEY4 being the stand and KEY5 the plot, at 5,021 rows against the
+# 5,021 (stand, plot, year) groups in the research tree table. Keying the ESI proxy on the stand
+# alone therefore threw away resolution the source already carried, and now that the stand key is
+# per subplot it would also fail to join. Keyed on both.
+qp["plot"] = qp["KEY5"].apply(key4_to_int)
+qp["stand_key"] = "NS_RS_" + qp["stand"].astype(str) + "P" + qp["plot"].astype(str)
 rs_esi = qp.groupby("stand_key")["AVGTOPHTM"].median(numeric_only=True)
 rs_esi = rs_esi.dropna()
 rs_esi = rs_esi[rs_esi > 2]
