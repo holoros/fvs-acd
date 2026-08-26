@@ -414,3 +414,95 @@ coverage is closer to complete.
 RMSE and bias are in percent of observed mean total volume, slope is the observed-on-predicted OLS
 slope, both computed the same way as the published table above. v12.11 and OSM-ACD figures for
 these two sources are not repeated here since neither was rescored against the expanded coverage.
+
+## Pass 30: h1_v132_mortgate scored against NB, QC, NS, and NS-long
+
+Pass 24 answered whether v12.11's config elements could be merged into the v13.2 base without
+reintroducing Baxter's over-prediction, restricted to the non-Canadian battery per instruction at
+the time. It found h1_v132_mortgate (density-dependent mortality scaling, gated on the managed
+flag) bit-identical to v13.2 everywhere in that battery except CFRU CTRN, where h1 wins outright.
+NB MagPlot, QC MagPlot, NS, and NS-long were excluded from that verdict by instruction, even though
+h1 through h4 result files for those four sources already existed on Cardinal from before the
+restriction took effect. This pass reopens that question, using GYDB's now-complete pair coverage
+for the four Canadian sources rather than the narrower coverage those pre-existing files carried.
+
+Orientation confirmed the pre-existing merge_v24 files could only partly be reused. NS managed and
+NS unmanaged matched the current p21 baseline coverage exactly, both in row count and in a
+STAND-for-STAND diff, and were reused as scored without rerunning the model. NB and QC did not,
+since the pre-existing h1 NB file (734 rows) predates the QC merge and the pointwise ESI fill that
+now bring NB plus QC to 2,547 combined pairs, and no h1 file for NS-long existed at all, since pass
+24's merge_v24 sweep only ever scored NS and never touched the NS-long source. NB plus QC and all
+three NS-long components (managed singleregime, unmanaged, and the multiregime slice pass 28
+closed) were therefore rescored this pass under h1_v132_mortgate, using the exact overlay pass 24
+used (ONSET 0.55, LEV3 lo 0.35 hi 0.45 qmin 18, V1211_MORTGATE=TRUE, V1211_DHTHW=FALSE, MORT_FMIN
+MORT_K MORT_RD0 left at their 0.13, 12.4, 0.38 defaults) on top of the unmodified v13.2 stack, read
+from merge_v24's own hybrids sbatch and lever_block.txt rather than reconstructed from memory. NB
+and QC both carry V1211_MANAGED=TRUE, matching how pass 24 scored the combined nb source. NS and
+NS-long split by their own managed and unmanaged pairs files, so V1211_MANAGED tracks TRUE for the
+managed and multiregime components and FALSE for the unmanaged component, exactly as merge_v24 did
+for NS.
+
+Every h1 result file, new or reused, was checked against its current v13.2 baseline file on STAND
+keys and observed TOTVOL before any metric was trusted, the same observed-basis gate pass 24's own
+scorecard enforces. All eight gates passed with an exact row-count and STAND match (NB 355, QC
+2,192, NS managed and unmanaged 2,500 each, NS-long managed singleregime 1,334, unmanaged 4,419,
+multiregime 176), so every number below rests on a matched, verified pair set.
+
+| Model | Source | n | RMSE% | Bias% | Slope obs-on-pred |
+|---|---|---|---|---|---|
+| v13.2 baseline | NB | 355 | 48.80 | -11.13 | 1.181 |
+| h1 mortgate | NB | 355 | 41.86 | -5.84 | 1.082 |
+| v13.2 baseline | QC | 2,192 | 61.03 | 10.83 | 0.657 |
+| h1 mortgate | QC | 2,192 | 57.95 | 15.55 | 0.684 |
+| v13.2 baseline | NS | 5,000 | 177.77 | -38.79 | 0.203 |
+| h1 mortgate | NS | 5,000 | 152.32 | -28.55 | 1.838 |
+| v13.2 baseline | NS-long | 5,929 | 158.38 | -40.91 | 0.075 |
+| h1 mortgate | NS-long | 5,929 | 130.64 | -30.68 | 2.042 |
+
+RMSE and bias are in percent of observed mean total volume, slope is the observed-on-predicted OLS
+slope, computed the same way as the tables above.
+
+NB is a clean win for h1. RMSE drops 6.94 points (48.80% to 41.86%), the negative bias shrinks by
+5.29 points (-11.13% to -5.84%), and the slope moves closer to 1 (1.181 to 1.082). QC is mixed
+rather than a clean win or loss. RMSE improves 3.08 points and the slope moves closer to 1 from
+below (0.657 to 0.684), yet QC's bias was already positive under v13.2 and h1 pushes it further
+positive still, from 10.83% to 15.55%, a 4.72 point increase in over-prediction. NS and NS-long
+both show large RMSE and bias gains under h1, RMSE falling 25.45 and 27.74 points and bias
+improving 10.24 and 10.23 points respectively, yet their slopes invert rather than correct, moving
+from severe attenuation well below 1 (0.203 and 0.075) to overshoot well above 1 (1.838 and 2.042).
+The distance from a slope of 1 is roughly symmetric before and after the lever fires on both
+sources (NS moves from 0.797 to 0.838 units away from 1, NS-long from 0.925 to 1.042), so the lever
+trades one form of dispersion miscalibration for the opposite one on these two sources rather than
+fixing it outright. What drives that inversion is not established by this pass's aggregate metrics
+alone and is flagged here as an open question for a follow-up pass, not explained away.
+
+h1_v132_mortgate never loses to v13.2 on RMSE at any of the four Canadian sources, extending the
+pattern already established on the non-Canadian battery, where h1 was bit-identical to v13.2 on
+every source except CTRN, where it won outright. That extends the standing recommendation from
+pass 24 rather than reversing it, adopt h1_v132_mortgate broadly, across both the non-Canadian and
+now the Canadian battery, since it is never the worse RMSE choice anywhere tested to date. The
+recommendation carries two caveats that pass 24's non-Canadian verdict did not need to carry. QC's
+bias tradeoff means h1 is not an unqualified win there even though it wins on RMSE, and the NS and
+NS-long slope inversion means the lever changes the character of those two sources' dispersion
+miscalibration rather than resolving it, a distinction worth carrying into any downstream use of
+predicted variance or intervals from those two sources specifically.
+
+### Files added this pass
+
+`results/gydb/h1_v132_mortgate_nb_v2_results.csv`: h1 rerun against the current NB plus QC pair set
+(2,547 rows combined, PROV distinguishes NB from QC).
+`results/gydb/h1_v132_mortgate_ns_long_managed_singleregime_results.csv`,
+`h1_v132_mortgate_ns_long_unmanaged_results.csv`,
+`h1_v132_mortgate_ns_long_multiregime_results.csv`: h1 reruns against NS-long's three pair-file
+components (1,334, 4,419, and 176 rows).
+`results/gydb/pass30_h1_vs_v132_canadian.csv`: the eight-row scorecard published above.
+`results/gydb/2026-08-25_pass30_h1_rerun.sbatch`: the SLURM array that produced the four new h1
+result files (job 13960633, four tasks).
+`scripts/gydb/2026-08-25_pass30_scorecard_canadian.R`: computes the table above, including the
+observed-basis gate against each source's current v13.2 baseline file (job 13962194, chained on
+job 13960633 via SLURM's own --dependency=afterok so it started automatically once scoring
+finished, no manual resubmission needed).
+NS managed and NS unmanaged h1 results are not re-copied here since they are unchanged from
+`merge_v24/h1_v132_mortgate_ns_managed_results.csv` and `..._ns_unmanaged_results.csv`, already on
+Cardinal from pass 24 and confirmed this pass to match the current baseline exactly, both files stay
+on Cardinal only, consistent with the standing convention for the other merge_v24 per-stand files.
