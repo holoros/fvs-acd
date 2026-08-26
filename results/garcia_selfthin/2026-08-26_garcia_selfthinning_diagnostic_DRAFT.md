@@ -132,3 +132,55 @@ HW/SW classification and join), `2026-08-26_garcia_fortype_fit.R` and
 `2026-08-26_garcia_networktype_fit.R` (the broad-scale fits), and
 `garcia_fit_by_fortype_juris_2026-08-26.csv` / `garcia_fit_by_networktype_2026-08-26.csv` (results,
 all with a `boundary_hit` flag so a non-identified fit is never mistaken for a converged one).
+
+## Update: the hierarchical fit, and a single pooled curve that actually works
+
+Aaron chose an nlme random effect on beta over a full Bayesian brms fit, since beta is the
+parameter closest to a physical asymptote and nlme matches this workspace's default for a
+single-grouping-factor nonlinear fit. A first attempt across all six sources with at least 30
+mortality-bearing pairs failed outright (`step halving factor reduced below minimum in PNLS step`),
+both from a blind population start and from the standard nlme workflow of seeding the mixed model
+from an `nlsList` fit per source. The `nlsList` stage itself explained why: mefia and mefia_long
+never converged individually at all (singular gradient), and ctrn converged to an extreme,
+implausible point (alpha=41.7, gamma=78.3), the same kind of degenerate solution the fixed-effects
+boundary hits already flagged. A mixed model cannot borrow strength from a group whose own
+likelihood is flat or degenerate, so those three were dropped, a disclosed restriction, not a
+silent one, and the fit was rebuilt on the three sources with a sane individual optimum, ns,
+ns_long, and mefia_subp (n=2,987 mortality-bearing pairs).
+
+That restricted model converged cleanly and answered the original question directly: the random
+effect on beta collapsed to zero (StdDev 1.33e-06, its 95 percent interval running from 2.7e-58 to
+6.7e+45, the textbook signature of a singular random effect with no detectable between-source
+variance). There is no evidence these three sources need different self-thinning curves. What they
+share is a single, tightly estimated population curve, alpha=3.222 (SE 0.429), beta=0.0681
+(SE 0.0034), gamma=5.688 (SE 0.751), self-thinning slope 2*gamma/alpha=3.53, closer to the
+Reineke-consistent value of 4 than any per-source estimate before it, and beta a third independent
+landing near Garcia's own published 0.0721. This is the actual answer to "something that works at
+broad scale": not a grouping by ecoregion, forest type, or jurisdiction, but the recognition that a
+subset of sources sharing a compatible, natural stand-development trajectory already obey one
+shared curve with no adjustment needed, while CTRN, PEF, Baxter, mefia, and mefia_long do not belong
+in that pool at all, not because of geography or species but because they are actively managed or
+too sparse to identify.
+
+**A usable ceiling, by height, from the pooled curve.** At the asymptote, N(H) =
+(100/(beta*H)^(gamma/alpha))^2 trees per hectare. Evaluated at three reference top heights: roughly
+38,800 trees/ha at 10 m, 3,350 at 20 m, and 800 at 30 m. These fall in the same order of magnitude as
+`results/sdimax/`'s FIA-derived ceilings and decline with height the way a self-thinning boundary
+should, and unlike a fixed SDImax constant, this ceiling is conditioned on the height trajectory
+already being tracked rather than imposed as a separate number.
+
+**Scope, stated plainly.** This pooled curve is fit and validated only for ns, ns_long, and
+mefia_subp, natural or lightly-managed permanent-sample-plot networks. It has not been shown to
+apply to CTRN, PEF, Baxter, mefia, or mefia_long, and Garcia's own paper gives the reason not to
+force it there: managed stands with divergent thinning histories only guarantee a limiting plane,
+not a shared line. Using this curve as an engine-level density ceiling, rather than a validated
+research finding, would be the next real step and a bigger one, translating N(H) into a modifier or
+constraint FVS-ACD's stand-mortality submodel can consume, then testing it specifically against the
+pass-32 long-horizon crash this whole line of inquiry was aimed at.
+
+**Further files.** `2026-08-26_garcia_nlme_restricted3.R` (the nlsList-then-nlme fit, including the
+attempts that failed and why), `2026-08-26_garcia_nlme_report.R` (summary, VarCorr, and interval
+extraction), `garcia_nlme_coef_restricted3_2026-08-26.csv` (per-source coefficients, confirming they
+are numerically identical), `garcia_nlme_fit_restricted3_2026-08-26.rds` (the fitted nlme object),
+and `garcia_nlme_report_2026-08-26.txt` (full summary, VarCorr, fixed effects, and confidence
+intervals).
