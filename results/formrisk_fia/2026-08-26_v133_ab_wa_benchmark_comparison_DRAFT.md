@@ -85,15 +85,17 @@ the result files. It is a pre-existing defect in the interaction between `calc_d
 benchmark runner, not something v13.3 introduced, and it would have suppressed the six-species
 Castle modifier in exactly the same way in any earlier run made with `USE_MODS=TRUE`.
 
-**The control run confirms the mechanism directly.** Rerunning the candidate engine on silc_l with
-every export unchanged except `USE_MODS=FALSE`, submitted as job 13982126, returns 73 scored stands
-and zero failures against the 14 scored stands and 59 failures the same engine produced with the
-lever ON. Same engine file, same overlay, same inputs, same twenty-odd production levers, one flag
-moved. The hardwood form and risk lever being ON is what destroys 59 of 73 stands, and turning it off
-recovers every one of them. This is the control the original two-arm design never included, and it is
-the reason the prod-versus-cand comparison could not have detected anything. Larger-source controls on
-memat and mef, job 13982044, were still running when this record was written and are confirmatory
-rather than load bearing.
+**The control run confirms the mechanism directly.** Rerunning the candidate engine with every export
+unchanged except `USE_MODS=FALSE`, submitted as job 13982126, recovers the entire population on both
+sources tested. silc_l returns 73 scored stands and zero failures against the 14 scored and 59 failed
+the same engine produced with the lever ON, and baxter returns 91 scored and zero failures against 3
+scored and 88 failed. Same engine file, same overlay, same inputs, same twenty-odd production levers,
+one flag moved, and in both cases every previously discarded stand comes back and nothing fails at
+all. The hardwood form and risk lever being ON is precisely what destroys the hardwood-bearing stands,
+and turning it off recovers every one of them. This is the control the original two-arm design never
+included, and it is the reason the prod-versus-cand comparison could not have detected anything.
+Larger-source controls on memat and mef, job 13982044, were still running when this record was
+written and are confirmatory rather than load bearing.
 
 **What the isolation check actually shows.** The brief called for direct confirmation that sources
 containing no AB, WA or SM score identically between arms. That check passes, and passes twice over.
