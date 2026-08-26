@@ -24,17 +24,34 @@ identifiers outside their own release. Given the weak join, Aaron chose to fit n
 from the FIA-wide record instead of from the Castle file.
 
 **Data build.** The existing form and risk crosswalk in `apply_formrisk_crosswalk.R`, built and
-validated in an earlier pass at roughly 98 percent form coverage and 100 percent risk coverage on
-Maine hardwood rows, was reused verbatim rather than rebuilt, since re-deriving it would only invite a
+validated in an earlier pass, was reused verbatim rather than rebuilt, since re-deriving it would only invite a
 second, needlessly different set of field-call thresholds. It maps TREECLCD, TREEGRCD (falling back to
 TREE_GRADE_NCRS where TREEGRCD is missing), CULL_FLD and DAMAGE_AGENT_CD1 through CD3 into an F1/F2
 form call and an R1/R2/R3 risk call. Each ME_TREE_GRM_COMPONENT record was matched to its beginning-
 of-interval tree row by PREV_TRE_CN and to its plot's remeasurement period by PLT_CN, and the form and
 risk crosswalk was applied at that beginning occasion only, so the covariate never uses information
 from after the growth or mortality it predicts. The analysis population is every SURVIVOR,
-MORTALITY1 or MORTALITY2 record with a beginning DBH of 5.0 cm or larger, a positive remeasurement
-period, and a resolved form and risk call, 134,646 trees on 8,973 plots. Non-positive or missing
-annual diameter growth on survivors dropped a further 197 rows (0.15 percent) before the growth fit.
+MORTALITY1 or MORTALITY2 record with a beginning DBH at or above the FIA 5.0 inch threshold, which is
+12.7 cm, a positive remeasurement period, and a resolved form and risk call, 142,603 rows on 11,246
+plots, of which 134,646 are SURVIVOR and 7,957 are MORTALITY1. There are no MORTALITY2 records at all,
+so that term of the filter never binds. Crosswalk coverage over the full candidate set on this build
+is 83.38 percent for form and 90.46 percent for risk. Non-positive or missing annual diameter growth
+on survivors dropped a further 197 rows (0.15 percent) before the growth fit.
+
+Four numbers in the first version of this paragraph were wrong and are corrected above, with the
+originals recorded here rather than silently replaced, since both of the 26 August session handoffs
+propagated them. The population was given as 134,646 trees on 8,973 plots, which reported the
+SURVIVOR subtotal as the whole population and attached a plot count that no candidate definition
+reproduces, the correct figure being 11,246. Coverage was given as roughly 98 percent form and 100
+percent risk, which are real figures from `apply_cw.out` but computed over a denominator counting only
+rows that already carry a call, making the risk figure a tautology rather than a coverage rate. The
+diameter threshold was given as 5.0 cm when `DIA` is in inches throughout, so the population actually
+begins at 12.7 cm, and this is the one to watch, since the fitted coefficients are unaffected only
+because no conversion was ever applied, while anyone reading this write-up to set an engine
+coefficient would have carried the error into a metric model. And MORTALITY2 was named as an included
+class when the count is zero. All four were re-derived against the committed run's own log (job
+13978142) by an independent verification pass on 26 August 2026, recorded in
+`2026-08-26_reversal_verification_REVIEW.md` in this directory.
 
 **Physical validity screen.** Mortality rate rises with worse form and risk inside every one of the
 nine species pools, from a low near 1 percent (RO, good form, low risk) to highs above 25 percent (AB,
@@ -120,3 +137,17 @@ entering the repository. Not yet done, translating either model into an engine-r
 comparable in form to `ddbh_hw_mod` and `tsurv_hw_mod`, and deciding with Aaron whether the joint
 species-by-form-by-risk interaction structure should replace the current uniform growth modifier or
 supplement it only for AB, WA and SM where no modifier exists today.
+
+**Update, 26 August 2026, the growth half of that decision is settled and the sugar maple survival
+half has been reopened.** Aaron scoped the growth question to gap fill only, and engine v13.3 adds
+`ddbh_hw_mod_fia()` for American beech and white ash diameter growth alone, leaving every validated
+species byte identical to production. On the survival side, a v13.3 sugar maple modifier was
+investigated and declined on the stated ground that this analysis population lacks the BAL and plot
+basal area fields `tsurv_hw_mod` needs. That premise was correct about the saved 52.6 MB extract and
+wrong about the source. Both fields recover at 100.00 percent coverage on all 15,881 sugar maple rows
+by returning to `ME_TREE` at the previous plot visit and summing 0.005454 DIA² TPA_UNADJ over the live
+trees, independently confirmed on 26 August 2026. A sugar maple survival modifier fit on a form the
+data actually supports now lives in `2026-08-26_sm_survival_refit_DRAFT.md` in this directory. It is
+deliberately not comparable to `tsurv_hw_mod` and says so at length, so the two must not be read on
+one scale. The remaining blockers named in the original refusal, the absent three level NHRI form
+field and the absence of a scale conversion, are untouched by this and still stand.

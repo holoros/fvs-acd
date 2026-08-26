@@ -1,0 +1,6 @@
+model,rhs,npar,logLik,AIC,BIC,pdHess,dAIC
+D,form_begin + risk_begin + dbh_cm + sqrt(ba_c) + bal_c,8,-1701.41973708405,3418.8394741681,3480.22250380898,TRUE,0
+E,form_begin * risk_begin + log(dbh_cm) + sqrt(ba_c) + bal_c,10,-1703.73477569153,3427.46955138307,3504.19833843418,TRUE,8.63007721497343
+C,form_begin + risk_begin + log(dbh_cm) + sqrt(ba_c) + bal_c,8,-1706.53918321309,3429.07836642617,3490.46139606706,TRUE,10.238892258074
+A,form_begin + risk_begin,5,-1711.23127670198,3432.46255340396,3470.82694692951,TRUE,13.6230792358601
+B,form_begin + risk_begin + log(dbh_cm),6,-1710.50410060071,3433.00820120142,3479.04547343208,TRUE,14.1687270333223
