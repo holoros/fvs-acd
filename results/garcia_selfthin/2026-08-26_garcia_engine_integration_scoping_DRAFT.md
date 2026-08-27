@@ -461,3 +461,22 @@ through 35, `repos/fvs-acd/results/gydb/p36-data-defects_REVIEW_2026-08-26.md`,
 `repos/fvs-acd/results/gydb/p36-readme-section_DRAFT_2026-08-26.md`,
 `repos/fvs-acd/results/bakuzis/data/ctrn_h1default_traj.csv` and its check report, and
 `_context/handoffs/20260826_session_handoff.md`.
+
+## Correction appended 27 August 2026: Table 1's crash depth was under-sampled
+
+Table 1 above samples the CTRN_AP_80_I2014_2015, site 14.3 trajectory at ages 1, 20, 40, 50, 60, 80,
+and 100, and the crash-depth figure quoted in the body text, "178.2 against 223.8, a trough at 0.796,"
+is the age-50 value used as a proxy for the minimum over the stated crash window (ages 40 to 55). It
+is a proxy, not the true minimum: checking every annual value in the same file
+(`results/bakuzis/data/ctrn_h1default_traj.csv`, same stand, same site) finds the true minimum at age
+54, VOL 167.3 m³ ha⁻¹, giving a crash depth of 0.748 rather than 0.796. Both numbers come from the
+identical source file, so this is a sampling-density artifact in Table 1, not a data or methodology
+discrepancy across documents. Age 54 falls inside the window Table 1's own caption already declares
+(40 to 55), it is simply a year the ten-and-five-year-step table never printed. The corrected figure,
+0.748, is now the one carried in
+`results/garcia_selfthin/2026-08-27_bakuzis_nh_diagnostic_results.md`'s narrow crash-pathology
+follow-up. This does not change section 4 or 5's conclusions, since 0.748 is a deeper crash than 0.796,
+which if anything strengthens rather than weakens the case that the crash is real; it only means the
+acceptance-criteria discussion in section 4, which cites the 0.796 figure as the baseline a working
+constraint would need to raise to 0.95 or above, should use 0.748 as that baseline if section 4 is ever
+acted on. Verification: `/tmp/crash_recheck.R` on Cardinal, output reproduced in the commit message.
