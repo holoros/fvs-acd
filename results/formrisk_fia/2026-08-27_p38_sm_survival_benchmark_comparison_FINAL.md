@@ -81,10 +81,28 @@ here rather than resolved, is the NHRI form and risk assignment itself: form and
 per tree in these benchmark sources but assigned by a fractional record split (`hw_formrisk_split.R`,
 Smith Table A.9 empirical distributions) that could, for this particular source's sugar maple
 population, land disproportionately in or near the reference cell (good form, low risk) where the
-modifier returns close to 1. That would produce exactly this pattern, high stem-count composition with
-low realized prediction change, without indicating any defect in the modifier or its wiring. This has
-not been measured directly and should be, before the ns_long_managed and ns_managed results are read as
-evidence about the isolation property one way or the other.
+modifier returns close to 1. Checked 2026-08-27 (`scripts/p38/sm_formrisk_cellcheck_2026-08-27.R`,
+output committed alongside) and the hypothesis as stated is wrong. Applying the actual split to every
+sugar maple tree in both sources gives an identical distribution in both, since the split is a pure
+species-level lookup with no source, stand, or DBH dependence: 46.45 percent of expansion-factor-
+weighted stems land at the reference cell F1/R1, but the remaining 53.55 percent land off reference,
+across F1/R2 (21.65 percent, hazard ratio 2.762), F1/R3 (16.82 percent, hazard ratio 8.023), F2/R1
+(10.28 percent, hazard ratio 1.979), and F2/R2 (4.79 percent, hazard ratio 5.466). So the modifier is
+reaching a majority of sugar maple's weighted presence with real, non-trivial hazard ratios, not
+concentrating near the reference cell. What the check did find is a different and more specific
+mechanism: the worst cell, F2/R3 (hazard ratio 15.877), receives exactly zero weight for sugar maple in
+either source. Sugar maple's form-F2 margin probability (0.1574) times its native risk-R3 margin
+(0.1365) gives 0.0215, and times its native risk-R4 margin (0.0616, folding into crosswalk R3) gives
+0.0097, both below the fractional split's own 0.03 prune threshold, so both are dropped before
+renormalization. This is a property of sugar maple's own form and risk margins under the independence
+assumption the split makes, not of either source, so it holds for every source with sugar maple
+present, not only these two. It means the fitted worst-cell hazard ratio, the one built on the thinnest
+evidentiary base (130 trees, named in the verdict below), can as currently wired never actually be
+exercised by the engine, which narrows the exposure the sub-flag carries but does not on its own
+explain why ns_long_managed and ns_managed specifically show near-total prediction identity despite
+carrying real weight in the 1.979-to-8.023 hazard-ratio range. That narrower question, why these two
+sources in particular diverge less than memat does at comparable or lower composition, is still open
+and is a different question from the one the original hypothesis asked.
 
 Composition is therefore confirmed present in every cell that shows nonzero prediction difference, and
 absent (to three decimal places, near enough to a floor set by the fractional form and risk split) in
@@ -232,8 +250,15 @@ ctrn, and pef carry the least sugar maple and the most complete prediction ident
 most among the cleanly resolved sources and the least identity. Two cells, ns_long_managed and ns_managed,
 carry high sugar maple composition alongside high prediction identity, breaking the pattern outright, and
 the leading candidate explanation, that this source's sugar maple population lands disproportionately
-near the reference form-and-risk cell under the fractional NHRI split rather than the modifier failing to
-reach it, has not been measured directly. That gap is a new, cheap follow-up (join the split output back
-to source and cell and check the realized form-by-risk distribution for ns_long_managed and ns_managed
-specifically), not a reason to revise the hold-at-default-off verdict, since the two exceptions widen
-rather than narrow the case for caution before promoting this sub-flag.
+near the reference form-and-risk cell under the fractional NHRI split, was checked 2026-08-27 and is
+wrong: 53.55 percent of sugar maple's weighted presence lands off the reference cell in both sources,
+identically. What the check found instead is that the split's own prune threshold drops the single
+worst cell, F2/R3, hazard ratio 15.877, to exactly zero weight for sugar maple in every source, a
+property of the species' Smith Table A.9 margins rather than of ns_long_managed or ns_managed
+specifically, so it narrows the sub-flag's practical exposure without explaining why these two sources
+diverge less than memat at comparable or lower composition. That narrower question remains open. Full
+detail in the isolation-check section above and in
+`results/formrisk_fia/sm_formrisk_cellcheck_output_2026-08-27.txt`. Not a reason to revise the
+hold-at-default-off verdict, since the two exceptions still leave composition confirmed and the
+worst-cell hazard ratio still rests on a 130-tree cell that the engine, per this finding, cannot even
+reach under the current split, which is an argument for caution rather than against it.
