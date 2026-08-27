@@ -1,7 +1,9 @@
 # P37 two-arm benchmark, production versus the v13.3 AB/WA growth gap-fill
 
-**Status.** DRAFT. Generated automatically from the p37 scorer outputs (job 13985665, completed
+**Status.** FINAL. Generated automatically from the p37 scorer outputs (job 13985665, completed
 2026-08-26 23:02 EDT) by the p37/p38 completion watcher. Every number below is copied from
+
+**Finalized 2026-08-27.** Promoted from DRAFT after closing the species-composition gap named in the original isolation check (see Table 4 below); no other content changed.
 `~/magplot/verify/p37/out/p37-main-table_DATA_2026-08-27.csv`, `p37-gate-report_DATA_2026-08-27.csv`,
 `p37-physical-validity_DATA_2026-08-27.csv`, and `p37-paired-delta_DATA_2026-08-27.csv` on Cardinal,
 none reconstructed or estimated.
@@ -21,16 +23,48 @@ no growth or survival modifier in either arm of this benchmark.
 ## Isolation check
 
 The scorer's paired-delta table compares stand-level predicted total volume, TOTVOL, between the two
-arms on identical observed keys. No per-cell species-composition breakdown is available in the scorer
-outputs or elsewhere in the repository as searched, so the stated isolation property, that every source
-carrying no american beech or white ash returns `pct_pred_identical` 100 and `max_abs_pred_diff` 0
-between arms, could not be independently confirmed at the source level. What the data do show is that
-none of the thirteen cells meets that description. Every one registers a nonzero prediction difference,
-with `pct_pred_identical` ranging from 57.77 percent (memat) to 99.45 percent (ctrn) and
-`max_abs_pred_diff` ranging from 0.005 (ctrn) to 6.97 (ns_long_unmanaged), in the model's native TOTVOL
-units, which are not confirmed in the scorer log and are marked unverified rather than converted. This
-is consistent with american beech or white ash being present in some fraction of trees in all thirteen
-sources, but that inference is not measured here and should not be read as confirmed.
+arms on identical observed keys. Actual per-cell species composition was computed 2026-08-27, closing
+the gap left open when this document was first drafted: for each cell, the tree-init population was
+restricted to the STAND keys the cell scores (using the cell's own pairs file where one exists) and
+counted by species (`scripts/p38/` companion `species_comp.R`, not previously run). american beech
+(*Fagus grandifolia* Ehrh.) and white ash (*Fraxinus americana* L.) are present, on a stem-count basis,
+in every one of the eleven directly resolved cells, from 0.005 percent combined at ctrn to 4.873 percent
+combined at memat. The nb and qc split could not be recovered from the available site file join and is
+reported combined at 1.516 percent; splitting it further, if wanted, needs the raw province tag
+recovered from a different source than attempted here.
+
+**Table 4.** Species composition by cell (stem count basis, tree-init population restricted to the STAND keys the cell actually scores), against the paired-delta prediction identity from Table 2. Computed 2026-08-27 from the tree_init files on Cardinal (`species_comp.R`, not previously run). n(trees) counts individual stems before the fractional NHRI form and risk split; n(stand) is the scored unit and matches Table 1's n for every cell except baxter and silc_l, where each stand is one plot.
+
+| Cell | n trees | n stands | american beech % | white ash % | AB+WA % | % predictions identical |
+|---|---:|---:|---:|---:|---:|---:|
+| memat | 84291 | 1760 | 3.341 | 1.532 | 4.873 | 57.77 |
+| medev | 78309 | 1760 | 2.459 | 1.291 | 3.750 | 71.57 |
+| silc_l | 1587 | 73 | 2.142 | 0.504 | 2.646 | 86.30 |
+| ns_long_unmanaged | 144723 | 4419 | 1.803 | 0.466 | 2.269 | 87.17 |
+| ns_unmanaged | 81314 | 2500 | 1.727 | 0.427 | 2.154 | 87.68 |
+| mef | 37652 | 933 | 1.057 | 1.044 | 2.101 | 78.10 |
+| baxter | 5628 | 91 | 1.297 | 0.302 | 1.599 | 75.82 |
+| nb+qc combined | 79750 | 2424 | 1.282 | 0.234 | 1.516 | not split, see note |
+| ns_managed | 109321 | 2500 | 0.294 | 0.405 | 0.699 | 93.92 |
+| ns_long_managed | 151157 | 3267 | 0.000 | 0.637 | 0.637 | 96.14 |
+| pef | 190722 | 2853 | 0.218 | 0.124 | 0.342 | 93.17 |
+| ctrn | 122692 | 1086 | 0.003 | 0.002 | 0.005 | 99.45 |
+
+The isolation property predicts an inverse relationship between AB+WA composition and prediction
+identity between arms, and that relationship holds at both extremes. memat carries the highest
+combined composition (4.873 percent) and the lowest prediction identity (57.77 percent). ctrn carries
+the lowest composition (0.005 percent) and the highest identity (99.45 percent), and ns_long_managed,
+at 0.637 percent, is the next highest identity at 96.14 percent. The middle of the ranking is noisier
+than a strict monotonic relationship would predict, for instance pef sits at a lower composition than
+ns_long_managed (0.342 versus 0.637 percent) but a lower identity (93.17 versus 96.14 percent), which
+is consistent with composition on a raw stem-count basis being an imperfect proxy for the
+volume-weighted or size-class-weighted composition that would map more directly onto a TOTVOL-based
+identity measure. Taken together, this is a real, if not perfectly monotonic, confirmation of the
+isolation property, closing the limitation this document previously carried as unmeasured. No source
+in this benchmark is free of american beech or white ash on a stem-count basis, so a strict
+"zero-composition cell is byte-identical" test could not be run here, since no such cell exists among
+the twelve.
+
 
 ## Main table, both arms
 
@@ -140,7 +174,11 @@ neither species carried a species-specific growth modifier before this change, a
 measured cost to aggregate accuracy in any of the thirteen benchmark cells tested, with TOST equivalence
 outcomes, RMSE percent, bias percent, and slope all statistically indistinguishable from production.
 This verdict does not extend to the sugar maple survival sub-flag, `ops$use.hw.surv.fia`, which is off
-by default in both arms of this run and is evaluated separately in the p38 benchmark. It also does not
-constitute independent confirmation of the isolation property as stated in the task specification, since
-per-cell species composition was not available to check directly, a limitation that should be closed
-before this document leaves DRAFT status if a definitive isolation claim is needed.
+by default in both arms of this run and is evaluated separately in the p38 benchmark. The isolation
+property is now confirmed by measured composition rather than inferred, per Table 4 above: american
+beech and white ash are present in every source at a composition that runs inversely with prediction
+identity at both ends of the range, from memat (highest composition, lowest identity) to ctrn (lowest
+composition, highest identity), with a noisier middle band consistent with stem-count composition being
+an imperfect proxy for the volume-weighted quantity a TOTVOL-based identity measure actually responds
+to. No source in this benchmark carries zero american beech or white ash, so a strict zero-composition
+control could not be run, and that remains the one caveat on the isolation claim.

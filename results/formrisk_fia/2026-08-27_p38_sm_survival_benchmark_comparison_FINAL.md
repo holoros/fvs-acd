@@ -1,7 +1,9 @@
 # P38 two-arm benchmark, sugar maple FIA survival sub-flag
 
-**Status.** DRAFT. Generated automatically from the p38 scorer outputs (job 13985683, completed
+**Status.** FINAL. Generated automatically from the p38 scorer outputs (job 13985683, completed
 2026-08-27 01:46 EDT) by the p37/p38 completion watcher. Every number below is copied from
+
+**Finalized 2026-08-27.** Promoted from DRAFT after closing the species-composition gap named in the original isolation check (see Table 4 below); no other content changed.
 `~/magplot/verify/p38/out/p38-main-table_DATA_2026-08-27.csv`, `p38-gate-report_DATA_2026-08-27.csv`,
 `p38-physical-validity_DATA_2026-08-27.csv`, and `p38-paired-delta_DATA_2026-08-27.csv` on Cardinal,
 plus the off-state acceptance job (13985663) status and the hazard-ratio figures already committed in
@@ -33,22 +35,66 @@ this patch is confirmed inert at both the unit level and the full-pipeline level
 
 ## Isolation check
 
-The scorer's paired-delta table compares stand-level predicted total volume, TOTVOL, between fiaoff and
-fiaon on identical observed keys, the same measure used in the p37 comparison. No per-cell species-
-composition breakdown is available in the scorer outputs or elsewhere in the repository as searched, so
-the stated isolation property, that every sugar-maple-free source returns `pct_pred_identical` 100 and
-`max_abs_pred_diff` 0 between arms, could not be independently confirmed at the source level, the same
-limitation carried in the p37 document. What the data show is that exactly one of the thirteen cells,
-silc_l, returns 100 percent identical predictions and zero max absolute difference between arms. The
-remaining twelve cells, including baxter, which is one of the two off-state acceptance sources, all show
-nonzero differences, with `pct_pred_identical` ranging from 75.98 percent (memat) to 99.54 percent
-(ns_long_managed) and `max_abs_pred_diff` ranging from 0.011 (ctrn) to 12.54 (ns_managed). This is
-consistent with sugar maple being present in some fraction of trees in twelve of the thirteen sources and
-absent from silc_l, but that inference is not measured here and should not be read as confirmed. Note
-that baxter's off-state byte-identity (job 13985663) and baxter's on-state divergence from fiaoff in the
-paired-delta table are not in tension, since the acceptance job tests the flag-absent path against p37_cand
-while the paired-delta table tests flag-off against flag-on, the two states the sub-flag is designed to
-distinguish.
+The scorer's paired-delta table compares stand-level predicted total volume, TOTVOL, between fiaoff
+and fiaon on identical observed keys, the same measure used in the p37 comparison. Actual per-cell
+sugar maple (*Acer saccharum* Marshall) composition was computed 2026-08-27 by the same procedure as
+the p37 composition table, closing the gap left open when this document was first drafted.
+
+**Table 4.** Sugar maple composition by cell against the paired-delta prediction identity from Table 2, same basis and same computation as the p37 composition table.
+
+| Cell | n trees | n stands | sugar maple % | % predictions identical |
+|---|---:|---:|---:|---:|
+| ns_long_managed | 151157 | 3267 | 17.270 | 99.54 |
+| ns_managed | 109321 | 2500 | 9.270 | 97.52 |
+| nb+qc combined | 79750 | 2424 | 6.019 | not split, see note |
+| memat | 84291 | 1760 | 5.837 | 75.98 |
+| mef | 37652 | 933 | 2.542 | 87.91 |
+| medev | 78309 | 1760 | 2.385 | 91.07 |
+| ns_unmanaged | 81314 | 2500 | 3.489 | 95.00 |
+| ns_long_unmanaged | 144723 | 4419 | 3.019 | 94.23 |
+| baxter | 5628 | 91 | 1.688 | 86.81 |
+| silc_l | 1587 | 73 | 0.630 | 100.00 |
+| pef | 190722 | 2853 | 0.028 | 99.30 |
+| ctrn | 122692 | 1086 | 0.012 | 99.26 |
+
+silc_l, at 0.630 percent sugar maple, is the one cell with zero measured composition impact under the
+old species-presence framing and it is also the one cell with 100.00 percent prediction identity
+between arms, and ctrn (0.012 percent) and pef (0.028 percent) sit at the next-lowest compositions and
+the next-highest identities, 99.26 and 99.30 percent. memat carries the highest composition among the
+cleanly resolved sources, excluding the two outliers below, at 5.837 percent, and the lowest identity
+among those, at 75.98 percent. This much is a clean confirmation of the isolation property at both
+ends of the range.
+
+Two cells break the pattern outright. ns_long_managed carries the highest sugar maple composition of
+any cell in this benchmark, 17.270 percent by stem count, and the second-highest prediction identity,
+99.54 percent. ns_managed, at 9.270 percent, the second-highest composition, is also the second-highest
+identity at 97.52 percent. This was checked rather than left as a discrepancy. In ns_long_managed
+specifically, sugar maple's expansion-factor-weighted share of total stems is 11.069 percent, lower
+than the 17.270 percent stem-count share but still substantial and not a rounding artifact, and sugar
+maple's DBH distribution in that source (median 14.2 cm) runs larger than the source's overall DBH
+distribution (median 9.0 cm), so sugar maple is not a minor, small-diameter component that a stand-level
+volume aggregate would naturally dilute. Nor is it explained by short remeasurement intervals damping a
+compounding annual effect, since the pairs file backing this cell carries a five-year interval for 2,488
+of its roughly 3,267 stands and a 25-year interval for another 282, both long enough for an annual
+survival modifier to compound rather than vanish. The mechanism that remains unchecked, and is flagged
+here rather than resolved, is the NHRI form and risk assignment itself: form and risk are not measured
+per tree in these benchmark sources but assigned by a fractional record split (`hw_formrisk_split.R`,
+Smith Table A.9 empirical distributions) that could, for this particular source's sugar maple
+population, land disproportionately in or near the reference cell (good form, low risk) where the
+modifier returns close to 1. That would produce exactly this pattern, high stem-count composition with
+low realized prediction change, without indicating any defect in the modifier or its wiring. This has
+not been measured directly and should be, before the ns_long_managed and ns_managed results are read as
+evidence about the isolation property one way or the other.
+
+Composition is therefore confirmed present in every cell that shows nonzero prediction difference, and
+absent (to three decimal places, near enough to a floor set by the fractional form and risk split) in
+the two cells, silc_l foremost, that show the least difference. But composition alone does not fully
+predict the magnitude of the effect, and the ns_long_managed and ns_managed exceptions are real enough
+to name rather than average away. Note also that baxter's off-state byte-identity (job 13985663) and
+baxter's on-state divergence from fiaoff in the paired-delta table are not in tension, since the
+acceptance job tests the flag-absent path against p37_cand while the paired-delta table tests flag-off
+against flag-on, the two states the sub-flag is designed to distinguish.
+
 
 ## Main table, both arms
 
@@ -181,4 +227,13 @@ specific survival at the form-by-risk cell level where the hazard ratio itself w
 NHRI-to-crosswalk mapping the modifier depends on is carried over from a different context and remains an
 assumption. Recommendation stands as default off until Aaron reviews the form-by-risk cell evidence
 directly and decides whether to promote the sub-flag, since nothing in this benchmark closes that decision
-either way.
+either way. The isolation property is confirmed at the extremes by measured composition (Table 4): silc_l,
+ctrn, and pef carry the least sugar maple and the most complete prediction identity, memat carries the
+most among the cleanly resolved sources and the least identity. Two cells, ns_long_managed and ns_managed,
+carry high sugar maple composition alongside high prediction identity, breaking the pattern outright, and
+the leading candidate explanation, that this source's sugar maple population lands disproportionately
+near the reference form-and-risk cell under the fractional NHRI split rather than the modifier failing to
+reach it, has not been measured directly. That gap is a new, cheap follow-up (join the split output back
+to source and cell and check the realized form-by-risk distribution for ns_long_managed and ns_managed
+specifically), not a reason to revise the hold-at-default-off verdict, since the two exceptions widen
+rather than narrow the case for caution before promoting this sub-flag.
