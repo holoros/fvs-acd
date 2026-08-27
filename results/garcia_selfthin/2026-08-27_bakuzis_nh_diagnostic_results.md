@@ -63,3 +63,56 @@ should be expected to bind first if it binds anywhere.
 `results/bakuzis/scripts/bakuzis_check.R` (patched, prior version backed up locally as
 `bakuzis_check_PREV_20260827.R`, gitignored per repo convention). This note. No trajectory data
 or coefficient file was changed.
+
+## Narrow follow-up, 27 August 2026: does CTRN's high-site ceiling crossing share the crash pathology?
+
+Aaron asked whether to proceed straight to the full step-three benchmark or narrow first. Narrowed
+first. The scoping document's own crash-depth and volume-to-basal-area diagnostics
+(`2026-08-26_garcia_engine_integration_scoping_DRAFT.md`, "the diagnostic that distinguishes
+prevention from masking") were run against all four CTRN site classes in both trajectory files, not
+only the two that cross the Garcia ceiling.
+
+**Table.** Crash depth (min standing volume over ages 40-70, as a fraction of the trajectory's own
+age-40 volume) by CTRN site class and configuration.
+
+| Site | h1_v132_mortgate crash depth | v132 baseline crash depth | Max N/N(H), ages 0-100 |
+|---|---:|---:|---:|
+| 14.3 | 0.748 | 0.787 | 0.771 (never breaches) |
+| 15.8 | 0.777 | 0.787 | 0.802 (never breaches) |
+| 17.2 | 0.735 | 0.746 | 1.332 (breaches, 20/100 ages) |
+| 18.1 | 0.919 | 0.925 | 1.201 (breaches, 10/100 ages) |
+
+Site 17.2 does show the deepest crash of the four and the worst ceiling breach together, and its
+volume-to-basal-area ratio through the crash window only rises (0 to 8.3 percent above the age-40
+value under h1_v132_mortgate, 0 to 7.6 percent under baseline), never falls, which is not the
+signature the scoping document names for masking (a constraint that retains small stems holds basal
+area while volume per unit basal area falls). So site 17.2's crash looks like a real crash rather than
+an artifact, and it happens to coincide with the worst ceiling breach.
+
+But site 14.3, the scoping document's own reference site, crashes almost as deep, 0.748, while never
+approaching the Garcia ceiling at all, max N/N(H) 0.771 across the full 100-year horizon. Site 15.8 is
+similar, crash depth 0.777, max N/N(H) 0.802. So crash depth does not track ceiling proximity across
+the four CTRN sites: the two sites furthest from the ceiling crash nearly as deep as the one site
+closest to it, and site 18.1, which does breach the ceiling, has the shallowest crash of all four,
+0.919, barely a dip. A single coincidence (site 17.2) is not a pattern against three site classes that
+contradict it.
+
+One number does not reconcile and is flagged rather than smoothed over. The scoping document's own
+reported crash depth at CTRN, "178.2 against 223.8, a trough at 0.796," matches this data's site 14.3
+age-40 volume of 223.8 exactly but not its computed trough, 167.3 rather than 178.2, giving 0.748
+rather than 0.796. The window definition, exact trajectory file, or config used for the original
+number was not re-derived here and the discrepancy should be resolved before either figure is quoted
+again, though it does not change this section's conclusion either way since 0.748 is if anything a
+slightly deeper crash than the document's own 0.796.
+
+**Conclusion.** This does not support proceeding to step three. The one candidate coincidence, site
+17.2 pairing the deepest crash with the worst ceiling breach, does not generalize across CTRN's other
+three site classes, and the crash is present, to a comparable or greater depth, at sites that never
+come near the Garcia ceiling. This is consistent with, and adds a second line of evidence to, the
+scoping document's own falsification result that switching `ops$use.sdimort` off entirely does not
+repair the crash: if the mechanism the Garcia ceiling would constrain were driving the crash, crash
+depth should track ceiling proximity, and here it does not. Recommendation: park step three on the
+current evidence. The Garcia relation's contribution to this engine remains diagnostic (the N/N(H)
+section above, now standing infrastructure in `bakuzis_check.R`), not constraining, and nothing found
+in this narrow follow-up changes that reading. Revisit only if a future crash investigation finds a
+mechanism this diagnostic would actually gate.
