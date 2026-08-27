@@ -63,6 +63,54 @@ for (o in origins) for (s in sites) {
   }
 }
 
+## 4b Garcia N/N(H): self-thinning density ceiling ratio --------------------
+# Added 27 August 2026, per results/garcia_selfthin/2026-08-26_garcia_engine_integration_scoping_DRAFT.md
+# step two ("add the self-thinning relation to bakuzis_check.R as a diagnostic, evaluating N/N(H)
+# along every trajectory the Bakuzis battery already produces and flagging departures"). This fires
+# on every origin/site trajectory regardless of whether the Reineke slope test above could run, which
+# matters because the battery reported Reineke as "n/a, not in a self-thinning regime" at all four
+# CTRN sites before this addition, leaving CTRN with no working self-thinning test at all. N(H) is
+# the Garcia (2009) relative-spacing self-thinning ceiling, N(H) = 10^4 * (beta*H)^(-2*gamma/alpha),
+# using the pooled nlme fit's coefficients (source: garcia_nlme_coef_restricted3_2026-08-26.csv,
+# alpha and gamma shared across sources, beta's random-effect SD is 1.33e-06 so the three per-source
+# rows are numerically indistinguishable). The managed-stand refit (2026-08-26_garcia_managed_split_DRAFT.md)
+# found the unmanaged-only ceiling shifts by 19.7 percent at 10 m but stays inside the pooled fit's own
+# 95 percent bootstrap interval at every height, so the pooled coefficients are used here rather than an
+# unmanaged-only refit; if that refit is later adopted as the standing curve, update GARCIA_COEF_FILE.
+# This is diagnostic only: it reports and flags, it does not constrain any projection. The scoping
+# doc's own reading of the evidence is that a HARD ceiling here is measurably inert on the one crash
+# case examined (pass 32 CTRN, N/N(H) sat at 0.36 to 0.42 straight through the crash and never
+# approached 1), so a FLAG from this section means the trajectory is closer to the ceiling than that
+# case was, not that a violation in the mechanical sense (N/N(H) > 1) is expected or required to be
+# meaningful.
+cat("\n[4b Garcia N/N(H)] density ratio to the Garcia (2009) self-thinning ceiling (flag if any age exceeds 1, note if sustained above 0.8):\n")
+GARCIA_COEF_FILE <- file.path(dirname(dirname(dirname(normalizePath(csv, mustWork = FALSE)))),
+                              "garcia_selfthin", "garcia_nlme_coef_restricted3_2026-08-26.csv")
+garcia_coef <- tryCatch(read.csv(GARCIA_COEF_FILE, stringsAsFactors = FALSE), error = function(e) NULL)
+if (is.null(garcia_coef) || !nrow(garcia_coef)) {
+  # Fall back to the committed pooled point estimates if the coefficient file is not reachable from
+  # the trajectory CSV's location (e.g. bakuzis_check.R invoked from outside the repo tree). Recorded
+  # here as a labelled fallback rather than silently skipping the section.
+  cat("  [coefficient file not found at", GARCIA_COEF_FILE, "- using hardcoded pooled fallback]\n")
+  GARCIA_ALPHA <- 3.22205915150016; GARCIA_BETA <- 0.0680769838; GARCIA_GAMMA <- 5.68833514337564
+} else {
+  GARCIA_ALPHA <- mean(garcia_coef$alpha); GARCIA_BETA <- mean(garcia_coef$beta); GARCIA_GAMMA <- mean(garcia_coef$gamma)
+}
+garcia_ceiling <- function(H) 1e4 * (GARCIA_BETA * H) ^ (-2 * GARCIA_GAMMA / GARCIA_ALPHA)
+for (o in origins) for (s in sites) {
+  g <- d[d$origin == o & d$site == s, ]; g <- g[order(g$age), ]
+  g <- g[is.finite(g$HT) & g$HT > 0 & is.finite(g$TPH) & g$TPH > 0, ]
+  if (!nrow(g)) { cat(sprintf("  %s site %s: no valid HT/TPH rows - N/N(H) n/a\n", o, s)); next }
+  nh <- garcia_ceiling(g$HT)
+  ratio <- g$TPH / nh
+  mn <- min(ratio); mx <- max(ratio)
+  n_over <- sum(ratio > 1); n_sustained <- sum(ratio > 0.8)
+  status <- if (n_over > 0) "FLAG (exceeds ceiling)" else if (n_sustained > 0) "NOTE (approaching ceiling)" else "OK"
+  cat(sprintf("  %s site %s: N/N(H) range %.3f-%.3f across %d ages, %d over 1.0, %d over 0.8  %s\n",
+              o, s, mn, mx, nrow(g), n_over, n_sustained, status))
+  if (n_over > 0) flags <- c(flags, sprintf("Garcia N/N(H) exceeds 1.0 at %d/%d ages (%s site %s)", n_over, nrow(g), o, s))
+}
+
 ## 8 Eichhorn: volume-height site independence ------------------------------
 cat("\n[8 Eichhorn] volume-height site independence (CV of VOL across sites at matched HT):\n")
 for (o in origins) {
