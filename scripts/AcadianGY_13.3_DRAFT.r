@@ -157,6 +157,14 @@ AcadianVersionTag = "AcadianV13.3"
 
 # ---------------------------------------------------------------------------
 # 13.3 (DRAFT) hardwood form/risk GAP-FILL: AB and WA diameter growth, SM survival investigated.
+#   AMENDMENT 27 August 2026: SM survival is NOW CARRIED, by tsurv_hw_mod_fia (M =
+#   clamp(S_ref^(HR-1), 0.60, 1.00), cloglog hazard-ratio form fit on the Maine FIA GRM
+#   crosswalk, n = 15,881), wired behind ops$use.hw.surv.fia, a NEW sub-flag nested under
+#   ops$use.hw.mod and defaulting to FALSE, so behaviour with use.hw.mod alone is unchanged and
+#   the AB/WA isolation property of the two-arm benchmark is preserved. The SM survival
+#   paragraphs below record why the Castle-form tsurv.hw.spp table could NOT carry SM and remain
+#   true; the new modifier is a different object on a different scale (see tsurv_hw_mod_fia's
+#   own comment and results/formrisk_fia/2026-08-26_sm_survival_refit_DRAFT.md).
 #   Same lever as v12.11's ddbh_hw_mod / tsurv_hw_mod (ops$use.hw.mod, default OFF => byte-identical
 #   to baseline), extended to cover species the six-species Castle (2018) fit never included. Not a
 #   new flag; a coverage extension of the existing one, per Aaron's explicit "fill gaps only" call
@@ -2361,6 +2369,52 @@ tsurv_hw_mod = function(dbh, bal, ba.plot, form, b0, b1) {
   tsurv_hw_mod(dbh = dbh, bal = bal, ba.plot = ba.plot, form = form, b0 = b0, b1 = b1)
 }
 
+# Sugar maple survival modifier from the Maine FIA GRM form and risk crosswalk, 27 August 2026.
+# Source fit: results/formrisk_fia/2026-08-26_sm_survival_refit_DRAFT.md and
+# sm_main_effect_hr_2026-08-26.csv (binomial cloglog hazard, log(REMPER) offset, plot random
+# intercept, n = 15,881 Maine FIA sugar maple rows, AIC-selected, validity screen clean on all
+# five monotonicity tests, 600-resample plot-cluster bootstrap intervals). On the cloglog scale
+# a form and risk contrast multiplies the annual hazard by a constant HR, so with S_ref the
+# annual survival the engine would otherwise assign the tree (surv.tree), modified survival is
+# S_ref^HR exactly and the multiplicative modifier is
+#   M = clamp( S_ref^(HR - 1), 0.60, 1.00 ),
+# equal to 1 at good form and low risk by construction. HR is the product of two main effects
+# (no interaction retained by AIC):
+#   form  F2 vs F1: 1.97893813132547
+#   risk  R2 vs R1: 2.76231530263085,  R3 vs R1: 8.0231672229822
+# giving the six-cell table 1.000 / 2.762 / 8.023 (F1) and 1.979 / 5.466 / 15.877 (F2). The
+# ceiling of 1.00 cannot bind on a correctly coded tree (every cell's bootstrap lower HR bound
+# exceeds 1, smallest 1.426 at F2/R1) and the floor of 0.60 is an extrapolation guard only,
+# verified inactive on all 15,881 fitted trees (raw in-sample minimum 0.7480). Form and risk
+# enter on the FIA crosswalk's own 2-level x 3-level scale, reached from the engine's NHRI codes
+# by the same collapse ddbh_hw_mod_fia already uses: NHRI F1/F3/F4/F7 -> crosswalk F1, all else
+# F2; NHRI R4 folds into crosswalk R3. That mapping is an assumption carried over rather than a
+# measurement (the write-up names it the weakest link in the chain). NOT comparable to
+# tsurv_hw_mod and NOT expressible as a sixth tsurv.hw.spp row: different response scale
+# (cloglog hazard vs logistic-on-DBH ratio), different reference (the engine's own surv.tree vs
+# a PB-referenced fixed baseline), and a value that moves with any recalibration of the survival
+# equation, which is why it cannot be tabulated as a b0/b1 pair. SCALAR function; apply
+# element-wise (purrr::pmap_dbl) per the 27 August 2026 vectorization lesson.
+tsurv_hw_mod_fia = function(sp, form, risk, surv.tree) {
+
+  # Valid species, form, risk and reference survival, else no modification
+  if (is.na(sp) || sp != 'SM' ||
+      is.na(form) || !(gsub('[^0-9]', '', form) %in% 1:8) ||
+      is.na(risk) || !(gsub('[^0-9]', '', risk) %in% 1:4) ||
+      is.na(surv.tree) || surv.tree <= 0 || surv.tree > 1) {
+    return(1)
+  }
+
+  # NHRI -> crosswalk collapse, identical to ddbh_hw_mod_fia's
+  hr.form = ifelse(form %in% c('F1', 'F7', 'F3', 'F4'), 1, 1.97893813132547)
+  hr.risk = ifelse(risk %in% c('R3', 'R4'), 8.0231672229822,
+                   ifelse(risk %in% c('R2'), 2.76231530263085, 1))
+
+  # Annual hazard ratio and clamped multiplicative survival modifier
+  hr = hr.form * hr.risk
+  max(0.60, min(1.00, surv.tree^(hr - 1)))
+}
+
 #' Plot thinning survival modifier
 #' 
 #' @param year.thin Numeric: Commercial thinning year
@@ -2601,6 +2655,11 @@ calc_mortality = function(tree.data, plot.data, region = stand$region,
   # its SM coefficients are not on a convertible scale either. Judged not fittable cleanly in the same
   # functional form as the existing five rows (RO/YB/RM/PB/QA, all untouched below); reported here
   # rather than forced. SM remains excluded from the species gate immediately below.
+  # AMENDMENT 27 August 2026: SM survival is now carried INSTEAD by tsurv_hw_mod_fia,
+  # gated separately behind ops$use.hw.surv.fia and applied after surv.tree is computed,
+  # further below. The exclusion from THIS gate stands, and must stand, since the two
+  # objects are on different scales and a sixth tsurv.hw.spp row cannot express the new
+  # modifier (it takes surv.tree as an argument).
   if (use.hw.mod == TRUE) {
     tree = tree %>%
       dplyr::left_join(tsurv.hw.spp, 
@@ -2644,11 +2703,30 @@ calc_mortality = function(tree.data, plot.data, region = stand$region,
                   b2 = tree.mort.spp$b2[mort.idx],
                   surv.tree = tree_surv_prob(sp, dbh, b0, b1, b2)) %>%
     dplyr::select(-mort.idx, -b0, -b1, -b2)
+
+  # Sugar maple FIA survival modifier (tsurv_hw_mod_fia, defined above). Gated behind
+  # ops$use.hw.surv.fia, a sub-flag NESTED UNDER use.hw.mod: BOTH must be TRUE, and the new flag
+  # defaults to FALSE (a missing ops entry reads NULL, and isTRUE(NULL) is FALSE), so the engine
+  # is byte-identical to committed v13.3 out of the box and under use.hw.mod alone. Deliberately
+  # NOT folded under use.hw.mod by itself: that would break the AB/WA benchmark isolation
+  # property, namely that every source carrying no AB, WA or SM scores identically between the
+  # two arms. Applied AFTER surv.tree is computed because the modifier is a function of the
+  # engine's own reference survival rather than of a fixed baseline. Scalar function applied
+  # element-wise with pmap_dbl; its internal validity gate returns 1 for every non-SM row, every
+  # NA or invalid form or risk code, and any out-of-range reference survival.
+  if (use.hw.mod == TRUE && isTRUE(ops$use.hw.surv.fia)) {
+    tree = tree %>%
+      dplyr::mutate(tsurv.hw.fia.mod = purrr::pmap_dbl(list(sp, form, risk, surv.tree),
+                                                       tsurv_hw_mod_fia))
+  } else {
+    tree = tree %>%
+      dplyr::mutate(tsurv.hw.fia.mod = 1)
+  }
   
   # Apply tree level mortality modifiers
   tree = tree %>%
     dplyr::mutate(tsurv = pmax(0, pmin(surv.tree *
-                                         tsurv.thin.mod * tsurv.sbw.mod * tsurv.hw.mod, 
+                                         tsurv.thin.mod * tsurv.sbw.mod * tsurv.hw.mod * tsurv.hw.fia.mod, 
                                        1.0)),
                   tmort = 1-tsurv)
   
