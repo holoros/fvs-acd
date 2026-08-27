@@ -38,7 +38,7 @@ this patch is confirmed inert at both the unit level and the full-pipeline level
 The scorer's paired-delta table compares stand-level predicted total volume, TOTVOL, between fiaoff
 and fiaon on identical observed keys, the same measure used in the p37 comparison. Actual per-cell
 sugar maple (*Acer saccharum* Marshall) composition was computed 2026-08-27 by the same procedure as
-the p37 composition table, closing the gap left open when this document was first drafted.
+the p37 composition table, closing the gap left open when this document was first drafted. TOTVOL is confirmed as gross total stem volume in m³ ha⁻¹, computed as sum(nsvb(...,"VOLCFGRS")*expf)*FT3_M3 with FT3_M3=0.0283168 converting the NSVB cubic-foot response to cubic meters (`magplot/verify/p38/2026-08-27_p38-runner.R, metrics(), line ~150`, confirmed 2026-08-27); the scorer's own VOL_CEILING comment states the same units directly ("832 m3 ha-1 at NB and QC").
 
 **Table 4.** Sugar maple composition by cell against the paired-delta prediction identity from Table 2, same basis and same computation as the p37 composition table.
 

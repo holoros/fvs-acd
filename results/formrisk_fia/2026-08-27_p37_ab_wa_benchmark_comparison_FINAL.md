@@ -23,7 +23,7 @@ no growth or survival modifier in either arm of this benchmark.
 ## Isolation check
 
 The scorer's paired-delta table compares stand-level predicted total volume, TOTVOL, between the two
-arms on identical observed keys. Actual per-cell species composition was computed 2026-08-27, closing
+arms on identical observed keys. TOTVOL is confirmed as gross total stem volume in m³ ha⁻¹, computed as sum(nsvb(...,"VOLCFGRS")*expf)*FT3_M3 with FT3_M3=0.0283168 converting the NSVB cubic-foot response to cubic meters (`magplot/verify/p38/2026-08-27_p38-runner.R, metrics(), line ~150`, confirmed 2026-08-27); the scorer's own VOL_CEILING comment states the same units directly ("832 m3 ha-1 at NB and QC"). Actual per-cell species composition was computed 2026-08-27, closing
 the gap left open when this document was first drafted: for each cell, the tree-init population was
 restricted to the STAND keys the cell scores (using the cell's own pairs file where one exists) and
 counted by species (`scripts/p38/` companion `species_comp.R`, not previously run). american beech
