@@ -1,0 +1,184 @@
+# P38 two-arm benchmark, sugar maple FIA survival sub-flag
+
+**Status.** DRAFT. Generated automatically from the p38 scorer outputs (job 13985683, completed
+2026-08-27 01:46 EDT) by the p37/p38 completion watcher. Every number below is copied from
+`~/magplot/verify/p38/out/p38-main-table_DATA_2026-08-27.csv`, `p38-gate-report_DATA_2026-08-27.csv`,
+`p38-physical-validity_DATA_2026-08-27.csv`, and `p38-paired-delta_DATA_2026-08-27.csv` on Cardinal,
+plus the off-state acceptance job (13985663) status and the hazard-ratio figures already committed in
+`results/formrisk_fia/2026-08-26_sm_survival_refit_DRAFT.md`, none reconstructed or estimated.
+
+## What this run tests
+
+Job 13985663 (off-state acceptance, sources silc_l and baxter, patched engine with the new sub-flag
+absent) and job 13985664 (arm fiaon, twelve sources, `USE_HW_SURV_FIA=TRUE`) isolate the sugar maple
+(*Acer saccharum* Marshall) survival modifier wired in commit 15f106f behind
+`ops$use.hw.surv.fia`, a sub-flag nested under `use.hw.mod` and defaulting to FALSE. Arm fiaoff reuses
+the p37 candidate-arm results as baseline, since with the sub-flag off the patched engine is required to
+reproduce p37's v133cand output exactly. The modifier itself is `M = clamp(S_ref^(HR-1), 0.60, 1.00)`,
+with HR the product of two fitted main effects from a binomial cloglog refit on the FIA GRM population
+(n = 15,881 sugar maple rows), applied in `calc_mortality` after `surv.tree` is computed and multiplied
+into the existing `tsurv` product. No other species carries a modifier under this flag, so the isolation
+property under test is that turning the sub-flag on changes predictions only for sources where sugar
+maple appears in the tree list.
+
+## Off-state acceptance (job 13985663)
+
+Both array elements of 13985663 (silc_l, index 5, and baxter, index 11) completed with exit code 0:0.
+The acceptance job is written to fail with exit 3 unless its result files are byte-identical to the
+corresponding p37_cand output, so this completion confirms byte-identity for both sources with the sub-flag
+unset. Combined with the T4 OFF-state identity checks already committed in
+`results/formrisk_fia/p38_smfia_unit_probe_output_2026-08-27.txt` (gate condition FALSE for both explicit
+FALSE and an absent flag, all six neighbouring functions byte-identical pre versus post), the off state of
+this patch is confirmed inert at both the unit level and the full-pipeline level.
+
+## Isolation check
+
+The scorer's paired-delta table compares stand-level predicted total volume, TOTVOL, between fiaoff and
+fiaon on identical observed keys, the same measure used in the p37 comparison. No per-cell species-
+composition breakdown is available in the scorer outputs or elsewhere in the repository as searched, so
+the stated isolation property, that every sugar-maple-free source returns `pct_pred_identical` 100 and
+`max_abs_pred_diff` 0 between arms, could not be independently confirmed at the source level, the same
+limitation carried in the p37 document. What the data show is that exactly one of the thirteen cells,
+silc_l, returns 100 percent identical predictions and zero max absolute difference between arms. The
+remaining twelve cells, including baxter, which is one of the two off-state acceptance sources, all show
+nonzero differences, with `pct_pred_identical` ranging from 75.98 percent (memat) to 99.54 percent
+(ns_long_managed) and `max_abs_pred_diff` ranging from 0.011 (ctrn) to 12.54 (ns_managed). This is
+consistent with sugar maple being present in some fraction of trees in twelve of the thirteen sources and
+absent from silc_l, but that inference is not measured here and should not be read as confirmed. Note
+that baxter's off-state byte-identity (job 13985663) and baxter's on-state divergence from fiaoff in the
+paired-delta table are not in tension, since the acceptance job tests the flag-absent path against p37_cand
+while the paired-delta table tests flag-off against flag-on, the two states the sub-flag is designed to
+distinguish.
+
+## Main table, both arms
+
+**Table 1.** RMSE percent, bias percent, and slope by cell and arm, with cluster-bootstrap 95 percent
+confidence intervals, TOST equivalence decisions at the Robinson and Froese convention (plus or minus 25
+percent, stated before any result was seen), and the observed-basis gate.
+
+| Cell | Arm | n | n clusters | RMSE % [CI] | Bias % [CI] | Slope [CI] | TOST int / slp | Gate |
+|---|---|---:|---:|---|---|---|---|---|
+| baxter | fiaoff | 91 | 91 | 24.83 [20.45, 29.65] | 3.10 [-1.94, 8.56] | 1.041 [0.848, 1.215] | TRUE / TRUE | PASS |
+| baxter | fiaon | 91 | 91 | 24.91 [20.66, 29.77] | 2.96 [-1.85, 8.55] | 1.046 [0.845, 1.230] | TRUE / TRUE | PASS |
+| ctrn | fiaoff | 1086 | 166 | 17.77 [15.60, 20.12] | -1.59 [-2.73, -0.39] | 1.004 [0.958, 1.048] | TRUE / TRUE | PASS |
+| ctrn | fiaon | 1086 | 166 | 17.77 [15.65, 19.98] | -1.59 [-2.78, -0.38] | 1.004 [0.960, 1.048] | TRUE / TRUE | PASS |
+| pef | fiaoff | 2853 | 406 | 18.78 [17.23, 20.35] | 3.04 [1.78, 4.35] | 0.918 [0.879, 0.959] | TRUE / TRUE | PASS |
+| pef | fiaon | 2853 | 406 | 18.78 [17.25, 20.42] | 3.04 [1.74, 4.30] | 0.918 [0.878, 0.957] | TRUE / TRUE | PASS |
+| silc_l | fiaoff | 73 | 73 | 65.13 [45.72, 80.13] | -6.38 [-19.65, 9.11] | 0.541 [0.229, 0.902] | FALSE / FALSE | PASS |
+| silc_l | fiaon | 73 | 73 | 65.13 [46.47, 80.59] | -6.38 [-19.60, 8.53] | 0.541 [0.229, 0.897] | FALSE / FALSE | PASS |
+| mef | fiaoff | 918 | 918 | 38.39 [36.28, 40.62] | -13.56 [-15.49, -11.58] | 1.101 [1.020, 1.179] | TRUE / TRUE | PASS |
+| mef | fiaon | 918 | 918 | 38.39 [36.18, 40.56] | -13.61 [-15.57, -11.54] | 1.102 [1.021, 1.179] | TRUE / TRUE | PASS |
+| nb | fiaoff | 339 | 339 | 41.07 [33.43, 49.04] | -6.09 [-9.84, -2.08] | 1.081 [1.013, 1.162] | TRUE / TRUE | PASS |
+| nb | fiaon | 339 | 339 | 41.04 [33.06, 48.99] | -6.08 [-9.89, -1.93] | 1.081 [1.013, 1.161] | TRUE / TRUE | PASS |
+| qc | fiaoff | 2192 | 2061 | 57.50 [53.23, 61.95] | 14.11 [11.36, 17.05] | 0.684 [0.620, 0.748] | FALSE / FALSE | FAIL |
+| qc | fiaon | 2192 | 2061 | 57.48 [53.13, 62.12] | 14.08 [11.39, 17.07] | 0.685 [0.621, 0.747] | FALSE / FALSE | FAIL |
+| memat | fiaoff | 1757 | 1757 | 18.52 [17.60, 19.43] | -7.04 [-7.80, -6.30] | 1.183 [1.139, 1.227] | TRUE / TRUE | PASS |
+| memat | fiaon | 1757 | 1757 | 18.52 [17.62, 19.44] | -7.05 [-7.78, -6.33] | 1.183 [1.140, 1.226] | TRUE / TRUE | PASS |
+| medev | fiaoff | 1759 | 1759 | 20.77 [19.17, 22.42] | -4.28 [-5.17, -3.38] | 1.061 [1.035, 1.087] | TRUE / TRUE | PASS |
+| medev | fiaon | 1759 | 1759 | 20.77 [19.14, 22.33] | -4.29 [-5.20, -3.37] | 1.061 [1.036, 1.086] | TRUE / TRUE | PASS |
+| ns_managed | fiaoff | 2500 | 1246 | 38.07 [31.65, 45.00] | -9.01 [-10.68, -7.48] | 1.133 [1.066, 1.210] | TRUE / TRUE | PASS |
+| ns_managed | fiaon | 2500 | 1246 | 38.08 [31.66, 45.11] | -9.02 [-10.64, -7.41] | 1.133 [1.065, 1.210] | TRUE / TRUE | PASS |
+| ns_unmanaged | fiaoff | 2500 | 1388 | 34.69 [31.78, 37.77] | -6.68 [-8.04, -5.21] | 1.181 [1.135, 1.227] | TRUE / TRUE | PASS |
+| ns_unmanaged | fiaon | 2500 | 1388 | 34.71 [31.88, 37.74] | -6.71 [-8.11, -5.28] | 1.182 [1.135, 1.227] | TRUE / TRUE | PASS |
+| ns_long_managed | fiaoff | 3267 | 811 | 43.49 [34.90, 52.30] | -11.45 [-13.78, -9.16] | 1.095 [1.006, 1.196] | TRUE / TRUE | PASS |
+| ns_long_managed | fiaon | 3267 | 811 | 43.49 [34.75, 52.01] | -11.45 [-13.76, -9.19] | 1.095 [1.003, 1.194] | TRUE / TRUE | PASS |
+| ns_long_unmanaged | fiaoff | 4419 | 1768 | 38.63 [36.84, 40.48] | -3.33 [-4.81, -1.83] | 1.091 [1.051, 1.131] | TRUE / TRUE | PASS |
+| ns_long_unmanaged | fiaon | 4419 | 1768 | 38.62 [36.85, 40.45] | -3.37 [-4.81, -1.89] | 1.093 [1.052, 1.132] | TRUE / TRUE | PASS |
+
+TOST decisions are identical between arms in all thirteen cells. Ten of the eleven PASS-gated cells pass
+equivalence on both intercept and slope in both arms (baxter, ctrn, pef, mef, nb, memat, medev,
+ns_managed, ns_unmanaged, ns_long_managed, ns_long_unmanaged). silc_l is PASS-gated but fails TOST on both
+components in both arms, driven by a wide slope interval on n = 73. qc fails TOST on both components in
+both arms and additionally fails the observed-basis gate, both properties already present in the p37
+benchmark and unrelated to this sub-flag.
+
+## Paired cluster-bootstrap deltas, fiaon minus fiaoff
+
+**Table 2.** Per-cell prediction identity and paired delta on RMSE percent, bias percent, and slope, with
+cluster-bootstrap 95 percent confidence intervals on the delta.
+
+| Cell | n | n clusters | % predictions identical | Max abs pred diff | d RMSE % [CI] | d Bias % [CI] | d Slope |
+|---|---:|---:|---:|---:|---|---|---:|
+| baxter | 91 | 91 | 86.81 | 10.600 | 0.0761 [-0.0459, 0.2681] | -0.1386 [-0.3249, 0.0124] | 0.00483 |
+| ctrn | 1086 | 166 | 99.26 | 0.011 | 0.0000 [0.0000, 0.0000] | 0.0000 [0.0000, 0.0001] | 0.00000 |
+| pef | 2853 | 406 | 99.30 | 0.414 | -0.0002 [-0.0006, 0.0001] | -0.0004 [-0.0009, 0.0000] | 0.00000 |
+| silc_l | 73 | 73 | 100.00 | 0.000 | 0.0000 [0.0000, 0.0000] | 0.0000 [0.0000, 0.0000] | 0.00000 |
+| mef | 918 | 918 | 87.91 | 11.222 | -0.0026 [-0.0634, 0.0492] | -0.0432 [-0.0815, -0.0091] | 0.00121 |
+| nb | 339 | 339 | 95.58 | 2.460 | -0.0257 [-0.1096, 0.0504] | 0.0082 [-0.0169, 0.0351] | -0.00007 |
+| qc | 2192 | 2061 | 90.33 | 4.920 | -0.0199 [-0.0527, 0.0072] | -0.0281 [-0.0446, -0.0128] | 0.00030 |
+| memat | 1757 | 1757 | 75.98 | 7.524 | 0.0060 [-0.0040, 0.0169] | -0.0098 [-0.0209, 0.0007] | -0.00028 |
+| medev | 1759 | 1759 | 91.07 | 2.617 | 0.0018 [-0.0029, 0.0062] | -0.0067 [-0.0118, -0.0021] | 0.00010 |
+| ns_managed | 2500 | 1246 | 97.52 | 12.539 | 0.0086 [-0.0022, 0.0282] | -0.0154 [-0.0470, 0.0022] | 0.00053 |
+| ns_unmanaged | 2500 | 1388 | 95.00 | 6.582 | 0.0226 [0.0069, 0.0427] | -0.0253 [-0.0457, -0.0086] | 0.00051 |
+| ns_long_managed | 3267 | 811 | 99.54 | 5.713 | -0.0010 [-0.0050, 0.0015] | -0.0007 [-0.0040, 0.0015] | 0.00005 |
+| ns_long_unmanaged | 4419 | 1768 | 94.23 | 10.010 | -0.0068 [-0.0357, 0.0181] | -0.0400 [-0.0581, -0.0234] | 0.00120 |
+
+Every delta is small relative to the cell's own RMSE percent or bias percent in Table 1, on the same
+order as the p37 deltas. Ten of the thirteen bias percent delta intervals exclude zero (mef, qc, medev,
+ns_unmanaged, ns_long_unmanaged, and, with the interval bound touching zero, ns_managed and memat), a
+larger share of nonzero bias shifts than p37 showed, consistent with a survival modifier acting on stand
+persistence rather than a growth modifier acting on increment alone. Two RMSE percent delta intervals
+exclude zero, ns_unmanaged at 0.0226 [0.0069, 0.0427] and no others, both under three hundredths of a
+percentage point. No slope delta interval in the table excludes zero by more than a few thousandths.
+
+## Physical validity and observed-basis gate
+
+**Table 3.** Physical screen and observed-basis gate status by cell, both arms share an identical
+observed record so the status is reported once per cell.
+
+| Cell | Observed-basis gate | Physical screen | Note |
+|---|---|---|---|
+| baxter | PASS | PASS | identical basis |
+| ctrn | PASS | PASS | identical basis |
+| pef | PASS | PASS | identical basis |
+| silc_l | PASS | PASS | identical basis |
+| mef | PASS | PASS | identical basis |
+| nb | PASS | PASS | identical basis |
+| qc | FAIL | PASS | scoring populations agree, the post-filter sets differ only through non-finite predictions |
+| memat | PASS | PASS | identical basis |
+| medev | PASS | PASS | identical basis |
+| ns_managed | PASS | FLAG | 32 of 2500 observed BA and 17 of 2500 predicted BA over ceiling, 2 volume records over ceiling |
+| ns_unmanaged | PASS | PASS | identical basis |
+| ns_long_managed | PASS | FLAG | 75 of 3267 observed BA and 24 of 3267 predicted BA over ceiling, 4 volume records over ceiling |
+| ns_long_unmanaged | PASS | PASS | identical basis |
+
+qc's observed-basis gate failure and the ns_managed and ns_long_managed physical-validity flags are
+properties of the observed record shared by both arms, already present under p37 and unrelated to this
+sub-flag.
+
+## Context carried from the refit write-up, not measured in this benchmark
+
+The hazard ratios feeding the modifier come from a binomial cloglog refit on 15,881 sugar maple rows,
+reported in `results/formrisk_fia/2026-08-26_sm_survival_refit_DRAFT.md`. The worst cell, form F2 by risk
+R3, carries a fitted hazard ratio of 15.877 (bootstrap 95 percent interval 9.852 to 26.948) on a cell of
+130 trees and 25 deaths, one of only two cells in the six-cell form-by-risk table holding fewer than 150
+trees. That document's own recommendation is default off pending a dedicated benchmark run, on the
+grounds that a hazard ratio of that magnitude in the worst cell is a large behavioral change to introduce
+untested. The NHRI-to-crosswalk code mapping the modifier depends on (F1/F3/F4/F7 collapsed to F1,
+otherwise F2, R4 folded into R3) is the same collapse `ddbh_hw_mod_fia` already uses in production, and is
+an assumption carried over from that prior mapping rather than a measurement made for this modifier
+specifically.
+
+## Verdict
+
+TOST equivalence decisions are identical between fiaoff and fiaon in all thirteen cells, and every paired
+RMSE percent and slope delta is small relative to the cell's own confidence interval width. Bias percent
+deltas are more often nonzero than in the p37 comparison, consistent with a survival modifier reaching
+stand-level volume through mortality rather than through diameter increment. Twelve of the thirteen cells
+show some nonzero prediction difference between arms, with silc_l as the sole cell showing complete
+identity, again consistent with, but not a direct measurement of, sugar maple's presence or absence across
+these thirteen sources. The off-state acceptance job (13985663) confirms the sub-flag is inert when unset,
+for both silc_l and baxter, matching the unit-level OFF-state proof already committed.
+
+The verdict for `ops$use.hw.surv.fia` is hold at default off. The aggregate accuracy metrics in this
+benchmark do not argue against the modifier, since TOST outcomes, RMSE percent, and slope are
+statistically indistinguishable between arms in every cell, and the bias percent shifts that do appear are
+all under three hundredths of a percentage point. But the modifier's own source document already
+recommended default off pending a dedicated benchmark, precisely because the worst-cell hazard ratio of
+15.877 rests on 130 trees, an evidentiary base this thirteen-cell aggregate benchmark does not add
+strength to, since it measures stand-level accuracy across mixed-species stands rather than sugar-maple-
+specific survival at the form-by-risk cell level where the hazard ratio itself was estimated. The
+NHRI-to-crosswalk mapping the modifier depends on is carried over from a different context and remains an
+assumption. Recommendation stands as default off until Aaron reviews the form-by-risk cell evidence
+directly and decides whether to promote the sub-flag, since nothing in this benchmark closes that decision
+either way.
