@@ -46,7 +46,8 @@ the p37 composition table, closing the gap left open when this document was firs
 |---|---:|---:|---:|---:|
 | ns_long_managed | 151157 | 3267 | 17.270 | 99.54 |
 | ns_managed | 109321 | 2500 | 9.270 | 97.52 |
-| nb+qc combined | 79750 | 2424 | 6.019 | not split, see note |
+| nb | 13962 | 355 | 2.492 | see nb cell in Table 2 |
+| qc | 65788 | 2069 | 6.767 | see qc cell in Table 2 |
 | memat | 84291 | 1760 | 5.837 | 75.98 |
 | mef | 37652 | 933 | 2.542 | 87.91 |
 | medev | 78309 | 1760 | 2.385 | 91.07 |

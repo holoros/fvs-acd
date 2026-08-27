@@ -29,9 +29,15 @@ restricted to the STAND keys the cell scores (using the cell's own pairs file wh
 counted by species (`scripts/p38/` companion `species_comp.R`, not previously run). american beech
 (*Fagus grandifolia* Ehrh.) and white ash (*Fraxinus americana* L.) are present, on a stem-count basis,
 in every one of the eleven directly resolved cells, from 0.005 percent combined at ctrn to 4.873 percent
-combined at memat. The nb and qc split could not be recovered from the available site file join and is
-reported combined at 1.516 percent; splitting it further, if wanted, needs the raw province tag
-recovered from a different source than attempted here.
+combined at memat. The nb and qc split, initially unresolved because the site-ESI file carries no PROV column, was
+recovered 2026-08-27 from `magp_qcnb_pairs.csv`, which carries PROV directly on STAND and resolved
+all 79,750 tree-init rows. nb runs 1.970 percent AB plus WA combined and qc runs 1.420 percent,
+both close to the 1.516 percent combined figure and to each other, so the province split does not
+change the qualitative picture. Note the tree-init population here (355 NB and 2,069 QC pairs) is
+the raw source population before the runner's own INDOMAIN and esi_cov filters, which is why it
+differs from Table 1's scored n of 339 (nb) and 2,192 (qc); the composition figures reflect the
+tree list going into scoring, not the post-filter scored set specifically, consistent with how
+every other cell in this table was computed.
 
 **Table 4.** Species composition by cell (stem count basis, tree-init population restricted to the STAND keys the cell actually scores), against the paired-delta prediction identity from Table 2. Computed 2026-08-27 from the tree_init files on Cardinal (`species_comp.R`, not previously run). n(trees) counts individual stems before the fractional NHRI form and risk split; n(stand) is the scored unit and matches Table 1's n for every cell except baxter and silc_l, where each stand is one plot.
 
@@ -44,7 +50,8 @@ recovered from a different source than attempted here.
 | ns_unmanaged | 81314 | 2500 | 1.727 | 0.427 | 2.154 | 87.68 |
 | mef | 37652 | 933 | 1.057 | 1.044 | 2.101 | 78.10 |
 | baxter | 5628 | 91 | 1.297 | 0.302 | 1.599 | 75.82 |
-| nb+qc combined | 79750 | 2424 | 1.282 | 0.234 | 1.516 | not split, see note |
+| nb | 13962 | 355 | 1.619 | 0.351 | 1.970 | see nb cell in Table 2 |
+| qc | 65788 | 2069 | 1.210 | 0.210 | 1.420 | see qc cell in Table 2 |
 | ns_managed | 109321 | 2500 | 0.294 | 0.405 | 0.699 | 93.92 |
 | ns_long_managed | 151157 | 3267 | 0.000 | 0.637 | 0.637 | 96.14 |
 | pef | 190722 | 2853 | 0.218 | 0.124 | 0.342 | 93.17 |
