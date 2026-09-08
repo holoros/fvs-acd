@@ -14,8 +14,32 @@
 library(dplyr) # needed arrange, mutate, left_join, tibble, select, group_by, summarise, ungroup, case_when, all_of
 library(purrr) # needed for pmap_*
 
-AcadianVersionTag = "AcadianV12.11"
+AcadianVersionTag = "AcadianV12.11.1"
 
+# ---------------------------------------------------------------------------
+# 12.11.1 (mortality shutoff repairs, September 8, 2026, in response to Ben Rice's
+#        report that under some conditions mortality stops and projections become
+#        growth only). Three repairs, tagged M1 to M3 at their sites in
+#        calc_mortality, plus one gated lever.
+#
+#        M1  ba.growth.top30 is computed with na.rm and sg is coalesced to the
+#            all-species mean, so a species code absent from sp.attr can no longer
+#            propagate NA through cum.sdi.ward into stand.pmort and silently void
+#            the plot's mortality. This is the most likely cause of the reported
+#            behaviour on raw FIA input, whose species list is wider than the
+#            Acadian table.
+#        M2  ops$mort.expected.value, DEFAULT FALSE, switches the stand occurrence
+#            gate from the hard regional cut to the hurdle expectation
+#            P(occur) * E[amount]. Default OFF means shipped behaviour is
+#            unchanged and every existing benchmark stands.
+#        M3  the tree allocation gains na.rm, a guard for the case where every
+#            tree survival saturates at 1.0 and the ordering weights sum to zero,
+#            and a coalesce on mort.mult. Algebraically identical to 12.11 whenever
+#            the weights are positive and nothing is NA, so parity is exact on
+#            clean input by construction rather than by measurement.
+#
+#        Nothing here changes a fitted coefficient. Every repair either removes a
+#        silent NA-to-zero path or is gated OFF by default.
 # ---------------------------------------------------------------------------
 # 12.11 (maturity-gradient long-horizon volume correction; three gated levers, default OFF
 #        => byte-identical to 12.10.2, which is itself byte-identical to the frozen 12.10.1
@@ -1160,7 +1184,7 @@ calc_ddbh = function(tree.data, plot.data, csi = stand$csi, region = stand$regio
                                                                      form = form, risk = risk,
                                                                      spp.coeff = hw.mod.spp.coeff,
                                                                      dbh.interaction = hw.mod.dbh.interaction),
-                                                                ddbh_hw_mod), 1))%>% 
+                                                                ddbh_hw_mod), 1))%>%
       select( -idx.hw.mod, 
               -hw.mod.spp.coeff, -hw.mod.dbh.interaction)
   } else {
@@ -2077,7 +2101,7 @@ tsurv_hw_mod = function(dbh, bal, ba.plot, form, b0, b1) {
   
   
   hw.surv.mod
-  
+
 }
 
 # Call-site NA guard for tsurv_hw_mod (27 August 2026). tsurv_hw_mod's leading `if (form ==
@@ -2202,10 +2226,22 @@ calc_mortality = function(tree.data, plot.data, region = stand$region,
     dplyr::arrange(plot, 
                    desc(dbh)) %>%
     dplyr::group_by(plot) %>%
-    dplyr::mutate(cum.sdi.ward = cumsum(expf * (0.00015 + 0.00218 * sg) * ((dbh / 25)^1.605)),
+    # M1 (2026-09-08): sg arrives from the sp.attr join and is NA for any species
+    # code absent from that table, which raw FIA input carries. cumsum() without
+    # na.rm propagates that NA to every smaller tree in the plot, sum() without
+    # na.rm then makes ba.growth.top30 NA, stand.pmort NA, and the mortality gate
+    # below returns NA, which coalesce(dexpf, 0) at the apply site silently turns
+    # into zero mortality for the whole plot for the whole projection. The plot
+    # balsam fir summary twenty lines down already carries na.rm = TRUE, so the
+    # inconsistency was here rather than in the intent. sg is coalesced to the
+    # all-species mean rather than dropped, so an unknown species still occupies
+    # the density ranking it earns by diameter instead of vanishing from it.
+    dplyr::mutate(sg.use = dplyr::coalesce(sg, mean(sp.attr$sg, na.rm = TRUE)),
+                  cum.sdi.ward = cumsum(expf * (0.00015 + 0.00218 * sg.use) * ((dbh / 25)^1.605)),
                   ba.growth.tree = ((dbh + ddbh)^2 * 0.00007854 - dbh^2 * 0.00007854) * expf,
-                  ba.growth.top30 = sum(ifelse(cum.sdi.ward <= 0.3, ba.growth.tree, 0))) %>%
-    dplyr::ungroup()
+                  ba.growth.top30 = sum(ifelse(cum.sdi.ward <= 0.3, ba.growth.tree, 0), na.rm = TRUE)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-sg.use)
   
   # additional plot summary values
   plot.bf = tree.data %>%
@@ -2345,11 +2381,31 @@ calc_mortality = function(tree.data, plot.data, region = stand$region,
       dplyr::mutate(tsurv.hw.mod = 1)
   }
   
-  # Apply stand mortality basal area modifiers 
+  # Apply stand mortality basal area modifiers
+  #
+  # M2 (2026-09-08): the hard occurrence gate below is the hurdle model's
+  # classification form, not its expectation. Below the regional cut the whole
+  # plot takes exactly zero mortality, and because the cut is crossed on a
+  # combination whose QMD term is negative (b4 = -0.0551) and whose basal area
+  # growth term is strongly negative (b3 = -2.557), a stand that drifts under
+  # the cut as QMD rises tends to stay under it, so the projection can latch
+  # into growth only for the remainder of the horizon. This is the same defect
+  # that v12.6.1 removed from ingrowth when ingrowth.thrshld moved from 0.95 to
+  # the expected value of the zero-inflated model, and the repair is the same
+  # one: E[mortality] = P(occur) * E[amount].
+  #
+  # ops$mort.expected.value switches between them and DEFAULTS TO FALSE, so the
+  # shipped behaviour is byte for byte the hard gate and every existing
+  # benchmark stands. Set it TRUE to project with the expected value.
+  .mort.ev = tryCatch(isTRUE(ops$mort.expected.value), error = function(e) FALSE)
   tree = tree %>%
-    dplyr::mutate(stand.mort.ba = ifelse(stand.pmort > stand.prob.parms$cut * tryCatch(if (!is.null(ops$mort.cut.scale) && !is.na(ops$mort.cut.scale)) ops$mort.cut.scale else 1, error=function(e) 1),
-                                         stand.mort.ba * (1 / smort.thin.mod) * smort.sbw.mod,
-                                         0),
+    dplyr::mutate(stand.mort.ba = if (.mort.ev) {
+                                    stand.pmort * stand.mort.ba * (1 / smort.thin.mod) * smort.sbw.mod
+                                  } else {
+                                    ifelse(stand.pmort > stand.prob.parms$cut * tryCatch(if (!is.null(ops$mort.cut.scale) && !is.na(ops$mort.cut.scale)) ops$mort.cut.scale else 1, error=function(e) 1),
+                                           stand.mort.ba * (1 / smort.thin.mod) * smort.sbw.mod,
+                                           0)
+                                  },
                   stand.mort.ba = pmin(stand.mort.ba, ba.plot))
   
   # Get tree mortality species parameters and calculate survival
@@ -2370,14 +2426,31 @@ calc_mortality = function(tree.data, plot.data, region = stand$region,
   
   # Calculate tree mortality basal area and scale to stand basal area mortality
   tree = tree %>%
+    # M3 (2026-09-08): three repairs to the allocation, all of the same family.
+    # sum() gains na.rm so one NA increment cannot void the plot's ordering
+    # weights. mort.ratio is guarded against the sum being zero, which happens
+    # when every tree in the plot has a survival probability that saturates at
+    # exactly 1.0 in double precision, since tree.mortba / 0 is NaN and the
+    # coalesce at the apply site reads NaN as missing and drops the mortality.
+    # When the ordering weights are all zero the stand rate is spread on basal
+    # area instead, which keeps the stand total the equations asked for rather
+    # than discarding it. mort.mult is coalesced to 1 so a species missing from
+    # calib.spp cannot silently zero its own mortality.
     dplyr::mutate(tree.mortba = ((dbh + ddbh)^2 * 0.00007854) * expf * tmort) %>%
     dplyr::group_by(plot) %>%
-    dplyr::mutate(sum.tree.mortba = sum(tree.mortba)) %>%
+    dplyr::mutate(sum.tree.mortba = sum(tree.mortba, na.rm = TRUE),
+                  sum.ba.plot = sum(((dbh + ddbh)^2 * 0.00007854) * expf, na.rm = TRUE)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(mort.ratio = ifelse(stand.mort.ba > 0, sum.tree.mortba / stand.mort.ba, 0),
-                  tree.mortba.adj = ifelse(stand.mort.ba > 0, tree.mortba / mort.ratio, 0),
-                  ba.tree = 0.00007854 * (dbh + ddbh)^2,   
-                  dexpf = ifelse(stand.mort.ba > 0, tree.mortba.adj / ba.tree, 0) * mort.mult) # apply mortality multiplier
+    dplyr::mutate(wt = ifelse(sum.tree.mortba > 0,
+                              dplyr::coalesce(tree.mortba, 0) / sum.tree.mortba,
+                              ifelse(sum.ba.plot > 0,
+                                     (((dbh + ddbh)^2 * 0.00007854) * expf) / sum.ba.plot,
+                                     0)),
+                  tree.mortba.adj = ifelse(stand.mort.ba > 0, stand.mort.ba * wt, 0),
+                  ba.tree = 0.00007854 * (dbh + ddbh)^2,
+                  dexpf = ifelse(stand.mort.ba > 0 & ba.tree > 0, tree.mortba.adj / ba.tree, 0) *
+                          dplyr::coalesce(mort.mult, 1)) %>% # apply mortality multiplier
+    dplyr::select(-wt, -sum.ba.plot)
   
   # Remove temporary columns
   tree = tree %>%
@@ -3622,9 +3695,48 @@ Acadian.GY = function(tree, stand, ops = NULL) {
 }
 
   
+#' Fill species functional attributes for codes absent from sp.attr
+#'
+#' M1 (2026-09-08). The sp.attr join has no catch-all row, so an unrecognised
+#' species code leaves sg and sp.type NA. Both are load bearing and neither is
+#' checked downstream: NA sp.type makes calc_bal return NA bal.sw and bal.hw for
+#' every tree below it in the descending diameter list, and NA sg voids
+#' cum.sdi.ward and with it the stand mortality probability, so the plot
+#' silently projects growth only for the rest of the run. Raw FIA input carries
+#' a wider species list than the Acadian table, which is where this is met.
+#' Unknown codes take the other-hardwood attributes, the convention
+#' validate_acd_tree_spp already applies, and the substitution warns once per
+#' call rather than passing silently.
+#'
+#' @param tree.data Dataframe: Tree list, already joined to sp.attr
+#' @param sp.attr.data Dataframe: Species functional attribute table
+#' @return Dataframe: Tree list with no NA species attributes
+#'
+fill_unknown_sp_attr = function(tree.data, sp.attr.data = sp.attr){
+
+  miss = is.na(tree.data$sp.type) | is.na(tree.data$sg)
+  if (!any(miss)) return(tree.data)
+
+  oh = sp.attr.data[sp.attr.data$species == 'OH', ]
+  if (nrow(oh) == 0) return(tree.data)
+
+  warning(sprintf(paste0("AcadianGY: %d tree record(s) carry species code(s) not in sp.attr (%s); ",
+                         "other-hardwood attributes substituted. Map them with ",
+                         "validate_acd_tree_spp() to remove this warning."),
+                  sum(miss), paste(sort(unique(tree.data$sp[miss])), collapse = ', ')),
+          call. = FALSE)
+
+  for (cl in setdiff(intersect(names(oh), names(tree.data)), 'species')) {
+    tree.data[[cl]][miss] = oh[[cl]][1]
+  }
+
+  tree.data
+}
+
+
 ###Acadian growth and yield model called for one stand at time
 #' Run Acadian growth and yield model for one year for one stand
-#' 
+#'
 #' @param tree Dataframe: Tree list
 #' @param stand Dataframe: Stand attributes
 #' @param ops Dataframe: 
@@ -3647,13 +3759,24 @@ AcadianGYOneStand = function(tree, stand, ops)
 ##### Add tree attributes ####
   tree = tree %>% 
       # species functional attributes
-    dplyr::left_join(sp.attr, 
-                     by=c('sp'='species')) %>% 
+    dplyr::left_join(sp.attr,
+                     by=c('sp'='species')) %>%
         # basal area (plot level)
     dplyr::mutate(ba=(dbh^2*0.00007854)*expf,
-         # clean form and risk       
+         # clean form and risk
          form = dplyr::na_if(form, " "),
-         risk = dplyr::na_if(risk, " ")) %>% 
+         risk = dplyr::na_if(risk, " ")) %>%
+      # M1 (2026-09-08): this join has no fallback row, so a species code absent
+      # from sp.attr leaves sg and sp.type NA. Neither is checked downstream and
+      # both are load bearing: NA sp.type makes calc_bal return NA bal.sw and
+      # bal.hw for every tree below it in the descending diameter list, and NA sg
+      # voids cum.sdi.ward and with it the stand mortality probability, so the
+      # plot silently projects growth only. Raw FIA input carries a wider species
+      # list than the 47-row Acadian table, which is where this is met in
+      # practice. Unknown codes take the documented other-hardwood attributes,
+      # the same convention validate_acd_tree_spp already applies, and the
+      # substitution is announced once per call rather than made silently.
+    fill_unknown_sp_attr() %>%
       # Calculate BAL
     calc_bal()
 
