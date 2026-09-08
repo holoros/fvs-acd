@@ -58,22 +58,33 @@ through a fallback path that is relative and therefore depends on the working di
 Nothing below asks you to accept a number that rests on the above being tidy. Where a result is
 inherited from earlier work it is cited to the file that produced it.
 
-**URLs.** Everything described below is on branch `mortality-shutoff-repairs-20260908`:
+## 0a. What is and is not on this branch yet
 
-- Branch: https://github.com/holoros/fvs-acd/tree/mortality-shutoff-repairs-20260908
-- Patched engine: https://github.com/holoros/fvs-acd/blob/mortality-shutoff-repairs-20260908/scripts/AcadianGY_12.11.r
-- Acceptance tests: https://github.com/holoros/fvs-acd/blob/mortality-shutoff-repairs-20260908/scripts/p38-mortality-compare/acd-12111-parity-and-defect_SCRIPT_2026-09-08.R
-- Projection comparison: https://github.com/holoros/fvs-acd/blob/mortality-shutoff-repairs-20260908/scripts/p38-mortality-compare/acd-mortality-three-way_SCRIPT_2026-09-08.R
-- The p37 commit whose changes were ported forward: https://github.com/holoros/fvs-acd/commit/2d3ea38
-- This branch is cut from `hardwood-formrisk-wip`: https://github.com/holoros/fvs-acd/tree/hardwood-formrisk-wip
+**This document is currently the only thing on the branch.** The patched engine and the two
+scripts described below are written, parsed and tested, but they are deliberately **not uploaded
+yet**, because the machine holding them cannot presently run git and the only remaining transfer
+route would mean retyping a 4,661-line engine through a browser. Retyping production code cannot
+be made byte-exact, and a silently corrupted engine is a worse outcome than a delayed one. They go
+up as soon as a byte-exact transfer is available, and this section will be deleted when they do.
+
+So: every measurement below was really run and is quoted from the run, and every file path below
+names a real file on the working machines, yet the three code paths will 404 on this branch until
+that upload happens.
+
+- Branch, live now: https://github.com/holoros/fvs-acd/tree/mortality-shutoff-repairs-20260908
+- The p37 commit whose changes were ported forward, live now: https://github.com/holoros/fvs-acd/commit/2d3ea38
+- Parent branch, live now: https://github.com/holoros/fvs-acd/tree/hardwood-formrisk-wip
+- Patched engine, PENDING UPLOAD: `scripts/AcadianGY_12.11.r`
+- Acceptance tests, PENDING UPLOAD: `scripts/p38-mortality-compare/acd-12111-parity-and-defect_SCRIPT_2026-09-08.R`
+- Projection comparison, PENDING UPLOAD: `scripts/p38-mortality-compare/acd-mortality-three-way_SCRIPT_2026-09-08.R`
 
 Your history branch,
 `https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface/tree/FvsHiHistory`,
 was read and is the koa line, not this one.
 
-The ten local commits from September 2 are still unpushed and are **not** on this branch, because
-the machine holding them cannot currently run git. This branch is cut from the remote tip and
-contains only the mortality work, which is the reviewable unit anyway.
+The ten local commits from September 2 are also still unpushed and are **not** on this branch.
+This branch is cut from the remote tip and carries only the mortality work, which is the
+reviewable unit anyway.
 
 ---
 
@@ -229,140 +240,3 @@ chain rather than a modifier: when the lever is on it sets `ops$use.sdimort <- F
 the only mortality in the model.
 
 ---
-## 3. Validation results
-
-### 3.1 The Bakuzis comparison, and it does not favour the newest model
-
-Source: `active-projects/fvs-acd-survival/bakuzis-comparison-reineke-standardised_DATA_2026-09-08.csv`,
-produced September 8 under the `08b` self-thinning filter, a cell required to carry at least five
-thinning steps and a non-constant QMD to contribute, with a nonparametric percentile bootstrap of
-the median over contributing cells at 10,000 resamples.
-
-Reineke's rule puts the self-thinning slope near **−1.605**.
-
-| Formulation | Median slope | 95% bootstrap | Contributing | Frontier crossings | Max BA, m² ha⁻¹ |
-|---|---|---|---|---|---|
-| v12.11 SDImax ON | −1.736 | [−1.936, −1.560] | 15 of 15 | 0 | 40.8 |
-| v13.1 SDImax ON | −1.736 | [−1.936, −1.560] | 15 of 15 | 0 | 40.8 |
-| v13.1 SDImax ON + hier | −1.903 | [−1.963, −1.604] | 15 of 15 | 0 | 40.4 |
-| v12.11 / v13.1 SDImax OFF | −1.856 | [−2.106, −1.525] | 12 of 15 | 8 | 197.5 |
-| **v14 L1** | **−0.783** | [−1.038, −0.557] | 15 of 15 | 10 | 79.9 |
-| **v14 L2** | **−1.113** | [−1.255, −0.942] | 15 of 15 | 4 | 73.4 |
-| **v14 L3** | **−0.695** | [−0.893, −0.449] | 15 of 15 | 10 | 79.9 |
-| OSM-ACD v2.26.1 | −0.915 | [−1.997, −0.852] | 4 of 9 | 0 | 60.2 |
-
-Three things follow, and the second is the one that matters.
-
-**v12.11 and v13.1 are the same model on this axis.** Identical to every reported digit wherever
-the switches match. That is expected, since the mortality block is the same code offset by 139
-lines, and it is worth stating plainly because the version numbers imply a difference that is not
-there.
-
-**The linked system is the only family whose interval excludes Reineke's slope in the shallow
-direction, and by a wide margin.** v12.11 and v13.1 with SDImax on bracket −1.605 comfortably.
-v14 L2, the best of the linked family, tops out at −0.942, and L1 and L3 do not reach −1.04. These
-are self-thinning slopes roughly half of the law-like value, on 15 of 15 contributing cells, so
-this is not a coverage artifact. The frontier crossing counts and the maximum basal areas say the
-same thing from the other side: L1 and L3 cross the size-density frontier on 10 of 15 trajectories
-and run basal area to 79.9 m² ha⁻¹, which is far above any observed mature Acadian stand.
-
-The Bakuzis test falsifies, it does not confirm. It does not say the linked model predicts worse;
-its held-out proportional Brier score is 0.043564 and it may well be the better short-horizon
-predictor. It says that whatever the linked model is doing, it is not reproducing self-thinning,
-and a model that does not self-thin should not be projected to rotation length.
-
-**A caution on the shipped bundle.** The bundle's stage 3 is flagged PROVISIONAL in the script
-that builds it, `R/24_v14_coef_bundle_v4.R` line 96, "version 2 frame, superseded if the
-whole-frame refit differs". The whole-frame refit has since happened.
-
-### 3.2 Acceptance tests on 12.11.1
-
-Script `scripts/p38-mortality-compare/acd-12111-parity-and-defect_SCRIPT_2026-09-08.R`, run on the
-committed 12.11 and the patched 12.11.1 side by side in isolated environments.
-
-| Test | What it asserts | Result |
-|---|---|---|
-| AT-1 | On clean input with the lever off, 12.11.1 reproduces 12.11 | **PASS, exact.** 614.8218070997 stems ha⁻¹ at year 30 under both, maximum absolute difference over 30 years 0e+00 |
-| AT-2 | 12.11 loses its mortality on a list containing an unknown species code, 12.11.1 does not | **PASS.** One stem of 40 recoded to `XX`: 12.11 goes from 900.0000 to 900.0000 stems ha⁻¹ over 30 years, losing **zero**. 12.11.1 goes to 614.2379, losing **285.7621**. The warning fires on all 30 years and names the code |
-| AT-3 | With `ops$mort.expected.value = TRUE`, mortality is recovered on a stand under the regional cut | **PASS.** Low-density larger-QMD stand, 250 stems ha⁻¹ at 20 to 44 cm: lever OFF loses **0.0000** stems over 30 years, lever ON loses **144.6432** |
-
-AT-2 is the reproduction of your report. A single unrecognised species code on a mid-diameter stem
-takes a stand that should lose 285 stems ha⁻¹ over 30 years and gives it exactly zero mortality,
-with no error and no warning, for the whole projection. That is "mortality stops and projections
-become growth only", stated as a two-line test.
-
-AT-1 passing exactly is the load-bearing one for you, because it means adopting 12.11.1 cannot
-move any existing result unless the input contains the defect it repairs.
-
-The first attempt at AT-2 was inconclusive and the reason is worth recording, because it is a
-measurement trap rather than a coding slip. The test stand was the AT-1 stand with the unknown
-code on the *largest* stem, and both arms lost zero. That looked like a failed repair. It was the
-occurrence gate of M2 binding on that stand and zeroing mortality before the NA path could be
-reached, so the control arm was already at the floor and the test could not distinguish the two
-causes. A test whose control is already at zero measures nothing. Moving the unknown code to a
-mid-diameter stem, so that stems both above and below it are exposed to the cumulative sum,
-separates them cleanly.
-
-### 3.3 The three engines in the repository are one model at default settings
-
-Independent 150-year projections on a four-point site gradient, CSI 10, 13, 16 and 19, annual step,
-script `scripts/p38-mortality-compare/acd-mortality-three-way_SCRIPT_2026-09-08.R`.
-
-At age 100, `scripts/AcadianGY_12.11.r`, `scripts/AcadianGY_13.1_DRAFT.r` and
-`scripts/AcadianGY_14.0.r` with its lever off return **identical values on every site and every
-variable**, to every digit carried: 19.08, 19.62, 20.18 and 20.82 m top height, 31.35 to 32.59
-m² ha⁻¹ basal area, 21.73 to 22.04 cm QMD. Every arm loses 77 percent of its stems and declines in
-stem number on 128 to 130 of 150 years, so the mortality chain is live throughout and this is not
-a shutoff masking a difference.
-
-This confirms 14.0's own header claim that the lever off is "v13.1 byte for byte", and it
-establishes the less comfortable point that the version numbers in the repository do not mark
-behavioural differences at default settings. Everything separating 12.11, 13.1 and 14.0 sits
-behind flags that default to off.
-
-Site ordering holds: top height and volume increase monotonically with site index at age 100 with
-no inversion. QMD is nearly flat across the gradient, 21.73 to 22.04 cm, which is a weak site
-response worth a look but is not a Bakuzis violation.
-
-One negative result, reported because it was run. A fourth arm set `ops$mort.cut.scale = 0` as a
-stand-in for the expected-value form and returned trajectories identical to the other three. That
-is not evidence the lever does nothing; it is evidence the **gate is not binding on dense young
-spruce-fir**, which is what that harness starts from. AT-3 shows the gate binding hard on a
-low-density, larger-QMD stand. The practical reading is that the latching failure lives on open,
-larger-diameter stands, which is what a great many FIA plots are and what a young dense stand is
-not.
-
----
-
-## 4. What is left to explore
-
-1. **Which mortality formulation ships.** The Bakuzis result and the Brier result point in
-   opposite directions and both are real. This is a judgement about horizon, not a tie to be
-   broken by a single number.
-2. **Whether the linked system can be made to self-thin.** Its stage 2 carries its own density
-   response, so the shallow slope is a property of that fit rather than an omission.
-3. **The v14.0 self-containment rewrite.** Both violations are fixable. The coefficient bundle
-   reduces to **249 numeric constants** once the 2,500 bootstrap replicates the lever never reads
-   are dropped, which is small enough to inline as literal R at full double precision; a generator
-   with an exact round-trip assertion is written as
-   `active-projects/fvs-acd-survival/R/35_bundle_to_inline_source_2026-09-08.R`. Inlining the 13.1
-   base is mechanical. The blocker is not effort, it is that the base is not in version control.
-4. **The two ingrowth documentation defects**, pending your call.
-5. **The ingrowth level deficit**, roughly a factor of two after the gate is opened, which is a
-   calibration question rather than a defect.
-6. **Whether 13.3 and the real 13.1 should be committed**, which is the root cause of this whole
-   document.
-
----
-
-## 5. What I need from you
-
-1. **Confirm which engine you are actually running for NEFF**, by version tag rather than by file
-   name, since the file names collide across machines. `AcadianVersionTag` is at line 17.
-2. **Push your bug fixes for the uncommon species codes when convenient.** They may overlap M1
-   directly, and I would rather merge than duplicate.
-3. **Tell me whether to enable `ops$mort.expected.value` by default** or leave it as an opt-in.
-4. **Tell me whether to correct the two ingrowth documentation defaults.**
-
-The two uncommitted engines are mine to fix, and the September 2 commits go up as soon as the
-machine holding them can run git again.
