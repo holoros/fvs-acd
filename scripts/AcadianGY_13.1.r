@@ -14,7 +14,7 @@
 library(dplyr) # needed arrange, mutate, left_join, tibble, select, group_by, summarise, ungroup, case_when, all_of
 library(purrr) # needed for pmap_*
 
-AcadianVersionTag = "AcadianV13.1"
+AcadianVersionTag = "AcadianV13.2"
 
 # ---------------------------------------------------------------------------
 # v13.1 (DRAFT) hierarchical recruitment and mortality: the fitted posteriors REPLACE
