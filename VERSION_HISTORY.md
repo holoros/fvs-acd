@@ -151,3 +151,27 @@ benchmark numbers, which live in the dated handoffs themselves (`docs/handoffs/`
 history, `hardwood-formrisk-wip` branch handoffs for pass 9 onward), nor the Zenodo-deposited
 v12.10.1 package (`zenodo_v12101/`), which packages that frozen version's data and metadata
 separately for citation.
+
+## Era 7: v14.0, the three-stage linked mortality lever (7 Sep to 16 Sep 2026)
+
+| Version | Date | Size | Status |
+|---|---|---|---|
+| `14.0` | 7 Sep | 22 KB | superseded, first cut of the lever, scored by the pass 23 benchmark |
+| `14.0.1` | 16 Sep | 28 KB | **shipped, current v14 release** |
+
+Both files are derived cuts rather than forks. Each sources the v13.1 base (or the base named in
+`ACD_V14_BASE`) and rebinds `calc_mortality` and `make_ops` only. With
+`ops$use.linked.mortality = FALSE`, which is the default, either file reproduces its base exactly.
+The lever replaces the SDImax self-thinning block with a three-stage linked system: a plot-level
+probability that any stem dies, a Garcia state-space survivor decrement driven by top height with a
+stand density index term, and a tree-level stage that ranks which stems die. The coefficients live
+in an rds bundle named by `ops$linked.coef.file`. Both bundles are in `data/v14/`.
+
+14.0.1 changes three things. L2 (the floor applied as a minimum decrement everywhere) is the default
+linkage; L1 and L3 stay available. The stage 3 fixed effects resolve through a documented name map
+at bundle load, and the management term is now required. The shipping bundle is
+`v14_coef_bundle_2026-09-08.rds` (md5 4740de88af8231677d828dec8e5b753c), with stage 3 refitted on
+the version 4 whole frame (601,096 rows) and the genus, family and jurisdiction effects dropped.
+14.0 could not load that bundle. With the September 7 bundle, 14.0.1 gives per-tree kill identical
+to 14.0 in all three modes. The benchmark numbers for 14.0.1 are in the FVS-ACD linked survival
+model report (collected benchmark section, restated 16 September 2026).
