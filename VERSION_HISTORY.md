@@ -376,6 +376,25 @@ leg 2's CTRN intervals are one to two years, and the release observations span o
 thinning. E7 is the only horizon check, and over 50 yr the two terms take the largest projected
 diameter from 53.0 to 70.2 cm; that is the size of the commitment and it is invisible at the
 remeasurement interval. GT6's cap bound once in 88,703 thinning term calls at the remeasurement
-interval and 80 times in 191,800 over 50 yr, so it is load bearing at horizon and nearly inert
-otherwise. E6 gates CTRN only. Option 3 was fitted on CTRN and BAXTER, both Maine; whether it applies
+interval and 85 times in 191,800 over 50 yr (corrected on 25 September from an earlier 80,
+against the run 14868899 log), so it is load bearing at horizon and nearly inert otherwise. E6 gates CTRN only. Option 3 was fitted on CTRN and BAXTER, both Maine; whether it applies
 to the New Brunswick, Quebec and Nova Scotia sources is open and nothing here answers it.
+
+Large tree survivor increment, scored after release (25 September 2026). The 14.1 reference was run
+through the v141 Phase D runner on all nine Phase D sources. With both gates off it reproduced the
+14.0.4 Phase D output file for file, and on the CTRN consecutive source it reproduced the E6 leg 2
+output file for file. On the three tag stable sources, CTRN consecutive, CTRN first-last and
+BAXTER, 14.1 raises the pooled survivor diameter increment ratio, predicted over observed, from
+0.8365 [0.8055, 0.8670] under 14.0.4 to 0.9580 [0.9234, 0.9927]. The classes above 12.7 cm move from
+0.7828, 0.7403 and 0.7810 to 0.9129, 0.9201 and 1.0657. A bounded shape only correction for large
+trees was pre-registered on top of 14.1 and closed before any fit, because the deficit that remains
+is a level deficit in thinned stands, which a shape term normalized over the L estimation set cannot
+reach. Three limitations are carried from that work. First, on thinned CTRN stands over 5 to 20 yr
+intervals, 14.1 under predicts survivor increment above 12.7 cm (0.8429 [0.7271, 0.9789] on the
+first-last source). This is the long interval face of GT1 and stays open until long release records
+exist. Second, on the CTRN consecutive source at 5 yr intervals (69 plots in 11 installations), 14.1
+over predicts the largest stems: 1.1646 at 30 cm and over, 1.2883 in the 0.6 to 0.85 Dq class, and a
+size slope of -0.4443. Third, the tree level frame holds only CTRN and BAXTER, so no leave one
+dataset out transfer test of a diameter increment correction is possible on the current data. GT6
+has one further data point: on the CTRN first-last source, at 2 to 20 yr intervals, the cap bound 24
+times in 49,730 thinning term calls, and relative size reached 3.486.
