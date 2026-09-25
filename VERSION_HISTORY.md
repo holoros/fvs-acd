@@ -159,7 +159,8 @@ separately for citation.
 | `14.0` | 7 Sep | 22 KB | superseded, first cut of the lever, scored by the pass 23 benchmark |
 | `14.0.1` | 16 Sep | 28 KB | superseded, L2 made the default and the stage 3 name map added |
 | `14.0.2` | 17 Sep | 37 KB | superseded, three fixes to the lever, all on by default |
-| `14.0.3` | 17 Sep | 53 KB | **shipped, current v14 release** |
+| `14.0.3` | 17 Sep | 53 KB | superseded, two further lever repairs and the small-tree increment component |
+| `14.0.4` | 17 Sep | 59 KB | **shipped, current v14 release**, the Chapter 10 basal area increment target refitted |
 
 Every file in this era is a derived cut rather than a fork. Each sources the v13.1 base (or the base
 named in `ACD_V14_BASE`) and rebinds `calc_mortality` and `make_ops` only; 14.0.3 also rebinds the
@@ -242,3 +243,57 @@ not; that gate is unresolved at release and this version makes no claim for LEV3
 
 Known issue at release. `AcadianVersionTag` in `AcadianGY_14.0.3.r` and in the mortality-only cut
 still reads `AcadianV14.0.2`, carried over from the source. The tag has not been bumped.
+
+14.0.4 (17 September, committed 25 September) makes one change. `ops$use.dba.v1404` (`DBA_V1404`,
+default TRUE) replaces the Chapter 10 stand basal area increment target that `calc_ddbh`'s
+proportional-increment constraint disaggregates. `plot_ba_incr` is rebound rather than edited in
+place, so the published equation stays readable in the base and the switch is a true identity when
+off. With the switch off 14.0.4 is 14.0.3 bit for bit; with the lever off it is v13.1 exactly.
+
+Why. Measured on the 8,839 stand intervals of the mortality fit frame, the published target has three
+defects. Its design is rank deficient, because ln(CSI x RD) is exactly ln(CSI) + ln(RD). Its intrinsic
+rate goes negative on 45.0 percent of stand visits between 38.68 and 51.57 m² ha⁻¹ of basal area and
+on 98.3 percent above 51.57, which a Verhulst rate cannot do by definition of the form. The target
+then collapses to its 0.227 percent floor on 95.2 percent of those visits and 100 percent above
+51.57. Predicted over observed survivor basal area increment is 0.705 [0.667, 0.749] pooled and
+0.165 [0.148, 0.185] at 38.68 to 51.57. The constraint is a throttle rather than a neutral
+disaggregation, and LEV3's activation fractions were not the defect; they only pulled a third of the
+frame into a target that was already wrong.
+
+The refit keeps the Verhulst form and repairs it four ways: the intrinsic rate is the exponential of a
+linear predictor, the redundant ln(CSI x RD) term is dropped, the predictors are centred, and the
+solution is integrated in closed form over each interval on the survivor cohort with a Huber loss of
+delta 0.6 m² ha⁻¹ yr⁻¹. The carrying capacity k is fixed at 90 m² ha⁻¹, chosen from a sensitivity
+over 80 to 250 as the value minimising the worst basal area class deviation from 1. The shipped
+literals are a0 -3.7709501673, a_lrd 0.2315904496, a_lhw -0.0336296628, and centres -0.8557383504 and
+-1.5669061229. They are inline in the engine, as the published ones are; the fitting provenance is
+`data/v14/dba/v1404_dba_coef_FINAL_2026-09-17.rds` (md5 87c3ba213271d79683415013a58353f3), which the
+engine never reads. Predicted over observed moves to 0.947 [0.916, 0.983], four of five basal area
+classes cover 1.00, and the floor is reached on 0.000 percent of visits.
+
+Stated limitation. The refitted target does not respond to site index at all. The fit frame excludes
+Maine, so its site index spans only 15.58 to 21.18, and a coefficient fitted on that window came out
+at 4.374, which extrapolates to 0.17 times the rate at CSI 12 and 4.21 times it at CSI 25. Dropping
+the term costs 4.9 percent of training loss and improves held-out transfer from a median absolute
+deviation of 0.45 to 0.20. The target responds to density through relative density and the carrying
+capacity only. A site term should be restored only on a frame that spans the site index range the
+engine actually sees. This is a limitation stated at release, not an oversight.
+
+Gate results for 14.0.4. Nine engine gates pass, including both switch-off identities against 14.0.3.
+On the 19 GYDB benchmark sets the switch-off identity holds on all 40 scored rows, with maximum
+absolute difference exactly 0 in both %RMSE and bias, on 28,898 admitted rows identical to 14.0.3.
+Benchmark assembly gates 310 of 310, H3 19 of 19, Phase D P1 to P3 18 of 18. Four full-engine Bakuzis
+gates pass on job 14628037: maximum basal area 43.95 m² ha⁻¹ against the 74.9 bound, zero frontier
+crossings of 15 cells in both arms, median basal area at age 160 rising 24.63 to 25.28 m² ha⁻¹, and
+Reineke slope -1.779 to -1.807. First-last total volume bias improves from 14.0.3's
+-10.548 [-12.023, -9.023] percent to -8.371 [-9.831, -6.864] on NS and from -9.261 [-10.679, -7.780]
+to -5.692 [-7.135, -4.158] on NS_LONG, and still misses the plus or minus 5 window, so the E1
+benchmark criterion fails and is recorded as such. The pooled survivor diameter increment ratio moves
+from 0.7345 [0.7030, 0.7662] to 0.8365 [0.8055, 0.8670], about a third of the gap to 1.00, with every
+interval above 12.7 cm still excluding 1.00. Mortality is untouched. The LEV3 defaults arm, run
+22 to 23 September, is bit identical to the shipped 0.35 / 0.45 / 18 setting on the Bakuzis grid,
+because the grid never reaches densities at which the constraint activates; the shipped setting
+stands for want of a guardrail test, and this version makes no claim for LEV3 either way.
+
+Known issue at release. `AcadianVersionTag` in `AcadianGY_14.0.4.r` still reads `AcadianV14.0.2`,
+carried over from the source. The tag has not been bumped.
