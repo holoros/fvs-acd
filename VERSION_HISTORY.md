@@ -152,20 +152,23 @@ history, `hardwood-formrisk-wip` branch handoffs for pass 9 onward), nor the Zen
 v12.10.1 package (`zenodo_v12101/`), which packages that frozen version's data and metadata
 separately for citation.
 
-## Era 7: v14.0, the three-stage linked mortality lever (7 Sep to 16 Sep 2026)
+## Era 7: v14.0, the three-stage linked mortality lever (7 Sep to 17 Sep 2026)
 
 | Version | Date | Size | Status |
 |---|---|---|---|
 | `14.0` | 7 Sep | 22 KB | superseded, first cut of the lever, scored by the pass 23 benchmark |
-| `14.0.1` | 16 Sep | 28 KB | **shipped, current v14 release** |
+| `14.0.1` | 16 Sep | 28 KB | superseded, L2 made the default and the stage 3 name map added |
+| `14.0.2` | 17 Sep | 37 KB | superseded, three fixes to the lever, all on by default |
+| `14.0.3` | 17 Sep | 53 KB | **shipped, current v14 release** |
 
-Both files are derived cuts rather than forks. Each sources the v13.1 base (or the base named in
-`ACD_V14_BASE`) and rebinds `calc_mortality` and `make_ops` only. With
-`ops$use.linked.mortality = FALSE`, which is the default, either file reproduces its base exactly.
+Every file in this era is a derived cut rather than a fork. Each sources the v13.1 base (or the base
+named in `ACD_V14_BASE`) and rebinds `calc_mortality` and `make_ops` only; 14.0.3 also rebinds the
+diameter increment entry point, behind its own flag and off by default. With
+`ops$use.linked.mortality = FALSE`, which is the default, every file reproduces its base exactly.
 The lever replaces the SDImax self-thinning block with a three-stage linked system: a plot-level
 probability that any stem dies, a Garcia state-space survivor decrement driven by top height with a
 stand density index term, and a tree-level stage that ranks which stems die. The coefficients live
-in an rds bundle named by `ops$linked.coef.file`. Both bundles are in `data/v14/`.
+in an rds bundle named by `ops$linked.coef.file`. The bundles are in `data/v14/`.
 
 14.0.1 changes three things. L2 (the floor applied as a minimum decrement everywhere) is the default
 linkage; L1 and L3 stay available. The stage 3 fixed effects resolve through a documented name map
@@ -175,3 +178,67 @@ the version 4 whole frame (601,096 rows) and the genus, family and jurisdiction 
 14.0 could not load that bundle. With the September 7 bundle, 14.0.1 gives per-tree kill identical
 to 14.0 in all three modes. The benchmark numbers for 14.0.1 are in the FVS-ACD linked survival
 model report (collected benchmark section, restated 16 September 2026).
+
+14.0.2 (17 September) adds three fixes to the lever, each behind its own switch and all three on by
+default. Fix 1 (`ops$linked.fix.threshold`) evaluates the linkage indicator on the stage 1
+probability over a reference interval of `ops$linked.threshold.dref` years, default 5, rather than
+on the one year probability the engine steps; nu = 0.13 was chosen on the fitted intervals, whose
+median is 5. Fix 2 (`ops$linked.fix.floordomain`) applies the floor hazard only where the top height
+increment is not positive, which is where it was fitted. Fix 3 (`ops$linked.fix.pool`) computes N1,
+the stand state and the stage 3 kill on the closed cohort the stand stages were fitted on, weighting
+a recruit that entered k years ago by min(1, k / dref). Diameter growth, height growth, crown
+recession and ingrowth are untouched and the coefficient bundle is unchanged. With all three
+switches off, 14.0.2 is 14.0.1 exactly in L1, L2 and L3. 14.0.2 was cut and gated on 17 September
+but never committed; it enters the repository with this release as `scripts/AcadianGY_14.0.2.r`.
+
+14.0.3 (17 September) makes two further repairs to the lever, changes one default, and adds one new
+growth component that is off by default.
+
+Fix 4 (`ops$linked.fix.s3offset`, default TRUE) subtracts the stage 3 centring offset. The stage 3
+refit built its design with ldt = log(dt) - 1.687711 and the bundle carries that constant as
+`stage3$offset_centre`, but the engine steps one year and added log(1) = 0 without subtracting it,
+so every annual stage 3 cumulative hazard ran exp(1.687711) = 5.407 times the fitted one. Stage 3
+only allocates a kill that stages 1 and 2 have already sized, so a common shift of the stage 3
+linear predictor cancels in the normalisation while the hazards are small, and the defect acts only
+through saturation. On the gate stand the uncorrected hazard saturated 124 of 200 stems, from 1 cm
+DBH up, which flattened the allocation and pushed the kill onto large stems: the share of the kill
+falling on stems 30 cm and larger was 0.1274 under 14.0.2 against 0.0621 under 14.0.3, with the
+total kill unchanged at 150.0000 stems. 14.0.1 and 14.0.2 both carry the defect.
+
+Fix 5 (`ops$linked.fix.stepinv`, default TRUE) makes the stand decrement step invariant. The linkage
+removes a fraction of the Garcia decrement and both are interval quantities, so chaining one year
+steps carried about 30 percent of the fitted interval decrement and L1 removed about 0.3 percent of
+stems per year against about 2.2 percent observed. The Garcia log decrement is additive across
+years, so the switch applies pi = -log(1 - p(dref)(1 - exp(-L_g))) / L_g to each annual log
+decrement l_g, with L_g = dref l_g. At dt = dref that is the fitted interval rule exactly (the gate
+agrees to 2.06e-16 on 2,160 rows) and at dref = 1 it is the 14.0.1 arithmetic. It supersedes
+`ops$linked.fix.pscale`, and setting both stops.
+
+Fix 2 now defaults off (`ops$linked.fix.floordomain = FALSE`). With it on, L2 is L1, which fails the
+size-density frontier and the long-span equivalence test. L2 with the floor applied as a minimum
+decrement everywhere is the shipped mode again, so the two labels name two models again.
+
+`ops$use.smalltree.dg` (default FALSE) adds a small-tree diameter increment equation blended into
+the large-tree increment between 8.25 and 12.7 cm DBH, FVS style, evaluated at a 5 year reference
+interval (`ops$smalltree.iv.ref`). Its coefficients are
+`data/v14/smalltree/smalltree_coef_bundle_2026-09-17.rds` (md5
+69c423dc3adb142b16aae1bfede0359d), named by `ops$smalltree.coef.file`. With the flag off the
+projection is 14.0.3 without the component, which is the identity checked against the mortality-only
+intermediate `AcadianGY_14.0.3_mortonly.r` (md5 af33056cd79f93055f5438e001795f10).
+
+14.0.3 also ships `v14_coef_bundle_2026-09-08_L2default.rds` (md5
+655ef0117b3531651978f230d82d61fa), the September 8 bundle with `linkage$default` corrected from L1
+to L2. Every fitted quantity is identical to `v14_coef_bundle_2026-09-08.rds` and the engine never
+reads that field, so either bundle gives the same projection.
+
+Gate results for 14.0.3, 17 September 2026. The lever unit gates pass 14 of 14 and the engine gates
+pass 11 of 12. With the lever off, 14.0.3 is v13.1 exactly. With the small-tree flag off it is the
+mortality-only cut, with the lever both off and on. At the 14.0.2 switch values it reproduces 14.0.2
+in L1, L2 and L3, and with every switch off it reproduces 14.0.2 with every switch off. An unset
+linkage mode defaults to L2. Under the 14.0.3 defaults the cohort loses 5.433 percent per year
+against 0.912 under 14.0.2 and 5.306 under the 14.0.1 equivalent configuration. The one failure is
+C_lev3, which asserts that the LEV3 stand constraint changes the projection and found that it does
+not; that gate is unresolved at release and this version makes no claim for LEV3.
+
+Known issue at release. `AcadianVersionTag` in `AcadianGY_14.0.3.r` and in the mortality-only cut
+still reads `AcadianV14.0.2`, carried over from the source. The tag has not been bumped.
