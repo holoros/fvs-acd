@@ -297,3 +297,85 @@ stands for want of a guardrail test, and this version makes no claim for LEV3 ei
 
 Known issue at release. `AcadianVersionTag` in `AcadianGY_14.0.4.r` still reads `AcadianV14.0.2`,
 carried over from the source. The tag has not been bumped.
+
+## Era 8: v14.1, option 3 diameter increment terms (23 Sep to 25 Sep 2026)
+
+| Version | Date | Size | Status |
+|---|---|---|---|
+| `14.1` | 24 Sep | 10 KB | **shipped**, overlay on 14.0.4, both terms off by default, one named standing gate failure (GT1) |
+
+14.1 is an overlay rather than a cut. `scripts/AcadianGY_14.1.r` sources nothing itself; it must be
+sourced after `AcadianGY_14.0.4.r` and stops if the 14.0.4 increment hook is not already bound. It
+modifies nothing in 14.0.4 and wraps `ddbh`, `calc_ddbh` and `make_ops` the same way 14.0.3 wrapped
+them for the small-tree blend. Two switchable diameter increment terms are gated independently, and
+each is the identity when its gate is FALSE. With both gates FALSE the hooked engine reproduces the
+unhooked 14.0.4 exactly, tree level, in separate R processes (gate E1) and at the 160 yr horizon
+(gate E6 leg 1, 15 of 15 Bakuzis cells at a maximum absolute difference of exactly 0).
+
+`ops$use.lsdg.v141` (`LSDG_V141`, default FALSE) is the unmanaged level term L, applied as a
+multiplier on the predicted annual diameter increment: m_L(d) = 1 + (lambda - 1) s(d), where s is a
+smoothstep from 0 at `ops$v141.d.lo` (12.7 cm) to 1 at `ops$v141.d.hi` (15.0 cm). It is the identity
+below 12.7 cm by construction.
+
+`ops$use.thin.v141` (`THIN_V141`, default FALSE) is the thinning release term T, applied after L only
+on stands with a known years since thinning: m_T(tst, d, Dq) = 1 + alpha exp(-beta tst)
+(min(d / Dq, cap))^gamma, with Dq the quadratic mean diameter of the current tree list and the cap
+`ops$v141.rel.cap` set to the maximum d / Dq in the estimation set (gate GT6). The runner contract is
+that the caller sets `ops$stand.tst`, the years since the last thinning at the start of the current
+step, per stand, and advances it by one each projection year, exactly as it sets
+`ops$stand.managed`. When `ops$stand.tst` is NULL, NA or negative, T is not applied to that stand
+and the call is counted. T is never applied by guessing a thinning date.
+
+Coefficients come from `ops$v141.coef.file`, an rds written by the offline stage, or from
+`ops$v141.lambda`, `ops$v141.alpha`, `ops$v141.beta` and `ops$v141.gamma` when that file is absent.
+A gate that is TRUE with no coefficient stops the run rather than falling back to the identity. The
+shipped bundle is `data/v14/option3/v141_option3_offline_coefs_r5_2026-09-23.rds` (md5
+c8f02f5841e98b93cb532b6fa9b1fc51), from run 14868899, fitted on CTRN and BAXTER, both Maine, with
+the bootstrap clustered on the CTRN installation and gamma fixed at 2: lambda 1.14863
+[0.92637, 1.37565], alpha 0.37109 [0.12383, 0.64890], beta 0.08220 [0.00752, 0.20480], gamma 2
+(fixed, chosen outside the fit as the basal area proportional allocation), relative size cap 2.9848.
+
+Gates. The full pre-registration, with every threshold, its provenance and every revision, is
+`docs/v14.1/2026-09-25_v141_option3_engine_gates_PREREG2_r5.md` (md5
+1f149a0faadfebc0e640f5ffb129e91e), and it governs. GM0, GL1 to GL5, GT2 to GT6, D1, E1 to E5, E6 and
+E7 pass. GT1 FAILS and the failure stands in the record. GT1 requires the implied release half-life
+ln(2) / beta to lie between 3 and 50 yr; run 14868899 gives 3.38 to 92.21 yr, so the condition fails
+on the upper endpoint alone while the other two conditions of the gate pass (beta's interval is
+strictly above 0, and no estimate or interval endpoint sits on an optimiser bound). The band was not
+widened and the condition was not retired, because the band is itself a self-referential threshold
+that had already been moved once against this fit, and removing a condition because it failed is the
+same act with a different name. The diagnosis, so that the failure invites the right repair: the data
+determine the SIGN of the release decay and not its RATE. Beta is strictly above zero in every version
+fitted and the free gamma fit beats the beta equals zero restriction on objective, so the release
+decays. The rate is not identified at the available replication, and the binding constraint is the 17
+independent CTRN installations, not the parameter count: fixing gamma removed a bound failure and
+left beta's interval essentially unchanged. No further reduction of this functional form will
+identify the rate. The condition may be moved only on evidence external to this fit, meaning added
+installations or an independently sourced release duration for this species group and treatment. No
+document may report GT1 as passing.
+
+The v141 copy of the Phase D runner ships as
+`scripts/phaseD/2026-09-25_v141_phaseD_runner_p23_tst.R` (md5 8471121e3a880e838b42923250a94cdd),
+because without it a reviewer cloning the repository cannot reproduce a single hooked number. It is
+its 14.0.4 parent plus four additive blocks and one changed line: an optional source of the overlay
+under `V141=1`, a per stand years since thinning resolved from data with the precedence a per stand
+TST column, then a TST_FILE keyed on STAND, then a source level SRC_TST, and the per year advance of
+`ops$stand.tst` inside the projection loop. NEVER and UNKNOWN both reach the engine as NA and are
+counted apart. With `THIN_V141=1` and no source the run stops. A record whose thinning year equals or
+follows the interval start is supplied as UNKNOWN, not 0, because that interval contains the removal
+rather than a release. With `V141` unset the file behaves as its parent.
+
+Stated limitations, carried so that they are not rediscovered as defects. Lambda's 95 percent
+interval covers 1, so the level term is not separable from the identity at that level; GL1 records
+this as a limitation rather than a failure. The relative size class below 0.6 Dq sits at 1.4452
+before option 3 and 1.5326 after (run 14868899; an earlier revision quoted 1.5540 from the
+superseded r3 fit), the one place the terms made agreement worse; it is out of scope
+under GT3 as a 14.0.4 defect for suppressed trees, and widening T to fix it would be tuning against a
+symptom. Neither leg of E6 tests T at the projection horizon: leg 1 has no thinning by construction,
+leg 2's CTRN intervals are one to two years, and the release observations span only 1 to 17 yr since
+thinning. E7 is the only horizon check, and over 50 yr the two terms take the largest projected
+diameter from 53.0 to 70.2 cm; that is the size of the commitment and it is invisible at the
+remeasurement interval. GT6's cap bound once in 88,703 thinning term calls at the remeasurement
+interval and 80 times in 191,800 over 50 yr, so it is load bearing at horizon and nearly inert
+otherwise. E6 gates CTRN only. Option 3 was fitted on CTRN and BAXTER, both Maine; whether it applies
+to the New Brunswick, Quebec and Nova Scotia sources is open and nothing here answers it.
