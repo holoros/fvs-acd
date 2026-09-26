@@ -378,7 +378,8 @@ diameter from 53.0 to 70.2 cm; that is the size of the commitment and it is invi
 remeasurement interval. GT6's cap bound once in 88,703 thinning term calls at the remeasurement
 interval and 85 times in 191,800 over 50 yr (corrected on 25 September from an earlier 80,
 against the run 14868899 log), so it is load bearing at horizon and nearly inert otherwise. E6 gates CTRN only. Option 3 was fitted on CTRN and BAXTER, both Maine; whether it applies
-to the New Brunswick, Quebec and Nova Scotia sources is open and nothing here answers it.
+to the New Brunswick, Quebec and Nova Scotia sources was open when this section was first written. The
+regional paragraph below answers it.
 
 Large tree survivor increment, scored after release (25 September 2026). The 14.1 reference was run
 through the v141 Phase D runner on all nine Phase D sources. With both gates off it reproduced the
@@ -398,3 +399,31 @@ size slope of -0.4443. Third, the tree level frame holds only CTRN and BAXTER, s
 dataset out transfer test of a diameter increment correction is possible on the current data. GT6
 has one further data point: on the CTRN first-last source, at 2 to 20 yr intervals, the cap bound 24
 times in 49,730 thinning term calls, and relative size reached 3.486.
+
+Regional transfer (25 September 2026). 14.1 was validated as shipped in New Brunswick, Quebec and
+Nova Scotia under pre-registration 3, with no coefficient changed. No stand in those regions carries
+a thinning year, so T never acts there and the test is of L alone. It was paired against 14.0.4
+through one harness whose 14.0.4 arm reproduces the published benchmark file for file. On the
+basal area level ratio, all three regions pass. New Brunswick is neutral (0.9887 to 0.9944). Quebec
+is neutral on qc_c (1.0261 to 1.0443); qc_fl, with 19 sites, is below the replication floor.
+Nova Scotia improves on all four sets, for example ns_long_fl from 0.8574 to 0.8831. The test is
+directional. 14.1 raises predicted basal area on 98.9 to 100 percent of stands, so the pass shows
+that 14.0.4's basal area under prediction outside Maine shrinks under L. It does not validate L's
+size structure there. In Nova Scotia, L also pushes QMD and total volume further above 1, and in
+Quebec it moves basal area, total volume and QMD away from 1.
+
+Finalization (26 September 2026, pre-registration 4). On all 19 benchmark sets, the both gates off
+arm reproduces the published 14.0.4 benchmark on 62 of 62 chunks. Consecutive frame total volume
+%RMSE is within the 0.5 point tolerance: 14.0.4 minus 14.1 is -0.023 (NS) and -0.215 (NS_LONG).
+First-last total volume absolute bias falls from 8.371 to 5.411 (NS) and from 5.692 to 2.080
+(NS_LONG). The E1 window of plus or minus 5 percent is met on NS_LONG and missed on NS
+(-5.411 [-6.933, -3.846]). 14.0.4 missed both. On a new Bakuzis grid, five site indices by four
+initial densities (1,500 to 12,000 trees ha⁻¹), each unthinned and with one commercial thinning
+from below at QMD 12 cm, all gates pass. The grid runs 160 yr and reaches about 51 m² ha⁻¹. No
+relation flags under 14.1 that passes under 14.0.4, and Reineke's Q4 holds in both regimes. This
+is the first long horizon test of T. The release it adds decays to nothing by about 17 yr after
+thinning, which sits inside the 1 to 17 yr support of the fit. Density feedback then takes part of
+it back, and at 160 yr median basal area is 1.1 percent above L alone. One diagnostic, not a gate:
+in the 6,000 trees ha⁻¹ thinned cells, T deepens a late rotation top height dip of 0.36 to 0.51 m.
+It also produces one top height site order inversion at 160 yr (ESI 16 at 27.12 m against ESI 14 at
+27.25 m).
