@@ -1,0 +1,5 @@
+suppressPackageStartupMessages(library(data.table))
+bp <- fread("/users/PUOM0008/crsfaaron/silc_cfi/v32_htdub/silc_cfi_v32ht_byplot_primary_DATA_2026-09-23.csv")
+x <- merge(bp[model_config=="AGM_v840_meas",.(PLOT,p=gross4_cd)], bp[model_config=="OBSERVED",.(PLOT,o=gross4_cd)], by="PLOT")
+l <- rbindlist(lapply(x$PLOT, function(k){y<-x[PLOT!=k]; data.table(left_out=k, bias=round(100*(mean(y$p)-mean(y$o))/mean(y$o),2), R2=round(1-sum((y$p-y$o)^2)/sum((y$o-mean(y$o))^2),3))}))
+fwrite(l, "v32st_loo_agm_v840_DATA_2026-09-26.csv"); print(range(l$bias)); print(range(l$R2))
