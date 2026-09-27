@@ -1,0 +1,246 @@
+## BENCH141 FROZEN COPY (2026-09-25) of v1404/bench/score/R/2026-09-18_v1404_bench_score_tables.R; output date only.
+## FROZEN COPY for v1402 (2026-09-17) of score/R/2026-09-16_gydbreg-score_tables.R: file names and contrast labels only.
+## 2026-09-16_gydbreg-score_tables.R
+## Sourced after 2026-09-16_gydbreg-score_core.R (same session). Builds every scored table.
+## Suite reproduced (adaptations A8 to A12 in addition to A1 to A7 in the core header):
+##  A8  intervals: 95 percent percentile intervals for bias, RMSE and paired differences, as
+##      composite_score_fourway.R; the equivalence verdict uses the 90 percent interval (TOST at
+##      alpha 0.05, equivalence_frozen_REGION.txt) as primary and also reports the 95 percent
+##      verdict used by equivalence_tests_fourway_demeaned.R.
+##  A9  demeaned equivalence per set: source = set, demeaned once on the full common sample and
+##      the fixed residual pairs resampled (as the fourway script); per-set pooled OLS on
+##      demeaned values has intercept 0 at the point estimate by construction, the bootstrap
+##      interval is informative. Pooled demeaned test = sets of one frame and NS scenario.
+##  A10 composite: per-set %RMSE and %bias weighted by stand-years (sum of measured intervals of
+##      the common stands, not n x a constant interval), per frame; two NS scenarios (NS or
+##      NS_LONG as the Nova Scotia row, as the NS / NS-long treatments of the fourway composite).
+##  A11 leave-Maine-out drops PEF, CTRN, SILC_L, BAXTER, MEMAT, MEDEV, MEFIA_L, MNAP.
+##  A12 stratum composites keep a set only where the stratum has at least MIN_N_STRATUM stands.
+
+qq  <- function(x, a) unname(quantile(x, a, na.rm = TRUE, type = 7))
+lo95 <- function(x) qq(x, 0.025); hi95 <- function(x) qq(x, 0.975)
+lo90 <- function(x) qq(x, 0.05);  hi90 <- function(x) qq(x, 0.95)
+r <- function(x, d = 3) round(x, d)
+wfile <- function(dt, what) {
+  f <- file.path(TAB, sprintf("%s-%s_DATA_2026-09-25.csv", V1402_PREFIX, what))
+  fwrite(dt, f); cat(sprintf("wrote %s (%d rows)\n", basename(f), nrow(dt)))
+}
+colf <- function(x) factor(x, levels = unname(COLS))
+
+## ---- 0. population, failures, strata checks ----
+wfile(META, "population")
+FAILS <- rbindlist(FAILS); wfile(FAILS, "run-failures")
+FG <- rbindlist(FGCHK)
+wfile(FG[, .(n = sum(N)), by = .(set, forest_group, fortype_frozen)][order(set, forest_group, fortype_frozen)],
+      "forest-group-rule-check")
+UN <- if (length(UNMAP)) rbindlist(UNMAP) else data.table(set = character(), SP = character(), N = integer())
+wfile(UN, "unmapped-species")
+wfile(rbindlist(SITE_CUTS), "site-tercile-cuts")
+
+## ---- 1. per set x column x metric ----
+perset <- list()
+for (s in SETS) for (k in names(COLS)) for (m in METRICS) {
+  e <- S_str[[s]][["all|All"]][[k]][[m]]; pt <- e$pt; bs <- e$bs
+  perset[[length(perset) + 1L]] <- data.table(
+    set = s, dataset = set_dataset(s), frame = set_frame(s), column_id = k, column = COLS[[k]],
+    metric = m, n = pt$Sw, n_dropped = META[set == s, n_dropped_common],
+    mean_obs = r(st_mo(pt), 4), mean_pred = r(st_mp(pt), 4),
+    bias_pct = r(st_bias(pt)), bias_lo = r(lo95(st_bias(bs))), bias_hi = r(hi95(st_bias(bs))),
+    rmse_pct = r(st_rmse(pt)), rmse_lo = r(lo95(st_rmse(bs))), rmse_hi = r(hi95(st_rmse(bs))),
+    intercept = r(st_int(pt), 4), intercept_lo = r(lo95(st_int(bs)), 4), intercept_hi = r(hi95(st_int(bs)), 4),
+    slope = r(st_slope(pt), 4), slope_lo = r(lo95(st_slope(bs)), 4), slope_hi = r(hi95(st_slope(bs)), 4),
+    r2 = r(st_r2(pt), 4))
+}
+PERSET <- rbindlist(perset); wfile(PERSET, "perset-scores")
+
+## ---- 2. paired differences, v14.0.1 L2 minus each other column, per set ----
+paired_row <- function(eL, eK) {
+  dR <- st_rmse(eL$bs) - st_rmse(eK$bs); dB <- st_bias(eL$bs) - st_bias(eK$bs)
+  dA <- abs(st_bias(eL$bs)) - abs(st_bias(eK$bs))
+  data.table(
+    d_rmse = r(st_rmse(eL$pt) - st_rmse(eK$pt)), d_rmse_lo = r(lo95(dR)), d_rmse_hi = r(hi95(dR)),
+    pr_L2_lower_rmse = r(mean(dR < 0, na.rm = TRUE), 4),
+    d_bias = r(st_bias(eL$pt) - st_bias(eK$pt)), d_bias_lo = r(lo95(dB)), d_bias_hi = r(hi95(dB)),
+    d_absbias = r(abs(st_bias(eL$pt)) - abs(st_bias(eK$pt))), d_absbias_lo = r(lo95(dA)), d_absbias_hi = r(hi95(dA)),
+    pr_L2_lower_absbias = r(mean(dA < 0, na.rm = TRUE), 4))
+}
+pp <- list()
+for (s in SETS) for (m in STRAT_METRICS) for (k in setdiff(names(COLS), REFCOL)) {
+  pp[[length(pp) + 1L]] <- cbind(
+    data.table(set = s, dataset = set_dataset(s), frame = set_frame(s), metric = m,
+               contrast = sprintf("%s minus %s", COLS[[REFCOL]], COLS[[k]]), other_id = k,
+               n = S_str[[s]][["all|All"]][[k]][[m]]$pt$Sw),
+    paired_row(S_str[[s]][["all|All"]][[REFCOL]][[m]], S_str[[s]][["all|All"]][[k]][[m]]))
+}
+wfile(rbindlist(pp), "perset-paired-L2")
+
+## ---- 3. equivalence (per set, demeaned and raw; pooled demeaned) ----
+eq_verdicts <- function(ip, ib, sp, sb, mo) {
+  reg <- 0.25 * mo
+  data.table(
+    intercept = r(ip, 4), int_lo90 = r(lo90(ib), 4), int_hi90 = r(hi90(ib), 4),
+    int_lo95 = r(lo95(ib), 4), int_hi95 = r(hi95(ib), 4),
+    int_region_lo = r(-reg, 4), int_region_hi = r(reg, 4),
+    slope = r(sp, 4), slope_lo90 = r(lo90(sb), 4), slope_hi90 = r(hi90(sb), 4),
+    slope_lo95 = r(lo95(sb), 4), slope_hi95 = r(hi95(sb), 4),
+    int_equiv90 = lo90(ib) >= -reg & hi90(ib) <= reg,
+    slope_equiv90 = lo90(sb) >= 0.75 & hi90(sb) <= 1.25,
+    int_equiv95 = lo95(ib) >= -reg & hi95(ib) <= reg,
+    slope_equiv95 = lo95(sb) >= 0.75 & hi95(sb) <= 1.25)[
+    , `:=`(equiv90 = int_equiv90 & slope_equiv90, equiv95 = int_equiv95 & slope_equiv95)]
+}
+eq <- list()
+for (s in SETS) for (k in names(COLS)) for (m in METRICS) {
+  e <- S_str[[s]][["all|All"]][[k]][[m]]
+  mo <- st_mo(e$pt)
+  dm <- eq_verdicts(st_int(e$dm$pt), st_int(e$dm$bs), st_slope(e$dm$pt), st_slope(e$dm$bs), mo)
+  rw <- eq_verdicts(st_int(e$pt), st_int(e$bs), st_slope(e$pt), st_slope(e$bs), mo)
+  setnames(rw, paste0("raw_", names(rw)))
+  eq[[length(eq) + 1L]] <- cbind(data.table(set = s, dataset = set_dataset(s), frame = set_frame(s),
+                                            column_id = k, column = COLS[[k]], metric = m,
+                                            n = e$pt$Sw, mean_obs = r(mo, 4)), dm, rw)
+}
+EQ <- rbindlist(eq); wfile(EQ, "perset-equivalence")
+
+scen_sets <- function(frame, scen, excl = "none") {
+  ss <- SETS[set_frame(SETS) == frame]
+  ss <- ss[set_dataset(ss) != (if (scen == "NS") "NS_LONG" else "NS")]
+  if (excl == "leave_maine_out") ss <- ss[!(set_dataset(ss) %in% MAINE)]
+  ss
+}
+FRAMES <- c("consecutive", "first-last"); SCENS <- c("NS", "NS_LONG")
+EXCLS <- c(none = "All datasets", leave_maine_out = "Leave Maine out")
+
+peq <- list()
+for (fr_ in FRAMES) for (sc in SCENS) for (k in names(COLS)) for (m in METRICS) {
+  ss <- scen_sets(fr_, sc)
+  if (!length(ss)) next
+  Dp <- NULL; Db <- NULL; Rp <- NULL
+  for (s in ss) {
+    e <- S_str[[s]][["all|All"]][[k]][[m]]
+    Dp <- add_sums(Dp, e$dm$pt); Db <- add_sums(Db, e$dm$bs); Rp <- add_sums(Rp, e$pt)
+  }
+  peq[[length(peq) + 1L]] <- cbind(
+    data.table(frame = fr_, ns_scenario = sc, column_id = k, column = COLS[[k]], metric = m,
+               n_sets = length(ss), n_pooled = Dp$Sw, mean_obs_raw = r(st_mo(Rp), 4)),
+    eq_verdicts(st_int(Dp), st_int(Db), st_slope(Dp), st_slope(Db), st_mo(Rp)))
+}
+PEQ <- rbindlist(peq); wfile(PEQ, "pooled-demeaned-equivalence")
+
+## ---- 4. composites ----
+## key_fun(set) returns the stratum key to use for that set, or NA to skip the set.
+composite_draws <- function(ss, key_fun, k, m, min_n = 1L) {
+  w <- c(); Rp <- c(); Bp <- c(); Rb <- NULL; Bb <- NULL; used <- c(); nn <- 0
+  for (s in ss) {
+    key <- key_fun(s)
+    if (is.na(key)) next
+    e <- S_str[[s]][[key]][[k]][[m]]
+    if (is.null(e) || SY[[s]][[key]][["n"]] < min_n) next
+    w <- c(w, SY[[s]][[key]][["stand_years"]]); used <- c(used, s); nn <- nn + SY[[s]][[key]][["n"]]
+    Rp <- c(Rp, st_rmse(e$pt)); Bp <- c(Bp, st_bias(e$pt))
+    Rb <- rbind(Rb, st_rmse(e$bs)); Bb <- rbind(Bb, st_bias(e$bs))
+  }
+  if (!length(w)) return(NULL)
+  list(sets = used, w = w, n = nn, sy = sum(w),
+       rmse = sum(w * Rp) / sum(w), bias = sum(w * Bp) / sum(w),
+       rmse_b = drop(w %*% Rb) / sum(w), bias_b = drop(w %*% Bb) / sum(w))
+}
+comp_row <- function(cd) data.table(
+  n_sets = length(cd$sets), sets = paste(cd$sets, collapse = " "), n_stands = cd$n,
+  stand_years = r(cd$sy, 1),
+  rmse = r(cd$rmse), rmse_lo = r(lo95(cd$rmse_b)), rmse_hi = r(hi95(cd$rmse_b)),
+  bias = r(cd$bias), bias_lo = r(lo95(cd$bias_b)), bias_hi = r(hi95(cd$bias_b)),
+  n_na_draws = sum(!is.finite(cd$rmse_b)))
+comp_pair <- function(cL, cK) {
+  dR <- cL$rmse_b - cK$rmse_b; dB <- cL$bias_b - cK$bias_b; dA <- abs(cL$bias_b) - abs(cK$bias_b)
+  data.table(d_rmse = r(cL$rmse - cK$rmse), d_rmse_lo = r(lo95(dR)), d_rmse_hi = r(hi95(dR)),
+             pr_L2_lower_rmse = r(mean(dR < 0, na.rm = TRUE), 4),
+             d_bias = r(cL$bias - cK$bias), d_bias_lo = r(lo95(dB)), d_bias_hi = r(hi95(dB)),
+             d_absbias = r(abs(cL$bias) - abs(cK$bias)), d_absbias_lo = r(lo95(dA)), d_absbias_hi = r(hi95(dA)),
+             pr_L2_lower_absbias = r(mean(dA < 0, na.rm = TRUE), 4))
+}
+
+## stratum specs for composites: list(dim, level, key_fun, scenarios, min_n, columns)
+key_all <- function(s) "all|All"
+strat_specs <- list(list(dim = "all", level = "All", fun = key_all, scen = SCENS, min_n = 1L, cols = names(COLS)),
+                    list(dim = "full_population_non_osm", level = "All admitted stands (7 columns)",
+                         fun = function(s) "full7|All", scen = SCENS, min_n = 1L, cols = setdiff(names(COLS), "osm")))
+for (lv in c("Managed", "Unmanaged")) strat_specs[[length(strat_specs) + 1L]] <-
+  list(dim = "managed", level = lv, fun = local({lv <- lv; function(s) paste0("managed|", lv)}), scen = SCENS, min_n = MIN_N_STRATUM, cols = names(COLS))
+strat_specs[[length(strat_specs) + 1L]] <- list(dim = "churn", level = "Churn-flag-free",
+  fun = function(s) "churn|Churn-flag-free", scen = SCENS, min_n = MIN_N_STRATUM, cols = names(COLS))
+for (fg in c("Softwood", "Mixedwood", "Hardwood")) strat_specs[[length(strat_specs) + 1L]] <-
+  list(dim = "forest_group", level = fg, fun = local({fg <- fg; function(s) paste0("forest_group|", fg)}), scen = SCENS, min_n = MIN_N_STRATUM, cols = names(COLS))
+for (mt in unique(MATURITY)) strat_specs[[length(strat_specs) + 1L]] <-
+  list(dim = "maturity", level = mt, fun = local({mt <- mt; function(s) if (MATURITY[[set_dataset(s)]] == mt) paste0("maturity|", mt) else NA_character_}),
+       scen = SCENS, min_n = MIN_N_STRATUM, cols = names(COLS))
+for (sc in c("Low", "Mid", "High")) strat_specs[[length(strat_specs) + 1L]] <-
+  list(dim = "site_productivity", level = sc, fun = local({sc <- sc; function(s) paste0("site_productivity|", sc)}), scen = SCENS, min_n = MIN_N_STRATUM, cols = names(COLS))
+for (bk in c("<15", "15-30", ">30")) strat_specs[[length(strat_specs) + 1L]] <-
+  list(dim = "projection_length", level = bk, fun = local({bk <- bk; function(s) paste0("projection_length|", bk)}), scen = SCENS, min_n = MIN_N_STRATUM, cols = names(COLS))
+strat_specs[[length(strat_specs) + 1L]] <- list(dim = "nsl_regime", level = "NS_LONG single-regime only",
+  fun = function(s) if (set_dataset(s) == "NS_LONG") "nsl_regime|Single-regime" else "all|All",
+  scen = "NS_LONG", min_n = 1L, cols = names(COLS))
+
+comp <- list(); cpair <- list(); shares <- list()
+for (sp in strat_specs) for (fr_ in FRAMES) for (sc in sp$scen) for (ex in names(EXCLS)) {
+  if (ex != "none" && !(sp$dim %in% c("all", "managed", "churn", "full_population_non_osm"))) next
+  ss <- scen_sets(fr_, sc, ex)
+  if (!length(ss)) next
+  mets <- if (sp$dim == "all") METRICS else STRAT_METRICS
+  for (m in mets) {
+    CD <- setNames(lapply(sp$cols, function(k) composite_draws(ss, sp$fun, k, m, sp$min_n)), sp$cols)
+    if (is.null(CD[[1]])) next
+    for (k in sp$cols) comp[[length(comp) + 1L]] <- cbind(
+      data.table(frame = fr_, ns_scenario = sc, exclusion = EXCLS[[ex]], stratum_dim = sp$dim,
+                 stratum = sp$level, column_id = k, column = COLS[[k]], metric = m), comp_row(CD[[k]]))
+    if (REFCOL %in% sp$cols) for (k in setdiff(sp$cols, REFCOL)) cpair[[length(cpair) + 1L]] <- cbind(
+      data.table(frame = fr_, ns_scenario = sc, exclusion = EXCLS[[ex]], stratum_dim = sp$dim,
+                 stratum = sp$level, metric = m, contrast = sprintf("%s minus %s", COLS[[REFCOL]], COLS[[k]]),
+                 other_id = k, n_stands = CD[[k]]$n), comp_pair(CD[[REFCOL]], CD[[k]]))
+    if (sp$dim == "all" && m == "TOTVOL") {
+      c1 <- CD[[REFCOL]]
+      shares[[length(shares) + 1L]] <- data.table(frame = fr_, ns_scenario = sc, exclusion = EXCLS[[ex]],
+        set = c1$sets, dataset = set_dataset(c1$sets),
+        dataset_label = unname(DS_LABEL[set_dataset(c1$sets)]),
+        n = sapply(c1$sets, function(s) SY[[s]][["all|All"]][["n"]]),
+        stand_years = r(c1$w, 1), share_pct = r(100 * c1$w / sum(c1$w), 2),
+        maine = set_dataset(c1$sets) %in% MAINE)
+    }
+  }
+}
+COMP <- rbindlist(comp); CPAIR <- rbindlist(cpair); SHARES <- rbindlist(shares)
+wfile(COMP[stratum_dim %in% c("all", "full_population_non_osm")], "composite")
+wfile(CPAIR[stratum_dim %in% c("all", "full_population_non_osm")], "composite-paired-L2")
+wfile(SHARES, "composite-shares")
+wfile(COMP[!(stratum_dim %in% c("all", "full_population_non_osm"))], "strata-composite")
+wfile(CPAIR[!(stratum_dim %in% c("all", "full_population_non_osm"))], "strata-composite-paired-L2")
+
+## ---- 5. per set x stratum table (TOTVOL, BA) ----
+pst <- list()
+for (s in SETS) for (g in setdiff(names(S_str[[s]]), c("all|All", "full7|All"))) {
+  dim_ <- sub("\\|.*$", "", g); lev <- sub("^.*\\|", "", g)
+  for (m in STRAT_METRICS) for (k in names(COLS)) {
+    e <- S_str[[s]][[g]][[k]][[m]]
+    eL <- S_str[[s]][[g]][[REFCOL]][[m]]
+    dR <- st_rmse(eL$bs) - st_rmse(e$bs)
+    pst[[length(pst) + 1L]] <- data.table(
+      set = s, dataset = set_dataset(s), frame = set_frame(s), stratum_dim = dim_, stratum = lev,
+      column_id = k, column = COLS[[k]], metric = m, n = e$pt$Sw, small_n_flag = e$pt$Sw < 15,
+      stand_years = r(SY[[s]][[g]][["stand_years"]], 1),
+      bias_pct = r(st_bias(e$pt)), bias_lo = r(lo95(st_bias(e$bs))), bias_hi = r(hi95(st_bias(e$bs))),
+      rmse_pct = r(st_rmse(e$pt)), rmse_lo = r(lo95(st_rmse(e$bs))), rmse_hi = r(hi95(st_rmse(e$bs))),
+      d_rmse_L2_minus = if (k == REFCOL) NA_real_ else r(st_rmse(eL$pt) - st_rmse(e$pt)),
+      d_rmse_lo = if (k == REFCOL) NA_real_ else r(lo95(dR)),
+      d_rmse_hi = if (k == REFCOL) NA_real_ else r(hi95(dR)),
+      n_na_draws = sum(!is.finite(st_rmse(e$bs))))
+  }
+}
+wfile(rbindlist(pst), "strata-perset")
+
+## ---- 6. equivalence bins for the figure (aggregate counts only) ----
+BINS <- rbindlist(BINS)
+BINS[, `:=`(x_mid = (BRK[bx] + BRK[bx + 1]) / 2, y_mid = (BRK[by] + BRK[by + 1]) / 2)]
+wfile(BINS[, .(set, column_id, x_mid = r(x_mid, 3), y_mid = r(y_mid, 3), n, n_clipped)], "fig-equivalence-bins")
+if (length(IDXCHK)) wfile(rbindlist(IDXCHK), "siteidx-check")
+cat("TABLES_DONE\n")

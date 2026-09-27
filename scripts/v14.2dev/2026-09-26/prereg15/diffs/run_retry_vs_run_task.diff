@@ -1,0 +1,26 @@
+6,8c6
+< T=$1; R1=$HOME; TM=$R1/work/p15_taskmap_DATA_2026-09-26.csv
+< ROW=$(awk -F, -v t="$T" 'NR>1 && $1==t {print $2","$3","$4","$5","$6}' "$TM"); [ -n "$ROW" ] || { echo "task $T not in $TM"; exit 2; }
+< IFS=, read -r COL CHUNK SET FROM TO <<< "$ROW"
+---
+> SET=$1; T=retry; R1=$HOME; COL=v141LT; CHUNK=900; FROM=1; TO=9999
+13c11
+< mkdir -p $R1/out/$COL/$SET; export CONFIG_TAG=$R1/out/$COL/$SET/c$(printf %03d $CHUNK)
+---
+> mkdir -p $R1/out_retry/$COL/$SET; export CONFIG_TAG=$R1/out_retry/$COL/$SET/c$(printf %03d $CHUNK)
+33c31
+< unset HTFIX_B ING_MIN_FROM_SCORE SRC_TST SCORE_MINDBH_FIXED STAND_KEEP_FILE MGD_FILE MGD_COL MGD_UNMANAGED SRC_MANAGED V1211_MGD_PERSTAND || true
+---
+> unset HTFIX_B ING_MIN_FROM_SCORE SRC_TST SCORE_MINDBH_FIXED MGD_FILE MGD_COL MGD_UNMANAGED SRC_MANAGED V1211_MGD_PERSTAND || true
+36c34
+< RUNNER=$HOME/runner_htfix_fb.R; chk $RUNNER 4e6a29971922b1f7a0397cc91ff56f84
+---
+> export STAND_KEEP_FILE=$R1/work/retry/keep_${SET}.csv; RUNNER=$HOME/runner_htfix_fb.R; chk $RUNNER 4e6a29971922b1f7a0397cc91ff56f84
+39c37
+< echo "[v142p15-fb] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO HTFIX_B=${HTFIX_B:-unset} IMULT=$IMULT TST_FILE=$TST_FILE host=$(hostname) start=$(date -Is)"
+---
+> echo "[v142p15-retry] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO HTFIX_B=${HTFIX_B:-unset} IMULT=$IMULT TST_FILE=$TST_FILE host=$(hostname) start=$(date -Is)"
+41c39
+< echo "[v142p15-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"
+---
+> echo "[v142p15-retry] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"

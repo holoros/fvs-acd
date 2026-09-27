@@ -1,0 +1,309 @@
+1,8c1,23
+< .libPaths(c("~/R/x86_64-pc-linux-gnu-library/4.4","~/R/x86_64-pc-linux-gnu-library/4.5",.libPaths()))
+< suppressMessages({ library(RSQLite); library(DBI); library(data.table) })
+< setwd("~/gydb_ws")
+< DB <- "data/ALL/ALL_Standardized.sqlite"
+< WS <- "mnap_raw"
+< 
+< DRYRUN <- as.logical(Sys.getenv("DRYRUN", "TRUE"))
+< cat("DRYRUN =", DRYRUN, "\n")
+---
+> ## Pass 29 step 1 (PREREG13 draft): copy the pass 28 GYDB and replace dataset 8 (MNAP; State and TNC ecological
+> ## reserves as ONE set, Owner kept as a plot attribute in a side table) visits and trees in the copy only.
+> ## Parents: pass28/scripts/2026-09-26_pass28_step1_remap.R (copy, md5 and stopifnot pattern) and
+> ## gydb_ws/mnap_raw/build_mnap_visits_trees.R (species map, date parse, HT rule), both frozen in parents/.
+> ## Firewall: no coordinate column is read. ERM_ME_Plots arrives with UTMNorth, UTMWest, GPSAcc, PlotTown, LocNotes
+> ## dropped on Cardinal; S_Locations X and Y are never selected; new locations get X, Y and Z NULL. Tree Distance and
+> ## Azimuth (within plot stem map) are used for matching only and are never written out.
+> ## The Access databases on scratch (EcoreserveMonitoring.accdb, StJohnEIM.mdb) are NOT consulted [UNKNOWN].
+> ## Outputs carry PROVISIONAL in their names. No em dashes.
+> suppressMessages({library(data.table); library(DBI); library(RSQLite)}); options(width = 200); set.seed(20260926)
+> J   <- Sys.getenv("P29_JOB", "/home/aaron/jobs/v142p29")
+> SRC <- file.path(J, "in/pass28/db/ALL_Standardized_pass28.sqlite"); SRC_MD5 <- "75781fc042ffab47dc879a357cb53aba"
+> DST <- file.path(J, "db/ALL_Standardized_pass29_PROVISIONAL.sqlite")
+> RAW <- file.path(J, "in/mnap_raw")
+> DRY <- Sys.getenv("P29_DRYRUN", "0") == "1"                     # dry run: raw CSVs plus a read only look at S_Plots, no copy, no writes to any DB
+> TB  <- if (DRY) file.path(J, "dryrun") else file.path(J, "out/tables")
+> OUTF <- function(x) file.path(TB, sprintf("pass29-step1-%s_PROVISIONAL_DATA_2026-09-26.csv", x))
+> DS8 <- 8L
+> TOL_DIST <- 0.5   # m   [SET ON AUTOPILOT] stem map distance tolerance
+> TOL_AZ   <- 10    # deg [SET ON AUTOPILOT] stem map azimuth tolerance (circular)
+> EXPF_KNOWN <- c(`1` = 59.5683229471819, `2` = 9.87918734906746)   # raw EXPF of small tree subplot (Frame 1) and large tree plot (Frame 2)
+> stopifnot(dir.exists(TB))
+> LOG <- list(); lg <- function(item, n, note = "") { LOG[[length(LOG) + 1]] <<- data.table(item = item, n = as.integer(n), note = note); cat(sprintf("%-55s %8d  %s\n", item, as.integer(n), note)) }
+9a25
+> ## species map, verbatim from build_mnap_visits_trees.R
+16,19d31
+< 
+< ## 6-letter MNAP code -> 2-letter AGY, parsed once from ERM_ME_SpeciesCodes.R and hardcoded here
+< ## for reproducibility (parsed+verified interactively this pass: 58/58 observed codes covered,
+< ## 0 missing from Lookup_Species).
+29,37d40
+< map_species <- function(code) {
+<   agy <- CODE2AGY[toupper(code)]
+<   spcd <- AGY2SP[agy]
+<   spcd[is.na(spcd)] <- "T_X"
+<   unname(spcd)
+< }
+< 
+< con <- dbConnect(SQLite(), DB)
+< dbExecute(con, "PRAGMA foreign_keys = OFF")
+39,105c42,95
+< ## ---- resolve Round -> real calendar date via PlotMetrics extracted from EcoreserveMonitoring.accdb ----
+< pm <- fread(file.path(WS, "PlotMetrics_export.csv"), encoding = "Latin-1", colClasses = "character")
+< pm[, Date := trimws(Date)]
+< pm_ok <- pm[Date != "" & Round %in% c("1","2")]
+< ## Date format observed: MM/DD/YY HH:MM:SS (all years 2004-2016, so YY -> 2000+YY)
+< parts <- tstrsplit(sub(" .*", "", pm_ok$Date), "/")
+< pm_ok[, `:=`(MM = as.integer(parts[[1]]), DD = as.integer(parts[[2]]), YR = 2000L + as.integer(parts[[3]]))]
+< cat(sprintf("PlotMetrics rows total=%d; with usable Date+Round(1/2)=%d; dropped (blank Date or blank Round)=%d\n",
+<             nrow(pm), nrow(pm_ok), nrow(pm) - nrow(pm_ok)))
+< 
+< ## join key check against existing S_Plots (Dataset=8, Location=Plot_ID)
+< splots <- as.data.table(dbGetQuery(con, "SELECT LocationID, PlotID, Block, Location FROM S_Plots WHERE Dataset=8"))
+< setkey(splots, Location)
+< setnames(pm_ok, "Plot_ID", "Location")
+< missing_plot <- unique(pm_ok[!(Location %in% splots$Location), .(Location)])
+< cat(sprintf("PlotMetrics resolved visits joining to an existing MNAP S_Plots row: %d of %d; missing-plot Plot_ID(s): %s\n",
+<             sum(pm_ok$Location %in% splots$Location), nrow(pm_ok),
+<             paste(missing_plot$Location, collapse=", ")))
+< pm_ok <- pm_ok[Location %in% splots$Location]
+< pm_ok <- merge(pm_ok, splots, by = "Location", all.x = TRUE)
+< 
+< ## assign VisitID sequentially, Visit = Round
+< pm_ok[, Visit := as.integer(Round)]
+< setorder(pm_ok, LocationID, Visit)
+< pm_ok[, VisitID := .I]
+< 
+< visit_dt <- pm_ok[, .(Dataset = 8L, LocationID, PlotID, VisitID, Block, Location,
+<                        Plot = Location, Visit, YR, MM, DD, Design = 1L)]
+< cat(sprintf("S_Visits rows to insert: %d (Round 1: %d, Round 2: %d)\n",
+<             nrow(visit_dt), sum(visit_dt$Visit==1), sum(visit_dt$Visit==2)))
+< 
+< ## ---- trees: ERM_ME_AllTrees.csv joined on PM_ID to the resolved PlotMetrics subset ----
+< trees <- fread(file.path(WS, "ERM_ME_AllTrees.csv"), encoding = "Latin-1", colClasses = "character")
+< pmid_to_visit <- setNames(pm_ok$VisitID, pm_ok$PM_ID)
+< trees[, VisitID := pmid_to_visit[PM_ID]]
+< n_all <- nrow(trees)
+< trees_ok <- trees[!is.na(VisitID)]
+< cat(sprintf("ERM_ME_AllTrees.csv rows total=%d; resolved to a real-dated visit=%d (%.1f%%); unresolved (PM_ID not in accdb PlotMetrics)=%d\n",
+<             n_all, nrow(trees_ok), 100*nrow(trees_ok)/n_all, n_all - nrow(trees_ok)))
+< 
+< trees_ok[, `:=`(DBH_n = as.numeric(DBH), HT_n = suppressWarnings(as.numeric(Height)), EXPF_n = as.numeric(EXPF))]
+< ## Frame: EXPF ~59.568 -> small-tree subplot (Frame 1); EXPF ~9.879 -> large-tree plot (Frame 2)
+< trees_ok[, Frame := fifelse(abs(EXPF_n - 59.5683229471819) < 0.01, 1L,
+<                      fifelse(abs(EXPF_n - 9.87918734906746) < 0.01, 2L, NA_integer_))]
+< bad_frame <- sum(is.na(trees_ok$Frame))
+< if (bad_frame > 0) cat(sprintf("WARNING: %d tree row(s) have an EXPF not matching either known MNAP frame; dropped\n", bad_frame))
+< trees_ok <- trees_ok[!is.na(Frame)]
+< 
+< ## HT range fix, same rule as build_gydb.R's other sources: null outside [0.01,110] m
+< bad_ht <- which(!is.na(trees_ok$HT_n) & (trees_ok$HT_n <= 0 | trees_ok$HT_n > 110))
+< if (length(bad_ht)) { cat(sprintf("WARNING: nulled %d HT value(s) outside [0.01,110] m\n", length(bad_ht))); trees_ok$HT_n[bad_ht] <- NA_real_ }
+< 
+< ## DBH must be within (0.01, 500]; null / drop rows with missing or invalid DBH (schema allows NULL DBH but not <=0)
+< bad_dbh <- which(!is.na(trees_ok$DBH_n) & (trees_ok$DBH_n <= 0 | trees_ok$DBH_n > 500))
+< if (length(bad_dbh)) { cat(sprintf("WARNING: nulled %d DBH value(s) outside (0,500]\n", length(bad_dbh))); trees_ok$DBH_n[bad_dbh] <- NA_real_ }
+< 
+< trees_ok[, SpeciesCD := map_species(Species)]
+< trees_ok[, Status := fcase(Condition %in% c("1","2"), 1L, Condition == "3", 10L, default = 0L)]
+< trees_ok[, Tree := as.integer(TP_ID)]
+< 
+< tree_dt <- trees_ok[, .(Dataset = 8L, VisitID, Tree, Frame, SpeciesCD, DBH = DBH_n, HT = HT_n, Status)]
+< 
+< ## PK uniqueness check (Dataset,VisitID,Tree) before insert
+< ndup <- sum(duplicated(tree_dt[, .(VisitID, Tree)]))
+< if (ndup > 0) {
+<   cat(sprintf("WARNING: %d duplicate (VisitID,Tree) row(s) found; dropping duplicates, keeping first\n", ndup))
+<   tree_dt <- tree_dt[!duplicated(tree_dt[, .(VisitID, Tree)])]
+---
+> ## ---------------------------------------------------------------------------------------------
+> ## 1. raw inputs (column subsets only; no coordinates)
+> ## ---------------------------------------------------------------------------------------------
+> cat("raw md5:\n"); print(tools::md5sum(file.path(RAW, c("PlotMetrics_export.csv", "ERM_ME_LiveTrees.csv", "ERM_ME_Plots_nocoord.csv"))))
+> pm <- fread(file.path(RAW, "PlotMetrics_export.csv"), encoding = "Latin-1", colClasses = "character", select = c("PM_ID", "Plot_ID", "Date", "Round"))
+> lt <- fread(file.path(RAW, "ERM_ME_LiveTrees.csv"), encoding = "Latin-1", colClasses = "character",
+>             select = c("Plot_ID", "PM_ID", "TP_ID", "Species", "DBH", "Distance", "Azimuth", "Condition", "Height",
+>                        "TreeLink", "Round", "Owner", "EcoRName", "EcoRName_original", "EXPF"))
+> pp <- fread(file.path(RAW, "ERM_ME_Plots_nocoord.csv"), encoding = "UTF-8", colClasses = "character", select = c("Plot_ID", "EcoRName"))
+> stopifnot(!anyDuplicated(pm$PM_ID), !anyDuplicated(lt$TP_ID), !anyDuplicated(pp$Plot_ID))
+> lg("plotmetrics_rows", nrow(pm)); lg("livetrees_rows", nrow(lt))
+> for (v in c("PM_ID", "Plot_ID")) pm[, (v) := trimws(get(v))]
+> pm[, `:=`(Date = fcoalesce(trimws(Date), ""), Round = fcoalesce(trimws(Round), ""))]
+> 
+> ## ---------------------------------------------------------------------------------------------
+> ## 2. visits: PlotMetrics dated rounds 1 and 2, every plot in the export
+> ## ---------------------------------------------------------------------------------------------
+> lv <- unique(lt[, .(PM_ID, Plot_ID_lt = Plot_ID, Round_lt = Round, Owner, EcoRName, EcoRName_original)])
+> stopifnot(!anyDuplicated(lv$PM_ID))                                  # one plot, round, owner per tree bearing visit
+> stopifnot(all(lv$PM_ID %in% pm$PM_ID))
+> pm <- merge(pm, lv, by = "PM_ID", all.x = TRUE)
+> stopifnot(pm[!is.na(Plot_ID_lt), all(Plot_ID == Plot_ID_lt)])       # probe: plot ids agree for every tree bearing visit
+> lg("pm_round_blank_resolved_from_livetrees", pm[Round == "" & !is.na(Round_lt), .N], "[SET ON AUTOPILOT] LiveTrees Round governs where PlotMetrics Round is blank")
+> lg("pm_round_conflict_livetrees_governs", pm[Round != "" & !is.na(Round_lt) & Round != Round_lt, .N], "[SET ON AUTOPILOT] LiveTrees Round governs on conflict (the definition that gives the 519 plots)")
+> pm[, RoundR := fifelse(!is.na(Round_lt), Round_lt, Round)]
+> lg("pm_round_blank_no_trees_dropped", pm[RoundR == "", .N])
+> lg("pm_undated_dropped", pm[Date == "", .N])
+> lg("pm_round_not_1_2_dropped", pm[RoundR != "" & !(RoundR %in% c("1", "2")), .N])
+> vv <- pm[Date != "" & RoundR %in% c("1", "2")]
+> stopifnot(all(grepl("^\\d{2}/\\d{2}/\\d{2}( |$)", vv$Date)))        # MM/DD/YY HH:MM:SS
+> dp <- tstrsplit(sub(" .*", "", vv$Date), "/")
+> vv[, `:=`(MM = as.integer(dp[[1]]), DD = as.integer(dp[[2]]), YR = 2000L + as.integer(dp[[3]]), Visit = as.integer(RoundR))]
+> stopifnot(vv[, all(MM %in% 1:12 & DD %in% 1:31 & YR >= 2000L & YR <= 2020L)])
+> stopifnot(!anyDuplicated(vv[, .(Plot_ID, Visit)]), !anyDuplicated(vv[, .(Plot_ID, YR, MM, DD)]))
+> lg("visits_dated_round1", vv[Visit == 1, .N]); lg("visits_dated_round2", vv[Visit == 2, .N]); lg("plots_with_a_dated_visit", uniqueN(vv$Plot_ID))
+> 
+> ## plots: existing MNAP S_Plots rows, new rows only for plots the export holds and GYDB does not
+> con0 <- dbConnect(SQLite(), SRC, flags = SQLITE_RO)
+> sp  <- as.data.table(dbGetQuery(con0, "select LocationID, PlotID, Block, Location, Plot from S_Plots where Dataset = 8"))
+> blk <- as.data.table(dbGetQuery(con0, "select Block from S_Blocks where Dataset = 8"))$Block
+> mx  <- dbGetQuery(con0, "select (select max(LocationID) from S_Locations where Dataset = 8) as ml, (select max(PlotID) from S_Plots where Dataset = 8) as mp")
+> dbDisconnect(con0)
+> stopifnot(all(sp$Location == sp$Plot), !anyDuplicated(sp$Location))
+> eco_lt <- unique(lv[, .(Plot_ID = Plot_ID_lt, EcoRName)]); stopifnot(!anyDuplicated(eco_lt$Plot_ID))
+> chk <- merge(sp[, .(Plot_ID = Location, Block)], eco_lt, by = "Plot_ID")
+> stopifnot(all(chk$Block == chk$EcoRName))                            # GYDB Block is the LiveTrees EcoRName
+> xw <- unique(lv[EcoRName != EcoRName_original, .(EcoRName_original, EcoRName)])
+> newp <- data.table(Plot_ID = sort(setdiff(unique(vv$Plot_ID), sp$Location)))
+> if (nrow(newp)) {
+>   newp[eco_lt, on = "Plot_ID", Block := i.EcoRName]
+>   newp[is.na(Block), Block := pp$EcoRName[match(Plot_ID, pp$Plot_ID)]]
+>   newp[xw, on = .(Block = EcoRName_original), Block := i.EcoRName]   # harmonized reserve names, as in LiveTrees
+>   stopifnot(!anyNA(newp$Block), all(newp$Block %in% blk))
+>   newp[, `:=`(LocationID = as.integer(mx$ml) + seq_len(.N), PlotID = as.integer(mx$mp) + seq_len(.N))]
+107,118c97,202
+< cat(sprintf("S_Trees rows to insert: %d\n", nrow(tree_dt)))
+< cat("Species mapped to unknown placeholder T_X (should be 0):", sum(tree_dt$SpeciesCD == "T_X"), "\n")
+< cat("Status distribution:\n"); print(table(tree_dt$Status))
+< 
+< if (!DRYRUN) {
+<   dbBegin(con)
+<   dbAppendTable(con, "S_Visits", visit_dt)
+<   dbAppendTable(con, "S_Trees", tree_dt)
+<   dbCommit(con)
+<   cat("COMMITTED\n")
+< } else {
+<   cat("DRY RUN ONLY -- nothing written\n")
+---
+> lg("plots_new_in_gydb", nrow(newp), "[SET ON AUTOPILOT] new S_Locations rows carry X, Y, Z NULL")
+> allp <- rbind(sp[, .(Plot_ID = Location, Block, LocationID, PlotID, new = FALSE)],
+>               if (nrow(newp)) newp[, .(Plot_ID, Block, LocationID, PlotID, new = TRUE)])
+> vv <- merge(vv, allp, by = "Plot_ID")
+> setorder(vv, PlotID, Visit); vv[, VisitID := seq_len(.N)]
+> visit_dt <- vv[, .(Dataset = DS8, LocationID, PlotID, VisitID, Block, Location = Plot_ID, Plot = Plot_ID,
+>                    Visit, YR, MM, DD, Design = 1L)]
+> 
+> ## owner, a plot attribute
+> ow <- unique(lv[, .(Plot_ID = Plot_ID_lt, Owner)])
+> stopifnot(!anyDuplicated(ow$Plot_ID))
+> allp[ow, on = "Plot_ID", Owner := i.Owner]
+> allp[is.na(Owner) | !(Owner %in% c("State", "TNC")), Owner := "UNKNOWN"]   # [SET ON AUTOPILOT] Owner NA or plot without live trees -> UNKNOWN (TNC.xlsx not consulted)
+> cln <- function(x) gsub("[^A-Za-z0-9]", "", x)
+> allp[, PLOTKEY := paste(cln(Block), cln(Plot_ID), cln(Plot_ID), sep = "_")]           # builder: Block, Location, Plot (Plot = Location = Plot_ID)
+> stopifnot(!anyDuplicated(allp$PLOTKEY))
+> 
+> ## ---------------------------------------------------------------------------------------------
+> ## 3. trees: ERM_ME_LiveTrees, frame from its own EXPF column, tag rule
+> ## ---------------------------------------------------------------------------------------------
+> lt <- merge(lt, vv[, .(PM_ID, VisitID, Visit, YR)], by = "PM_ID", all.x = TRUE)
+> lg("tree_rows_undated_or_unresolved_visit_dropped", lt[is.na(VisitID), .N])
+> lt <- lt[!is.na(VisitID)]
+> stopifnot(all(lt$Round == as.character(lt$Visit)))
+> lt[, `:=`(e = as.numeric(EXPF), DBHn = as.numeric(DBH), HTn = suppressWarnings(as.numeric(Height)), TP = as.integer(TP_ID))]
+> stopifnot(!anyNA(lt$e), !anyNA(lt$DBHn), !anyNA(lt$TP), max(lt$TP) < 9000000L)
+> lt[, Frame := fifelse(abs(e - EXPF_KNOWN[["1"]]) < 0.01, 1L, fifelse(abs(e - EXPF_KNOWN[["2"]]) < 0.01, 2L, NA_integer_))]
+> lg("tree_rows_expf_not_a_known_frame", lt[is.na(Frame), .N], "must be 0")
+> stopifnot(!anyNA(lt$Frame))
+> lg("tree_rows_frame1_small_subplot", lt[Frame == 1L, .N]); lg("tree_rows_frame2_large_plot", lt[Frame == 2L, .N])
+> stopifnot(lt[, all(DBHn > 0 & DBHn <= 500)])
+> nb <- lt[!is.na(HTn) & (HTn <= 0 | HTn > 110), .N]; lt[!is.na(HTn) & (HTn <= 0 | HTn > 110), HTn := NA_real_]
+> lg("tree_ht_nulled_outside_0_110", nb, "parent rule")
+> stopifnot(all(lt$Condition %in% c("1", "2")))
+> lt[, Status := 1L]
+> stopifnot(all(toupper(lt$Species) %in% names(CODE2AGY)))
+> lt[, SpeciesCD := unname(AGY2SP[CODE2AGY[toupper(Species)]])]
+> stopifnot(!anyNA(lt$SpeciesCD))
+> 
+> ## tag rule: Tree = round 1 TP_ID; a round 2 tree takes its TreeLink target when that target is a round 1 TP_ID of the
+> ## same plot (and dated), else a stem map match, else 9,000,000 + TP_ID (untracked)
+> r1 <- lt[Visit == 1L]; r2 <- lt[Visit == 2L]
+> r1[, `:=`(Tree = TP, method = "r1")]
+> r2[, TL := suppressWarnings(as.integer(TreeLink))]
+> r2[, link_ok := !is.na(TL) & paste(Plot_ID, TL) %chin% paste(r1$Plot_ID, r1$TP)]
+> setorder(r2, Plot_ID, TL, TP)
+> r2[link_ok == TRUE, link_rank := seq_len(.N), by = .(Plot_ID, TL)]
+> lg("r2_link_valid", r2[link_ok == TRUE, .N]); lg("r2_link_absent", r2[is.na(TL), .N])
+> lg("r2_link_not_r1_same_plot", r2[!is.na(TL) & link_ok == FALSE, .N])
+> lg("r2_link_duplicate_target_to_stem_map", r2[link_ok == TRUE & link_rank > 1L, .N], "[SET ON AUTOPILOT] lowest TP_ID keeps a shared target")
+> r2[, method := fifelse(link_ok == TRUE & link_rank %in% 1L, "link", NA_character_)]
+> r2[method == "link", Tree := TL]
+> ## stem map: same raw species, |dDist| <= 0.5 m, circular |dAz| <= 10 deg, one to one, among round 1 trees not already claimed
+> num <- function(x) suppressWarnings(as.numeric(x))
+> cand1 <- r1[!(paste(Plot_ID, TP) %chin% r2[method == "link", paste(Plot_ID, Tree)]), .(Plot_ID, T1 = TP, sp = toupper(Species), d1 = num(Distance), a1 = num(Azimuth))]
+> cand2 <- r2[is.na(method), .(Plot_ID, T2 = TP, sp = toupper(Species), d2 = num(Distance), a2 = num(Azimuth))]
+> lg("stemmap_r2_candidates", nrow(cand2)); lg("stemmap_r2_candidates_no_numeric_dist_or_az", cand2[!is.finite(d2) | !is.finite(a2), .N], "compass letters or NA")
+> lg("stemmap_r1_pool_no_numeric_dist_or_az", cand1[!is.finite(d1) | !is.finite(a1), .N])
+> cm <- merge(cand1[is.finite(d1) & is.finite(a1)], cand2[is.finite(d2) & is.finite(a2)], by = c("Plot_ID", "sp"), allow.cartesian = TRUE)
+> cm[, `:=`(dd = abs(d1 - d2), da = { z <- abs(a1 - a2) %% 360; pmin(z, 360 - z) })]
+> cm <- cm[dd <= TOL_DIST & da <= TOL_AZ]
+> cm[, score := dd / TOL_DIST + da / TOL_AZ]
+> setorder(cm, score, T2, T1)                                          # [SET ON AUTOPILOT] greedy one to one on normalized distance, ties by TP_ID
+> u1 <- integer(); u2 <- integer(); acc <- vector("list", nrow(cm)); k <- 0L
+> for (i in seq_len(nrow(cm))) { a <- cm$T1[i]; b <- cm$T2[i]
+>   if (!(a %in% u1) && !(b %in% u2)) { u1 <- c(u1, a); u2 <- c(u2, b); k <- k + 1L; acc[[k]] <- data.table(T2 = b, T1 = a) } }
+> sm <- rbindlist(acc[seq_len(k)])
+> lg("stemmap_matched", nrow(sm))
+> if (nrow(sm)) r2[sm, on = .(TP = T2), `:=`(Tree = i.T1, method = "stem")]
+> r2[is.na(method), `:=`(Tree = 9000000L + TP, method = "untracked")]
+> lg("r2_untracked", r2[method == "untracked", .N])
+> tt <- rbind(r1[, .(PM_ID, TP_ID = TP, Plot_ID, Visit, VisitID, YR, Tree, method, Frame, SpeciesCD, DBH = DBHn, HT = HTn, Status)],
+>             r2[, .(PM_ID, TP_ID = TP, Plot_ID, Visit, VisitID, YR, Tree, method, Frame, SpeciesCD, DBH = DBHn, HT = HTn, Status)])
+> stopifnot(!anyDuplicated(tt[, .(VisitID, Tree)]), nrow(tt) == nrow(lt), !anyNA(tt$Tree))
+> tree_dt <- tt[, .(Dataset = DS8, VisitID, Tree = as.integer(Tree), Frame = as.integer(Frame), SpeciesCD, DBH, HT, Status = as.integer(Status))]
+> lg("s_trees_rows_new", nrow(tree_dt)); lg("s_visits_rows_new", nrow(visit_dt))
+> 
+> ## plot table and the dated remeasured plot set (probe definition: tree bearing visits in both rounds, both dated)
+> pv <- vv[, .(n_vis = .N, YR1 = YR[Visit == 1][1], YR2 = YR[Visit == 2][1]), by = Plot_ID]
+> nt <- tt[, .(n = .N), by = .(Plot_ID, Visit)]
+> allp <- merge(allp, pv, by = "Plot_ID", all.x = TRUE)
+> allp[nt[Visit == 1L], on = "Plot_ID", N1 := i.n][nt[Visit == 2L], on = "Plot_ID", N2 := i.n]
+> lvd <- lv[, .(Plot_ID = Plot_ID_lt, Round_lt, dated = PM_ID %in% pm[Date != "", PM_ID])]
+> rem <- lvd[, .(both = uniqueN(Round_lt) == 2L & all(dated)), by = Plot_ID][both == TRUE, Plot_ID]
+> allp[, REMEAS_DATED := Plot_ID %in% rem]
+> print(allp[REMEAS_DATED == TRUE, .N, by = Owner])
+> lg("plots_dated_remeasured_M3_denominator", length(rem), "expected 519")
+> 
+> ## ---------------------------------------------------------------------------------------------
+> ## 4. write tables; copy and replace (skipped in dry run)
+> ## ---------------------------------------------------------------------------------------------
+> fwrite(allp[, .(Plot_ID, Block, PLOTKEY, Owner, new_in_gydb = as.integer(new), n_vis, YR1, YR2, N1, N2, REMEAS_DATED = as.integer(REMEAS_DATED))], OUTF("plots"))
+> fwrite(tt[, .(PM_ID, TP_ID, Plot_ID, Visit, VisitID, YR, Tree, method, Frame, SpeciesCD, DBH, HT)], OUTF("tree-crosswalk"))
+> fwrite(tt[, .N, by = .(Visit, method)][order(Visit, method)], OUTF("tag-methods"))
+> if (DRY) { fwrite(rbindlist(LOG), OUTF("log")); cat("STEP1_DRYRUN_DONE\n"); quit(save = "no") }
+> 
+> stopifnot(unname(tools::md5sum(SRC)) == SRC_MD5, !file.exists(DST))
+> stopifnot(file.copy(SRC, DST)); stopifnot(unname(tools::md5sum(DST)) == SRC_MD5); cat("copy ok\n")
+> con <- dbConnect(SQLite(), DST)
+> for (tb in c("S_TreesAge", "S_TreesSpatial", "S_TreesDamage", "S_PlotTreatments", "S_PlotDisturbances"))
+>   stopifnot(dbGetQuery(con, sprintf("select count(*) as n from %s where Dataset = 8", tb))$n == 0)   # nothing hangs off the rows replaced
+> dbBegin(con)
+> n_t <- dbExecute(con, "delete from S_Trees where Dataset = 8"); n_v <- dbExecute(con, "delete from S_Visits where Dataset = 8")
+> if (nrow(newp)) {
+>   dbAppendTable(con, "S_Locations", newp[, .(Dataset = DS8, LocationID, Block, Location = Plot_ID, Plots = 1L)])
+>   dbAppendTable(con, "S_Plots", newp[, .(Dataset = DS8, LocationID, PlotID, Block, Location = Plot_ID, Plot = Plot_ID)])
+119a204,211
+> dbAppendTable(con, "S_Visits", visit_dt)
+> dbAppendTable(con, "S_Trees", tree_dt)
+> dbCommit(con)
+> lg("s_trees_rows_deleted_old", n_t); lg("s_visits_rows_deleted_old", n_v)
+> chk <- dbGetQuery(con, "select (select count(*) from S_Visits where Dataset = 8) as v, (select count(*) from S_Trees where Dataset = 8) as t,
+>                         (select count(*) from S_Trees t left join S_Visits v using (Dataset, VisitID) where t.Dataset = 8 and v.VisitID is null) as orphan")
+> stopifnot(chk$v == nrow(visit_dt), chk$t == nrow(tree_dt), chk$orphan == 0)
+> stopifnot(dbGetQuery(con, "pragma integrity_check")[[1]][1] == "ok")
+121c213,216
+< cat("DONE\n")
+---
+> m <- unname(tools::md5sum(DST)); lg("pass29_db_md5_below", 0L, m)
+> writeLines(m, file.path(J, "db/ALL_Standardized_pass29_PROVISIONAL.md5"))
+> fwrite(rbindlist(LOG), OUTF("log"))
+> cat("pass29 db md5:", m, "\nSTEP1_DONE\n")
