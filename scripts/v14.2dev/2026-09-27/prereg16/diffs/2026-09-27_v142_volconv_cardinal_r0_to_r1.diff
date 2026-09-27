@@ -1,0 +1,13 @@
+10c10,11
+< # Frozen runs are read, not rerun. New directory only. MODE=smoke scores three small sets into smoke/. No em dashes.
+---
+> # Frozen runs are read, not rerun. New directory only. MODE=smoke scores three small sets into smoke/. VC_RUN=r1 writes
+> # tables_r1/ after the r0 attempt stopped on a C2 tag link defect (NS pass 28 frames are reordered within stand). No em dashes.
+20c21
+< PLAN=$VC/plan/volconv_plan_${MODE}.csv
+---
+> PLAN=$VC/plan/volconv_plan_${MODE}${VC_RUN:+_$VC_RUN}.csv
+31c32
+< OUT=$VC/tables; [ "$MODE" = smoke ] && OUT=$VC/smoke
+---
+> OUT=$VC/tables${VC_RUN:+_$VC_RUN}; [ "$MODE" = smoke ] && OUT=$VC/smoke${VC_RUN:+_$VC_RUN}
