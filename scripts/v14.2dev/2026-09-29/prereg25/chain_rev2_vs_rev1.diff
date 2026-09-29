@@ -1,0 +1,12 @@
+2c2
+< # PREREG25 chain: diagnostic confirmation only (no engine arm; see the pre-registration). Waits for the 1 minute load to be
+---
+> # PREREG25 chain rev2 (confirmation script rev2): diagnostic confirmation only (no engine arm; see the pre-registration). Waits for the 1 minute load to be
+10c10
+< echo "6b72fd0cc37c36dc3a6932602f03cd72  scripts/2026-09-29_v142_p25_confirm.R" | md5sum -c - >> logs_chain.txt 2>&1 || { echo "SCRIPT MD5 FAIL" >> logs_chain.txt; exit 4; }
+---
+> echo "a340f07e51fcb6619ec441a178a5b05b  scripts/2026-09-29_v142_p25_confirm_rev2.R" | md5sum -c - >> logs_chain.txt 2>&1 || { echo "SCRIPT MD5 FAIL" >> logs_chain.txt; exit 4; }
+12c12
+< Rscript scripts/2026-09-29_v142_p25_confirm.R > logs_confirm.txt 2>&1; echo "confirm exit $? $(date -Is)" >> logs_chain.txt
+---
+> Rscript scripts/2026-09-29_v142_p25_confirm_rev2.R > logs_confirm.txt 2>&1; echo "confirm exit $? $(date -Is)" >> logs_chain.txt

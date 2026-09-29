@@ -1,0 +1,11 @@
+2,3c2,4
+< # PREREG20: all tasks in taskmap order, at most 4 at once (sibling tracks share firebreather), and no task starts while the
+< # 1 minute load average is above 14. One log per task. Usage: HOME=<bundle home> bash launch_p20.sh
+---
+> # PREREG22: all tasks in taskmap order, at most 2 at once (three sibling tracks share firebreather), and no task starts while
+> # the 1 minute load average is above 14. One log per task. Copy of ~/jobs/v142p20/home/launch_p20.sh with -P 2 and the
+> # p22 names. Usage: HOME=<bundle home> bash launch_p22.sh
+7c8
+< seq 1 $(($(wc -l < work/p20_taskmap_DATA_2026-09-28.csv) - 1)) | xargs -P 4 -I{} bash -c 'gate; echo "task {} start $(date -Is) load $(cut -d" " -f1 /proc/loadavg)" >> logs/_launch.txt; bash run_task_p20.sh {} > logs/task_{}.log 2>&1; echo "task {} exit $?" >> logs/_status.txt'
+---
+> seq 1 $(($(wc -l < work/p22_taskmap_DATA_2026-09-29.csv) - 1)) | xargs -P 2 -I{} bash -c 'gate; echo "task {} start $(date -Is) load $(cut -d" " -f1 /proc/loadavg)" >> logs/_launch.txt; bash run_task_p22.sh {} > logs/task_{}.log 2>&1; echo "task {} exit $?" >> logs/_status.txt'

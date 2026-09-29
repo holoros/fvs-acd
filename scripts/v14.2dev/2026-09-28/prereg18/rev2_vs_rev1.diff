@@ -1,0 +1,4 @@
+60c60
+< tol <- 1e-9
+---
+> tol <- 1e-6  ## rev2: per stand tables are printed to 6 decimals, so scorer values re-derived from them agree to about 1e-8; rev1 (1e-9) failed on the two E6b biases by 1.4e-8 and 2.6e-9 only
