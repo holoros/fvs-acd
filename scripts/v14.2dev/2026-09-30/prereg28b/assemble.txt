@@ -1,0 +1,39 @@
+margins from /home/aaron/jobs/v142p23/scripts/2026-09-29_v142_p23_assemble.R (md5 429f441e5522b644a011d267193fd3db): M_CLS 0.030 M_DOM 0.020 B1 1.0 B2 2.0 V2 -0.5
+      set stands trees worst_results worst_trees stands_over_1e9   pass
+   <char>  <int> <int>         <num>       <num>           <int> <lgcl>
+1:   qc_c    378 51551             0           0               0   TRUE
+2:  qc_fl     19  3644             0           0               0   TRUE
+frozen stand level reproduction: PREREG19 worst 4.55e-13 over 16 rows; PREREG23 worst 3.98e-13 over 16 rows
+PREREG23 height table reproduction: point worst 4.88e-15, interval worst 3.55e-15, over 60 rows
+            gate
+          <char>
+1:    H0 harness
+2:   K1 failures
+3:  H_inc pooled
+4: H_inc classes
+5: TOPHT reading
+6:      V2 %RMSE
+7: B1 basal area
+8:      B2 stems
+                                                                                                                                                                                          detail
+                                                                                                                                                                                          <char>
+1:                                                           p28_g0 against frozen p19_a0111: qc_c results 0.00e+00, trees 0.00e+00; qc_fl results 0.00e+00, trees 0.00e+00; stands over 1e-9: 0
+2:                                                                                                                             RUN_OK other than 1 for p28b_small after retries: qc_c 0, qc_fl 0
+3:                                                                   fold B ratio 0.883 [0.742, 1.113] for p28b_small against 0.086 at 0.111 (|dev| 0.117 against 0.914); 301 trees on 108 sites
+4:  below 12.7: bias -0.084 against -0.254 m/yr (worse by -0.170); 12.7 to 25: bias +0.011 against -0.161 m/yr (worse by -0.149); 25 and over: bias -0.021 against -0.021 m/yr (worse by +0.000)
+5: published TOPHT bias +11.97 percent for p28b_small against +14.63 at 1.061 (not worse) and +6.29 at 0.111; dominant cohort t2 level 0.986 against 0.922 at 0.111 (within margin, margin 0.02)
+6:                                                                                                                                                  fold B C1 %RMSE 46.91 against 46.76, d -0.16
+7:                                                                                                                                                      fold B |BA - 1| 0.40 against 0.17 points
+8:                                                                                                                                                 fold B |stems - 1| 24.52 against 24.23 points
+     pass
+   <lgcl>
+1:   TRUE
+2:   TRUE
+3:   TRUE
+4:   TRUE
+5:   TRUE
+6:   TRUE
+7:   TRUE
+8:   TRUE
+VERDICT: Rule 6: every gate passes; the small tree only QC anchor (1.265 below 25 cm, 0.111 at and above) is a 14.2 QC candidate, a regional usage setting, pending a Bakuzis QC grid; the choice against PREREG28 follows the PREREG28b TOPHT rule 
+P28B_ASSEMBLE_DONE

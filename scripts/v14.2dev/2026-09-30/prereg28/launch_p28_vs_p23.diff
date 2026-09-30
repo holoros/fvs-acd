@@ -1,0 +1,16 @@
+2,3c2,3
+< # PREREG23 launcher (copy of PREREG19 launch_p19.sh md5 25786453): runs the tasks listed in a task id file, at most 2 at once (the shared host cap), and holds each launch
+< # while the 1 minute load average is above 14. Usage: HOME=<bundle home> bash launch_p19.sh <taskids file> <status tag>
+---
+> # PREREG28 launcher (copy of PREREG23 launch_p23.sh, itself a copy of PREREG19 launch_p19.sh md5 25786453): runs the tasks listed in a task id file, at most 2 at once (the shared host cap), and holds each launch
+> # while the 1 minute load average is above 12 (this track cap). Usage: HOME=<bundle home> bash launch_p19.sh <taskids file> <status tag>
+7,8c7,8
+<     n=$(pgrep -f "run_task_p23.sh" | wc -l); l=$(awk '{print $1}' /proc/loadavg)
+<     if [ "$n" -lt 2 ] && awk -v l="$l" 'BEGIN{exit !(l<=14)}'; then break; fi
+---
+>     n=$(pgrep -f "run_task_p28.sh" | wc -l); l=$(awk '{print $1}' /proc/loadavg)
+>     if [ "$n" -lt 2 ] && awk -v l="$l" 'BEGIN{exit !(l<=12)}'; then break; fi
+11c11
+<   ( bash $HOME/../scripts/run_task_p23.sh $t > logs/task_${t}.log 2>&1; echo "task $t exit $?" >> logs/_status_${TAGS}.txt ) &
+---
+>   ( bash $HOME/../scripts/run_task_p28.sh $t > logs/task_${t}.log 2>&1; echo "task $t exit $?" >> logs/_status_${TAGS}.txt ) &

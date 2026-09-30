@@ -1,0 +1,155 @@
+--- /home/aaron/jobs/v142p22/home/runner_p20_fb.R	2026-09-28 16:01:21.004239084 -0300
++++ /home/aaron/jobs/v142p26/scripts/driver_p26.R	2026-09-30 07:45:08.188987437 -0300
+@@ -1,3 +1,9 @@
++# PREREG26 LONG HORIZON DRIVER (2026-09-30), built by build_driver_p26.sh as: this header, then lines 1 to 419 of
++# ~/jobs/v142p22/home/runner_p20_fb.R (md5 65392afbbe67e2e80524855fea7a41da) byte for byte, then the PREREG26 block
++# (parts/p26_block.R), which replaces runner lines 420 to 491 (the PHASE D hooks, the one interval per stand loop and the
++# result writer). The model setup, ops, the 14.1 overlay, the height form htfx() and every switch are the runner's own
++# lines. The per stand projection is the runner's lines 431 to 440 moved into a function without the PHASE D recording
++# hooks and with a longer time limit. Diff against the runner in ../diffs/. No coordinates. No em dashes.
+ # V142 COPY (2026-09-25) of v141_20260923/phaseD_v141/scripts/2026-09-25_v141_phaseD_runner_p23_tst.R
+ # (parent md5 8471121e3a880e838b42923250a94cdd). One change: the overlay counter file is named
+ # <set>_<chunk>_v141_counters.csv instead of <chunk>_v141_counters.csv, because the parent's name
+@@ -417,75 +423,73 @@
+ htfx <- function(x, p) { if (!is.finite(HTFIX_B1) || p$PROV != "NS") return(x)
+   x$dht.mult <- exp(-HTFIX_B1 * pmax(0, pmin(x$dbh, HTFIX_K) - 12.7) - HTFIX_B2 * pmax(0, x$dbh - HTFIX_K)); x }
+ cat(sprintf("PREREG20 HTFIX_B1=%s HTFIX_B2=%s K=%g\n", if (is.finite(HTFIX_B1)) format(HTFIX_B1) else "unset", if (is.finite(HTFIX_B2)) format(HTFIX_B2) else "unset", HTFIX_K))
+-source(path.expand("~/magplot/verify/gydbreg20260916/phaseD/scripts/2026-09-16_gydbreg-phaseD_trajhooks.R"))  # PHASE D hooks
+-MNAMES<-c("BA","SDI","QMD","TOPHT","TOTVOL","MERCHVOL","SAWVOL","BIOMASS","VALUE")
+-out<-list();fail<-0
+-TREE_OUT<-Sys.getenv("TREE_OUT","")
+-tlp<-list(); tly1<-list(); tl0<-list(); y1cap<-NULL; t0cap<-NULL
+-for(k in seq_len(nrow(prs))){ p<-prs[k,];sid<-p$STAND
+-  it<-ti[.(sid)];ot<-t2[.(sid)]; if(nrow(it)<3||nrow(ot)<3){fail<-fail+1;out[[k]]<-GYR_failrow(p,sid,it,ot,"lt3trees");next}
+-  iv<-max(1,round(p$interval_years)); elev<-if(is.finite(p$ELEV)&&p$ELEV>0)p$ELEV else 200
+-  GYR_lasterr<-"";setTimeLimit(elapsed=60,transient=TRUE)
+-  res<-tryCatch({
+-    cur<-data.frame(year=0,plot=1L,tree=seq_len(nrow(it)),sp=mapsp(it$SP),dbh=it$DBH,ht=ifelse(is.finite(it$HT)&it$HT>0,it$HT,NA_real_),hcb=NA,cr=NA,expf=it$EXPF,form=NA_character_,risk=NA_character_,ddbh.mult=1,dht.mult=(if(p$PROV=="NB") NB_AFAC else if(p$PROV=="QC") QC_AFAC else 1),mort.mult=1,max.dbh=200,max.height=50,stringsAsFactors=FALSE)
+-    if(SPLIT){cur<-split_formrisk(cur)}
+-    csi_use<-if(is.finite(p$csi_site)&&p$csi_site>2)p$csi_site else CSI_DEFAULT; reg<-if(p$PROV=="NB")"NB" else if(p$PROV=="QC")"QC" else if(p$PROV=="NS")"NS" else "ME"
+-    stand<<-make_stand(stand.id=sid,csi=csi_use,elev=elev,region=reg)
+-    ops$stand.managed <- as.logical(p$MGD_USE)  # p23 fix, see the block above
+-    .tst0 <<- { v <- suppressWarnings(as.numeric(p$TST_RAW))   # v141: years since thinning at the start of the step
+-                if (length(v) != 1L || !is.finite(v)) NA_real_ else v }
+-    ops$stand.tst <- .tst0
+-    if (identical(Sys.getenv("ING_MIN_FROM_SCORE", "0"), "1")) ops$ingrowth.min.dbh <- GYR_smd(p)  # PREREG9: ingrowth threshold = scoring threshold
+-    ops$active_ecobucket <- ecobucket_lookup[STAND==GYR_alias(p,sid), gate3][1]
+-    n_init <- max(cur$tree)
+-    if(nzchar(TREE_OUT)) t0cap<<-cur
+-    cur<-htfx(cur,p); PD_init(cur,p); for(yr in seq_len(iv)){ops$stand.tst<-if(is.na(.tst0)) NA_real_ else .tst0+(yr-1L); nx<-AcadianGYOneStand(tree=cur,stand=stand,ops=ops); if(is.null(nx)||nrow(nx)==0)stop("empty"); PD_step(cur,nx,yr); cur<-htfx(bf(nx),p); if(nzchar(TREE_OUT) && yr==1L) y1cap<<-cur; PD_snap(cur,yr,iv)}
+-    attr(cur,"n_init") <- n_init
+-    cur},error=function(e){GYR_lasterr<<-gsub("[\r\n,\"]"," ",substr(conditionMessage(e),1,160));NULL})
+-  setTimeLimit()
+-  if(is.null(res)){fail<-fail+1;out[[k]]<-GYR_failrow(p,sid,it,ot,if(nzchar(GYR_lasterr))GYR_lasterr else "null_result");next}
+-  PD_finish(sid,p,iv,res)  # PHASE D
+-  n_init <- attr(res,"n_init")
+-  ing_expf <- sum(res$expf[res$tree > n_init & is.finite(res$dbh) & res$dbh>=5], na.rm=TRUE)
+-  ing_rate <- ing_expf / iv
+-  if(nzchar(TREE_OUT)){
+-    tlp[[length(tlp)+1]] <- data.table::data.table(STAND=sid, iv=iv, tree=res$tree, sp=res$sp, dbh=res$dbh, ht=res$ht,
+-      expf=res$expf, ing=as.integer(res$tree > n_init))
+-    if(!is.null(t0cap)) tl0[[length(tl0)+1]] <- data.table::data.table(STAND=sid, tree=t0cap$tree, sp=t0cap$sp, dbh=t0cap$dbh, ht=t0cap$ht, expf=t0cap$expf)
+-    t0cap<<-NULL
+-    if(!is.null(y1cap)) tly1[[length(tly1)+1]] <- data.table::data.table(STAND=sid, tree=y1cap$tree,
+-      sp=y1cap$sp, dbh=y1cap$dbh, ht=y1cap$ht,
+-      pht=if(!is.null(y1cap$pht)) y1cap$pht else NA_real_,
+-      expf=y1cap$expf, ing=as.integer(y1cap$tree > n_init))
+-    y1cap<<-NULL
+-  }
+-  SMD<-GYR_smd(p); m1<-metrics(mapsp(it$SP),it$DBH,it$HT,it$EXPF,mindbh=SMD); m2o<-metrics(mapsp(ot$SP),ot$DBH,ot$HT,ot$EXPF,mindbh=SMD); m2p<-metrics(res$sp,res$dbh,res$ht,res$expf,res$form,res$risk,mindbh=SMD)
+-  out[[k]]<-data.frame(STAND=sid,PROV=p$PROV,esi_cov=p$esi_cov,iv=iv,
+-    t(setNames(m1,paste0(names(m1),"_t1"))),t(setNames(m2o,paste0(names(m2o),"_o"))),t(setNames(m2p,paste0(names(m2p),"_p"))),ING_p=ing_rate, GYR_tail(p,1L,""))
+-}
+-r<-rbindlist(out,fill=TRUE); fwrite(r,paste0(TAG,"_results.csv"))
+-PD_write(TAG)  # PHASE D
+-if(nzchar(TREE_OUT)){
+-  tp<-rbindlist(tlp,fill=TRUE); fwrite(tp,paste0(TREE_OUT,"_pred_t2_tree.csv"))
+-  t0<-rbindlist(tl0,fill=TRUE); fwrite(t0,paste0(TREE_OUT,"_t1_split_tree.csv"))
+-  ty<-rbindlist(tly1,fill=TRUE); fwrite(ty,paste0(TREE_OUT,"_pred_yr1_tree.csv"))
+-  cat(sprintf("WROTE tree lists: pred_t2 rows=%d stands=%d ; yr1 rows=%d stands=%d\n",
+-    nrow(tp),uniqueN(tp$STAND),nrow(ty),uniqueN(ty$STAND)))
+-}
+-cat(sprintf("=== %s v13.1 IGhier=%s MORThier=%s O%.2f BG%.3f BS%.3f IRC%.2f IRK%.1f SDMx%.2f NBbrk%.2f QCbrk%.2f BRMS%s ANCHOR%s n=%d (%d fail) ===\n",TAG,USE_HIER_ING,USE_HIER_MORT,ONSET,BG,BS,IRC,IRK,SDMAX,NB_BREAK,QC_BREAK,USE_BRMS,USE_ANCHOR,nrow(r),fail))
+-for(pv in c("NB","QC")){ s<-r[PROV==pv]; if(nrow(s)<5)next; cat(sprintf("-- %s n=%d --\n",pv,nrow(s)))
+- for(M in MNAMES){ o<-s[[paste0(M,"_o")]];pp<-s[[paste0(M,"_p")]];t1<-s[[paste0(M,"_t1")]]
+-   lvb<-100*(mean(pp)/mean(o)-1); pao<-mean((o-t1)/s$iv); pap<-mean((pp-t1)/s$iv)
+-   cat(sprintf("   %-9s level obs %8.2f pred %8.2f bias %+6.1f%% | PAI obs %+7.3f pred %+7.3f bias %+7.3f\n",M,mean(o),mean(pp),lvb,pao,pap,pap-pao)) }
+- cat(sprintf("   %-9s PRED ingrowth stems/ha/yr = %.2f (observed MagPlot ~%.1f)\n","ING",mean(s$ING_p),if(pv=="NB") 39.8 else 19.7))
+-}
+-if (V141 && exists(".acd_v141_report")) {
+-  .rep <- .acd_v141_report()
+-  cat("v141 overlay counters:\n"); print(.rep)
+-  .repdir <- Sys.getenv("V141_REPORT_DIR",""); if (nzchar(.repdir)) {
+-    dir.create(.repdir, showWarnings = FALSE, recursive = TRUE)
+-    fwrite(cbind(data.table(TAG = TAG), as.data.table(.rep)),
+-           file.path(.repdir, sprintf("%s_%s_v141_counters.csv", basename(dirname(TAG)), basename(TAG))))
++## ==== PREREG26 BLOCK (replaces runner lines 420 to 491) ===========================================================
++## Modes: P26_MODE=g0 projects named real NS stands (P26_G0_STANDS, comma separated) for their own interval and writes one
++## result row per stand in the runner's column layout; P26_MODE=grid projects the synthetic cells listed in P26_CELLS
++## (a CSV: cell,mix,esi,n0) for P26_NYR years and writes one summary row per cell per year.
++P26_MODE <- Sys.getenv("P26_MODE"); P26_OUT <- Sys.getenv("P26_OUT"); P26_ARM <- Sys.getenv("P26_ARM")
++if (!(P26_MODE %in% c("g0","grid")) || !nzchar(P26_OUT) || !nzchar(P26_ARM)) stop("p26: need P26_MODE g0|grid, P26_OUT, P26_ARM")
++if (file.exists(P26_OUT)) stop("p26: REFUSE, output exists: ", P26_OUT)
++cat(sprintf("p26: mode=%s arm=%s IMULT=%s ING_MIN_FROM_SCORE=%s HTFIX_B1=%s HTFIX_B2=%s\n", P26_MODE, P26_ARM, format(IMULT),
++  Sys.getenv("ING_MIN_FROM_SCORE","unset"), Sys.getenv("HTFIX_B1","unset"), Sys.getenv("HTFIX_B2","unset")))
++## one stand, nyr annual steps; the per stand setup and the per year loop are runner lines 431 to 440 without PD_* hooks.
++## rec(cur, yr) is called at yr = 0 (after htfx on the initial list) and after every step.
++p26_project <- function(cur, p, nyr, rec = NULL, tlim = 60) {
++  sid <- p$STAND; elev <- if (is.finite(p$ELEV) && p$ELEV > 0) p$ELEV else 200
++  setTimeLimit(elapsed = tlim, transient = TRUE); on.exit(setTimeLimit(), add = TRUE)
++  if (SPLIT) { cur <- split_formrisk(cur) }
++  csi_use <- if (is.finite(p$csi_site) && p$csi_site > 2) p$csi_site else CSI_DEFAULT
++  reg <- if (p$PROV == "NB") "NB" else if (p$PROV == "QC") "QC" else if (p$PROV == "NS") "NS" else "ME"
++  stand <<- make_stand(stand.id = sid, csi = csi_use, elev = elev, region = reg)
++  o <- ops
++  o$stand.managed <- as.logical(p$MGD_USE)
++  .tst0 <<- { v <- suppressWarnings(as.numeric(p$TST_RAW)); if (length(v) != 1L || !is.finite(v)) NA_real_ else v }
++  o$stand.tst <- .tst0
++  if (identical(Sys.getenv("ING_MIN_FROM_SCORE", "0"), "1")) o$ingrowth.min.dbh <- GYR_smd(p)   # PREREG9 threshold matching
++  o$active_ecobucket <- ecobucket_lookup[STAND == GYR_alias(p, sid), gate3][1]
++  ops <<- o
++  n_init <- max(cur$tree)
++  cur <- htfx(cur, p); if (!is.null(rec)) rec(cur, 0L, n_init)
++  for (yr in seq_len(nyr)) {
++    ops$stand.tst <<- if (is.na(.tst0)) NA_real_ else .tst0 + (yr - 1L)
++    nx <- AcadianGYOneStand(tree = cur, stand = stand, ops = ops)
++    if (is.null(nx) || nrow(nx) == 0) stop("empty")
++    cur <- htfx(bf(nx), p); if (!is.null(rec)) rec(cur, yr, n_init)
+   }
++  attr(cur, "n_init") <- n_init; cur
++}
++if (P26_MODE == "g0") {
++  ids <- strsplit(Sys.getenv("P26_G0_STANDS"), ",")[[1]]; setDT(prs); rows <- list()
++  for (sid in ids) { p <- as.list(prs[STAND == sid]); if (length(p$STAND) != 1L) stop("p26 g0: stand not admitted once: ", sid)
++    it <- ti[.(sid)]; iv <- max(1, round(p$interval_years))
++    cur <- data.frame(year=0,plot=1L,tree=seq_len(nrow(it)),sp=mapsp(it$SP),dbh=it$DBH,ht=ifelse(is.finite(it$HT)&it$HT>0,it$HT,NA_real_),hcb=NA,cr=NA,expf=it$EXPF,form=NA_character_,risk=NA_character_,ddbh.mult=1,dht.mult=(if(p$PROV=="NB") NB_AFAC else if(p$PROV=="QC") QC_AFAC else 1),mort.mult=1,max.dbh=200,max.height=50,stringsAsFactors=FALSE)
++    res <- p26_project(cur, p, iv)
++    n_init <- attr(res, "n_init"); ing_rate <- sum(res$expf[res$tree > n_init & is.finite(res$dbh) & res$dbh >= 5], na.rm = TRUE) / iv
++    m2p <- metrics(res$sp, res$dbh, res$ht, res$expf, res$form, res$risk, mindbh = GYR_smd(p))
++    rows[[sid]] <- data.table(STAND = sid, iv = iv, t(setNames(m2p, paste0(names(m2p), "_p"))), ING_p = ing_rate) }
++  fwrite(rbindlist(rows), P26_OUT); cat("p26 g0 WROTE", P26_OUT, "\n")
++} else {
++  cells <- fread(Sys.getenv("P26_CELLS")); NYR <- as.integer(Sys.getenv("P26_NYR", "100")); SMD <- as.numeric(Sys.getenv("P26_SMD"))
++  if (!is.finite(SMD)) stop("p26 grid: P26_SMD (the synthetic stand's scoring threshold) must be set")
++  MIX <- list(BF = c(BF = 40), RS = c(RS = 40), MX = c(RS = 12, BF = 10, RM = 6, SM = 4, WS = 4, YB = 4))
++  set.seed(20260930); D0 <- runif(40, 2, 5)          # one draw, shared by every cell and arm
++  out <- list()
++  for (k in seq_len(nrow(cells))) { cc <- cells[k]; t0 <- Sys.time()
++    sp <- rep(names(MIX[[cc$mix]]), MIX[[cc$mix]]); if (length(sp) != 40L) stop("mix size")
++    cur <- data.frame(year=0,plot=1L,tree=1:40,sp=sp,dbh=D0,ht=NA_real_,hcb=NA,cr=NA,expf=rep(cc$n0/40,40),form=NA_character_,risk=NA_character_,ddbh.mult=1,dht.mult=1,mort.mult=1,max.dbh=200,max.height=50,stringsAsFactors=FALSE)
++    p <- list(STAND = sprintf("P26_%s", cc$cell), PROV = "NS", ELEV = 200, csi_site = cc$esi, MGD_USE = 0L, TST_RAW = NA_real_, SCORE_MINDBH_OBS = SMD)
++    acc <- list()
++    rec <- function(x, yr, n_init) { lv <- is.finite(x$dbh) & is.finite(x$expf) & x$expf > 0
++      m4 <- metrics(x$sp, x$dbh, x$ht, x$expf, x$form, x$risk, mindbh = 4); ms <- metrics(x$sp, x$dbh, x$ht, x$expf, x$form, x$risk, mindbh = SMD)
++      acc[[length(acc) + 1L]] <<- data.table(arm = P26_ARM, cell = cc$cell, mix = cc$mix, esi = cc$esi, n0 = cc$n0, age = yr,
++        HT = m4[["TOPHT"]], TPH = sum(x$expf[lv & x$dbh >= 4]), BAPH = m4[["BA"]], QMD = m4[["QMD"]], SDI = m4[["SDI"]], VOL = m4[["TOTVOL"]],
++        MERCHVOL = m4[["MERCHVOL"]], TPH_s = sum(x$expf[lv & x$dbh >= SMD]), BAPH_s = ms[["BA"]], VOL_s = ms[["TOTVOL"]],
++        TPH_all = sum(x$expf[lv]), TPH_cohort = sum(x$expf[lv & x$tree <= n_init]), TPH_ing = sum(x$expf[lv & x$tree > n_init]),
++        nrec = sum(lv), smd = SMD) }
++    ok <- tryCatch({ p26_project(cur, p, NYR, rec, tlim = 5400); TRUE }, error = function(e) { cat("p26 FAIL cell", cc$cell, conditionMessage(e), "\n"); FALSE })
++    d <- rbindlist(acc); d[, run_ok := as.integer(ok && nrow(d) == NYR + 1L)]; out[[k]] <- d
++    cat(sprintf("p26 cell %s done ok=%s rows=%d secs=%.0f\n", cc$cell, ok, nrow(d), as.numeric(difftime(Sys.time(), t0, units = "secs")))) }
++  fwrite(rbindlist(out), P26_OUT); cat("p26 grid WROTE", P26_OUT, "\n")
+ }
++if (V141 && exists(".acd_v141_report")) { .rep <- .acd_v141_report(); cat("v141 overlay counters:\n"); print(.rep) }
+ cat("DONE\n")

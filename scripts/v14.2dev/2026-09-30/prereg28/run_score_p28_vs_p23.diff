@@ -1,0 +1,36 @@
+2c2
+< # PREREG23 scoring (copy of PREREG19 run_score_p19.sh). For every PREREG23 arm, qc_c and qc_fl: chunk results are joined
+---
+> # PREREG28 scoring (copy of PREREG23 run_score_p23.sh, itself a copy of PREREG19 run_score_p19.sh). For every PREREG28 arm, qc_c and qc_fl: chunk results are joined
+7c7
+< J=/home/aaron/jobs/v142p23; H=$J/home; X=/home/aaron/jobs/v142p19/in/xfer
+---
+> J=/home/aaron/jobs/v142p28; H=$J/home; X=/home/aaron/jobs/v142p19/in/xfer
+12c12
+< TM=$H/work/p23_taskmap_DATA_2026-09-29.csv
+---
+> TM=$H/work/p28_taskmap_DATA_2026-09-30.csv
+14c14
+<   n=$(awk -F, -v a=$A -v s=$s 'NR>1 && $1<=60 && $2==a && $4==s' $TM | wc -l); k=$(ls $H/out/$A/$s/c*_results.csv 2>/dev/null | wc -l)
+---
+>   n=$(awk -F, -v a=$A -v s=$s 'NR>1 && $1<=40 && $2==a && $4==s' $TM | wc -l); k=$(ls $H/out/$A/$s/c*_results.csv 2>/dev/null | wc -l)
+25c25
+< ARMS="p23_a0111 p23_a1061 p23_a1250"
+---
+> ARMS="p28_g0 p28_cand"
+32c32
+< mk_plan plan/p23_plan_fb.csv FALSE; mk_plan plan/p23_plan_fb_c2.csv TRUE
+---
+> mk_plan plan/p28_plan_fb.csv FALSE; mk_plan plan/p28_plan_fb_c2.csv TRUE
+35c35
+< VC_OUT=$J/tables VC_PLAN=$J/plan/p23_plan_fb.csv VC_TAG=p23-fb Rscript scripts/2026-09-27_v142_volconv_score.R; rc=$?; echo "SCORE C0 C1 EXIT $rc"; [ $rc -eq 0 ] || exit $rc
+---
+> VC_OUT=$J/tables VC_PLAN=$J/plan/p28_plan_fb.csv VC_TAG=p28-fb Rscript scripts/2026-09-27_v142_volconv_score.R; rc=$?; echo "SCORE C0 C1 EXIT $rc"; [ $rc -eq 0 ] || exit $rc
+37c37
+< VC_OUT=$J/tables_c2 VC_PLAN=$J/plan/p23_plan_fb_c2.csv VC_TAG=p23-fb-c2 Rscript scripts/2026-09-27_v142_volconv_score.R; echo "SCORE C2 EXIT $? (reported only)"
+---
+> VC_OUT=$J/tables_c2 VC_PLAN=$J/plan/p28_plan_fb_c2.csv VC_TAG=p28-fb-c2 Rscript scripts/2026-09-27_v142_volconv_score.R; echo "SCORE C2 EXIT $? (reported only)"
+39c39
+< echo P23_SCORE_DONE
+---
+> echo P28_SCORE_DONE

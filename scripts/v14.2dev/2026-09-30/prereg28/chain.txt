@@ -1,0 +1,8 @@
+chain start 2026-09-30T08:01:42-03:00 pid=1210707
+main done 2026-09-30T15:25:35-03:00: 40 exit 0, 0 nonzero
+retry p28_g0 done 2026-09-30T15:25:40-03:00: RETRY_DONE p28_g0 remaining: 0
+retry p28_cand done 2026-09-30T15:25:45-03:00: RETRY_DONE p28_cand remaining: 0
+score exit 0 2026-09-30T15:26:19-03:00
+height key helper md5 ok 2026-09-30T15:26:19-03:00
+assemble exit 0 2026-09-30T15:26:46-03:00
+CHAIN_DONE 2026-09-30T15:26:46-03:00
