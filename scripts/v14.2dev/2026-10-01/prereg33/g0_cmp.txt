@@ -1,0 +1,17 @@
+     gate      arm  reference    set stands not_ok trees recruits worst_results
+   <char>   <char>     <char> <char>  <int>  <int> <int>    <int>         <num>
+1:    G0a  p33_g0a p28b_small   qc_c     58      0  7950     1889   0.000000000
+2:    G0b  p33_g0b  p19_a0111   qc_c     58      0  7950     1889   0.000000000
+3:   G0b1 p33_g0b1  p19_a0111   qc_c     58      0  7950     1889   0.001462645
+4:    G0a  p33_g0a p28b_small  qc_fl     19      0  3644     1494   0.000000000
+5:    G0b  p33_g0b  p19_a0111  qc_fl     19      0  3644     1494   0.000000000
+6:   G0b1 p33_g0b1  p19_a0111  qc_fl     19      0  3644     1494   0.024090142
+   worst_col worst_trees worst_trees_seeded stands_over_1e9   pass  gated
+      <char>       <num>              <num>           <int> <lgcl> <lgcl>
+1:      BA_p   0.0000000        0.000000000               0   TRUE   TRUE
+2:      BA_p   0.0000000        0.000000000               0   TRUE   TRUE
+3:     SDI_p   0.3355619        0.001888359             116  FALSE  FALSE
+4:      BA_p   0.0000000        0.000000000               0   TRUE   TRUE
+5:      BA_p   0.0000000        0.000000000               0   TRUE   TRUE
+6:     QMD_p   0.4441055        0.001140215              38  FALSE  FALSE
+G0_PASS

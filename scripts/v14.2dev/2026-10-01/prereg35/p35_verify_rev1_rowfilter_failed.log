@@ -1,0 +1,43 @@
+md5 97ac93f0 /home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_nb_c_results.csv 
+md5 NA /home/aaron/jobs/v142p14/in/frames 
+md5 47251a80 /home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_c_results.csv 
+md5 NA /home/aaron/jobs/v142p14/in/frames 
+md5 add90324 /home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_fl_results.csv 
+md5 NA /home/aaron/jobs/v142p14/in/frames 
+md5 f491edd8 /home/aaron/jobs/v142p15/results_r1/v141LT/gyr_v141LT_mnap_c_results.csv 
+md5 NA /home/aaron/jobs/v142p15/home/magplot/verify/gydbreg20260916/frames 
+Warning messages:
+1: In structure(.Call(C_Rmd5, files), names = files) :
+  md5 failed on file '/home/aaron/jobs/v142p14/in/frames'
+2: In structure(.Call(C_Rmd5, files), names = files) :
+  md5 failed on file '/home/aaron/jobs/v142p14/in/frames'
+3: In structure(.Call(C_Rmd5, files), names = files) :
+  md5 failed on file '/home/aaron/jobs/v142p14/in/frames'
+4: In structure(.Call(C_Rmd5, files), names = files) :
+  md5 failed on file '/home/aaron/jobs/v142p15/home/magplot/verify/gydbreg20260916/frames'
+           label scored identity_vs_results vo_zero defect t1_zero_vol t1_zero_stems     share r2_vo_zero r2_defect r2_t1_zero r2_fires  match
+          <char>  <int>               <num>   <int>  <int>       <int>         <int>     <num>      <int>     <int>      <int>   <lgcl> <lgcl>
+ 1:         nb_c    355        6.918706e-15      33      0          37            37 0.1042254         33         0         37     TRUE   TRUE
+ 2:         nb_c    355        6.918706e-15      33      0          37            37 0.1042254          0         0          0    FALSE  FALSE
+ 3:         nb_c    355        6.918706e-15      33      0          37            37 0.1042254          0         0          0    FALSE  FALSE
+ 4:         qc_c    378        6.327071e-15       0      0           0             0 0.0000000         33         0         37     TRUE  FALSE
+ 5:         qc_c    378        6.327071e-15       0      0           0             0 0.0000000          0         0          0    FALSE   TRUE
+ 6:         qc_c    378        6.327071e-15       0      0           0             0 0.0000000          0         0          0    FALSE  FALSE
+ 7:        qc_fl     19        3.988372e-15       0      0           0             0 0.0000000         33         0         37     TRUE  FALSE
+ 8:        qc_fl     19        3.988372e-15       0      0           0             0 0.0000000          0         0          0    FALSE  FALSE
+ 9:        qc_fl     19        3.988372e-15       0      0           0             0 0.0000000          0         0          0    FALSE   TRUE
+10: mnap_c_state    348        5.580917e-15       0      0           0             0 0.0000000          0         0          0    FALSE   TRUE
+Key: <label, stratum, variable>
+    label        stratum   variable stands  ratio      d_ratio        d_rlo        d_rhi       d_bias       d_rmse        d_mlo        d_mhi   pass
+   <char>         <char>     <char>  <int>  <num>        <num>        <num>        <num>        <num>        <num>        <num>        <num> <lgcl>
+1:   nb_c            all basal area    355 0.9944 3.330669e-16 7.771561e-16 2.886580e-15 5.551115e-16 4.263256e-14 1.065814e-14 4.263256e-14   TRUE
+2:   nb_c            all      stems    355 1.1872 3.330669e-15 5.107026e-15 2.220446e-16 4.973799e-14 2.842171e-14 0.000000e+00 1.421085e-14   TRUE
+3:   nb_c            all  volume C0    355 0.9874 4.440892e-16 1.110223e-16 3.774758e-15 2.664535e-15 4.973799e-14 1.065814e-14 3.552714e-14   TRUE
+4:   nb_c            all  volume C1    355 0.9562 3.330669e-16 2.220446e-16 3.330669e-16 2.664535e-15 0.000000e+00 5.329071e-14 2.131628e-14   TRUE
+5:   nb_c established_t1 basal area    318 0.9882 4.440892e-16 1.221245e-15 2.220446e-16 2.375877e-14 1.065814e-14 3.552714e-14 2.131628e-14   TRUE
+6:   nb_c established_t1      stems    318 1.1541 3.108624e-15 2.220446e-15 3.774758e-15 5.329071e-15 7.105427e-15 1.421085e-14 0.000000e+00   TRUE
+7:   nb_c established_t1  volume C0    318 0.9861 2.220446e-16 2.220446e-16 3.108624e-15 3.774758e-15 2.842171e-14 5.329071e-14 2.131628e-14   TRUE
+8:   nb_c established_t1  volume C1    318 0.9548 3.330669e-16 7.771561e-16 5.551115e-16 8.881784e-16 4.263256e-14 7.105427e-15 1.421085e-14   TRUE
+cross check nb_c all stands C0 C1 vs frozen PREREG16 scores, worst 3.77e-15
+tolerance ratio 1e-09, percent 1e-07; set checks 4 of 10 match; stratum rows 8 of 8 pass; worst ratio diff 5.11e-15, worst percent diff 5.33e-14
+P35_VERIFY_FAILED

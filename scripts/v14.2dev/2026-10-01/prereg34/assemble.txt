@@ -1,0 +1,53 @@
+           used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  1001039 53.5    1635730  87.4  1635730  87.4
+Vcells 11295546 86.2   30775014 234.8 30770107 234.8
+Key: <set, fold, arm>
+           set   fold      arm     level trees   level30 trees30         diff
+        <char> <char>   <char>     <num> <int>     <num>   <int>        <num>
+ 1:  ns_long_c      A   v141LT 1.0412505  8685 1.0412505    8685 5.107026e-15
+ 2:  ns_long_c      A  v141LTf 1.0214085  8685 1.0214085    8685 4.662937e-15
+ 3:  ns_long_c      A v141LTfi 1.0214278  8685 1.0214278    8685 1.110223e-15
+ 4:  ns_long_c      B   v141LT 1.0441476  9054 1.0441476    9054 1.332268e-15
+ 5:  ns_long_c      B  v141LTf 1.0247165  9054 1.0247165    9054 3.774758e-15
+ 6:  ns_long_c      B v141LTfi 1.0247461  9054 1.0247461    9054 4.662937e-15
+ 7: ns_long_fl      A   v141LT 0.9340254  4250 0.9340254    4250 3.330669e-16
+ 8: ns_long_fl      A  v141LTf 0.9188226  4250 0.9188226    4250 4.440892e-16
+ 9: ns_long_fl      A v141LTfi 0.9188816  4250 0.9188816    4250 4.440892e-16
+10: ns_long_fl      B   v141LT 0.9353456  4188 0.9353456    4188 1.110223e-16
+11: ns_long_fl      B  v141LTf 0.9186185  4188 0.9186185    4188 1.110223e-16
+12: ns_long_fl      B v141LTfi 0.9186817  4188 0.9186817    4188 3.330669e-16
+     fold factor     gap composition   within comp_share level_fl level_c_bin
+   <char> <char>   <num>       <num>    <num>      <num>    <num>       <num>
+1:      A   prog -0.1026   -0.058181 -0.04440    0.56714   0.9188       1.021
+2:      A    cls -0.1026   -0.004909 -0.09768    0.04785   0.9188       1.021
+3:      A NLINKS -0.1026   -0.042452 -0.06013    0.41382   0.9188       1.021
+4:      A    y1g -0.1026    0.002792 -0.10538   -0.02721   0.9188       1.021
+5:      B   prog -0.1059   -0.058901 -0.04698    0.55628   0.9186       1.025
+6:      B    cls -0.1061   -0.004246 -0.10185    0.04002   0.9186       1.025
+7:      B NLINKS -0.1061   -0.034008 -0.07209    0.32054   0.9186       1.025
+8:      B    y1g -0.1061    0.004511 -0.11061   -0.04252   0.9186       1.025
+                                                        contrast       value          lo          hi supported
+                                                          <char>       <num>       <num>       <num>    <lgcl>
+1: NS_OP ns_long_fl bin minus NS_OP ns_long_c bin, v141LTf level -0.02846175 -0.04514636 -0.01339184     FALSE
+        stratum   subset  level_LT level_LTf pooled_pass classes classes_pass   pass
+         <char>   <char>     <num>     <num>      <lgcl>   <int>        <int> <lgcl>
+1:        NS_OP      bin 1.0196564 0.9963574        TRUE       2            2   TRUE
+2:        NS_RS      bin 0.8769158 0.8647432        TRUE       2            2   TRUE
+3: all programs NLINKS 1 1.0113624 0.9866354        TRUE       3            3   TRUE
+   explanation supported                                                                      material_subsets  comp_share                                        note
+        <char>    <lgcl>                                                                                <char>       <num>                                      <char>
+1:           a      TRUE NS_OP; plot 400 m2 (EXPF 25); observed floor 9.1 cm and over; all t1 heights measured  0.55628129                                            
+2:           b     FALSE                                                                                        0.04001535 verified match coverage in fold B bin 0.378
+3:           c      TRUE                                                                  NLINKS 1; ESI cov30m  0.32053799              frame contrast supported FALSE
+4:           d     FALSE                                                                        Y1 before 1975 -0.04251552                                            
+Rule 2: (a) and (c) supported and the residual check passes on the explaining subset; the form is safe on the population it was fit for, and the ns_long_fl 10 to 19 year bin is named a program and frame effect 
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-subsets_DATA_2026-10-01.csv"
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-materiality-foldB_DATA_2026-10-01.csv"
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-shapley-groups_DATA_2026-10-01.csv"
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-shapley_DATA_2026-10-01.csv"
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-frame-contrast_DATA_2026-10-01.csv"
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-residual_DATA_2026-10-01.csv"
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-support_DATA_2026-10-01.csv"
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-repro_DATA_2026-10-01.csv"
+[1] "/home/aaron/jobs/v142p34/assembled/gyr142-p34-provenance_DATA_2026-10-01.csv"
+P34_ASSEMBLE_DONE

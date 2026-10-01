@@ -1,0 +1,7 @@
+           used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  1001039 53.5    1635730  87.4  1635730  87.4
+Vcells 11295546 86.2   30775014 234.8 30770107 234.8
+Error in `:=`(expl, "ref") : 
+  Check that is.data.table(DT) == TRUE. Otherwise, `:=` is defined for use in j, once only and in particular ways. See help(":=", "data.table"). A common reason for this error is allocating a new column in `j` and using `<-` instead of `:=`; e.g., `DT[, new_col <- 1]` should be `DT[, new_col := 1]`. Another is using `:=` in a multi-statement `{...}` block; please use `:=` as the only statement in `j`.
+Calls: := -> stopf -> raise_condition -> signal
+Execution halted

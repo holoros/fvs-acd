@@ -1,0 +1,16 @@
+79,80c79,80
+<     c("b", "verified, non crossers", "verified & cross == FALSE"), c("b", "verified, crossers", "verified & cross == TRUE"), c("b", "verified match", "verified"),
+<     c("c", "NLINKS 1", "NLINKS == 1"), c("c", "NLINKS 2 and over", "NLINKS >= 2"), c("c", "no sibling link", "!sib"), c("c", "sibling link", "sib"),
+---
+>     c("b", "verified, non crossers", "verified & cross == FALSE"), c("b", "verified, crossers", "verified & cross == TRUE"), c("b", "verified match", "verified == TRUE"),
+>     c("c", "NLINKS 1", "NLINKS == 1"), c("c", "NLINKS 2 and over", "NLINKS >= 2"), c("c", "no sibling link", "!sib"), c("c", "sibling link", "sib == TRUE"),
+87c87
+<     for (u in SUB) { r <- stat(Z[eval(parse(text = u[3]))], "ns_long_fl", u[2], fd, stv); if (!is.null(r)) ST[[length(ST) + 1L]] <- r[, expl := u[1]] } }
+---
+>     for (u in SUB) { r <- stat(Z[which(rep_len(Z[, eval(parse(text = u[3]))], nrow(Z)) %in% TRUE)], "ns_long_fl", u[2], fd, stv); if (!is.null(r)) ST[[length(ST) + 1L]] <- r[, expl := u[1]] } }
+90,91c90,91
+<     ST[[length(ST) + 1L]] <- stat(Z, "ns_long_c", "bin", fd, stv)[, expl := "ref"]
+<     for (cl in c("below 12.7", "12.7 to 25", "25 and over")) ST[[length(ST) + 1L]] <- stat(Z[cls == cl], "ns_long_c", paste("class", cl), fd, stv)[, expl := "ref"] } }
+---
+>     r <- stat(Z, "ns_long_c", "bin", fd, stv); if (!is.null(r)) ST[[length(ST) + 1L]] <- r[, expl := "ref"]
+>     for (cl in c("below 12.7", "12.7 to 25", "25 and over")) { r <- stat(Z[cls == cl], "ns_long_c", paste("class", cl), fd, stv); if (!is.null(r)) ST[[length(ST) + 1L]] <- r[, expl := "ref"] } } }

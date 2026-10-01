@@ -1,0 +1,32 @@
+--- /home/aaron/jobs/v142p28b/home/runner_p28_fb.R	2026-09-30 07:50:37.053225783 -0300
++++ /home/aaron/jobs/v142p33/home/runner_p33_fb.R	2026-10-01 06:55:40.189858673 -0300
+@@ -412,6 +412,20 @@
+ HTFIX_B <- suppressWarnings(as.numeric(Sys.getenv("HTFIX_B", "")))
+ htfx <- function(x, p) { if (!is.finite(HTFIX_B) || p$PROV != "NS") return(x); x$dht.mult <- exp(-HTFIX_B * pmax(0, x$dbh - 12.7)); x }
+ cat(sprintf("PREREG11 HTFIX_B=%s\n", if (is.finite(HTFIX_B)) format(HTFIX_B) else "unset"))
++## PREREG33: QC_AFAC_DYNAMIC. "0" (the default) leaves this runner exactly runner_p28_fb.R: qcdyn() returns its input untouched.
++## "1": for a QC stand, at the start of every annual step and again on the list the step returns (so recruits are set on
++## entry), dht.mult of every tree with finite DBH, seeded trees and ingrowth recruits alike, is reassigned from its current
++## DBH: QC_AFAC_SMALL below QC_AFAC_KNOT cm, QC_AFAC_LARGE at and above. "2" (harness only, PREREG33 G0b): as "1" for the
++## seeded trees (tree id at or below n_init) only; recruits keep the 1 that bf() gives them, as in the static runner.
++## dht.mult is a returned tree variable (make_ops rtn.vars) and multiplies dht in calc_dht; no model file is edited.
++QC_AFAC_DYNAMIC <- Sys.getenv("QC_AFAC_DYNAMIC", "0")
++if (!(QC_AFAC_DYNAMIC %in% c("0", "1", "2"))) stop("PREREG33: QC_AFAC_DYNAMIC must be 0, 1 or 2")
++if (QC_AFAC_DYNAMIC != "0") { .qk33 <- as.numeric(Sys.getenv(c("QC_AFAC_SMALL", "QC_AFAC_LARGE", "QC_AFAC_KNOT")))
++  if (any(!is.finite(.qk33))) stop("PREREG33: QC_AFAC_DYNAMIC needs QC_AFAC_SMALL, QC_AFAC_LARGE and QC_AFAC_KNOT set")
++  cat(sprintf("PREREG33 QC_AFAC_DYNAMIC=%s small=%s large=%s knot=%s\n", QC_AFAC_DYNAMIC, format(.qk33[1]), format(.qk33[2]), format(.qk33[3]))) }
++qcdyn <- function(x, p, n_init) { if (QC_AFAC_DYNAMIC == "0" || p$PROV != "QC") return(x)
++  s <- is.finite(x$dbh); if (QC_AFAC_DYNAMIC == "2") s <- s & x$tree <= n_init
++  x$dht.mult[s] <- ifelse(x$dbh[s] < .qk33[3], .qk33[1], .qk33[2]); x }
+ source(path.expand("~/magplot/verify/gydbreg20260916/phaseD/scripts/2026-09-16_gydbreg-phaseD_trajhooks.R"))  # PHASE D hooks
+ MNAMES<-c("BA","SDI","QMD","TOPHT","TOTVOL","MERCHVOL","SAWVOL","BIOMASS","VALUE")
+ out<-list();fail<-0
+@@ -434,7 +448,7 @@
+     ops$active_ecobucket <- ecobucket_lookup[STAND==GYR_alias(p,sid), gate3][1]
+     n_init <- max(cur$tree)
+     if(nzchar(TREE_OUT)) t0cap<<-cur
+-    cur<-htfx(cur,p); PD_init(cur,p); for(yr in seq_len(iv)){ops$stand.tst<-if(is.na(.tst0)) NA_real_ else .tst0+(yr-1L); nx<-AcadianGYOneStand(tree=cur,stand=stand,ops=ops); if(is.null(nx)||nrow(nx)==0)stop("empty"); PD_step(cur,nx,yr); cur<-htfx(bf(nx),p); if(nzchar(TREE_OUT) && yr==1L) y1cap<<-cur; PD_snap(cur,yr,iv)}
++    cur<-htfx(cur,p); PD_init(cur,p); for(yr in seq_len(iv)){ops$stand.tst<-if(is.na(.tst0)) NA_real_ else .tst0+(yr-1L); cur<-qcdyn(cur,p,n_init); nx<-AcadianGYOneStand(tree=cur,stand=stand,ops=ops); if(is.null(nx)||nrow(nx)==0)stop("empty"); PD_step(cur,nx,yr); cur<-qcdyn(htfx(bf(nx),p),p,n_init); if(nzchar(TREE_OUT) && yr==1L) y1cap<<-cur; PD_snap(cur,yr,iv)}
+     attr(cur,"n_init") <- n_init
+     cur},error=function(e){GYR_lasterr<<-gsub("[\r\n,\"]"," ",substr(conditionMessage(e),1,160));NULL})
+   setTimeLimit()
