@@ -1,0 +1,27 @@
+start 2026-09-30T21:18:59-03:00 load 8.45
+rows 7272 
+         relation cand_flags ref_flags new_flags cand_worst    ref_worst ni_ok
+1         Reineke         36        36         0   1.496394 1.265742e+00 FALSE
+2        Frontier          0        10         0   0.000000 5.341842e-02  TRUE
+3       Magnitude          0         1         0   0.000000 7.013152e-05  TRUE
+4     HT_monotone          0        31         0   0.000000 2.798242e+00  TRUE
+5        Eichhorn          0         1         0   0.000000 2.101068e-02  TRUE
+6    SiteOrder_HT          0         7         0   0.000000 7.000000e+00  TRUE
+7   SiteOrder_VOL          1         0         1   1.000000 0.000000e+00 FALSE
+8  SiteOrder_BAPH          9         6         3  14.000000 1.300000e+01 FALSE
+9        Sukachev          0         0         0   0.000000 0.000000e+00  TRUE
+10   YieldDensity          0         8         0   0.000000 2.796744e-02  TRUE
+                              item                      value
+                            <char>                     <char>
+ 1:          relation rows matched 408 of 408 (assembled 408)
+ 2:                 flag agreement                 408 of 408
+ 3:        worst margin difference               5.087769e-15
+ 4:          worst stat difference                4.82947e-15
+ 5:       G1 complete trajectories                   72 of 72
+ 6:                   run_ok all 1                       TRUE
+ 7:              NI gate agreement                   10 of 10
+ 8:        NI overall (re-derived)                      FALSE
+ 9: NI overall (assembled verdict)                      FALSE
+10:         new flags (re-derived)                          4
+REDERIVE_DONE
+exit 0 2026-09-30T21:19:04-03:00

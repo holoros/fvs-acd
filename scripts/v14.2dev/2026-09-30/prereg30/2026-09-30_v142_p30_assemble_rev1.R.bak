@@ -1,0 +1,145 @@
+## PREREG30 assembly: H0 and K1 for the new v141LT (g0_off) fold B run, end of interval height of tag matched survivors by
+## set, fold, t1 diameter class, interval length and t1 dominant cohort for v141LT (frozen Cardinal Hp141 in the PREREG20
+## key), v141LTf (PREREG20 frozen) and v141LTfi (PREREG22 frozen), published TOPHT bias per stand on fold B, gates L1 to L5
+## and the decision rule in the PREREG30 order, tables and figure into ~/jobs/v142p30/assembled/ (refuses if not empty).
+## Site cluster bootstrap: first 1000 draws of the PREREG20 siteidx_<set>.rds (rows are unique SITE of the results file in
+## file order), fold B sites weighted by their draw counts. No coordinates are read. No em dashes.
+suppressMessages({ library(data.table); library(digest); library(ggplot2); library(patchwork) }); options(width = 200)
+J <- "/home/aaron/jobs/v142p30"; DRY <- Sys.getenv("P30_DRYRUN") == "1"
+O <- if (DRY) file.path(J, "dry/assembled") else file.path(J, "assembled"); dir.create(O, showWarnings = FALSE, recursive = TRUE)
+if (length(list.files(O))) stop("REFUSE ", O, " is not empty")
+hs <- function(...) stop(sprintf(...), call. = FALSE)
+w_out <- function(x, n) { f <- file.path(O, n); if (file.exists(f)) hs("REFUSE %s", f); fwrite(x, f); f }
+PROV <- list()
+md5chk <- function(f, m) { x <- unname(tools::md5sum(f)); if (is.na(x) || substr(x, 1, nchar(m)) != m) hs("md5 %s is %s, expected %s", f, x, m)
+  PROV[[length(PROV) + 1L]] <<- data.table(file = f, md5 = x); f }
+P20 <- "/home/aaron/jobs/v142p20"; P22 <- "/home/aaron/jobs/v142p22"; SETS <- c("ns_long_c", "ns_long_fl")
+KEY <- c(ns_long_c = md5chk(file.path(P20, "in/key/p20_htkey_ns_long_c.csv"), "fd8ab6d5"), ns_long_fl = md5chk(file.path(P20, "in/key/p20_htkey_ns_long_fl.csv"), "dce39692"))
+RESF <- list(v141LTf = c(ns_long_c = md5chk(file.path(P20, "results/v141LTf/gyr_v141LTf_ns_long_c_results.csv"), "e475736f"),
+                         ns_long_fl = md5chk(file.path(P20, "results/v141LTf/gyr_v141LTf_ns_long_fl_results.csv"), "f9b72f15")),
+             v141LTfi = c(ns_long_c = md5chk(file.path(P22, "results/v141LTfi/gyr_v141LTfi_ns_long_c_results.csv"), "9ac03bc2"),
+                          ns_long_fl = md5chk(file.path(P22, "results/v141LTfi/gyr_v141LTfi_ns_long_fl_results.csv"), "cf8bf849")))
+SIDX <- c(ns_long_c = md5chk(file.path(P20, "in/siteidx_ns_long_c.rds"), "f1cb3043"), ns_long_fl = md5chk(file.path(P20, "in/siteidx_ns_long_fl.rds"), "7def79ab"))
+md5chk(file.path(P20, "fit/gyr142-p20-fit-params_DATA_2026-09-28.csv"), "b06277a2"); md5chk(file.path(J, "home/runner_p20_fb.R"), "65392afb"); md5chk(file.path(J, "home/p20_env.sh"), "8edd89f4")
+FR <- file.path(P20, "home/magplot/verify/gydbreg20260916/frames")
+HOME_OF <- c(v141LT = file.path(J, "home"), v141LTf = file.path(P20, "home"), v141LTfi = file.path(P22, "home")); COL_OF <- c(v141LT = "g0_off", v141LTf = "v141LTf", v141LTfi = "v141LTfi")
+## dry run (P30_DRYRUN=1): the new v141LT run is stood in by the frozen v141LTf outputs, output to dry/assembled
+if (DRY) { HOME_OF[["v141LT"]] <- file.path(P20, "home"); COL_OF[["v141LT"]] <- "v141LTf" }
+ARMS <- c("v141LT", "v141LTf", "v141LTfi"); B <- 1000L
+fold_of <- function(x) { u <- unique(as.character(x)); f <- ifelse(strtoi(substr(vapply(u, digest, "", algo = "md5", serialize = FALSE), 1, 1), 16L) %% 2 == 0, "A", "B"); f[match(as.character(x), u)] }
+arm_dirs <- function(a, s) c(file.path(HOME_OF[[a]], "out", COL_OF[[a]], s), file.path(HOME_OF[[a]], sprintf("out_retry_a%d", 1:3), COL_OF[[a]], s))
+## main outputs, then later retry directories replace whole stands
+rd_stack <- function(a, s, pat, sel = NULL) { acc <- NULL
+  for (d in arm_dirs(a, s)) { fs <- sort(list.files(d, pat, full.names = TRUE)); if (!length(fs)) next
+    x <- rbindlist(lapply(fs, function(f) if (is.null(sel)) fread(f) else fread(f, select = sel)), fill = TRUE)[, STAND := as.character(STAND)]
+    if (!is.null(acc)) acc <- acc[!STAND %in% unique(x$STAND)]; acc <- rbind(acc, x, fill = TRUE) }
+  acc }
+res_of <- function(a, s) { if (a == "v141LT") rd_stack(a, s, "^c[0-9]+_results\\.csv$") else fread(RESF[[a]][[s]])[, STAND := as.character(STAND)] }
+pred_of <- function(a, s) { p <- rd_stack(a, s, "^c[0-9]+_pred_t2_tree\\.csv$", c("STAND", "tree", "ht", "ing"))[ing == 0]
+  if (anyDuplicated(p[, .(STAND, tree)])) hs("duplicated STAND tree %s %s", a, s); p[, .(STAND, tree, ht)] }
+
+H0 <- list(); K1 <- list(); HT <- list(); TP <- list(); TPS <- list(); TREES <- list()
+for (s in SETS) {
+  RF <- res_of("v141LTf", s); if (anyDuplicated(RF$STAND)) hs("dup STAND v141LTf %s", s)
+  sites <- unique(as.character(RF$SITE)); nsite <- length(sites)
+  IDX <- readRDS(SIDX[[s]]); if (nrow(IDX) != nsite) hs("%s: siteidx rows %d differ from %d sites", s, nrow(IDX), nsite); IDX <- IDX[, seq_len(B)]
+  W <- apply(IDX, 2, tabulate, nbins = nsite); rm(IDX)
+  st <- RF[, .(STAND, SITE = as.character(SITE), iv_st = interval_years)][, fold := fold_of(SITE)]
+  stB <- st[fold == "B"]
+  ## ---- H0 and K1 on the new v141LT run
+  RL <- res_of("v141LT", s); if (anyDuplicated(RL$STAND)) hs("dup STAND v141LT %s", s)
+  K1[[s]] <- data.table(set = s, foldB_stands_v141LTf = nrow(stB), stands_run = nrow(RL), same_set = setequal(RL$STAND, stB$STAND),
+    not_ok = sum(RL$RUN_OK != 1), timelimit_left = sum(grepl("elapsed time limit", RL$FAIL_REASON)))
+  K <- fread(KEY[[s]])[, STAND := as.character(STAND)]
+  K <- merge(K, st[, .(STAND, SITE, fold_site = fold)], by = "STAND")
+  if (K[, any(fold != fold_site)]) hs("key fold differs from SITE fold in %s", s)
+  PL <- pred_of("v141LT", s); m <- merge(K[fold == "B"], PL, by = c("STAND", "tree"), all.x = TRUE)
+  H0[[s]] <- data.table(set = s, key_trees_foldB = nrow(m), matched = sum(is.finite(m$ht)),
+    worst_scaled = max(abs(m$ht - m$Hp141) / pmax(1, abs(m$Hp141))), over_1e9 = sum(!is.finite(m$ht) | abs(m$ht - m$Hp141) / pmax(1, abs(m$Hp141)) > 1e-9))
+  ## ---- tree table
+  K[, Hp_v141LT := Hp141]
+  for (a in c("v141LTf", "v141LTfi")) { p <- pred_of(a, s); setnames(p, "ht", paste0("Hp_", a)); K <- merge(K, p, by = c("STAND", "tree"), all.x = TRUE) }
+  if (K[, anyNA(Hp_v141LTf) | anyNA(Hp_v141LTfi)]) hs("tag record without prediction in %s", s)
+  F <- fread(file.path(FR, sprintf("bench_gyr_%s_tree_init.csv", s)), select = c("STAND", "DBH", "EXPF"))[, STAND := as.character(STAND)][, tree := seq_len(.N), by = STAND]
+  F[, o := frank(-DBH, ties.method = "first"), by = STAND]; setorder(F, STAND, o); F[, cw := cumsum(EXPF), by = STAND]; F[, dom := cw <= 100 | o == 1L]
+  K <- merge(K, F[, .(STAND, tree, dom, D1f = DBH)], by = c("STAND", "tree")); if (K[, any(abs(D1f - D1) > 1e-9)]) hs("frame DBH differs from key D1 in %s", s)
+  K[, cls := as.character(cut(D1, c(0, 12.7, 25, Inf), right = FALSE, labels = c("below 12.7", "12.7 to 25", "25 and over")))]
+  K[, ivb := as.character(cut(iv, c(0, 10, 20, Inf), right = FALSE, labels = c("interval below 10", "interval 10 to 19", "interval 20 and over")))]
+  K[, set := s]; TREES[[s]] <- K
+  for (fd in c("A", "B")) { X <- K[fold == fd]
+    grp <- c(list(overall = X), split(X, X$cls), split(X, X$ivb), list(`interval 10 and over` = X[iv >= 10], dominant = X[dom == TRUE]))
+    for (g in names(grp)) { Y <- grp[[g]]; if (!nrow(Y)) next
+      SS <- Y[, c(list(n = .N, h2 = sum(H2), dho = sum((H2 - H1) / iv)), setNames(lapply(ARMS, function(a) sum(get(paste0("Hp_", a)))), paste0("L_", ARMS)),
+                  setNames(lapply(ARMS, function(a) sum((get(paste0("Hp_", a)) - H1) / iv)), paste0("D_", ARMS))), by = SITE]
+      w <- W[match(SS$SITE, sites), , drop = FALSE]; cn <- colSums(w * SS$n); ch2 <- colSums(w * SS$h2); cdo <- colSums(w * SS$dho)
+      for (a in ARMS) { L <- SS[[paste0("L_", a)]]; D <- SS[[paste0("D_", a)]]; cl <- colSums(w * L); cd <- colSums(w * D)
+        lb <- cl / ch2; bb <- (cl - ch2) / cn; ib <- (cd - cdo) / cn; rb <- cd / cdo; q <- function(v) quantile(v, c(.025, .975), na.rm = TRUE)
+        HT[[paste(s, fd, g, a)]] <- data.table(set = s, fold = fd, group = g, arm = a, trees = sum(SS$n), sites = nrow(SS), stands = uniqueN(Y$STAND),
+          obs_h2_m = sum(SS$h2) / sum(SS$n), pred_h2_m = sum(L) / sum(SS$n), level = sum(L) / sum(SS$h2), level_lo = q(lb)[1], level_hi = q(lb)[2],
+          bias_m = (sum(L) - sum(SS$h2)) / sum(SS$n), bias_lo = q(bb)[1], bias_hi = q(bb)[2],
+          obs_inc_m_yr = sum(SS$dho) / sum(SS$n), inc_bias_m_yr = (sum(D) - sum(SS$dho)) / sum(SS$n), inc_bias_lo = q(ib)[1], inc_bias_hi = q(ib)[2],
+          inc_ratio = sum(D) / sum(SS$dho), inc_ratio_lo = q(rb)[1], inc_ratio_hi = q(rb)[2]) } } }
+  ## ---- published TOPHT bias, fold B stands RUN_OK in all three arms
+  R3 <- lapply(setNames(ARMS, ARMS), function(a) { r <- if (a == "v141LT") RL else res_of(a, s); r[STAND %in% stB$STAND, .(STAND, RUN_OK, TOPHT_o, TOPHT_p)] })
+  ok <- Reduce(intersect, lapply(R3, function(r) r[RUN_OK == 1 & is.finite(TOPHT_o) & is.finite(TOPHT_p), STAND]))
+  TO <- merge(stB, R3$v141LT[STAND %in% ok, .(STAND, TOPHT_o, p_v141LT = TOPHT_p)], by = "STAND")
+  for (a in c("v141LTf", "v141LTfi")) { z <- R3[[a]][STAND %in% ok]; TO <- merge(TO, z[, .(STAND, o2 = TOPHT_o, p = TOPHT_p)], by = "STAND")
+    if (TO[, any(abs(o2 - TOPHT_o) > 1e-9)]) hs("TOPHT_o differs between arms in %s", s); TO[, o2 := NULL]; setnames(TO, "p", paste0("p_", a)) }
+  TO[, ivb := as.character(cut(iv_st, c(0, 10, 20, Inf), right = FALSE, labels = c("interval below 10", "interval 10 to 19", "interval 20 and over")))]; TO[, set := s]
+  TPS[[s]] <- TO[, c("set", "STAND", "iv_st", "ivb", "TOPHT_o", paste0("p_", ARMS)), with = FALSE]
+  for (g in c("all", unique(TO$ivb))) { Y <- if (g == "all") TO else TO[ivb == g]
+    SS <- Y[, c(list(n = .N, o = sum(TOPHT_o)), setNames(lapply(ARMS, function(a) sum(get(paste0("p_", a)))), ARMS)), by = SITE]
+    w <- W[match(SS$SITE, sites), , drop = FALSE]; co <- colSums(w * SS$o); cn <- colSums(w * SS$n)
+    for (a in ARMS) { cp <- colSums(w * SS[[a]]); pb <- 100 * (cp - co) / co; mb <- (cp - co) / cn
+      TP[[paste(s, g, a)]] <- data.table(set = s, fold = "B", group = g, arm = a, stands = nrow(Y), sites = nrow(SS), topht_obs_m = mean(Y$TOPHT_o),
+        topht_bias_pct = 100 * (mean(Y[[paste0("p_", a)]]) - mean(Y$TOPHT_o)) / mean(Y$TOPHT_o), topht_bias_lo = quantile(pb, .025), topht_bias_hi = quantile(pb, .975),
+        stand_bias_m = mean(Y[[paste0("p_", a)]] - Y$TOPHT_o), stand_bias_lo = quantile(mb, .025), stand_bias_hi = quantile(mb, .975),
+        stand_abs_bias_m = mean(abs(Y[[paste0("p_", a)]] - Y$TOPHT_o))) } }
+  rm(W); gc(verbose = FALSE)
+}
+H0 <- rbindlist(H0); K1 <- rbindlist(K1); HT <- rbindlist(HT); TP <- rbindlist(TP); TPS <- rbindlist(TPS)
+print(H0); print(K1)
+h0_pass <- all(H0$over_1e9 == 0) && all(H0$matched == H0$key_trees_foldB) && all(K1$same_set) && all(K1$not_ok == 0)
+## ---- gates on ns_long_c fold B
+hb <- function(g, a) { x <- HT[set == "ns_long_c" & fold == "B" & group == g & arm == a]; if (nrow(x) != 1) hs("gate row %s %s", g, a); x }
+tb <- function(a) { x <- TP[set == "ns_long_c" & group == "all" & arm == a]; if (nrow(x) != 1) hs("TOPHT row %s", a); x }
+gate_rows <- function(a) rbind(
+  data.table(gate = "L1", detail = "pooled level ratio", value = hb("overall", a)$level, ref = hb("overall", "v141LT")$level, margin = 0,
+             pass = abs(hb("overall", a)$level - 1) < abs(hb("overall", "v141LT")$level - 1)),
+  rbindlist(lapply(c("below 12.7", "12.7 to 25", "25 and over"), function(g) data.table(gate = "L2", detail = paste("level ratio,", g), value = hb(g, a)$level,
+             ref = hb(g, "v141LT")$level, margin = 0.03, pass = abs(hb(g, a)$level - 1) <= abs(hb(g, "v141LT")$level - 1) + 0.03))),
+  data.table(gate = "L3", detail = "dominant cohort level", value = hb("dominant", a)$level, ref = hb("dominant", "v141LT")$level, margin = 0.02,
+             pass = abs(hb("dominant", a)$level - 1) <= abs(hb("dominant", "v141LT")$level - 1) + 0.02),
+  data.table(gate = "L4", detail = "published TOPHT bias percent", value = tb(a)$topht_bias_pct, ref = tb("v141LT")$topht_bias_pct, margin = 0,
+             pass = abs(tb(a)$topht_bias_pct) <= abs(tb("v141LT")$topht_bias_pct)),
+  data.table(gate = "L5", detail = "level ratio, interval 10 years and over", value = hb("interval 10 and over", a)$level, ref = hb("interval 10 and over", "v141LT")$level, margin = 0.02,
+             pass = abs(hb("interval 10 and over", a)$level - 1) <= abs(hb("interval 10 and over", "v141LT")$level - 1) + 0.02))[, arm := a][]
+GT <- rbind(data.table(gate = "H0", detail = sprintf("worst scaled %.3g over %d fold B key trees; K1 not OK %d", max(H0$worst_scaled), sum(H0$key_trees_foldB), sum(K1$not_ok)),
+                       value = max(H0$worst_scaled), ref = 1e-9, margin = 0, pass = h0_pass, arm = "v141LT"),
+            gate_rows("v141LTf"), gate_rows("v141LTfi")[, arm := "v141LTfi (reported)"])
+print(GT, digits = 6)
+g <- GT[arm == "v141LTf"]; p <- sapply(split(g$pass, g$gate), all)
+verdict <- if (!h0_pass) "Rule 1: H0 fails; no verdict" else if (!p[["L1"]] || !p[["L3"]])
+  sprintf("Rule 2: %s fails; the height form is named as failing long interval realism and is not carried into 14.2 as fitted", paste(c("L1", "L3")[!p[c("L1", "L3")]], collapse = " and ")) else
+  if (all(p)) "Rule 3: L1 to L5 pass; the long interval data support the height form, and the PREREG26 top height loss is read as a synthetic start artifact" else
+  sprintf("Rule 4: L1 and L3 pass, %s fails; mixed, the height form is not cleared for long interval use and 14.1 is unchanged", paste(names(p)[!p], collapse = " and "))
+cat(verdict, "\n")
+f1 <- w_out(H0, "gyr142-p30-h0_DATA_2026-09-30.csv"); w_out(K1, "gyr142-p30-k1_DATA_2026-09-30.csv"); w_out(HT, "gyr142-p30-height_DATA_2026-09-30.csv")
+w_out(TP, "gyr142-p30-topht_DATA_2026-09-30.csv"); w_out(TPS, "gyr142-p30-topht-stands_DATA_2026-09-30.csv"); w_out(GT, "gyr142-p30-gates_DATA_2026-09-30.csv")
+w_out(rbindlist(PROV), "gyr142-p30-provenance_DATA_2026-09-30.csv")
+writeLines(c(sprintf("PREREG30 prereg %s", readLines(file.path(J, "logs/prereg_md5.txt"))), verdict), file.path(O, "gyr142-p30-verdict_2026-09-30.txt"))
+## ---- figure: fold B, three arms, by class, 95 percent site cluster intervals
+FD <- HT[fold == "B" & group %in% c("below 12.7", "12.7 to 25", "25 and over")]
+FD[, group := factor(group, c("below 12.7", "12.7 to 25", "25 and over"))]; FD[, arm := factor(arm, ARMS, c("v141LT (14.1)", "v141LTf (height form)", "v141LTfi (form and matching)"))]
+FD[, set := factor(set, SETS)]; pd <- position_dodge(width = 0.55); cols <- c("#4D4D4D", "#1B6FA8", "#C2571A")
+base <- function(d, y, lo, hi, yl, ref) ggplot(d, aes(group, .data[[y]], colour = arm, shape = arm)) + geom_hline(yintercept = ref, linewidth = 0.3, linetype = 2) +
+  geom_errorbar(aes(ymin = .data[[lo]], ymax = .data[[hi]]), width = 0.25, position = pd, linewidth = 0.4) + geom_point(size = 1.8, position = pd) +
+  facet_wrap(~set, nrow = 1) + scale_colour_manual(NULL, values = cols) + scale_shape_manual(NULL, values = c(16, 17, 15)) +
+  labs(x = NULL, y = yl) + theme_classic(base_size = 9) + theme(strip.background = element_blank(), strip.text = element_text(face = "bold"), legend.position = "bottom")
+pa <- base(FD, "level", "level_lo", "level_hi", expression("Predicted / observed " * italic(H)[2]), 1)
+pb <- base(FD, "bias_m", "bias_lo", "bias_hi", expression("Bias in " * italic(H)[2] ~ "(m)"), 0)
+pc <- base(FD, "inc_bias_m_yr", "inc_bias_lo", "inc_bias_hi", expression("Bias in height increment (m yr"^-1 * ")"), 0) + labs(x = expression("Diameter class at " * italic(t)[1] ~ "(cm)"))
+fig <- (pa / pb / pc) + plot_layout(guides = "collect") & theme(legend.position = "bottom")
+ff <- file.path(O, "gyr142-p30-height-foldB_2026-09-30.png"); if (file.exists(ff)) hs("REFUSE %s", ff)
+ggsave(ff, fig, width = 180, height = 200, units = "mm", dpi = 300, bg = "white")
+cat("P30_ASSEMBLE_DONE\n")

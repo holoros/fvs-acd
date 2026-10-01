@@ -1,0 +1,7 @@
+[1] "/home/aaron/jobs/v142p20/fit/gyr142-p20-fit-params_DATA_2026-09-28.csv"
+[1] "/home/aaron/jobs/v142p30/home/runner_p20_fb.R"
+[1] "/home/aaron/jobs/v142p30/home/p20_env.sh"
+Error in quantile.default(pb, 0.025) : 
+  missing values and NaN's not allowed if 'na.rm' is FALSE
+Calls: data.table -> quantile -> quantile.default
+Execution halted

@@ -1,0 +1,17 @@
+var,adm,metric,est,lo,hi
+Basal~area~(m^2~ha^-1),A0 published (355 stands),Pooled~ratio~(predicted/observed),0.994392361980582,0.962742864878279,1.03056813715798
+Basal~area~(m^2~ha^-1),A1 V_o = 0 excluded (322 stands),Pooled~ratio~(predicted/observed),0.985449802770606,0.954242292485858,1.02041724313117
+Stems~(ha^-1),A0 published (355 stands),Pooled~ratio~(predicted/observed),1.1871831834915,1.11752817763368,1.26719085005231
+Stems~(ha^-1),A1 V_o = 0 excluded (322 stands),Pooled~ratio~(predicted/observed),1.14011581382041,1.07262163127867,1.21425828804418
+Volume~C0~(m^3~ha^-1),A0 published (355 stands),Pooled~ratio~(predicted/observed),0.987409159021387,0.951507527493737,1.02883257416897
+Volume~C0~(m^3~ha^-1),A1 V_o = 0 excluded (322 stands),Pooled~ratio~(predicted/observed),0.985174662673784,0.949149412815247,1.02688738351033
+Volume~C1~(m^3~ha^-1),A0 published (355 stands),Pooled~ratio~(predicted/observed),0.956242677098668,0.922348588009557,0.993120572901892
+Volume~C1~(m^3~ha^-1),A1 V_o = 0 excluded (322 stands),Pooled~ratio~(predicted/observed),0.953993332779354,0.920046456090564,0.990900825696165
+Basal~area~(m^2~ha^-1),A0 published (355 stands),Percent~RMSE,33.0241910862976,28.6130848331298,38.2123920734504
+Basal~area~(m^2~ha^-1),A1 V_o = 0 excluded (322 stands),Percent~RMSE,31.2966049564831,27.0914194932608,36.1464714043492
+Stems~(ha^-1),A0 published (355 stands),Percent~RMSE,67.3829972365056,58.7395489897883,77.2450921060436
+Stems~(ha^-1),A1 V_o = 0 excluded (322 stands),Percent~RMSE,62.132515625745,53.8142970821174,71.2617178390967
+Volume~C0~(m^3~ha^-1),A0 published (355 stands),Percent~RMSE,38.2267072663158,30.5026607850498,45.7050869596864
+Volume~C0~(m^3~ha^-1),A1 V_o = 0 excluded (322 stands),Percent~RMSE,36.3975562985091,28.941945311209,43.3913861553788
+Volume~C1~(m^3~ha^-1),A0 published (355 stands),Percent~RMSE,37.2734406769904,30.2156431581537,44.0656948351504
+Volume~C1~(m^3~ha^-1),A1 V_o = 0 excluded (322 stands),Percent~RMSE,35.4892606763782,28.8102559440434,42.0480600789036

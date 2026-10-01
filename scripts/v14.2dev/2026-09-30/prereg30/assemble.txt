@@ -1,0 +1,36 @@
+[1] "/home/aaron/jobs/v142p20/fit/gyr142-p20-fit-params_DATA_2026-09-28.csv"
+[1] "/home/aaron/jobs/v142p30/home/runner_p20_fb.R"
+[1] "/home/aaron/jobs/v142p30/home/p20_env.sh"
+          set key_trees_foldB matched worst_scaled over_1e9
+       <char>           <int>   <int>        <num>    <int>
+1:  ns_long_c           69333   69333 9.634589e-16        0
+2: ns_long_fl           12633   12633 5.326598e-15        0
+          set foldB_stands_v141LTf stands_run same_set not_ok timelimit_left
+       <char>                <int>      <int>   <lgcl>  <int>          <int>
+1:  ns_long_c                 4279       4279     TRUE      0              0
+2: ns_long_fl                 1165       1165     TRUE      0              0
+      gate                                                         detail       value         ref margin   pass                 arm
+    <char>                                                         <char>       <num>       <num>  <num> <lgcl>              <char>
+ 1:     H0 worst scaled 5.33e-15 over 81966 fold B key trees; K1 not OK 0 5.32660e-15 0.000000001   0.00   TRUE              v141LT
+ 2:     L1                                             pooled level ratio 1.00409e+00 1.015210075   0.00   TRUE             v141LTf
+ 3:     L2                                        level ratio, below 12.7 1.00039e+00 1.001393061   0.03   TRUE             v141LTf
+ 4:     L2                                        level ratio, 12.7 to 25 1.00774e+00 1.022770405   0.03   TRUE             v141LTf
+ 5:     L2                                       level ratio, 25 and over 9.98750e-01 1.021998423   0.03   TRUE             v141LTf
+ 6:     L3                                          dominant cohort level 9.92537e-01 1.015253021   0.02   TRUE             v141LTf
+ 7:     L4                                   published TOPHT bias percent 4.05396e-01 2.370938413   0.00   TRUE             v141LTf
+ 8:     L5                        level ratio, interval 10 years and over 1.03680e+00 1.062841164   0.02   TRUE             v141LTf
+ 9:     L1                                             pooled level ratio 1.00411e+00 1.015210075   0.00   TRUE v141LTfi (reported)
+10:     L2                                        level ratio, below 12.7 1.00040e+00 1.001393061   0.03   TRUE v141LTfi (reported)
+11:     L2                                        level ratio, 12.7 to 25 1.00775e+00 1.022770405   0.03   TRUE v141LTfi (reported)
+12:     L2                                       level ratio, 25 and over 9.98752e-01 1.021998423   0.03   TRUE v141LTfi (reported)
+13:     L3                                          dominant cohort level 9.92542e-01 1.015253021   0.02   TRUE v141LTfi (reported)
+14:     L4                                   published TOPHT bias percent 4.15655e-01 2.370938413   0.00   TRUE v141LTfi (reported)
+15:     L5                        level ratio, interval 10 years and over 1.03688e+00 1.062841164   0.02   TRUE v141LTfi (reported)
+Rule 3: L1 to L5 pass; the long interval data support the height form, and the PREREG26 top height loss is read as a synthetic start artifact 
+[1] "/home/aaron/jobs/v142p30/assembled/gyr142-p30-k1_DATA_2026-09-30.csv"
+[1] "/home/aaron/jobs/v142p30/assembled/gyr142-p30-height_DATA_2026-09-30.csv"
+[1] "/home/aaron/jobs/v142p30/assembled/gyr142-p30-topht_DATA_2026-09-30.csv"
+[1] "/home/aaron/jobs/v142p30/assembled/gyr142-p30-topht-stands_DATA_2026-09-30.csv"
+[1] "/home/aaron/jobs/v142p30/assembled/gyr142-p30-gates_DATA_2026-09-30.csv"
+[1] "/home/aaron/jobs/v142p30/assembled/gyr142-p30-provenance_DATA_2026-09-30.csv"
+P30_ASSEMBLE_DONE

@@ -1,0 +1,14 @@
+task qc141 dry start 2026-09-30T20:38:33-03:00 load 7.80
+task qc141 BF start 2026-09-30T20:38:33-03:00 load 7.80
+task qc141 dry exit 0 2026-09-30T20:39:48-03:00
+task p28b_small BF start 2026-09-30T20:39:48-03:00 load 8.77
+task qc141 BF exit 0 2026-09-30T20:50:23-03:00
+task qc141 SM start 2026-09-30T20:50:23-03:00 load 6.30
+task p28b_small BF exit 0 2026-09-30T20:51:09-03:00
+task p28b_small SM start 2026-09-30T20:51:09-03:00 load 6.20
+task qc141 SM exit 0 2026-09-30T21:01:03-03:00
+task qc141 MX start 2026-09-30T21:01:03-03:00 load 5.03
+task p28b_small SM exit 0 2026-09-30T21:01:36-03:00
+task p28b_small MX start 2026-09-30T21:01:36-03:00 load 5.13
+task qc141 MX exit 0 2026-09-30T21:14:16-03:00
+task p28b_small MX exit 0 2026-09-30T21:15:05-03:00
