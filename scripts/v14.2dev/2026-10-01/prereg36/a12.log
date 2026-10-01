@@ -1,0 +1,62 @@
+      set  frame records_R records_M same_multiset same_order
+   <char> <char>     <int>     <int>        <lgcl>     <lgcl>
+1:   qc_c   init     65788     65788          TRUE       TRUE
+2:   qc_c     t2     68584     68584          TRUE       TRUE
+3:  qc_fl   init      2224      2224          TRUE       TRUE
+4:  qc_fl     t2      2198      2198          TRUE       TRUE
+      set t1_tags t2_tags matched_R matched_M   S_R   S_M S_both agreement
+   <char>   <int>   <int>     <int>     <int> <int> <int>  <int>     <num>
+1:   qc_c   65788   68584     57515     50434  9742 13574   3764 0.3863683
+2:  qc_fl    2224    2198      1648      1107   257   376     40 0.1556420
+       rule_A
+       <char>
+1: tag defect
+2: tag defect
+      set            grp     n dbh_shrink_share n_both_ht ht_shrink_share
+   <char>         <char> <int>            <num>     <int>           <num>
+1:   qc_c row index only  5978      0.287554366      1673      0.20561865
+2:   qc_c           both  3764      0.002391073      2856      0.01540616
+3:   qc_c field tag only  9810      0.002548420      6924      0.01978625
+4:  qc_fl row index only   217      0.262672811        60      0.16666667
+5:  qc_fl           both    40      0.000000000        21      0.00000000
+6:  qc_fl field tag only   336      0.000000000       173      0.01156069
+   dbh_change_median
+               <num>
+1:              1.50
+2:              1.80
+3:              1.90
+4:              3.30
+5:              3.75
+6:              4.20
+Error in `geom_vline()`:
+! Problem while setting up geom aesthetics.
+ℹ Error occurred in the 2nd layer.
+Caused by error in `check_aesthetics()`:
+! Aesthetics must be either length 1 or the same as the data (6).
+✖ Fix the following mappings: `linetype`.
+Backtrace:
+     ▆
+  1. └─ggplot2::ggsave(...)
+  2.   └─base::lapply(plot, grid.draw)
+  3.     ├─grid (local) FUN(X[[i]], ...)
+  4.     └─ggplot2 (local) `grid.draw.ggplot2::ggplot`(X[[i]], ...)
+  5.       ├─base::print(x)
+  6.       └─ggplot2 (local) `print.ggplot2::ggplot`(x)
+  7.         ├─ggplot2::ggplot_build(x)
+  8.         └─ggplot2 (local) `ggplot_build.ggplot2::ggplot`(x)
+  9.           └─ggplot2:::by_layer(...)
+ 10.             ├─rlang::try_fetch(...)
+ 11.             │ ├─base::tryCatch(...)
+ 12.             │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 13.             │ │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 14.             │ │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 15.             │ └─base::withCallingHandlers(...)
+ 16.             └─ggplot2 (local) f(l = layers[[i]], d = data[[i]])
+ 17.               └─l$compute_geom_2(d, theme = plot@theme)
+ 18.                 └─ggplot2 (local) compute_geom_2(..., self = self)
+ 19.                   └─self$geom$use_defaults(...)
+ 20.                     └─ggplot2 (local) use_defaults(..., self = self)
+ 21.                       └─ggplot2:::check_aesthetics(new_params, nrow(data))
+ 22.                         └─cli::cli_abort(...)
+ 23.                           └─rlang::abort(...)
+Execution halted

@@ -1,0 +1,27 @@
+        table  label rows_new rows_frozen worst   pass  new_md5 frozen_md5
+       <char> <char>    <int>       <int> <num> <lgcl>   <char>     <char>
+ 1:    scores   qc_c        8           8     0   TRUE b66f367b   a3ed3b76
+ 2:    scores  qc_fl        8           8     0   TRUE b66f367b   a3ed3b76
+ 3:    scores   nb_c        3           3     0   TRUE b66f367b   a3ed3b76
+ 4:    stands   qc_c      378         378     0   TRUE 5b38391c   d600f398
+ 5:    stands  qc_fl       19          19     0   TRUE 5b38391c   d600f398
+ 6:    stands   nb_c      355         355     0   TRUE 5b38391c   d600f398
+ 7:     c2cov   qc_c        1           1     0   TRUE 67ac1b3c   06c35edb
+ 8:     c2cov  qc_fl        1           1     0   TRUE 67ac1b3c   06c35edb
+ 9:     c2cov   nb_c        0           0     0   TRUE 67ac1b3c   06c35edb
+10:   c2align   qc_c        2           2     0   TRUE c37e9bf6   05c3b965
+11:   c2align  qc_fl        2           2     0   TRUE c37e9bf6   05c3b965
+12:   c2align   nb_c        0           0     0   TRUE c37e9bf6   05c3b965
+13:   htshare   qc_c        1           1     0   TRUE 0bb71b09   04913a93
+14:   htshare  qc_fl        1           1     0   TRUE 0bb71b09   04913a93
+15:   htshare   nb_c        1           1     0   TRUE 0bb71b09   04913a93
+16:     gates   qc_c        4           4     0   TRUE 868da274   fc7541fa
+17:     gates  qc_fl        3           3     0   TRUE 868da274   fc7541fa
+18:     gates   nb_c        3           3     0   TRUE 868da274   fc7541fa
+19: admission   qc_c        1           1     0   TRUE 5cc6714b   dc1c8937
+20: admission  qc_fl        1           1     0   TRUE 5cc6714b   dc1c8937
+21: admission   nb_c        1           1     0   TRUE 5cc6714b   dc1c8937
+        table  label rows_new rows_frozen worst   pass  new_md5 frozen_md5
+       <char> <char>    <int>       <int> <num> <lgcl>   <char>     <char>
+S0b PASS (qc_c, qc_fl rows: 14 of 14 pass)
+P36_S0B_DONE

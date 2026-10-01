@@ -1,0 +1,6 @@
+3,4c3,4
+< qc_c,qc_c,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_c_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_c,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/pass28qc,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_c.rds,TRUE
+< qc_fl,qc_fl,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_fl_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_fl,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/pass28qc,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_fl.rds,TRUE
+---
+> qc_c,qc_c,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_c_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_c,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/frames,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_c.rds,TRUE
+> qc_fl,qc_fl,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_fl_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_fl,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/frames,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_fl.rds,TRUE

@@ -1,0 +1,69 @@
+plan/2026-10-01_v142_c2-tag-identity-r2-adoption_PREREG36.md: OK
+/home/aaron/jobs/v142p35/scripts/2026-10-01_v142_volconv_score_r2.R: OK
+/home/aaron/jobs/v142p28/home/hw_formrisk_split.R: OK
+3,4c3,4
+< qc_c,qc_c,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_c_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_c,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/pass28qc,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_c.rds,TRUE
+< qc_fl,qc_fl,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_fl_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_fl,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/pass28qc,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_fl.rds,TRUE
+---
+> qc_c,qc_c,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_c_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_c,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/frames,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_c.rds,TRUE
+> qc_fl,qc_fl,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_fl_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_fl,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/frames,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_fl.rds,TRUE
+volconv R 4.5.1 data.table 1.18.6.1 OUT=/home/aaron/jobs/v142p36/tables/r2_fb_rowidx PLAN=/home/aaron/jobs/v142p36/plan/p36_plan_fb_v141LT_rowidx.csv host=ifm-kershaw seed=20260927
+    label    set    arm     c2 v0_hard
+   <char> <char> <char> <char>  <char>
+1:   nb_c   nb_c v141LT  FALSE    TRUE
+2:   qc_c   qc_c v141LT   TRUE    TRUE
+3:  qc_fl  qc_fl v141LT   TRUE    TRUE
+==== nb_c (nb_c, v141LT)
+R2 nb_c v141LT: check a pass (33 V_o = 0, 0 with source stem); check b pass; t1 zero 37 of 355 (0.1042), stratum fires
+nb_c v141LT done in 1.1 s
+==== qc_c (qc_c, v141LT)
+C2 tags: 13437 t1 tags, 14303 t2 tags, 11632 matched, 1569 same SP with measured HT2; duplicate keys dropped t1 0 t2 0
+QC screen: 65 cut stands among 378 scored
+R2 qc_c v141LT: check a pass (0 V_o = 0, 0 with source stem); check b pass; t1 zero 0 of 378 (0.0000), stratum not met
+qc_c v141LT done in 1.8 s
+==== qc_fl (qc_fl, v141LT)
+C2 tags: 690 t1 tags, 542 t2 tags, 484 matched, 67 same SP with measured HT2; duplicate keys dropped t1 0 t2 0
+QC screen: 11 cut stands among 19 scored
+R2 qc_fl v141LT: check a pass (0 V_o = 0, 0 with source stem); check b pass; t1 zero 0 of 19 (0.0000), stratum not met
+qc_fl v141LT done in 0.4 s
+wrote gyr142-volconv-gates_PROVISIONAL_2026-09-27.csv (10 rows)
+wrote gyr142-volconv-scores_PROVISIONAL_2026-09-27.csv (19 rows)
+wrote gyr142-volconv-htshare_PROVISIONAL_2026-09-27.csv (3 rows)
+wrote gyr142-volconv-admission_PROVISIONAL_2026-09-27.csv (3 rows)
+wrote gyr142-volconv-c2cov_PROVISIONAL_2026-09-27.csv (2 rows)
+wrote gyr142-volconv-c2align_PROVISIONAL_2026-09-27.csv (4 rows)
+wrote gyr142-volconv-stands_PROVISIONAL_2026-09-27.csv (752 rows)
+wrote gyr142-volconv-r2defect_PROVISIONAL_2026-09-27.csv (3 rows)
+wrote gyr142-volconv-r2exclusion_PROVISIONAL_2026-09-27.csv (3 rows)
+wrote gyr142-volconv-r2stratumshare_PROVISIONAL_2026-09-27.csv (3 rows)
+wrote gyr142-volconv-r2stratum_PROVISIONAL_2026-09-27.csv (8 rows)
+VC_DONE
+EXIT 0
+        table  label rows_new rows_frozen worst   pass  new_md5 frozen_md5
+       <char> <char>    <int>       <int> <num> <lgcl>   <char>     <char>
+ 1:    scores   qc_c        8           8    NA  FALSE b66f367b   a3ed3b76
+ 2:    scores  qc_fl        8           8    NA  FALSE b66f367b   a3ed3b76
+ 3:    scores   nb_c        3           3    NA  FALSE b66f367b   a3ed3b76
+ 4:    stands   qc_c      378         378     0   TRUE 5b38391c   d600f398
+ 5:    stands  qc_fl       19          19     0   TRUE 5b38391c   d600f398
+ 6:    stands   nb_c      355         355    NA  FALSE 5b38391c   d600f398
+ 7:     c2cov   qc_c        1           1     0   TRUE 67ac1b3c   06c35edb
+ 8:     c2cov  qc_fl        1           1     0   TRUE 67ac1b3c   06c35edb
+ 9:     c2cov   nb_c        0           0     0   TRUE 67ac1b3c   06c35edb
+10:   c2align   qc_c        2           2     0   TRUE c37e9bf6   05c3b965
+11:   c2align  qc_fl        2           2     0   TRUE c37e9bf6   05c3b965
+12:   c2align   nb_c        0           0     0   TRUE c37e9bf6   05c3b965
+13:   htshare   qc_c        1           1     0   TRUE 0bb71b09   04913a93
+14:   htshare  qc_fl        1           1     0   TRUE 0bb71b09   04913a93
+15:   htshare   nb_c        1           1     0   TRUE 0bb71b09   04913a93
+16:     gates   qc_c        4           4     0   TRUE 868da274   fc7541fa
+17:     gates  qc_fl        3           3     0   TRUE 868da274   fc7541fa
+18:     gates   nb_c        3           3     0   TRUE 868da274   fc7541fa
+19: admission   qc_c        1           1     0   TRUE 5cc6714b   dc1c8937
+20: admission  qc_fl        1           1     0   TRUE 5cc6714b   dc1c8937
+21: admission   nb_c        1           1     0   TRUE 5cc6714b   dc1c8937
+        table  label rows_new rows_frozen worst   pass  new_md5 frozen_md5
+       <char> <char>    <int>       <int> <num> <lgcl>   <char>     <char>
+S0b FAIL (qc_c, qc_fl rows: 12 of 14 pass)
+P36_S0B_DONE
+P36_B_DONE

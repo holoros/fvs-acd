@@ -1,0 +1,23 @@
+P36 verify A start 2026-10-01 10:57:15 
+md5 qc_c init rowindex 6fb1ff689670be192c9e5bade01b299d  field 521d6468861b66b8f73864fb9a6bf0fc 
+A1 qc_c init n_rowindex 65788 n_field 65788 multiset PASS row_order_identical TRUE 
+md5 qc_c t2 rowindex 684ebb341b33b55094f8c1ae0c7b99ad  field 7fd42665dccd3c3e9e188ee0ad9ca5d0 
+A1 qc_c t2 n_rowindex 68584 n_field 68584 multiset PASS row_order_identical TRUE 
+A2 qc_c rowindex t1_tags 65788 t2_tags 68584 matched 57515 S 9742 
+A2 qc_c field t1_tags 65788 t2_tags 68584 matched 50434 S 13574 
+A2 qc_c intersection 3764 agreement_a 0.386368302197 RuleA tag defect 
+A2 qc_c S_R_only n 5978 share_dbh_shrink 0.287554366009 n_ht_both 1673 share_ht_shrink 0.205618649133 median_dDBH 1.500000 
+A2 qc_c intersection n 3764 share_dbh_shrink 0.002391073326 n_ht_both 2856 share_ht_shrink 0.015406162465 median_dDBH 1.800000 
+A2 qc_c S_M_only n 9810 share_dbh_shrink 0.002548419980 n_ht_both 6924 share_ht_shrink 0.019786250722 median_dDBH 1.900000 
+md5 qc_fl init rowindex 3968dd67a179da42d1f511d621e8a705  field b1e2e18c6f35c5ec09ca52ef4fdea225 
+A1 qc_fl init n_rowindex 2224 n_field 2224 multiset PASS row_order_identical TRUE 
+md5 qc_fl t2 rowindex f9970bf74a359a3e39a671aa3b04dd95  field b47046d587d15f905196cb1701386b5f 
+A1 qc_fl t2 n_rowindex 2198 n_field 2198 multiset PASS row_order_identical TRUE 
+A2 qc_fl rowindex t1_tags 2224 t2_tags 2198 matched 1648 S 257 
+A2 qc_fl field t1_tags 2224 t2_tags 2198 matched 1107 S 376 
+A2 qc_fl intersection 40 agreement_a 0.155642023346 RuleA tag defect 
+A2 qc_fl S_R_only n 217 share_dbh_shrink 0.262672811060 n_ht_both 60 share_ht_shrink 0.166666666667 median_dDBH 3.300000 
+A2 qc_fl intersection n 40 share_dbh_shrink 0.000000000000 n_ht_both 21 share_ht_shrink 0.000000000000 median_dDBH 3.750000 
+A2 qc_fl S_M_only n 336 share_dbh_shrink 0.000000000000 n_ht_both 173 share_ht_shrink 0.011560693642 median_dDBH 4.200000 
+wrote CSV rows 60 
+P36_VERIFY_A_DONE
