@@ -1,0 +1,70 @@
+      tagkey records stands sites no_p0 ht_ne_H1 capped recon_fail dominant
+      <char>   <int>  <int> <int> <int>    <int>  <int>      <int>    <int>
+1: field tag     698    135   129     0        0      0          0      126
+2: row index     264    107   103     0        0      0          0       76
+3:   capture   13466    153    NA    NA       NA      0          0       NA
+       tagkey scheme       group trees sites obs_m_yr p0_m_yr       R    R_lo
+       <char> <char>      <char> <int> <int>    <num>   <num>   <num>   <num>
+ 1: field tag    all         all   698   129  0.19015  0.1531  1.2419  1.1059
+ 2: field tag  size2 25 and over    78    44  0.14410  0.1470  0.9800  0.6792
+ 3: field tag  size2    below 25   620   121  0.19595  0.1539  1.2734  1.1257
+ 4: field tag   cls3  12.7 to 25   434   115  0.18706  0.1563  1.1971  1.0498
+ 5: field tag   cls3 25 and over    78    44  0.14410  0.1470  0.9800  0.6792
+ 6: field tag   cls3  below 12.7   186    82  0.21669  0.1483  1.4609  1.2266
+ 7: row index    all         all   264   103  0.16205  0.1539  1.0532  0.7762
+ 8: row index  size2 25 and over    42    29 -0.02496  0.1392 -0.1793 -1.0563
+ 9: row index  size2    below 25   222    86  0.19743  0.1566  1.2604  1.0029
+10: row index   cls3  12.7 to 25   170    75  0.17292  0.1586  1.0902  0.8217
+11: row index   cls3 25 and over    42    29 -0.02496  0.1392 -0.1793 -1.0563
+12: row index   cls3  below 12.7    52    31  0.27755  0.1502  1.8476  1.4726
+      R_hi
+     <num>
+ 1: 1.3672
+ 2: 1.2697
+ 3: 1.4083
+ 4: 1.3336
+ 5: 1.2697
+ 6: 1.7158
+ 7: 1.2929
+ 8: 0.5246
+ 9: 1.5090
+10: 1.3550
+11: 0.5246
+12: 2.2426
+      tagkey R_small R_large      S     S_lo   S_hi S_boot_nonpos_large
+      <char>   <num>   <num>  <num>    <num>  <num>               <int>
+1: field tag   1.273  0.9800  1.299   0.9952  1.896                   0
+2: row index   1.260 -0.1793 -7.030 -49.6984 31.462                 675
+      tagkey covariate    beta beta_lo beta_hi boot_fail
+      <char>    <char>   <num>   <num>   <num>     <int>
+1: field tag       rel -1.1239 -1.6576 -0.6382         0
+2: field tag      lnH1 -0.6571 -0.9736 -0.3527         0
+      quantity estimate        lo       hi boot_fail
+        <char>    <num>     <num>    <num>     <int>
+ 1:     g_lnht  0.86477 -0.824230 3.492847         0
+ 2:       g_ht -0.14137 -0.354101 0.010609         0
+ 3:       g_cr -0.16319 -2.336032 2.276946         0
+ 4:     g_ccfl -0.09533 -0.227898 0.018516         0
+ 5:     g_csi2  0.23217 -0.133209 0.541636         0
+ 6:       D_H1  0.50603  0.253032 0.899261         0
+ 7:       D_H2 -0.11242 -0.262785 0.007251         0
+ 8:       D_H3 -0.01965 -0.063600 0.015162         0
+ 9:    D_total  0.37396  0.130929 0.725805         0
+10:       s_H1  1.35316  1.013817 2.402418         0
+11:       s_H2 -0.30061 -1.213441 0.026365         0
+12:       s_H3 -0.05256 -0.242315 0.044135         0
+13: ln_S_field  0.26187 -0.004856 0.639574        NA
+                                 quantity estimate     lo     hi boot_na
+                                   <char>    <num>  <num>  <num>   <int>
+ 1:                                 R_dom   1.2336 1.0232 1.4494       0
+ 2:                    delta_dht_equation   0.7550 0.1136 1.1503       3
+ 3:                          m_site_curve   0.7956 0.7176 0.8740       0
+ 4: obs_over_curve_increment_at_frame_ESI   0.6985 0.5841 0.8131       0
+ 5:               obs_dom_stand_incr_m_yr   0.1832     NA     NA      NA
+ 6:          curve_incr_at_frame_ESI_m_yr   0.2695     NA     NA      NA
+ 7:                           p0_dom_m_yr   0.1546     NA     NA      NA
+ 8:                      dominant_records 126.0000     NA     NA      NA
+ 9:                       dominant_stands  84.0000     NA     NA      NA
+10:               stands_dropped_H1d_ge_A   0.0000     NA     NA      NA
+11:             mean_frame_ESI_dom_stands  18.5360     NA     NA      NA
+P37_ASSEMBLE_DONE fold A

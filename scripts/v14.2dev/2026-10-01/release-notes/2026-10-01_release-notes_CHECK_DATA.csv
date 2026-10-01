@@ -1,0 +1,166 @@
+claim,value,class,source_file,source_quote
+L7 date span of work,September 27 to October 1 2026,AGREE,PREREG16_RESULT; qc-height-structure_RESULT,27 September 2026 ... 1 October 2026
+L7 no engine file coefficient or default of 14.1 changed,no change,AGREE,zenodo_upload_p36/README.md,None of them changed an engine file a coefficient or a default of the shipped 14.1
+L7 adopted scoring convention C1 or C2,C1 or C2,AGREE,2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,volume gates in 14.2 pre-registrations use C1 or C2 where it exists
+L7 adopted scorer r2 from PREREG37 on,r2 from PREREG37,AGREE,2026-10-01_v142_c2-tag-identity-r2-adoption_RESULT.md,r2 is the scorer for 14.2 gates from PREREG37 on
+L7 one regional NS candidate v141LTfi passes benchmark not Bakuzis,v141LTfi,AGREE,2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,The PREREG22 candidate v141LTfi keeps its benchmark gates but is not cleared
+L7 QC anchor open again,open,NOT FOUND (overstatement),2026-10-01_v142_qc-height-structure_RESULT.md,No frozen result is changed here. A field tag refit of QC_AFAC ... is a new track
+L7 PREREG37 found tag pairs behind size dependent anchor formed by row index,row index,AGREE,2026-10-01_v142_qc-height-structure_RESULT.md,It is produced by row index pairing (G0 ROW INDEX ARTIFACT)
+L7 each verdict follows rule fixed before held out value read,all verdicts,MISMATCH (overstatement),2026-09-28_v142_mnap-state-height_RESULT.md,r2 splits S after r1 was seen ... This is a post hoc refinement and it is declared as such
+L9 L and T not re-estimated GT1 named failure,,AGREE,all RESULTs,L and T unchanged; GT1 stays a named failure
+L13 C0 over C1 gap over 3% in 12 of 20 sets,12 of 20,AGREE,2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,the C0 over C1 volume gap exceeds 3 percent in 12 of 20 sets
+L13 baxter_c gap,+13.9%,AGREE,PREREG16_RESULT,baxter_c (+13.9 percent)
+L13 frozen MNAP TNC gap,+10.4%,AGREE,PREREG16_RESULT,frozen MNAP TNC (+10.4)
+L13 MNAP State gap,+9.6%,AGREE,PREREG16_RESULT,MNAP State (+9.6)
+L13 gap carries model height error since mefia_l_c shows none,0.0%,MISMATCH (meaning),PREREG16_RESULT,Where observed heights are all measured (mefia_l_c MNAP State) the gap is the model's own height error ... mefia_l_c has no gap (0.0 percent). MNAP State shows +9.6 percent which means the model's heights run tall there
+L13 five readings change most,five,AGREE,PREREG16_RESULT,Five sets change most in their volume reading
+T1 baxter_c C0 C1,+27 / +12,AGREE,PREREG16_RESULT,baxter_c: +27 becomes +12 percent
+T1 MNAP State C0 C1,+0.6 / -8.2,AGREE,PREREG16_RESULT,MNAP State: +0.6 becomes -8.2 percent
+T1 ns_long_fl C0 C1,+1.7 / -4.5,AGREE,PREREG16_RESULT,ns_long_fl: +1.7 becomes -4.5 percent
+T1 pef_fl C0 C1,-14 / -19,AGREE,PREREG16_RESULT,pef_fl: -14 becomes -19 percent
+T1 silc_l_c C0 C1 wide interval,-4.7 / +3.6,AGREE,PREREG16_RESULT,silc_l_c: -4.7 becomes +3.6 percent with a wide interval
+L25 r2 by insertion 48 added 0 removed,48 / 0,AGREE,2026-10-01_v142_scorer-checks-r2_RESULT.md,built by insertion only ... 0 lines removed 48 added
+L25 r2 adds defect gate exclusion check stratum row,3 checks,AGREE,2026-10-01_v142_scorer-checks-r2_RESULT.md,S1 defect gate ... Check (b) positive record ... S2 stratum
+L25 identity gate failed on QC C2 alone no adoption verdict,,AGREE,2026-10-01_v142_scorer-checks-r2_RESULT.md,the only failure is C2 on qc_c and qc_fl ... r2 is not yet adopted and no verdict is drawn
+L25 PREREG36 traced failure to frozen PREREG16 QC C2,,AGREE,2026-10-01_v142_c2-tag-identity-r2-adoption_RESULT.md,Rule A finds a tag defect in the frozen PREREG16 C2 for qc_c and qc_fl
+L25 tag frame copy of run frame TREE row index,,AGREE,c2-tag-identity_RESULT,their tag frame was a copy of the run frame where TREE is a row index
+L25 same tree share qc_c,38.6%,AGREE,c2-tag-identity_RESULT,Only 38.6 percent (qc_c)
+L25 same tree share qc_fl,15.6%,AGREE,c2-tag-identity_RESULT,15.6 percent (qc_fl)
+L25 field tags move QC C2 by,0.003 to 0.006,AGREE,c2-tag-identity_RESULT,The correction moves QC C2 by 0.003 to 0.006
+L25 screened qc_c C2,1.073 to 1.079,AGREE,c2-tag-identity_RESULT,screened | 313 | 1.088 | 1.073 | 1.079
+L25 no gate PREREG17 to 35 read QC C2 no verdict changes,,AGREE,c2-tag-identity_RESULT,no PREREG17 to 35 gate read QC C2 ... so no verdict changes
+L25 every PREREG36 gate passing r2 from PREREG37,,AGREE,c2-tag-identity_RESULT,S0b S0c S1 and S2 pass
+L25 field tag values supersede PREREG16 QC C2,,AGREE,zenodo_upload_p36/README.md,The PREREG16 Table 1 QC C2 entries are superseded for 14.2 use by the field tag values
+L29 PREREG17 stems criterion m*,2.5,AGREE,2026-09-27_v142_ns-ingrowth-multiplier-C1_RESULT.md,The selection rule chose m* = 2.5
+L29 PREREG17 E3 and E6b failed,,AGREE,ns-ingrowth-multiplier-C1_RESULT,E3 and E6b fail
+L29 PREREG18 grid 1.5 to 2.25 held out C1 criterion,1.5 to 2.25,AGREE,2026-09-28_v142_ns-imult-refine_RESULT.md,refined between 1.5 and 2.25 on a held out volume criterion
+L29 PREREG18 selected lower edge,1.5,AGREE,ns-imult-refine_RESULT,m* = 1.5 the lower edge of the grid
+L29 every gate other than Edge passed,,AGREE,ns-imult-refine_RESULT,Every gate other than Edge passes at 1.5
+L29 ns_c fold B volume ratio,1.0074 (0.9969 to 1.0179),AGREE,ns-imult-refine_RESULT,ratio 1.0074 (0.9969 to 1.0179)
+L29 edge value cannot be adopted no flat scalar fits both,,AGREE,ns-imult-refine_RESULT,the design does not permit an edge value to be adopted ... A flat NS multiplier cannot be placed inside the window
+L29 Maine stays at 1.0,1.0,AGREE,ns-imult-refine_RESULT,Maine stays at 1.0
+L31 PREREG20 coefficients,b1 0.034416 b2 0.005072,AGREE,2026-09-28_v142_ns-height-form-25cm_RESULT.md,b1 = 0.034416 and b2 = 0.005072
+L31 every height gate passed,,AGREE,ns-height-form-25cm_RESULT,The harness gates and every height gate pass
+L31 ns_c fold B large tree ratio,1.250 to 0.792,AGREE,ns-height-form-25cm_RESULT,ns_c: 14.1 1.250 ... PREREG20 0.792
+L31 ns_long_fl TOPHT bias,+5.47% to -1.75%,AGREE,ns-height-form-25cm_RESULT,ns_long_fl +5.47 to -1.75 percent
+L31 E6b failed by 0.08 points on ns_fl not adopted alone,0.08,AGREE,ns-height-form-25cm_RESULT,The E6b failures are 0.08 points on ns_fl and 0.02 points on ns_long_fl
+L31 PREREG22 every gate passed first NS arm H1 H2 S1 E3 E6b,,AGREE,2026-09-29_v142_ns-height-by-ingrowth_RESULT.md,The pair is the first NS arm in the 14.2 series to pass H1 H2 S1 E3 and E6b together
+L31 stems run low,4 to 12%,AGREE,ns-height-by-ingrowth_RESULT,stems stay 4 to 12 percent low
+L31 PREREG25 NS_RS under predicted at every size,about 40%,AGREE,2026-09-29_v142_ns-small-tree-height_RESULT.md,which v141LTf under predicts by about 40 percent at every size
+L31 NS_OP no small tree deficit no size multiplier,,AGREE,ns-small-tree-height_RESULT,C2 no small tree deficit in NS_OP ... No small tree size multiplier enters 14.2
+L35 PREREG27 survivor loss confirmed held out,,AGREE,2026-09-30_v142_ns-interval-imult_RESULT.md,the NS long interval stem deficit is survivor loss confirmed on held out sites
+L35 ns_c survivor ratio 16 to 60 yr,0.868,AGREE,ns-interval-imult_RESULT,0.868 (0.817 to 0.931) 34 stands
+L35 ns_long_c survivor ratio,0.921,AGREE,ns-interval-imult_RESULT,0.921 (0.877 to 0.966) 227 stands
+L35 predicted annual survival,0.987 to 0.991,AGREE,ns-interval-imult_RESULT,predicted 0.987 to 0.991 throughout
+L35 observed survival 5 yr and beyond 20,0.980 to 0.983 / 0.992 to 1.000,AGREE,ns-interval-imult_RESULT,observed 0.980 to 0.983 at 5 years 0.992 to 1.000 beyond 20
+L35 flat IMULT 1.5 stays mortality named for later track,,AGREE,ns-interval-imult_RESULT,The flat NS IMULT 1.5 in v141LTfi stays ... Named for a later track: NS survivor mortality over multi year steps
+L37 PREREG29 refit failed A1 A2 pooled form stays,,AGREE,2026-09-30_v142_nsrs-state-and-nsop-refit_RESULT.md,The NS_OP refit is material but fails A1 and A2 offline; the pooled PREREG20 form stays
+L37 best quartile reaches,0.82,AGREE,nsrs-state-and-nsop-refit_RESULT,the best quartile of any variable is 0.82
+L37 plot size,100 to 455 m² vs 400 m²,AGREE,nsrs-state-and-nsop-refit_RESULT,plot size (100 to 455 m² against a fixed 400 m²)
+L37 NS_RS outside 14.2 NS height calibration,,AGREE,nsrs-state-and-nsop-refit_RESULT,NS_RS is named as outside the 14.2 NS height calibration
+L39 PREREG30 every gate passed ns_long_c fold B,,AGREE,2026-09-30_v142_ns-long-interval-height_RESULT.md,Every gate passes on ns_long_c fold B
+L39 pooled level ratio,1.0152 to 1.0041,AGREE,ns-long-interval-height_RESULT,L1 pooled level ratio | 1.0041 | 1.0041 | 1.0152
+L39 20 years and over,1.1194 to 1.0734,AGREE,ns-long-interval-height_RESULT,1.1194 at 20 years and over ... v141LTf gives ... 1.0734
+L39 TOPHT bias,+2.37% to +0.41%,AGREE,ns-long-interval-height_RESULT,+2.37 percent for 14.1 ... +0.41 for v141LTf
+L39 longest intervals,35 yr / 40 yr,AGREE,ns-long-interval-height_RESULT,35 years (ns_long_c) and 40 years (ns_long_fl)
+L39 PREREG26 loss synthetic start artifact 100 yr size not tested,,AGREE,ns-long-interval-height_RESULT,the PREREG26 top height loss is read as a synthetic start artifact ... not tested here
+L39 ns_long_fl 10 to 19 bin level,0.9353 / 0.9186,AGREE,ns-long-interval-height_RESULT,level 0.9353 for 14.1 0.9186 for v141LTf
+L39 PREREG34 program effect,,AGREE,2026-10-01_v142_ns-long-fl-mid-interval_RESULT.md,The deficit is a program effect
+L39 bin NS_RS share,62%,AGREE,ns-long-fl-mid-interval_RESULT,62 percent NS_RS trees
+L39 composition share,0.556,AGREE,ns-long-fl-mid-interval_RESULT,-0.0589 to composition (share 0.556)
+L39 NS_OP level,1.0197 to 0.9964,AGREE,ns-long-fl-mid-interval_RESULT,NS_OP moves from 1.0197 to 0.9964
+L43 PREREG19 grid,0.030 to 1.000,AGREE,2026-09-28_v142_qc-anchor-C1_RESULT_r2.md,QC_AFAC 0.030 ... 1.000
+L43 fold A C1 span below 0.010,0.0067,AGREE,qc-anchor-C1_RESULT_r2,spans 0.0067 across the whole grid below the 0.010 threshold
+L43 height calibration excess in diameters and stems,,AGREE,qc-anchor-C1_RESULT_r2,The anchor is a height calibration only ... it sits in diameters and stem numbers
+L43 stems low on fold B at every anchor,about 24%,AGREE,qc-anchor-C1_RESULT_r2,Stems run about 24 percent low on fold B at every anchor
+L43 revision 2 withdraws C2,,AGREE,qc-anchor-C1_RESULT_r2,The C2 ... numbers in revision 1 are withdrawn
+L43 0.111 predicted about a tenth,0.086,AGREE,2026-09-29_v142_qc-anchor-hinc_RESULT.md,fold B ratio 0.828 against 0.086 ... about a tenth
+L43 candidate 1.061 ratio,0.828,AGREE,qc-anchor-hinc_RESULT,fold B ratio 0.828
+L43 25 cm class,-0.021 to +0.099 m yr⁻¹ worse by 0.077,AGREE,qc-anchor-hinc_RESULT,25 and over: +0.099 against -0.021 (worse by 0.077)
+L43 PREREG23 28 28b survivors row index frames,,AGREE,qc-height-structure_RESULT,PREREG23 28 and 28b built their tag matched survivors from the run frames
+L43 PREREG24 diagnostic tables only no verdict,,AGREE (README only; no RESULT),zenodo_upload_p36/README.md,PREREG24 | QC stems and QMD diagnostic | Tables only; no verdict
+L43 PREREG24 RESULT not on host,,AGREE,host listing,no PREREG24 RESULT under ~/jobs; README 1.3.0: PREREG24 RESULT held on the laptop
+L45 PREREG28 split,1.265 / 0.030,AGREE,2026-09-30_v142_qc-anchor-size_RESULT.md,1.265 below 25 cm and 0.030 at and above
+L45 both passed every gate,,AGREE,qc-anchor-size_RESULT; qc-anchor-small-only_RESULT,Every gate passes on screened qc_c fold B
+L45 pooled ratios,0.875 / 0.883,AGREE,qc-anchor-small-only_RESULT,0.883 (0.742 to 1.113) | 0.875 (0.736 to 1.102)
+L45 TOPHT difference,+11.64 vs +11.97 0.33 points under 0.5,AGREE,qc-anchor-small-only_RESULT,+11.64 percent against +11.97 here; the difference 0.33 points is under the 0.5 point threshold
+L45 PREREG28b named QC candidate,,AGREE,qc-anchor-small-only_RESULT,the small tree only anchor ... is the 14.2 QC candidate
+L45 TOPHT cost,+6.29% to +11.97%,AGREE,qc-anchor-small-only_RESULT,Published TOPHT bias goes from +6.29 percent at 0.111 to +11.97 percent
+L45 PREREG33 kept every benchmark gate,TOPHT +11.14%,AGREE,2026-10-01_v142_qc-anchor-dynamic_RESULT.md,keeps every PREREG28b gate ... TOPHT +11.14 percent
+L47 nothing in 14.1 increment produces size pattern,,AGREE (omits residual),qc-height-structure_RESULT,The size pattern is not a property of the 14.1 height increment ... A weaker real size structure remains under field tags and the H1 rule attributes it to the potential (height) term
+L47 helper reused unchanged by PREREG28 28b,,AGREE,qc-height-structure_RESULT,byte identical in v142p23 v142p28 and v142p28b
+L47 fold B records,737 vs 301,AGREE,qc-height-structure_RESULT,Field tag | 737 ... Row index | 301
+L47 field tag R pooled,1.169,AGREE,qc-height-structure_RESULT,1.169 (1.032 to 1.322)
+L47 field tag R 25 cm and over,0.943 (0.643 to 1.235),AGREE,qc-height-structure_RESULT,0.943 (0.643 to 1.235)
+L47 row index R 25 cm and over,0.271,AGREE,qc-height-structure_RESULT,0.271 (-0.535 to 0.943)
+L47 S vs threshold,1.265 vs 3.376,AGREE,qc-height-structure_RESULT,S_field 1.265 (0.949 to 1.897) S* 3.376
+L47 single QC_AFAC near 1.17,1.17,AGREE,qc-height-structure_RESULT,on field tags a single QC_AFAC near 1.17 fits not 0.111
+L47 unanchored HT50/ESI,0.62 to 0.81,ROUNDED,qc-height-structure_RESULT,HT50/ESI at QC_AFAC 1: 0.679 0.615 0.808
+L47 p28b_small and PREREG33 no longer candidates QC anchor open,,NOT FOUND (overstatement),qc-height-structure_RESULT; qc-anchor-dynamic_RESULT,The PREREG28 and 28b anchor fits and the PREREG33 dynamic reassignment rest on row index pairs ... No frozen result is changed here; PREREG33: the dynamic anchor is not cleared for release consideration (never named a candidate)
+L47 no frozen result changed,,AGREE,qc-height-structure_RESULT,No frozen result is changed here
+L51 H_p vs H_o,1.089 vs 0.993,AGREE,2026-09-28_v142_mnap-state-height_RESULT.md,H_p ... is 1.089 ... H_o ... is 0.993 ... The whole gap is on the model side
+L51 t1 trees without measured height,32%,AGREE,mnap-state-height_RESULT,At t1 32 percent of trees
+L51 imputed finish tall,21%,AGREE,mnap-state-height_RESULT,Those trees finish 21 percent tall at t2
+L51 measured start finish tall,5.5%,AGREE,mnap-state-height_RESULT,finish 5.5 percent tall
+L51 growth rate factor,about 2.4,AGREE,mnap-state-height_RESULT,about 2.4 times faster
+L51 split,55 to 45,AGREE,mnap-state-height_RESULT,split the gap roughly 55 to 45
+L51 diagnostic,,AGREE,mnap-state-height_RESULT,Diagnostic only
+L55 empty t2 stands,38; 33 of 355 nb_c,AGREE,2026-09-30_v142_nb-empty-t2-audit_RESULT.md,All 38 empty t2 stands are class R ... nb_c | 33 of 355
+L55 below 5 cm floor none harvested lost or defect,,AGREE,nb-empty-t2-audit_RESULT,every one below the 5 cm scoring floor. None is harvested lost or a frame defect
+L55 material for nb_c only,,AGREE,nb-empty-t2-audit_RESULT,Excluding them (A1) is material for nb_c and for no other set
+L55 nb_c C1,0.956 to 0.954,AGREE,nb-empty-t2-audit_RESULT,Volume C1 | 0.956 ... | 0.954
+L55 nb_c stems,1.187 to 1.140,AGREE,nb-empty-t2-audit_RESULT,Stems | 1.187 ... | 1.140
+L55 kept admission three checks now in r2,3,AGREE,nb-empty-t2-audit_RESULT; scorer-checks-r2_RESULT,Keep the published admission ... Add three checks to the scorer
+L55 PREREG14 nb_c reading,0.987 to 0.985,AGREE,nb-empty-t2-audit_RESULT,NB total V_p/V_o 0.987 to 0.985
+L59 PREREG26 not cleared,,AGREE,2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,Rule 2. Not cleared.
+L59 BA ordering margin,8 vs 7,AGREE,bakuzis-ns-v141LTfi_RESULT,its worst margin is 8 inversions against 7
+L59 cell balsam fir 6000 ha⁻¹,6000,AGREE,bakuzis-ns-v141LTfi_RESULT,pure balsam fir at 6000 stems ha⁻¹
+L59 attributed to threshold matching IMULT 1.5,,AGREE,bakuzis-ns-v141LTfi_RESULT,The follow up arms attribute that margin to threshold matching with IMULT 1.5
+L59 100 yr top height lowered,14 to 25%,AGREE,bakuzis-ns-v141LTfi_RESULT,lowers 100 year top height by 14 to 25 percent
+L59 balsam fir 18 m ESI,16.2 m vs 20.8 m,AGREE,bakuzis-ns-v141LTfi_RESULT,a top height of 16.2 m at year 100 against 20.8 m under 14.1
+L61 PREREG31 not cleared four new flags,4,AGREE,2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,Part (A) fails on site ordering: four new flags
+L61 Reineke margin,1.496 vs 1.266,AGREE,bakuzis-qc-p28b_RESULT,worst margin 1.496 against 1.266
+L61 BA ordering,14 vs 13,AGREE,bakuzis-qc-p28b_RESULT,site ordering of BA (14 inversions against 13)
+L61 reference keeps 0.111 for 100 yr,,AGREE,bakuzis-qc-p28b_RESULT,Under qc141 every seeded tree carries dht.mult 0.111 for 100 years
+L61 reference HT50/ESI,0.26 to 0.80,AGREE,bakuzis-qc-p28b_RESULT,Top height at 50 is 0.26 to 0.80 of ESI
+L61 PREREG33 Reineke,1.412 vs 1.266,AGREE,qc-anchor-dynamic_RESULT,worst margin 1.412 against 1.266
+L61 both grids tested row index fitted anchors,,AGREE,qc-height-structure_RESULT,The PREREG28 and 28b anchor fits and the PREREG33 dynamic reassignment rest on row index pairs
+L66 v141LTfi passes PREREG30 and PREREG34 long interval checks,,MISMATCH (overstatement),ns-long-interval-height_RESULT; ns-long-fl-mid-interval_RESULT,PREREG30 gate table: v141LTf gated and v141LTfi (reported); PREREG34 compares v141LTf against 14.1 only
+L67 QC no candidate,,NOT FOUND (overstatement),qc-height-structure_RESULT,No frozen result is changed here
+L69 v141LTfi not in a release before Bakuzis clears,,AGREE,ns-height-by-ingrowth_RESULT,It is not adopted into a release before a Bakuzis NS grid under its own pre-registration
+L74 reference cuts cohort height growth,about a ninth,AGREE,bakuzis-qc-p28b_RESULT,cohort height growth is cut to about a ninth
+L76 PREREG30 tested to,35 years,AGREE,ns-long-interval-height_RESULT; README,35 years (ns_long_c) and 40 years (ns_long_fl); README: supported on intervals to 35 years
+L77 old harness ESI offset,7.0 m,AGREE,nsrs-state-and-nsop-refit_RESULT,Old harness ESI differs by exactly 7.0 m ... reported for repair not acted on
+L79 QC stems deficit,about 24 points,AGREE,qc-anchor-size_RESULT,The stems deficit of about 24 points is ... shared by every arm
+L80 PREREG36 search missed height tag key,,AGREE,qc-height-structure_RESULT,PREREG36 searched for reads of QC C2 and found none but the height tag key of PREREG23 28 and 28b reads the same row index frames
+L81 PREREG23 and 24 prereg texts and PREREG24 RESULT not on host,,AGREE,qc-anchor-hinc_RESULT; host listing,The PREREG23 file lives in the previous session's p23/ folder ... firebreather holds only its md5
+L82 11632 qc_c tag matches attributed to PREREG23 key,11632,AGREE,qc-anchor-C1_RESULT_r2; c2-tag-identity_RESULT,PREREG23's key based match finds 11632 matched tags; PREREG36: 10226 ... against 11632 (1569) by row index
+L86 commits,3e429c13 58f04eb2 793b0239 3aff1c88 b05d58b5 96697305 5fe43221 6e42f330 fe7898f7 d93b4aad,AGREE,zenodo_upload_p36/README.md; push_v142_p36.out,commit d93b4aadf6ecc8c6f191241836c2af74afb230e5 (fast forward from fe7898f73e30)
+L86 concept DOI,10.5281/zenodo.22996790,AGREE,zenodo_upload_p36/README.md,Concept DOI (all versions): 10.5281/zenodo.22996790
+L86 v1.6.0 DOI,10.5281/zenodo.23082910,AGREE,zenodo_upload_p36/README.md,Version 1.6.0 DOI: 10.5281/zenodo.23082910
+L86 1.7.0 being published now,,NOT FOUND,zenodo_upload_p36/README.md,1.7.0 receives its own DOI when published (no publication status recorded)
+L86 PREREG37 not on branch or deposit,,AGREE,push_v142_p36.out; README,push contains prereg36 only; README Changes in 1.7.0: Added PREREG36
+T94 PREREG16 row,12 of 20,AGREE,PREREG16_RESULT,12 of 20 sets
+T95 PREREG17 row,m* 2.5 E3 E6b fail not adopted,AGREE,ns-ingrowth-multiplier-C1_RESULT,Not adopted
+T96 PREREG18 row,m* 1.5 ratio 1.0074,AGREE,ns-imult-refine_RESULT,Not adopted. Rule 2a
+T97 PREREG19 row,span 0.0067,AGREE,qc-anchor-C1_RESULT_r2,Not adopted. Rule 3 (flat)
+T98 PREREG20 row,1.250 to 0.792,AGREE,ns-height-form-25cm_RESULT,Not adopted alone
+T99 PREREG21 row,32%,AGREE,mnap-state-height_RESULT,32 percent of trees
+T100 PREREG22 row interaction terms,below 0.002,AGREE,ns-height-by-ingrowth_RESULT,Every interaction term ... is below 0.002 on the ratios
+T101 PREREG23 row,worse by 0.077 m yr⁻¹,AGREE,qc-anchor-hinc_RESULT,worse by +0.077
+T102 PREREG24 row,none cited,AGREE (README only),README,Tables only; no verdict
+T103 PREREG25 row,about 40%,AGREE,ns-small-tree-height_RESULT,about 40 percent
+T104 PREREG26 row,8 vs 7,AGREE,bakuzis-ns-v141LTfi_RESULT,8 inversions against 7
+T105 PREREG27 row revision 2,0.868,AGREE,ns-interval-imult_RESULT,Revision 2 ... 0.868
+T106 PREREG28 row,TOPHT +11.64%,AGREE,qc-anchor-size_RESULT,+11.64 percent
+T107 PREREG28b row candidate withdrawn,0.33 points,NOT FOUND (overstatement),qc-anchor-small-only_RESULT; qc-height-structure_RESULT,0.33 points (AGREE); withdrawal not stated in any RESULT
+T108 PREREG29 row,0.82,AGREE,nsrs-state-and-nsop-refit_RESULT,0.82
+T109 PREREG30 row,1.0152 to 1.0041,AGREE,ns-long-interval-height_RESULT,1.0041 | 1.0041 | 1.0152
+T110 PREREG31 row,1.496 vs 1.266,AGREE,bakuzis-qc-p28b_RESULT,1.496 against 1.266
+T111 PREREG32 row,33 of 355,AGREE,nb-empty-t2-audit_RESULT,33 of 355
+T112 PREREG33 row,1.412 vs 1.266,AGREE,qc-anchor-dynamic_RESULT,1.412 against 1.266
+T113 PREREG34 row,62%,AGREE,ns-long-fl-mid-interval_RESULT,62 percent
+T114 PREREG35 row,48 / 0,AGREE,scorer-checks-r2_RESULT,0 lines removed 48 added
+T115 PREREG36 row height tag key not covered,38.6%,AGREE (attribution: finding is PREREG37's),c2-tag-identity_RESULT; qc-height-structure_RESULT,38.6 percent; height key gap stated in PREREG37 not PREREG36
+T116 PREREG37 row QC anchor open,0.943; 1.17,AGREE values; NOT FOUND for open/withdrawal,qc-height-structure_RESULT,0.943 (0.643 to 1.235) ... near 1.17
+0.111 provenance statements,none,AGREE,draft,no sentence states where 0.111 came from

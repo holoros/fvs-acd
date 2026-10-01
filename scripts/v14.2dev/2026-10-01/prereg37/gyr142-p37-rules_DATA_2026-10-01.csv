@@ -1,0 +1,7 @@
+rule,result,basis
+G0,NOT REPRODUCED,S_field 1.265 (0.949 to 1.897) against S* 3.376
+G0 row index artifact,TRUE,S_row 5.210 (-30.564 to 45.218)
+H1,TRUE,"D_H1 0.573 (0.362 to 0.836), s_H1 1.74, s_H2 -0.73, beta_rel -1.534 (-2.013 to -1.050), fold A D_H1 0.506"
+H2,FALSE,"D_H2 -0.239 (-0.360 to -0.131), s_H2 -0.73, fold A D_H2 -0.112"
+H3 (dominant level),TRUE,"m 0.769 (0.676 to 0.857), threshold 0.135"
+Stall,unanchored equation also stalls,"HT50/ESI at QC_AFAC 1: 0.679, 0.615, 0.808"
