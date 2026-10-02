@@ -1,0 +1,25 @@
+2c2
+< # PREREG28b firebreather driver (copy of PREREG28 run_task_p28.sh md5 ad1fb918; arm case and taskmap only). PREREG28 driver (copy of PREREG23 run_task_p23.sh md5 0524be9c; itself a copy of PREREG19 run_task_p19.sh md5 ac029e4e): one task of work/p28_taskmap. Environment block is the bench141 v141LT array block verbatim
+---
+> # PREREG38 firebreather driver (copy of PREREG28b run_task_p28b.sh md5 3969483d; taskmap, arm case with fit check, log tag only). PREREG28b driver (copy of PREREG28 run_task_p28.sh md5 ad1fb918). PREREG28 driver (copy of PREREG23 run_task_p23.sh md5 0524be9c; itself a copy of PREREG19 run_task_p19.sh md5 ac029e4e): one task of work/p28_taskmap. Environment block is the bench141 v141LT array block verbatim
+7c7
+< T=$1; R1=$HOME; TM=$R1/work/p28b_taskmap_DATA_2026-09-30.csv
+---
+> T=$1; R1=$HOME; TM=$R1/work/p38_taskmap_DATA_2026-10-01.csv
+33c33
+< case "$SET" in qc_c|qc_fl) export SRC_TST=UNKNOWN ;; *) echo "FATAL set $SET not in PREREG28b"; exit 5 ;; esac
+---
+> case "$SET" in qc_c|qc_fl) export SRC_TST=UNKNOWN ;; *) echo "FATAL set $SET not in PREREG38"; exit 5 ;; esac
+36c36,37
+<   p28b_small) export QC_AFAC=0.111 QC_AFAC_SMALL=1.265 QC_AFAC_LARGE=0.111 QC_AFAC_KNOT=25 ;;
+---
+>   p38_fit) FF=/home/aaron/jobs/v142p38/fit/gyr142-p38-qcafac-fit_DATA_2026-10-01.csv; chk $FF $(cut -d' ' -f1 /home/aaron/jobs/v142p38/logs/fit_md5.txt); V=$(awk -F, 'NR==2 && $1=="QC_AFAC_FIT" {print $2}' $FF); [[ "$V" =~ ^[0-9]\.[0-9]{3}$ ]] || { echo "FATAL fit value $V"; exit 2; }; export QC_AFAC=$V QC_AFAC_SMALL=$V QC_AFAC_LARGE=$V QC_AFAC_KNOT=25 ;;
+>   p38_one) export QC_AFAC=1.000 QC_AFAC_SMALL=1.000 QC_AFAC_LARGE=1.000 QC_AFAC_KNOT=25 ;;
+42c43
+< echo "[v142p28b-fb] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO QC_AFAC=$QC_AFAC SMALL=${QC_AFAC_SMALL:-unset} LARGE=${QC_AFAC_LARGE:-unset} KNOT=${QC_AFAC_KNOT:-unset} NB_AFAC=$NB_AFAC USE_ANCHOR=$USE_ANCHOR QC_BREAK=$QC_BREAK IMULT=$IMULT host=$(hostname) start=$(date -Is)"
+---
+> echo "[v142p38-fb] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO QC_AFAC=$QC_AFAC SMALL=${QC_AFAC_SMALL:-unset} LARGE=${QC_AFAC_LARGE:-unset} KNOT=${QC_AFAC_KNOT:-unset} NB_AFAC=$NB_AFAC USE_ANCHOR=$USE_ANCHOR QC_BREAK=$QC_BREAK IMULT=$IMULT host=$(hostname) start=$(date -Is)"
+44c45
+< echo "[v142p28b-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"
+---
+> echo "[v142p38-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"

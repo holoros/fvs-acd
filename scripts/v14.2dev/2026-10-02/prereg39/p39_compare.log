@@ -1,0 +1,42 @@
+point items compared 124, agree 107
+                        arm      item   kind     verifier     assembly
+                     <char>    <char> <char>        <num>        <num>
+ 1:               p19_a0111        D5  point   5.82975107   6.52618576
+ 2:               p19_a0111 D5_stands  point 159.00000000 160.00000000
+ 3:               p19_a0111   delta_5  point   3.08626830   3.78270299
+ 4:               p19_a0111   delta_6  point   0.45929177  -0.23714292
+ 5:               p19_a0111        G4  point   3.08626830   3.78270299
+ 6:               p19_a0111  G4_share  point   0.18707156   0.22928537
+ 7:               p19_a0111        G5  point   0.45929177  -0.23714292
+ 8:               p19_a0111  G5_share  point   0.02783959  -0.01437422
+ 9:                 p38_fit        D5  point  15.71702837  16.47177422
+10:                 p38_fit D5_stands  point 159.00000000 160.00000000
+11:                 p38_fit   delta_5  point   3.03169296   3.78643881
+12:                 p38_fit   delta_6  point   0.49546258  -0.25928326
+13:                 p38_fit        G4  point   3.03169296   3.78643881
+14:                 p38_fit  G4_share  point   0.18067801   0.22565816
+15:                 p38_fit        G5  point   0.49546258  -0.25928326
+16:                 p38_fit  G5_share  point   0.02952779  -0.01545235
+17: p38_fit_minus_p19_a0111        D5  point   9.88727730   9.94558845
+       absdiff  agree
+         <num> <lgcl>
+ 1: 0.69643469  FALSE
+ 2: 1.00000000  FALSE
+ 3: 0.69643469  FALSE
+ 4: 0.69643469  FALSE
+ 5: 0.69643469  FALSE
+ 6: 0.04221380  FALSE
+ 7: 0.69643469  FALSE
+ 8: 0.04221380  FALSE
+ 9: 0.75474584  FALSE
+10: 1.00000000  FALSE
+11: 0.75474584  FALSE
+12: 0.75474584  FALSE
+13: 0.75474584  FALSE
+14: 0.04498014  FALSE
+15: 0.75474584  FALSE
+16: 0.04498014  FALSE
+17: 0.05831115  FALSE
+worst agreeing point diff 1.07e-14
+interval limits (info only) compared 24, agree 16
+P39_COMPARE_DONE

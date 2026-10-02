@@ -1,0 +1,55 @@
+scripts/2026-10-01_v142_volconv_score_r2.R: OK
+/home/aaron/jobs/v142p38/home/hw_formrisk_split.R: OK
+p38_fit qc_c: 378 stands, 0 replaced by retries, 0 still RUN_OK 0
+p38_fit qc_fl: 19 stands, 0 replaced by retries, 0 still RUN_OK 0
+265fc6950ce3f18da751da8b9fd3dbc2  scripts/2026-10-01_v142_volconv_score_r2.R
+0b604babd7cbef91afc0ded4b2687431  /home/aaron/jobs/v142p38/home/hw_formrisk_split.R
+98cfb4e748a81bc636cd9bafc9a4a15e  /home/aaron/jobs/v142p38/home/magplot/verify/nsvb_emulator_coefs.csv
+2f3f98199ac28277852b2af3d0f9610c  /home/aaron/jobs/v142p38/home/magplot/verify/spcd_spgrpcd.csv
+566ea4523c3b211e21a87884fd1285ac  /home/aaron/jobs/v142p19/in/xfer/v142_20260925/p14/out/p14_magp_treatment_DATA_2026-09-26.csv
+eef096537f61a7038fa37061366491a1  /home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_nb_c.rds
+5ce8ab3c64fc9ceb606ca89a0d998094  /home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_c.rds
+d377c98512301c46ba46694068616db6  /home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_fl.rds
+136d05301e3aafa14028358da608340d  plan/p38_plan_fb.csv
+volconv R 4.5.1 data.table 1.18.6.1 OUT=/home/aaron/jobs/v142p38/tables PLAN=/home/aaron/jobs/v142p38/plan/p38_plan_fb.csv host=ifm-kershaw seed=20260927
+    label    set       arm     c2 v0_hard
+   <char> <char>    <char> <char>  <char>
+1:   qc_c   qc_c   p38_fit  FALSE    TRUE
+2:   qc_c   qc_c p19_a0111  FALSE    TRUE
+3:  qc_fl  qc_fl   p38_fit  FALSE    TRUE
+4:  qc_fl  qc_fl p19_a0111  FALSE    TRUE
+==== qc_c (qc_c, p38_fit)
+QC screen: 65 cut stands among 378 scored
+R2 qc_c p38_fit: check a pass (0 V_o = 0, 0 with source stem); check b pass; t1 zero 0 of 378 (0.0000), stratum not met
+qc_c p38_fit done in 1.2 s
+==== qc_c (qc_c, p19_a0111)
+QC screen: 65 cut stands among 378 scored
+R2 qc_c p19_a0111: check a pass (0 V_o = 0, 0 with source stem); check b pass; t1 zero 0 of 378 (0.0000), stratum not met
+qc_c p19_a0111 done in 1.1 s
+==== qc_fl (qc_fl, p38_fit)
+QC screen: 11 cut stands among 19 scored
+R2 qc_fl p38_fit: check a pass (0 V_o = 0, 0 with source stem); check b pass; t1 zero 0 of 19 (0.0000), stratum not met
+qc_fl p38_fit done in 0.2 s
+==== qc_fl (qc_fl, p19_a0111)
+QC screen: 11 cut stands among 19 scored
+R2 qc_fl p19_a0111: check a pass (0 V_o = 0, 0 with source stem); check b pass; t1 zero 0 of 19 (0.0000), stratum not met
+qc_fl p19_a0111 done in 0.2 s
+wrote gyr142-p38-fb-gates_PROVISIONAL_2026-09-27.csv (12 rows)
+wrote gyr142-p38-fb-scores_PROVISIONAL_2026-09-27.csv (24 rows)
+wrote gyr142-p38-fb-htshare_PROVISIONAL_2026-09-27.csv (4 rows)
+wrote gyr142-p38-fb-admission_PROVISIONAL_2026-09-27.csv (4 rows)
+wrote gyr142-p38-fb-stands_PROVISIONAL_2026-09-27.csv (794 rows)
+wrote gyr142-p38-fb-r2defect_PROVISIONAL_2026-09-27.csv (4 rows)
+wrote gyr142-p38-fb-r2exclusion_PROVISIONAL_2026-09-27.csv (4 rows)
+wrote gyr142-p38-fb-r2stratumshare_PROVISIONAL_2026-09-27.csv (4 rows)
+VC_DONE
+SCORE C0 C1 EXIT 0
+gyr142-p38-fb-admission_DATA_2026-09-27.csv
+gyr142-p38-fb-gates_DATA_2026-09-27.csv
+gyr142-p38-fb-htshare_DATA_2026-09-27.csv
+gyr142-p38-fb-r2defect_DATA_2026-09-27.csv
+gyr142-p38-fb-r2exclusion_DATA_2026-09-27.csv
+gyr142-p38-fb-r2stratumshare_DATA_2026-09-27.csv
+gyr142-p38-fb-scores_DATA_2026-09-27.csv
+gyr142-p38-fb-stands_DATA_2026-09-27.csv
+P38_SCORE_DONE

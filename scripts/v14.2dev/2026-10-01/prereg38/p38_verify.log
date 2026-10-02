@@ -1,0 +1,87 @@
+plan md5 ok
+run and field tag frames agree on STAND SP DBH HT EXPF: 65788 68584 
+population stands RUN_OK==1: 378 screened: 313 fold A: 153 fold B: 160 
+field tag records fold A: 698 fold B: 737 
+  pred dir /home/aaron/jobs/v142p38/home/out/p38_fit/qc_c 19 files
+p38_fit fold B records with prediction: 737 of 737 
+  pred dir /home/aaron/jobs/v142p19/home/out/p19_a0111/qc_c 19 files
+p19_a0111 fold B records with prediction: 737 of 737 
+  pred dir /home/aaron/jobs/v142p28b/home/out/p28b_small/qc_c 19 files
+p28b_small fold B records with prediction: 737 of 737 
+  pred dir /home/aaron/jobs/v142p23/home/out/p23_a1061/qc_c 19 files
+p23_a1061 fold B records with prediction: 737 of 737 
+H0 qc_c stands 58 columns 13 
+  pred dir /home/aaron/jobs/v142p38/home/out/p38_one/qc_c 3 files
+  pred dir /home/aaron/jobs/v142p19/home/out/p19_a1000/qc_c 19 files
+H0 qc_c trees a 7950 b 7950 merged 7950 
+H0 qc_fl stands 19 columns 13 
+  pred dir /home/aaron/jobs/v142p38/home/out/p38_one/qc_fl 1 files
+  pred dir /home/aaron/jobs/v142p19/home/out/p19_a1000/qc_fl 1 files
+H0 qc_fl trees a 3644 b 3644 merged 3644 
+H0 worst stand column BA_p 0 
+                      item        arm         value
+                    <char>     <char>         <num>
+ 1:      tag_records_foldA   fieldtag  6.980000e+02
+ 2:      tag_records_foldB   fieldtag  7.370000e+02
+ 3:        tag_sites_foldB   fieldtag  1.360000e+02
+ 4:           hinc_n_foldB    p38_fit  7.370000e+02
+ 5:             hinc_ratio    p38_fit  1.052588e+00
+ 6:       hinc_bias_lt12.7    p38_fit -2.711719e-02
+ 7:     hinc_bias_12.7to25    p38_fit  2.194705e-02
+ 8:         hinc_bias_ge25    p38_fit  3.771232e-02
+ 9:              dom_level    p38_fit  9.943296e-01
+10:                  dom_n    p38_fit  1.330000e+02
+11:           hinc_n_foldB  p19_a0111  7.370000e+02
+12:             hinc_ratio  p19_a0111  9.313541e-02
+13:       hinc_bias_lt12.7  p19_a0111 -1.903357e-01
+14:     hinc_bias_12.7to25  p19_a0111 -1.409618e-01
+15:         hinc_bias_ge25  p19_a0111 -1.202731e-01
+16:              dom_level  p19_a0111  8.979125e-01
+17:                  dom_n  p19_a0111  1.330000e+02
+18:           hinc_n_foldB p28b_small  7.370000e+02
+19:             hinc_ratio p28b_small  9.793078e-01
+20:       hinc_bias_lt12.7 p28b_small -2.372957e-02
+21:     hinc_bias_12.7to25 p28b_small  2.527632e-02
+22:         hinc_bias_ge25 p28b_small -1.202731e-01
+23:              dom_level p28b_small  9.606848e-01
+24:                  dom_n p28b_small  1.330000e+02
+25:           hinc_n_foldB  p23_a1061  7.370000e+02
+26:             hinc_ratio  p23_a1061  8.979274e-01
+27:       hinc_bias_lt12.7  p23_a1061 -5.370054e-02
+28:     hinc_bias_12.7to25  p23_a1061 -4.244143e-03
+29:         hinc_bias_ge25  p23_a1061  1.264807e-02
+30:              dom_level  p23_a1061  9.788630e-01
+31:                  dom_n  p23_a1061  1.330000e+02
+32: K1_runok_not1_qc_c_all    p38_fit  0.000000e+00
+33:          stand_n_foldB    p38_fit  1.600000e+02
+34:         topht_bias_pct    p38_fit  1.621249e+01
+35:               ba_ratio    p38_fit  1.002476e+00
+36:            stems_ratio    p38_fit  7.534243e-01
+37:                   c1_n    p38_fit  1.600000e+02
+38:            c1_rmse_pct    p38_fit  4.679824e+01
+39:          stand_n_foldB  p19_a0111  1.600000e+02
+40:         topht_bias_pct  p19_a0111  6.289043e+00
+41:               ba_ratio  p19_a0111  9.983289e-01
+42:            stems_ratio  p19_a0111  7.577385e-01
+43:                   c1_n  p19_a0111  1.600000e+02
+44:            c1_rmse_pct  p19_a0111  4.675564e+01
+45:          stand_n_foldB  p23_a1061  1.600000e+02
+46:         topht_bias_pct  p23_a1061  1.462521e+01
+47:               ba_ratio  p23_a1061  1.001936e+00
+48:            stems_ratio  p23_a1061  7.541078e-01
+49:                   c1_n  p23_a1061  1.600000e+02
+50:            c1_rmse_pct  p23_a1061  4.679498e+01
+51:              H0_stands    p38_one  7.700000e+01
+52:               H0_trees    p38_one  1.159400e+04
+53:  H0_worst_stand_scaled    p38_one  0.000000e+00
+54:       H0_worst_tree_ht    p38_one  0.000000e+00
+55:      H0_worst_tree_dbh    p38_one  0.000000e+00
+56:     H0_worst_tree_expf    p38_one  0.000000e+00
+57:      H0_worst_tree_ing    p38_one  0.000000e+00
+58:           H0_worst_all    p38_one  0.000000e+00
+                      item        arm         value
+                    <char>     <char>         <num>
+failing gates: TOPHT_level 
+VERDICT: not adopted (TOPHT) 
+wrote /home/aaron/jobs/v142p38/verify_20261001/p38_verify_DATA_2026-10-01.csv 76 rows
+P38_VERIFY_DONE
