@@ -1,0 +1,35 @@
+5a6,7
+> ## Revision 2: r1 (1e0c790f) stopped after R1 and R2 because a column named key collided with data.table's key argument;
+> ## r2 renames it tagkey, writes to assembled_r2/ and adds, after the verifier report and labelled as such, the PREREG36 count scope.
+11c13
+< O <- file.path(J, "assembled"); if (length(list.files(O))) stop("REFUSE ", O, " not empty"); dir.create(O, showWarnings = FALSE)
+---
+> O <- file.path(J, "assembled_r2"); if (dir.exists(O)) stop("REFUSE ", O, " exists"); dir.create(O)
+28c30
+< mf <- file.path(J, "logs/input_md5.txt"); if (file.exists(mf)) stop("REFUSE ", mf); writeLines(paste(unname(tools::md5sum(inp)), inp, sep = "  "), mf)
+---
+> mf <- file.path(J, "logs/input_md5_r2.txt"); if (file.exists(mf)) stop("REFUSE ", mf); writeLines(paste(unname(tools::md5sum(inp)), inp, sep = "  "), mf)
+56c58
+<   list(row = data.table(key = key, cand = c, ratio_cand = c1$ratio, ratio_ref = c0$ratio, HP = HP,
+---
+>   list(row = data.table(tagkey = key, cand = c, ratio_cand = c1$ratio, ratio_ref = c0$ratio, HP = HP,
+58c60
+<     dom_cand = d1$level_t2, dom_ref = d0$level_t2, dom_out = dom_out, topht_cand = t1, topht_ref = if (st$mode == "p23") t0 else tT, TOP = TOP, trees = c1$trees, sites = c1$sites), cls = cls[, key := key][, cand := c]) }
+---
+>     dom_cand = d1$level_t2, dom_ref = d0$level_t2, dom_out = dom_out, topht_cand = t1, topht_ref = if (st$mode == "p23") t0 else tT, TOP = TOP, trees = c1$trees, sites = c1$sites), cls = cls[, tagkey := key][, cand := c]) }
+74c76,78
+<   data.table(key = key, frames = fr, stands = uniqueN(F$STAND), matched = nrow(K), same_species_measured_both = K[SP1 == SP2 & is.finite(H1) & is.finite(H2), .N]) }
+---
+>   S378 <- fread(file.path(P19, "results/p19_a0111/gyr_p19_a0111_qc_c_results.csv"))[RUN_OK == 1, as.character(STAND)]
+>   data.table(tagkey = key, frames = fr, stands = uniqueN(F$STAND), matched = nrow(K), same_species_measured_both = K[SP1 == SP2 & is.finite(H1) & is.finite(H2), .N],
+>     matched_378 = K[STAND %in% S378, .N], same_species_t2_height_378 = K[STAND %in% S378 & SP1 == SP2 & is.finite(H2), .N]) }   # last two: added after the verifier report, not pre-registered
+76c80
+< CN[, PREREG36_matched := c(11632, 10226)][, PREREG36_subset := c(1569, 2299)][, agrees_PREREG36 := matched == PREREG36_matched & same_species_measured_both == PREREG36_subset]
+---
+> CN[, PREREG36_matched := c(11632, 10226)][, PREREG36_subset := c(1569, 2299)][, agrees_PREREG36 := matched == PREREG36_matched & same_species_measured_both == PREREG36_subset][, agrees_PREREG36_scope378 := matched_378 == PREREG36_matched & same_species_t2_height_378 == PREREG36_subset]
+78,79c82,83
+< writeLines(c("plan_md5=55b7b4614dbb5b2e7a560f4fdb8e3251", paste0("verdict_", V$study, "=", V$verdict_field_tag, " (row index: ", V$verdict_row_index, "; changed=", V$changed, ")"),
+<   sprintf("counts_row_index=%d (%d) counts_field_tag=%d (%d) agree_PREREG36=%s", CN$matched[1], CN$same_species_measured_both[1], CN$matched[2], CN$same_species_measured_both[2], all(CN$agrees_PREREG36))),
+---
+> writeLines(c("plan_md5=55b7b4614dbb5b2e7a560f4fdb8e3251", "assembly=r2", paste0("verdict_", V$study, "=", V$verdict_field_tag, " (row index: ", V$verdict_row_index, "; changed=", V$changed, ")"),
+>   sprintf("counts_row_index=%d (%d) counts_field_tag=%d (%d) agree_PREREG36=%s; scope 378 RUN_OK stands, t2 height only (added): %d (%d) and %d (%d), agree=%s", CN$matched[1], CN$same_species_measured_both[1], CN$matched[2], CN$same_species_measured_both[2], all(CN$agrees_PREREG36), CN$matched_378[1], CN$same_species_t2_height_378[1], CN$matched_378[2], CN$same_species_t2_height_378[2], all(CN$agrees_PREREG36_scope378))),

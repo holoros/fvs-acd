@@ -1,0 +1,6 @@
+stop,reference,arms,rows,expected_rows,worst,pass
+"R1 row index, PREREG23",gyr142-p23-hinc_DATA_2026-09-29.csv,p19_a0111 p23_a1061 p23_a1250,15,15,4.88498130835069e-15,TRUE
+"R1 row index, PREREG28",gyr142-p28-hinc_DATA_2026-09-30.csv,p28_cand,5,5,1.99840144432528e-15,TRUE
+"R1 row index, PREREG28b",gyr142-p28b-hinc_DATA_2026-09-30.csv,p28b_small,5,5,1.99840144432528e-15,TRUE
+"R1 row index, PREREG33",gyr142-p33-hinc_DATA_2026-10-01.csv,p33_dyn,5,5,5.55111512312578e-16,TRUE
+"R2 field tag, PREREG38",gyr142-p38-hinc_DATA_2026-10-01.csv,p19_a0111 p23_a1061 p23_a1250 p28b_small,20,20,4.66293670342566e-15,TRUE
