@@ -1,0 +1,28 @@
+R0d frames agree on 7 non TREE columns over 68584 rows: TRUE
+t2 rows 68584, linked 50434, linked and measured 13574; dup keys dropped t1 0 t2 0
+fit stands: p19_a0111 qc_c cut FALSE 313, with results 313, fold A 153 (RUN_OK != 1 among fold A: 0)
+softwood fit (three parameter): n 808
+     Estimate Std. Error   t value     Pr(>|t|)
+a 21.11754389 1.46319438 14.432494 3.666037e-42
+b  0.06875614 0.01283895  5.355279 1.115437e-07
+c  1.59623564 0.23082428  6.915371 9.509432e-12
+residual SE 2.326255
+hardwood fit (three parameter): n 294
+     Estimate Std. Error   t value     Pr(>|t|)
+a 24.83924623 2.30838281 10.760454 5.919570e-23
+b  0.03850575 0.01184295  3.251364 1.283502e-03
+c  0.84839753 0.13001265  6.525500 3.002129e-10
+residual SE 2.239255
+p19_a0030  stands 160 (summary 160) R0a o 4.97e-14 p 6.57e-14 (empty o 0 p 0) R0b 8.88e-16 | Bpub 5.586126 B_M -9.161684 (n 154) B_H -3.148082 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p19_a0060  stands 160 (summary 160) R0a o 4.97e-14 p 7.64e-14 (empty o 0 p 0) R0b 2.49e-14 | Bpub 5.846068 B_M -8.896418 (n 154) B_H -2.909642 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p19_a0111  stands 160 (summary 160) R0a o 4.97e-14 p 7.46e-14 (empty o 0 p 0) R0b 2.04e-14 | Bpub 6.289043 B_M -8.445228 (n 154) B_H -2.503311 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p19_a0250  stands 160 (summary 160) R0a o 4.97e-14 p 7.64e-14 (empty o 0 p 0) R0b 2.31e-14 | Bpub 7.497242 B_M -7.216165 (n 154) B_H -1.395055 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p19_a0500  stands 160 (summary 160) R0a o 4.97e-14 p 7.46e-14 (empty o 0 p 0) R0b 2.49e-14 | Bpub 9.685083 B_M -5.006415 (n 154) B_H 0.611805 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p19_a1000  stands 160 (summary 160) R0a o 4.97e-14 p 5.68e-14 (empty o 0 p 0) R0b 6.39e-14 | Bpub 14.091190 B_M -0.550320 (n 154) B_H 4.653434 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p23_a1061  stands 160 (summary 160) R0a o 4.97e-14 p 7.46e-14 (empty o 0 p 0) R0b 4.44e-14 | Bpub 14.625215 B_M -0.004926 (n 154) B_H 5.143283 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p23_a1250  stands 160 (summary 160) R0a o 4.97e-14 p 7.28e-14 (empty o 0 p 0) R0b 3.2e-14 | Bpub 16.282501 B_M 1.676070 (n 154) B_H 6.663477 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p28b_small stands 160 (summary 160) R0a o 4.97e-14 p 6.39e-14 (empty o 0 p 0) R0b 3.91e-14 | Bpub 11.967628 B_M 0.165844 (n 154) B_H 2.705535 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+p38_fit    stands 160 (summary 160) R0a o 4.97e-14 p 7.46e-14 (empty o 0 p 0) R0b 7.46e-14 | Bpub 16.212491 B_M 1.604448 (n 154) B_H 6.599258 (n 160) | fill share 0.6055 D3 0.3744 nfM 0 nfP 0 nfPsel 0
+reproduction R0a to R0d all pass: TRUE 
+DECISION: rule 3: T_M passes (|B_M| 1.6044 <= 10) and T_H passes (|B_H| 6.5993 <= 10); published TOPHT rejection of 1.242 attributed to the observed height rule; p38_fit eligible for the Bakuzis QC grid under a separate pre-registration 
+P40_VERIFY_DONE
