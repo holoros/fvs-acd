@@ -1,0 +1,12 @@
+p19_a0030: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -9.553015
+p19_a0060: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -9.281555
+p19_a0111: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -8.819775
+p19_a0250: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -7.559353
+p19_a0500: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -5.286092
+p19_a1000: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -0.718612
+p23_a1061: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -0.159722
+p23_a1250: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM 1.573902
+p28b_small: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -0.004583
+p38_fit: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM 1.500463
+PART_B_DONE
+P41_VERIFY_DONE

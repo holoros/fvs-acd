@@ -1,0 +1,5 @@
+d7fd3101f2b41a12eddaf34116a6b050  scripts/run_p41.sh
+d733721bcff04d2ca75fc645bc0c9207  scripts/chain_p41.sh
+0b7344b2ff2f7245c97e0b5aa9692f20  scripts/assemble_p41.R
+0055e48e27d1a1290021637b390b8e5c  scripts/assemble_p41b.R
+recorded 2026-10-02T13:54:14-03:00 before verifier launch and before the chain

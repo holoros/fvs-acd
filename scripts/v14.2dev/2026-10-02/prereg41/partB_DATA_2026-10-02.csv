@@ -1,0 +1,81 @@
+item,arm,value
+pop stands,p19_a0030,160
+O_M NA pattern match,p19_a0030,1
+O_M repro worst,p19_a0030,3.5527136788005e-14
+stands_MM,p19_a0030,154
+selected,p19_a0030,562
+dropped,p19_a0030,0
+stands with drop,p19_a0030,0
+B_MM,p19_a0030,-9.55301459479126
+pop stands,p19_a0060,160
+O_M NA pattern match,p19_a0060,1
+O_M repro worst,p19_a0060,3.5527136788005e-14
+stands_MM,p19_a0060,154
+selected,p19_a0060,562
+dropped,p19_a0060,0
+stands with drop,p19_a0060,0
+B_MM,p19_a0060,-9.28155529864676
+pop stands,p19_a0111,160
+O_M NA pattern match,p19_a0111,1
+O_M repro worst,p19_a0111,3.5527136788005e-14
+stands_MM,p19_a0111,154
+selected,p19_a0111,562
+dropped,p19_a0111,0
+stands with drop,p19_a0111,0
+B_MM,p19_a0111,-8.81977521781172
+pop stands,p19_a0250,160
+O_M NA pattern match,p19_a0250,1
+O_M repro worst,p19_a0250,3.5527136788005e-14
+stands_MM,p19_a0250,154
+selected,p19_a0250,562
+dropped,p19_a0250,0
+stands with drop,p19_a0250,0
+B_MM,p19_a0250,-7.55935285326015
+pop stands,p19_a0500,160
+O_M NA pattern match,p19_a0500,1
+O_M repro worst,p19_a0500,3.5527136788005e-14
+stands_MM,p19_a0500,154
+selected,p19_a0500,562
+dropped,p19_a0500,0
+stands with drop,p19_a0500,0
+B_MM,p19_a0500,-5.28609152789516
+pop stands,p19_a1000,160
+O_M NA pattern match,p19_a1000,1
+O_M repro worst,p19_a1000,3.5527136788005e-14
+stands_MM,p19_a1000,154
+selected,p19_a1000,562
+dropped,p19_a1000,0
+stands with drop,p19_a1000,0
+B_MM,p19_a1000,-0.718612206528927
+pop stands,p23_a1061,160
+O_M NA pattern match,p23_a1061,1
+O_M repro worst,p23_a1061,3.5527136788005e-14
+stands_MM,p23_a1061,154
+selected,p23_a1061,562
+dropped,p23_a1061,0
+stands with drop,p23_a1061,0
+B_MM,p23_a1061,-0.159721804751437
+pop stands,p23_a1250,160
+O_M NA pattern match,p23_a1250,1
+O_M repro worst,p23_a1250,3.5527136788005e-14
+stands_MM,p23_a1250,154
+selected,p23_a1250,562
+dropped,p23_a1250,0
+stands with drop,p23_a1250,0
+B_MM,p23_a1250,1.57390173166076
+pop stands,p28b_small,160
+O_M NA pattern match,p28b_small,1
+O_M repro worst,p28b_small,3.5527136788005e-14
+stands_MM,p28b_small,154
+selected,p28b_small,562
+dropped,p28b_small,0
+stands with drop,p28b_small,0
+B_MM,p28b_small,-0.00458325060574487
+pop stands,p38_fit,160
+O_M NA pattern match,p38_fit,1
+O_M repro worst,p38_fit,3.5527136788005e-14
+stands_MM,p38_fit,154
+selected,p38_fit,562
+dropped,p38_fit,0
+stands with drop,p38_fit,0
+B_MM,p38_fit,1.50046279616375
