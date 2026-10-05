@@ -1,0 +1,32 @@
+2c2
+< # PREREG38 firebreather driver (copy of PREREG28b run_task_p28b.sh md5 3969483d; taskmap, arm case with fit check, log tag only). PREREG28b driver (copy of PREREG28 run_task_p28.sh md5 ad1fb918). PREREG28 driver (copy of PREREG23 run_task_p23.sh md5 0524be9c; itself a copy of PREREG19 run_task_p19.sh md5 ac029e4e): one task of work/p28_taskmap. Environment block is the bench141 v141LT array block verbatim
+---
+> # PREREG45 task driver (copy of PREREG38 run_task_p38.sh md5 423e0162; taskmap, arm case, runner, log tag only). PREREG38 firebreather driver (copy of PREREG28b run_task_p28b.sh md5 3969483d; taskmap, arm case with fit check, log tag only). PREREG28b driver (copy of PREREG28 run_task_p28.sh md5 ad1fb918). PREREG28 driver (copy of PREREG23 run_task_p23.sh md5 0524be9c; itself a copy of PREREG19 run_task_p19.sh md5 ac029e4e): one task of work/p28_taskmap. Environment block is the bench141 v141LT array block verbatim
+7c7
+< T=$1; R1=$HOME; TM=$R1/work/p38_taskmap_DATA_2026-10-01.csv
+---
+> T=$1; R1=$HOME; TM=$R1/work/p45_taskmap_DATA_2026-10-05.csv
+33,34c33,34
+< case "$SET" in qc_c|qc_fl) export SRC_TST=UNKNOWN ;; *) echo "FATAL set $SET not in PREREG38"; exit 5 ;; esac
+< unset HTFIX_B ING_MIN_FROM_SCORE QC_AFAC_SMALL QC_AFAC_LARGE QC_AFAC_KNOT || true
+---
+> case "$SET" in qc_c|qc_fl) export SRC_TST=UNKNOWN ;; *) echo "FATAL set $SET not in PREREG45"; exit 5 ;; esac
+> unset HTFIX_B ING_MIN_FROM_SCORE QC_AFAC_SMALL QC_AFAC_LARGE QC_AFAC_KNOT QC_RH_A QC_RH_B QC_RH_RFILL || true
+36,37c36,37
+<   p38_fit) FF=/home/aaron/jobs/v142p38/fit/gyr142-p38-qcafac-fit_DATA_2026-10-01.csv; chk $FF $(cut -d' ' -f1 /home/aaron/jobs/v142p38/logs/fit_md5.txt); V=$(awk -F, 'NR==2 && $1=="QC_AFAC_FIT" {print $2}' $FF); [[ "$V" =~ ^[0-9]\.[0-9]{3}$ ]] || { echo "FATAL fit value $V"; exit 2; }; export QC_AFAC=$V QC_AFAC_SMALL=$V QC_AFAC_LARGE=$V QC_AFAC_KNOT=25 ;;
+<   p38_one) export QC_AFAC=1.000 QC_AFAC_SMALL=1.000 QC_AFAC_LARGE=1.000 QC_AFAC_KNOT=25 ;;
+---
+>   qc_rh) FF=/home/aaron/jobs/v142p45/fit/gyr142-p45-qcrh-fit_DATA_2026-10-05.csv; chk $FF $(cut -d' ' -f1 /home/aaron/jobs/v142p45/logs/fit_md5.txt); A=$(awk -F, '$1=="a"{print $3}' $FF); Bv=$(awk -F, '$1=="b"{print $3}' $FF); [[ "$A" =~ ^-?[0-9]+\.[0-9]+$ && "$Bv" =~ ^-?[0-9]+\.[0-9]+$ ]] || { echo "FATAL fit values $A $Bv"; exit 2; }; export QC_RH_A=$A QC_RH_B=$Bv QC_RH_RFILL=0.815 ;;
+>   qc_rh0) export QC_RH_A=0 QC_RH_B=0 QC_RH_RFILL=0.815 QC_AFAC=1.000 ;;
+40c40
+< RUNNER=$HOME/runner_p28_fb.R; chk $RUNNER 0a2b27421ee7b25eaab7f4591ce3af97
+---
+> RUNNER=$HOME/runner_p45_fb.R; chk $RUNNER e85b3612d4bf9475309042436c761701
+43c43
+< echo "[v142p38-fb] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO QC_AFAC=$QC_AFAC SMALL=${QC_AFAC_SMALL:-unset} LARGE=${QC_AFAC_LARGE:-unset} KNOT=${QC_AFAC_KNOT:-unset} NB_AFAC=$NB_AFAC USE_ANCHOR=$USE_ANCHOR QC_BREAK=$QC_BREAK IMULT=$IMULT host=$(hostname) start=$(date -Is)"
+---
+> echo "[v142p45-fb] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO QC_AFAC=$QC_AFAC RH_A=${QC_RH_A:-unset} RH_B=${QC_RH_B:-unset} SMALL=${QC_AFAC_SMALL:-unset} LARGE=${QC_AFAC_LARGE:-unset} KNOT=${QC_AFAC_KNOT:-unset} NB_AFAC=$NB_AFAC USE_ANCHOR=$USE_ANCHOR QC_BREAK=$QC_BREAK IMULT=$IMULT host=$(hostname) start=$(date -Is)"
+45c45
+< echo "[v142p38-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"
+---
+> echo "[v142p45-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"

@@ -1,0 +1,6 @@
+task qc_rh S1 start 2026-10-05T15:02:30-03:00
+task qc_rh S2 start 2026-10-05T15:02:30-03:00
+task qc_rh S1 exit 0 2026-10-05T15:12:08-03:00
+task qc_rh S3 start 2026-10-05T15:12:08-03:00
+task qc_rh S2 exit 0 2026-10-05T15:12:41-03:00
+task qc_rh S3 exit 0 2026-10-05T15:22:24-03:00
