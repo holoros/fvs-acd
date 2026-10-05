@@ -1,0 +1,16 @@
+chain s1 start 2026-10-05T17:17:38-03:00 pid=1631651
+g0run exit 0 2026-10-05T17:17:57-03:00
+g0cmp exit 0 2026-10-05T17:17:58-03:00
+g0brun exit 0 2026-10-05T17:18:54-03:00
+g0bcmp exit 0 2026-10-05T17:18:55-03:00
+bench s1 done 2026-10-05T17:41:11-03:00: 39 exit 0, 0 nonzero
+retry nb141 done 2026-10-05T17:41:12-03:00: RETRY_DONE nb141 remaining: 0
+retry nb_one done 2026-10-05T17:41:12-03:00: RETRY_DONE nb_one remaining: 0
+retry nb_rh0 done 2026-10-05T17:41:12-03:00: RETRY_DONE nb_rh0 remaining: 0
+fit exit 0 2026-10-05T17:41:14-03:00
+fit md5 fbeaa86af43b78c647bbe55243f75b43  /home/aaron/jobs/v142p45b/fit/gyr142-p45b-nbrh-fit_DATA_2026-10-05.csv
+CHAIN_S1_DONE 2026-10-05T17:41:14-03:00
+chain s2 start 2026-10-05T17:41:16-03:00 pid=1635612
+bench s2 done, retry nb_rh 2026-10-05T17:51:30-03:00: RETRY_DONE nb_rh remaining: 0
+grid exit 0 2026-10-05T18:21:11-03:00
+CHAIN_DONE ready for assembly 2026-10-05T18:21:11-03:00

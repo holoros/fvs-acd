@@ -1,0 +1,5 @@
+plan_md5=a0b8b166
+fit a=1.8672 b=-2.1924
+outcome=RULE2_NOT_ADOPTED_HEIGHT
+failing=H1;H relht;NI long run
+decision_weight=informs 14.3 only; 14.2 keeps NB_AFAC 0.579

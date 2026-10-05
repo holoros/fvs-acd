@@ -1,0 +1,8 @@
+0a1,2
+> ## PREREG45b assembly r2: r1 (md5 3ce976c0) stopped because the H0b per tree difference was NA for records with no height in both arms;
+> ## r2 changes only that line (both NA count as equal, one NA as Inf). No gate, rule or threshold changed.
+24c26,27
+< h0t <- m[, max(abs(ht.x - ht.y) / pmax(1, abs(ht.y)), abs(dbh.x - dbh.y) / pmax(1, abs(dbh.y)), abs(expf.x - expf.y) / pmax(1, abs(expf.y)))]
+---
+> nd <- function(x, y) { d <- abs(x - y) / pmax(1, abs(y)); d[is.na(x) & is.na(y)] <- 0; d[xor(is.na(x), is.na(y))] <- Inf; d }  # r2: NA safe, both NA equal
+> h0t <- m[, max(nd(ht.x, ht.y), nd(dbh.x, dbh.y), nd(expf.x, expf.y))]
