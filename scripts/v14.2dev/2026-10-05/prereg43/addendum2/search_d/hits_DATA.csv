@@ -1,0 +1,10 @@
+host,folder,file,line,class,text,note
+cardinal,~/scripts,(16 files),,NONE,,no file matched QC_AFAC 0.111 afac topht_recal
+cardinal,~/_scripts,build_v130.py,126,USE,".Asym <- (.esi / .afac) / ((1 - exp(-.k*.base))^.p)",v13.0 build kit anchor string; afac not estimated
+cardinal,~/_scripts,AcadianGY_12.9.2.r,1421,OTHER,"# v12.9.x: ESI-consistent height-increment recalibration. topht_recal_diag.R/.csv diagnosed",md5 0b115f6f556098133f7cd221e46dabc3 dated 2026-07-02; describes the fitted esi.anchor.coef (NB 0.885 + 0.0103 esi; QC 0.441 + 0.0378 esi) from topht_recal_diag; no afac or dht.mult value
+cardinal,~/_scripts,AcadianGY_12.9.2.r,3581,OTHER,"# v12.9.x: ESI-consistent anchor recalibration. Diagnostic (topht_recal_diag.R/.csv,",same file; esi.anchor.coef derivation; QC_AFAC not present in the model file
+cardinal,~/_scripts,AcadianGY_12.3.6 to 12.11 (23 files),various,OTHER,"0.11176485808573 (AW coefficient); 0.1113 (NLME table, a1); 0.111855 (WP taper b5_tap)",numeric coincidence in species coefficient tables; no QC_AFAC or qc_afac in any model file
+cardinal,~/_scripts,chmv2_signal_check_out and species_topo_disturbance_signal_check_out (7 csv),,OTHER,,out of fold prediction tables from 3 Sep 2026 signal checks; matched on numeric 0.111 substrings; not line read
+cardinal,~/fvsacd_bak30,stand_slim_2026-09-07.csv and 3 out30_basebak traj csv,,OTHER,"0.111783117993539 (pBA_bf1 column); 620.111009975043 (SDI)",numeric coincidence; zero afac lines
+cardinal,~/fvs-freeze-archive_20260805,src-converted (79 files with 0.111; 6 with afac substring),,OTHER,"TAFAC = 1.7 (lpmpb); TPAFAC (vbase/cuts.f90 sdical.f90)",FVS Fortran; afac matches are substrings of TAFAC and TPAFAC; 0 hits in src-converted/acd; 0.111 files are non ACD variant coefficient tables and were not line read
+cardinal,~/fvs-freeze-archive_20260806,src-converted lpmpb vbase; MANIFEST.md5,,OTHER,"25700c6beb46c8afacc5e5f9091f9a07  src-converted/base/CALCOM.f90",afac substring inside md5 hashes and TAFAC/TPAFAC; 0 hits in acd; no 0.111 outside src-converted

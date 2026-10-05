@@ -1,0 +1,12 @@
+task qc141 S1 start 2026-10-05T13:19:39-03:00 load 0.99
+task qc141 S2 start 2026-10-05T13:19:39-03:00 load 0.99
+task qc141 S1 exit 0 2026-10-05T13:29:17-03:00
+task qc141 S3 start 2026-10-05T13:29:17-03:00 load 2.02
+task qc141 S2 exit 0 2026-10-05T13:29:51-03:00
+task p38_fit S1 start 2026-10-05T13:29:51-03:00 load 2.01
+task p38_fit S1 exit 0 2026-10-05T13:39:04-03:00
+task p38_fit S2 start 2026-10-05T13:39:04-03:00 load 2.09
+task qc141 S3 exit 0 2026-10-05T13:39:11-03:00
+task p38_fit S3 start 2026-10-05T13:39:11-03:00 load 2.08
+task p38_fit S2 exit 0 2026-10-05T13:49:14-03:00
+task p38_fit S3 exit 0 2026-10-05T13:49:27-03:00
