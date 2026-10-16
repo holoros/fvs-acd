@@ -4,7 +4,17 @@ Acadian growth-and-yield model (AcadianGY / FVS-ACD) modernization, benchmarking
 documentation. Code and aggregate results are versioned here; coordinate data, raw tree lists, and
 large inputs stay on OSC Cardinal and (at release) Zenodo, matching the other holoros data repos.
 
-## Current status (updated 13 August 2026)
+## Current status (October 16, 2026)
+
+**AcadianGY 14.1 is the release.** It shipped on September 24, 2026 as an overlay on 14.0.4 with both of its diameter increment terms off by default and one named standing gate failure (GT1), as `VERSION_HISTORY.md` Era 8 records. The 14.x engine files (`scripts/AcadianGY_14.0.1.r` to `scripts/AcadianGY_14.1.r`) and the 14.1 gate pre-registration are on branch `engines-14.1-20260924`, which is open as pull request #9 and is not yet merged into this branch or `main`. The 13.1 model of record described in the August section below remains the base that every 14.x file sources.
+
+The 14.2 refinement runs on branch `v142-refinement-20260926`. From September 27 to October 5, 2026 it ran the preregistered studies PREREG16 to PREREG45b against the 14.1 benchmark record, and none of them changed an engine file, coefficient or default of 14.1. It adopted a volume scoring convention (C1, or C2 where tags allow) and scorer r2, produced one regional NS candidate (v141LTfi) that passes its benchmark gates but has not cleared a Bakuzis grid, and closed the QC height anchor track with the shipped 0.111 kept. PREREG46 and revisions 1 to 5 of PREREG47 (absolute QC Bakuzis gates) are registered but not yet run, because firebreather, the host of the 14.2 runs, has been unreachable since October 11, 2026. The current release notes are revision e, `scripts/v14.2dev/2026-10-16/release-notes/2026-10-16_fvs-acd-v14.2_release-notes_DRAFT.md`.
+
+A cross-version benchmark on October 16, 2026 compared 13.1h, 14.0.4 L2 and 14.1 on the 19 frozen benchmark sets, a new set of 827 post-harvest Maine FIA stands, and 200 yr no-harvest projections of 918 unmanaged Maine FIA stands (`docs/benchmarks/2026-10-16_cross-version/README.md`). Version 14.1 is the best ten year model, with a median absolute biomass bias of 3.8% across the 19 sets against 9.6% for 13.1h. However, it predicts biomass recovery after heavy removals of 2.78 Mg ha⁻¹ yr⁻¹ against an observed 1.39, an overstatement of 1.39 (1.13 to 1.64), and it projects a plateau and decline in 64 to 84% of stands in every forest type, where the FIA curves show a peak only in spruce-fir. Version 13.1h tracks recovery after harvest most closely but never declines. The benchmark points 14.3 at three changes, which are to limit the thinning response to partial removals (1), condition senescence on forest type (2), and repair the diameter growth shortfall of about 10% in quadratic mean diameter that every version shows on unmanaged Maine FIA stands (3). The 14.2 candidate arms p38_fit and qc_rh were not run, as their engine copies are on firebreather.
+
+The Zenodo concept DOI for all versions of the FVS-ACD deposit is 10.5281/zenodo.22996790. The latest published version is 1.8.0 (10.5281/zenodo.23168366), which adds PREREG38 to PREREG44, and earlier versions are 1.7.0 (10.5281/zenodo.23085773) and 1.6.0 (10.5281/zenodo.23082910). Version 1.9.0, which adds PREREG45, PREREG45b and the stress tests, is staged on firebreather and unpublished. The cross-version benchmark is planned for the version after it.
+
+## Status as of August 13, 2026 (historical)
 
 Active development is on **AcadianGY 13.1**, not the 12.6.1 candidate this README previously
 described. The model of record is `~/AcadianGY_13.1.r` on Cardinal (never edited directly; all
@@ -79,6 +89,10 @@ Resources); model changes coordinate with that repository.
   decks, in their finished formats (docx/pptx/pdf) plus markdown source where one exists.
 - `docs/reports/archive/` superseded `_PREV_*` versions of the files in `docs/reports/`, kept for
   provenance. Not the current version of anything; check `docs/reports/` first.
+- `docs/benchmarks/` dated benchmark packages, each with its own README, report, figures,
+  aggregate CSVs and scripts (first entry `2026-10-16_cross-version/`).
+- `scripts/v14.2dev/` the 14.2 refinement record, one dated folder per session, holding the
+  preregistrations, RESULT files, diffs, scripts and release notes.
 - `docs/GY_model_evaluation_scorecard.md`, `docs/HANDOFF_FVS-ACD.md` standing (non-dated)
   reference documents.
 - `CHARTER.md` project charter, at root alongside this README as a repo-level standing document.

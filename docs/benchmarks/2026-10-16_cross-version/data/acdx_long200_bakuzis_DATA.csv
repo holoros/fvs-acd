@@ -1,0 +1,61 @@
+ftg,rho,lo,hi,n,relation,arm
+WRPH,-0.0544137022397892,-0.348783082897421,0.247131315680912,45,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v131h
+SF,-0.150263246392599,-0.242166243340791,-0.0514265732362643,370,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v131h
+MBB,0.104490538424464,-0.0147701732364245,0.22967673156813,237,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v131h
+AB,0.0809614658686339,-0.0898871962203706,0.238889781951248,164,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v131h
+EAC,0.163476422512401,-0.177960978047178,0.455772324684028,43,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v131h
+OAK,0.0501800720288115,-0.207107155195949,0.331826676800159,50,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v131h
+AB,0.317073170731707,,,164,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v131h
+EAC,0.906976744186047,,,43,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v131h
+MBB,0.616033755274262,,,237,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v131h
+OAK,0.86,,,50,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v131h
+SF,0.0432432432432432,,,370,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v131h
+WRPH,0.0888888888888889,,,45,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v131h
+AB,0,,,164,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v131h
+EAC,0,,,43,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v131h
+MBB,0,,,237,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v131h
+OAK,0,,,50,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v131h
+SF,0,,,370,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v131h
+WRPH,0,,,45,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v131h
+ALL,0.904891709006883,,,918,"Eichhorn: slope ratio of log volume on log top height, high over low ESI tercile (near 1 holds)",v131h
+ALL,-0.173060359629871,,,918,"yield-density: Spearman(initial TPH, AGB at yr 100), near 0 holds",v131h
+WRPH,0.221739130434783,-0.0875466422459239,0.51349087698977,45,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141off
+SF,-0.00751721344866897,-0.111369021937379,0.100436622897615,370,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141off
+MBB,0.0992269333597999,-0.0310294626908129,0.226023200191898,237,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141off
+AB,0.203168838059879,0.0637751080380879,0.339530803690875,164,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141off
+EAC,0.111828444222109,-0.189743563538431,0.413091268589278,43,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141off
+OAK,0.0362545018007203,-0.24682780158175,0.310755317231435,50,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141off
+AB,0,,,164,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141off
+EAC,0.0232558139534884,,,43,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141off
+MBB,0,,,237,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141off
+OAK,0,,,50,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141off
+SF,0,,,370,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141off
+WRPH,0,,,45,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141off
+AB,0,,,164,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141off
+EAC,0,,,43,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141off
+MBB,0,,,237,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141off
+OAK,0,,,50,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141off
+SF,0,,,370,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141off
+WRPH,0,,,45,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141off
+ALL,0.890657011072825,,,918,"Eichhorn: slope ratio of log volume on log top height, high over low ESI tercile (near 1 holds)",v141off
+ALL,0.00704858177775984,,,918,"yield-density: Spearman(initial TPH, AGB at yr 100), near 0 holds",v141off
+WRPH,0.164558629776021,-0.15400514239217,0.488094767573814,45,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141LT
+SF,-0.000896815729658731,-0.104391641885585,0.105094981271901,370,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141LT
+MBB,0.110789466389757,-0.013002284559175,0.233595636781983,237,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141LT
+AB,0.198769601192779,0.0462014779631957,0.342350380541945,164,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141LT
+EAC,0.0866840337386775,-0.226180756885976,0.380810459616839,43,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141LT
+OAK,0.0187755102040816,-0.276602334153178,0.307044565271651,50,"site ordering: Spearman(ESI, AGB at yr 100) > 0",v141LT
+AB,0,,,164,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141LT
+EAC,0.0697674418604651,,,43,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141LT
+MBB,0,,,237,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141LT
+OAK,0,,,50,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141LT
+SF,0,,,370,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141LT
+WRPH,0,,,45,magnitude: share of stands whose max AGB exceeds observed 99.9th percentile,v141LT
+AB,0,,,164,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141LT
+EAC,0,,,43,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141LT
+MBB,0,,,237,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141LT
+OAK,0,,,50,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141LT
+SF,0,,,370,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141LT
+WRPH,0,,,45,Reineke: share of stands whose max SDI exceeds observed 99.9th percentile,v141LT
+ALL,0.891442477325484,,,918,"Eichhorn: slope ratio of log volume on log top height, high over low ESI tercile (near 1 holds)",v141LT
+ALL,0.00478412514225547,,,918,"yield-density: Spearman(initial TPH, AGB at yr 100), near 0 holds",v141LT
