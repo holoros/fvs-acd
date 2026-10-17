@@ -38,9 +38,10 @@ Maine sets, and Zenodo version 1.9.0 and the version after it, which will carry 
 
 To run 14.1, start with the user guide, `docs/guide/user-guide-14.1.md`, which shows a ten year
 projection called directly in R; `docs/reference/running-14.1.md` covers the benchmark runner. In short, a projection sources four layers in
-order (13.1, the 14.x base, the 14.0.4 engine, the 14.1 overlay), reads every setting from
-environment variables, and is driven by the benchmark runner. The defaults of several variables do
-not reproduce the release, so start from the launcher block in that guide. Every variable, with its
+order (13.1, the 14.x base, the 14.0.4 engine, the 14.1 overlay), and in the benchmarks reads every
+setting from environment variables through the runner. The defaults of several variables do not
+reproduce the release, so start from the worked example in the user guide or the launcher block in
+the running guide. Every variable, with its
 default and its release value, is in `docs/reference/switches.md`.
 
 A clone cannot yet run 14.1 end to end. The benchmarked 13.1 base, the 14.x base file, the trajectory
