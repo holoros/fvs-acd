@@ -6,6 +6,11 @@ through the current model of record `AcadianGY_13.1.r`). Sourced from the dated 
 traceable to one of those. Where a detail could not be verified from a primary source it is marked
 `[unverified]` rather than guessed. No em dashes.
 
+*Note added October 17, 2026.* The paragraph above dates from August 13, 2026. Eras 7 to 9 have since
+added 14.0 to 14.1 and the 14.2 refinement. 14.1 is the current release, and its engine files are on
+branch `engines-14.1-20260924` (PR #9), not yet in this branch's `scripts/`. 13.1 remains the model of
+record that every 14.x file sources. `docs/reference/running-14.1.md` describes how the layers stack.
+
 ## How to read this
 
 Dates are the file's last-modified timestamp on Cardinal (when the version was finalized), not

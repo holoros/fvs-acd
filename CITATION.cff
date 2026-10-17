@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use FVS-ACD (AcadianGY) or this modernization record, please cite the Zenodo concept DOI below, which resolves to the latest deposited version."
+title: "FVS-ACD (AcadianGY): Acadian variant of the Forest Vegetation Simulator, modernization and benchmark record"
+type: software
+doi: "10.5281/zenodo.22996790"
+repository-code: "https://github.com/holoros/fvs-acd"
+authors:
+  - family-names: Weiskittel
+    given-names: Aaron
+    orcid: "https://orcid.org/0000-0003-2534-4478"
+    affiliation: "Center for Research on Sustainable Forests, University of Maine"
+  - family-names: Rice
+    given-names: Ben
+    affiliation: "Midgard Natural Resources"
+keywords:
+  - forestry
+  - growth and yield
+  - Forest Vegetation Simulator
+  - Acadian
+  - FIA
+  - NSVB
+  - biometrics
