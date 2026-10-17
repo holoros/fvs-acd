@@ -15,10 +15,16 @@ the layer below unmodified.
 
 | Layer | File | md5 | In this repository |
 |:--|:--|:--|:--|
-| 1. Model of record | `AcadianGY_13.1.r` | 5894df6013c701d09e7ba67ba6c2f090 | `scripts/` |
+| 1. Model of record | `AcadianGY_13.1.r` | 5894df6013c701d09e7ba67ba6c2f090 | no, Cardinal only (`~/AcadianGY_13.1.r`); see the note below |
 | 2. 14.x base (diameter increment refit, `ACD_V14_BASE`) | `p4e/model_b0b1b2.r` | bb51eeada62796532ce3a7212a5c6451 | no, Cardinal only |
 | 3. Engine (linked three stage mortality, refitted stand basal area increment target) | `AcadianGY_14.0.4.r` | 61f95d99f896e8e513930d6e33a7391a | `scripts/` on branch `engines-14.1-20260924` (PR #9) |
 | 4. Overlay (terms L and T) | `AcadianGY_14.1.r` | 0bf27dde81240e6bdf59c9a90f0051bd | `scripts/` on branch `engines-14.1-20260924` (PR #9) |
+
+No branch of this repository holds the 13.1 file the benchmarks ran. `scripts/AcadianGY_13.1.r` on
+`main` and the refinement branches is an older copy (md5 5140bf9b), and the engine branches hold the
+Cardinal copy with its version tag changed to AcadianV13.2 (md5 6ec18236, commit e9527d7). Check the
+md5 of whatever 13.1 you source against the value in the table. The 14.0.4 file also still carries the
+version tag AcadianV14.0.2; its md5, not its tag, identifies it.
 
 14.0.4 sources its base itself: `ACD_V14_BASE` when set, otherwise `~/AcadianGY_13.1.r`, otherwise
 `AcadianGY_13.1_DRAFT.r` in the working directory. The benchmark sets `ACD_V14_BASE` to layer 2,
@@ -62,7 +68,7 @@ Three behaviors catch people out.
 
 | Variable | Contents |
 |:--|:--|
-| `PAIRS_FILE` | one row per stand pair: `STAND`, `SITE`, `PROV`, `Y1`, `Y2`, `interval_years`, `SCORE_MINDBH_OBS`, optional `MANAGED`, `TST` |
+| `PAIRS_FILE` | one row per stand pair: `STAND`, `SITE`, `PROV`, `Y1`, `Y2`, `interval_years`, `SCORE_MINDBH_OBS`, `ELEV` (m; values of 0 or less fall back to 200), optional `MANAGED`, `TST`. Include `ELEV` even when unknown: the runner tests it with `&&`, which errors in R 4.3 and later when the column is absent (read from the code, not run) |
 | `INIT_FILE` | t1 tree list: `STAND`, species code, `DBH` (cm), `HT` (m), `EXPF` (trees ha⁻¹) |
 | `T2_FILE` | observed t2 tree list in the same form, for scoring |
 | `SITE_FILE` | `SITE`, `esi8`; stands without ESI coverage are dropped when `INDOMAIN=1` |
@@ -70,7 +76,10 @@ Three behaviors catch people out.
 The runner also reads lookup files from its working directory on Cardinal
 (`~/magplot/verify/`): `v129_gate3_dedup.csv`, `v129x_brms_sdimax_map.csv`,
 `nsvb_emulator_coefs.csv` and `spcd_spgrpcd.csv`, and sources `~/hw_sawfrac_smith.R` and
-`~/hw_formrisk_split.R`. None of these is in the repository yet.
+`~/hw_formrisk_split.R`. It always sources an absolute path trajectory hooks file, and with `V132=1` a
+v13.2 site overlay, both on Cardinal. The counters runner that the 14.1 benchmark used
+(`2026-09-25_v142_phaseD_runner_p23_tst_counters.R`, md5 300a0d61) and `~/v13_comb_post` are also
+Cardinal only. None of these is in the repository yet.
 
 ## Minimal 14.1 launch (Cardinal)
 
@@ -93,7 +102,7 @@ export DBA_V1404=1 SMALLTREE=0
 export V141=1 V141_FILE=$HOME/v14_1_20260923/AcadianGY_14.1.r
 export V141_COEF=$V/gydbreg20260916/v141_20260923/work/v141_option3_offline_coefs_r5_2026-09-23.rds
 export V141_RELCAP=2.9848 V141_DLO=12.7 V141_DHI=15.0
-export LSDG_V141=1 THIN_V141=1 SRC_TST=UNKNOWN   # or TST_FILE=... TST_COL=TST
+export LSDG_V141=1 THIN_V141=1 SRC_TST=UNKNOWN   # T does nothing with UNKNOWN; for thinned stands use TST_FILE=... TST_COL=TST
 cd $V && Rscript $V/gydbreg20260916/v142_20260925/runner/scripts/2026-09-25_v142_phaseD_runner_p23_tst_counters.R
 ```
 

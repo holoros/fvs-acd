@@ -65,9 +65,9 @@ MORTCAL optional and off by default.
 - Value is dominated by the site variable (GSA SRC 0.80); ingrowth fixes stem structure, not value.
 - FVS-ACD vs OSM diverge ~60% in long-horizon BA (model-form uncertainty).
 - Version evolution: v9.6 (+17%) -> v12 line (+11%) -> v12.6 (+3% regional) -> v13.1 ship18 (see
-  Current status above for the latest scorecard).
+  the Status section of the README for the latest scorecard).
 
-### Status and next steps (12.6-era, see Current status above for what actually shipped next)
+### Status and next steps (12.6-era, see the Status section of the README for what actually shipped next)
 12.6.1 was a documented candidate, not a release, at the time this section was written. Gating
 items named then (see `docs/handoffs/20260629_redteam_and_roadmap.md`): regional mortality
 recalibration, refined ESI + ESI-anchored dominant height, broader long-horizon validation,

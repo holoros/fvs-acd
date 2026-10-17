@@ -24,7 +24,7 @@ means the file is pinned as an unchanging reference point other work is scored a
 | Version | Date | Size | Status |
 |---|---|---|---|
 | `12.3.6` | 21 May | 154 KB | prototype |
-| `12.3.6_uploaded` | 21 May | 154 KB | prototype (byte-identical upload copy of 12.3.6, `[unverified]` whether any diff exists) |
+| `12.3.6_uploaded` | 21 May | 154 KB | prototype (upload copy; checked October 17, 2026: not byte identical to 12.3.6, md5 86b65c71 against a410e66d, and its `AcadianVersionTag` reads AcadianV12.3.5) |
 | `12.3.7` | 22 May | 155 KB | prototype |
 | `12.3.7_dbg` | 26 May | 155 KB | prototype, debug build |
 | `12.3.8` | 26 May | 155 KB | prototype |
@@ -360,7 +360,7 @@ installations or an independently sourced release duration for this species grou
 document may report GT1 as passing.
 
 The v141 copy of the Phase D runner ships as
-`scripts/phaseD/2026-09-25_v141_phaseD_runner_p23_tst.R` (md5 8471121e3a880e838b42923250a94cdd),
+`scripts/phaseD/2026-09-25_v141_phaseD_runner_p23_tst.R` on branch `engines-14.1-20260924` (md5 8471121e3a880e838b42923250a94cdd),
 because without it a reviewer cloning the repository cannot reproduce a single hooked number. It is
 its 14.0.4 parent plus four additive blocks and one changed line: an optional source of the overlay
 under `V141=1`, a per stand years since thinning resolved from data with the precedence a per stand

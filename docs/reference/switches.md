@@ -28,7 +28,7 @@ release half life gate, is a standing named failure (`VERSION_HISTORY.md`, Era 8
 | `ACD_V14_BASE` | `~/AcadianGY_13.1.r` if present, else `AcadianGY_13.1_DRAFT.r` | `p4e/model_b0b1b2.r` | base model the engine sources |
 | `ACD_V14_LEVER_ONLY` | unset | unset | load the mortality machinery without the base (unit parity tests) |
 | `LINKED` | 0 | 1 | linked three stage mortality in place of SDImax self thinning |
-| `LINKED_MODE` | L2 | L2 | floor applied as a minimum decrement everywhere |
+| `LINKED_MODE` | L2 | L2 | floor applied as a minimum decrement everywhere; set it explicitly, as the benchmark launchers do, rather than relying on the bundle default |
 | `LINKED_COEF` | none | `v14_coef_bundle_2026-09-08.rds` | linked mortality coefficients |
 | `LINKED_SPRE` | 1 | 1 | stage 3 species conditional modes; 0 evaluates the species effect at the population level |
 | `LINKED_JURRE` | 1 | default | |
@@ -47,7 +47,7 @@ release half life gate, is a standing named failure (`VERSION_HISTORY.md`, Era 8
 | `MODEL_FILE` | `~/AcadianGY_13.1.r` | `AcadianGY_14.0.4.r` | first file sourced |
 | `V132` | 1 | 0 | v13.2 site overlay from a Cardinal path; **set 0 for every 14.x run** |
 | `V141`, `V141_FILE` | 0, `~/v14_1_20260923/AcadianGY_14.1.r` | 1, the 14.1 file | source the 14.1 overlay |
-| `V141_REPORT_DIR` | none | per run | where T and L call counters are written (counters runner) |
+| `V141_REPORT_DIR` | none | per run | where T and L call counters are written; read by the v141 runner in this repository (md5 8471121e) and by the counters runner |
 | `B0NEW`, `B1NEW`, `B2NEW` | none | -1.88365516930746, 0.497878016309701, -0.0293425859449079 | diameter increment coefficients read by `model_b0b1b2.r`, which sources 13.1 and patches `ddbh()` |
 | `SPLIT` | FALSE | TRUE | apply `split_formrisk()` from `~/hw_formrisk_split.R` to each projected list (hardwood form risk split) |
 | `USE_MODS` | FALSE | unset | hardwood modifier |
@@ -74,7 +74,7 @@ release half life gate, is a standing named failure (`VERSION_HISTORY.md`, Era 8
 
 | Variable | Default | Meaning |
 |:--|:--|:--|
-| `PAIRS_FILE`, `INIT_FILE`, `T2_FILE`, `SITE_FILE` | none | stand set, see `running-14.1.md` |
+| `PAIRS_FILE`, `INIT_FILE`, `T2_FILE`, `SITE_FILE` | `magp_qcnb_pairs.csv`, `magp_qcnb_tree_init.csv`, `magp_qcnb_tree_t2.csv`, `magp_qcnb_site_esi8.csv` (the QC and NB MagPlot set, in the working directory) | stand set, see `running-14.1.md`; always set them, since the defaults silently run the QC and NB set |
 | `CONFIG_TAG` | `cb_v131` | output prefix, `<CONFIG_TAG>_results.csv` |
 | `TREE_OUT` | unset | per tree output prefix |
 | `INDOMAIN` | 1 | keep NB stands and stands with ESI coverage only |
@@ -84,7 +84,9 @@ release half life gate, is a standing named failure (`VERSION_HISTORY.md`, Era 8
 | `SCORE_MINDBH_FIXED` | unset | fixed scoring DBH threshold in place of the per pair `SCORE_MINDBH_OBS` |
 | `MGD_FILE`, `MGD_COL`, `MGD_UNMANAGED`, `SRC_MANAGED` | unset | management state when the pairs file has no `MANAGED` column; no source stops the run |
 | `TST_FILE`, `TST_COL`, `SRC_TST` | unset | years since thinning when the pairs file has no `TST` column; accepts a number, `NEVER` or `UNKNOWN`; with `THIN_V141=1` no source stops the run |
-| `SCORECARD`, `SCORECARD_OUT`, `BASE_PREFIX`, `CAND_PREFIX`, `CAND_LABEL` | unset | aggregation mode, no model run |
+| `SCORECARD` | unset | aggregation mode, no model run |
+| `SCORECARD_OUT`, `BASE_PREFIX`, `CAND_PREFIX`, `CAND_LABEL` | `v131_allsites_scorecard.csv`, `v131base`, `v131`, `CANDIDATE v13.1` | output and file prefixes used in aggregation mode |
+| `TIMELIM` | 60 s | per stand time limit; read only by the 200 yr runner copy `2026-10-16_acdx_long200_runner.R` (3,000 s in those runs), not by the runner in this repository |
 
 The 13.1h column is the configuration of `docs/benchmarks/2026-10-16_cross-version/scripts/cardinal/bench131h/`,
 also used for the Seven Islands work: `MODEL_FILE=~/AcadianGY_13.1.r` with no 14.x variables set.
