@@ -16,7 +16,7 @@ the layer below unmodified.
 | Layer | File | md5 | In this repository |
 |:--|:--|:--|:--|
 | 1. Model of record | `AcadianGY_13.1.r` | 5894df6013c701d09e7ba67ba6c2f090 | no, Cardinal only (`~/AcadianGY_13.1.r`); see the note below |
-| 2. 14.x base (diameter increment refit, `ACD_V14_BASE`) | `p4e/model_b0b1b2.r` | bb51eeada62796532ce3a7212a5c6451 | no, Cardinal only |
+| 2. 14.x base (diameter increment refit, `ACD_V14_BASE`) | `p4e/model_b0b1b2.r` | bb51eeada62796532ce3a7212a5c6451 per the cross-version benchmark launchers; the 14.2 launch scripts check the same path against 04a0b71da081ae98d1473391c9976896, and which belongs to the benchmarked 14.1 is unverified | no, Cardinal only |
 | 3. Engine (linked three stage mortality, refitted stand basal area increment target) | `AcadianGY_14.0.4.r` | 61f95d99f896e8e513930d6e33a7391a | `scripts/` on branch `engines-14.1-20260924` (PR #9) |
 | 4. Overlay (terms L and T) | `AcadianGY_14.1.r` | 0bf27dde81240e6bdf59c9a90f0051bd | `scripts/` on branch `engines-14.1-20260924` (PR #9) |
 
@@ -36,19 +36,23 @@ Coefficients are separate files.
 |:--|:--|:--|:--|
 | Linked mortality bundle | `v14_coef_bundle_2026-09-08.rds` | 4740de88af8231677d828dec8e5b753c | `data/v14/` on branch `engines-14.1-20260924` |
 | L and T | `v141_option3_offline_coefs_r5_2026-09-23.rds` | c8f02f5841e98b93cb532b6fa9b1fc51 | `data/v14/option3/` on branch `engines-14.1-20260924` |
-| 14.0.4 basal area increment target | `v1404_dba_coef_FINAL_2026-09-17.rds` | 87c3ba213271d79683415013a58353f3 (repository copy) | `data/v14/dba/` on branch `engines-14.1-20260924` |
+| 14.0.4 basal area increment target (fitting provenance only; 14.0.4 carries these coefficients inline and never reads the file) | `v1404_dba_coef_FINAL_2026-09-17.rds` | 87c3ba213271d79683415013a58353f3 (repository copy) | `data/v14/dba/` on branch `engines-14.1-20260924` |
 
 ## The runner
 
-Projections are driven by a benchmark runner, not called directly. The 14.1 copy ships as
+The engine function `AcadianGYOneStand(tree, stand, ops)` can be called directly, and `docs/guide/user-guide-14.1.md`
+shows how; the component functions take their defaults from global `ops` and `stand`, so assign both
+globally. The benchmarks instead drive it through a runner bound to Cardinal paths. The 14.1 copy ships as
 `scripts/phaseD/2026-09-25_v141_phaseD_runner_p23_tst.R` (md5 8471121e3a880e838b42923250a94cdd) on
 branch `engines-14.1-20260924`. The October 2026 benchmarks used a descendant that adds call
 counters, `2026-09-25_v142_phaseD_runner_p23_tst_counters.R` (md5 300a0d610070f77517352c8e23f07922),
 which lives on Cardinal.
 
-The runner reads every setting from environment variables. In order, it sources `MODEL_FILE`, then
-optionally a v13.2 site overlay (`V132`), then the 14.1 overlay (`V141`), builds `ops` with
-`make_ops()`, sets the mortality, ingrowth and height anchor levers, resolves each stand's
+The runner reads every setting from environment variables. It sources `MODEL_FILE`; with `V132=1` it
+sources the v13.2 site overlay, sources `MODEL_FILE` again and calls `activate_v132()`; it always
+sources the Phase D trajectory hooks from a Cardinal path; then it sources the 14.1 overlay (`V141`),
+builds `ops` with `make_ops()`, sets the levers (several of which no engine file reads, see
+`switches.md`), resolves each stand's
 management state and years since thinning, projects every stand pair from t1 to t2 in annual steps,
 and writes one `<CONFIG_TAG>_results.csv` with observed and predicted stand metrics.
 

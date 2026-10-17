@@ -36,7 +36,8 @@ Maine sets, and Zenodo version 1.9.0 and the version after it, which will carry 
 
 ## Quick start
 
-To run 14.1, read `docs/reference/running-14.1.md`. In short, a projection sources four layers in
+To run 14.1, start with the user guide, `docs/guide/user-guide-14.1.md`, which shows a ten year
+projection called directly in R; `docs/reference/running-14.1.md` covers the benchmark runner. In short, a projection sources four layers in
 order (13.1, the 14.x base, the 14.0.4 engine, the 14.1 overlay), reads every setting from
 environment variables, and is driven by the benchmark runner. The defaults of several variables do
 not reproduce the release, so start from the launcher block in that guide. Every variable, with its
@@ -69,14 +70,15 @@ kept with the plan.
 | Path | Contents |
 |:--|:--|
 | `docs/index.md` | documentation map, including the branch map |
-| `docs/reference/` | running guide and switch reference |
+| `docs/guide/` | the 14.1 user guide |
+| `docs/reference/` | runner guide and switch reference |
 | `VERSION_HISTORY.md` | every engine version, nine eras, from 12.3.6 to 14.1 |
 | `docs/preregistrations.md` | index of the 14.2 pre-registrations and results |
 | `docs/benchmarks/` | dated benchmark packages, each with its README, figures, aggregate CSVs and scripts |
 | `docs/reports/` | finished reports and decks; superseded versions in `docs/reports/archive/` |
 | `docs/handoffs/` | dated session records, `YYYYMMDD_topic.md` |
 | `docs/history.md` | the status sections this README carried from June to October 16, 2026 |
-| `scripts/` | engine files (`AcadianGY_*.r`), build and patch scripts, harnesses; `scripts/v14.2dev/` holds the 14.2 record by date |
+| `scripts/` | engine files (`AcadianGY_*.r`), build and patch scripts, harnesses, indexed in `scripts/README.md`; `scripts/v14.2dev/` holds the 14.2 record by date |
 | `results/`, `data/`, `figures/` | aggregate scorecards, frozen composite scores, publication figures |
 | `refs/` | archived reference material |
 | `zenodo_v12101/` | the v12.10.1 Zenodo deposit package |

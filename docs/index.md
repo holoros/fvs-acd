@@ -6,9 +6,10 @@ Start with `../README.md`. This page lists everything else by what a reader is t
 
 | Document | Contents |
 |:--|:--|
+| `guide/user-guide-14.1.md` | user guide for 14.1, written from the engine code: the layer stack, inputs, every switch with its effect, a ten year projection in R without the runner, outputs, md5 checks and known limitations |
 | `reference/running-14.1.md` | how a 14.1 projection is assembled and launched, file and coefficient md5s, and what a clone cannot yet run |
 | `reference/switches.md` | every 14.0.4, 14.1 and runner environment variable with its default and its 14.1 benchmark value |
-| `handoffs/20260629_FVS-ACD_user_guide.md` | the 12.6 era user guide; it predates 14.x, so check any field it names against `reference/switches.md` |
+| `handoffs/20260629_FVS-ACD_user_guide.md` | the 12.6 era user guide, superseded for 14.x by `guide/user-guide-14.1.md` |
 | `reports/FVS-ACD_variant_overview_GTR.docx` | variant overview in the FVS general technical report style (12.6 era; the 12.9 revision is `FVS-ACD_variant_overview_GTR_v129.docx`) |
 
 ## Understand what changed and why
@@ -21,6 +22,11 @@ Start with `../README.md`. This page lists everything else by what a reader is t
 | `../scripts/v14.2dev/2026-10-16/release-notes/2026-10-16_fvs-acd-v14.2_release-notes_DRAFT.md` | 14.2 release notes, revision e |
 | `GY_model_evaluation_scorecard.md` | the multi-dimensional growth and yield evaluation framework the benchmarks score against |
 | `../CHARTER.md`, `HANDOFF_FVS-ACD.md` | the June 2026 site driver modernization charter and its handoff |
+
+## Find a script
+
+`../scripts/README.md` indexes every file in `scripts/` by role, version and status, and records
+header and version tag mismatches. Paths there are frozen; nothing is moved.
 
 ## Check the evidence
 
