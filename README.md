@@ -17,7 +17,7 @@ here are coordinated with both.
 |:--|:--|:--|
 | **14.1** | **current release**, shipped September 24, 2026: 14.0.4 plus two diameter increment terms, L (large stem level) and T (thinning release), both off by default; one named standing gate failure, GT1 | engine files on branch `engines-14.1-20260924`, PR #9 |
 | 14.2 | refinement in progress; no engine file, coefficient or default of 14.1 changed so far | record in `scripts/v14.2dev/`, release notes revision e |
-| 14.3 | planned; the first pre-registration (thinning response limited to partial removals) is drafted and under red team review, not yet in this repository | `docs/v14.3/` once registered |
+| 14.3 | planned; pre-registration 1 (the 14.1 thinning response limited to partial removals) registered October 18, 2026 after five red team rounds, not yet run | `docs/v14.3/` |
 | 13.1 | model of record and the base every 14.x file sources | the benchmarked copy (md5 5894df60) is on Cardinal only; `scripts/AcadianGY_13.1.r` here is an older copy (md5 5140bf9b), see `docs/reference/running-14.1.md` |
 | 12.10.1 | frozen August 2026 operational baseline, packaged for deposit | `zenodo_v12101/` |
 

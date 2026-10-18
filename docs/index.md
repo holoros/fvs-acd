@@ -18,6 +18,7 @@ Start with `../README.md`. This page lists everything else by what a reader is t
 |:--|:--|
 | `../VERSION_HISTORY.md` | every engine version from 12.3.6 to 14.1, with status, gates and stated limitations, in nine eras |
 | `history.md` | the dated status sections the README carried from June to October 16, 2026 |
+| `v14.3/` | 14.3 pre-registration 1 (registered October 18, 2026, md5 7f3e67c2), its registration log, change log and the five red team reviews |
 | `preregistrations.md` | index of the 14.2 refinement pre-registrations and results, PREREG13b to PREREG49 |
 | `../scripts/v14.2dev/2026-10-16/release-notes/2026-10-16_fvs-acd-v14.2_release-notes_DRAFT.md` | 14.2 release notes, revision e |
 | `GY_model_evaluation_scorecard.md` | the multi-dimensional growth and yield evaluation framework the benchmarks score against |
