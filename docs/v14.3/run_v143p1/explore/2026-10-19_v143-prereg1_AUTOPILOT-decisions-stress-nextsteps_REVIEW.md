@@ -23,7 +23,7 @@ The repo held none of the 14.x engines before this branch. The branch leaves out
 
 **T follow-up: recommend re-estimating T's form (option 1), with two diagnostics first.** The reasons are in the stress test below. This is Aaron's call, and it needs its own pre-registration. A draft outline is given under next steps.
 
-**Track B: still skipped.** Firebreather refused port 22 at 05:14, 06:35 and again at the start of this pass. Nothing was published, and the Zenodo 1.9.0 go remains unused.
+**Track B: still skipped.** Firebreather refused port 22 at 05:14, 06:35, at the start of this pass, and again during the PREREG2 revision pass. Nothing was published, and the Zenodo 1.9.0 go remains unused.
 
 ## Stress test of the conclusions (exploratory)
 
@@ -66,22 +66,31 @@ Within heavy stands, those where T predicts more release do realize more, with a
 
 ## Next steps
 
-**1. Two cheap diagnostics before any new study (Cardinal, about a day).**
+**1. Diagnostics (done, 19 October; exploratory).** Script `v143_diag_T_form.R` (md5 f38a6066), Cardinal job 15674803, outputs `~/v143p1/out/explore/diag_a*` and `diag_b*`.
 
-- (a) Rebuild the S1 table on the CTRN post-thinning records that T was fitted on. If 14.1 fits CTRN at d / Dq above 1.5 but overshoots there on FIA, the defect is the extrapolation to operational removals. If it overshoots on CTRN too, the defect is the fixed gamma of 2 (the GT1 failure).
-- (b) Cross-tabulate the S1 ratio by tst year and d / Dq class on mefia_ph_c and pef_c, to see whether a lag-then-decay release fits better than the exponential decay.
+**(a) CTRN fit set** (46,521 records, reproduces n_T; installation bootstrap):
 
-Both are read-only and use existing outputs.
+| d / Dq | Observed over 14.1 | Observed over A0 |
+|:--:|:--:|:--:|
+| below 0.6 | 0.652 (0.469 to 0.982) | 0.692 |
+| 0.6 to 0.85 | 0.983 (0.783 to 1.274) | 1.121 |
+| 0.85 to 1.15 | 1.132 (0.935 to 1.329) | 1.420 |
+| 1.15 to 1.5 | 0.943 (0.819 to 1.072) | 1.332 |
+| above 1.5 | 0.775 (0.668 to 0.862) | 1.314 |
 
-**2. Pre-registration 2 for 14.3: re-estimate the form of T.** Draft outline, not registered:
+14.1 overshoots above 1.5 on its own fit set, so the defect is partly the fixed gamma of 2 (GT1), not only the extrapolation to operational removals. Only 3.4% of fit records exceed 1.5 (99th percentile 1.70), against 41% of FIA survivors. CTRN is short of A0 below 0.6, which no T can repair.
 
-- **Candidate forms.** m_T = 1 + alpha f(tst) g(d / Dq), with f either exponential decay (the 14.1 form, as baseline) or a rise-then-decay (gamma shaped) term. g is either a power with gamma free, a power with a lower cap (about 1.5), or a saturating form.
-- **Fitting.** Fit on CTRN and PEF post-thinning records with installation-clustered bootstrap intervals, as in GT1. L stays fixed at 14.1's lambda.
-- **Validation.** mefia_ph_c is held out entirely as external validation. The registered gates are the survivor increment ratio within 0.10 of 1 in every d / Dq class with 30 or more trees, plus P1 to P3 and P5 at the 25% tolerance, plus N1 and N2 against 14.1.
-- **Confirmation.** The New Hampshire and Vermont post-harvest set (rule 7 of PREREG1), built only once a candidate exists.
-- **Constraint.** This is a new study because it re-estimates T, which PREREG1 forbade.
+**(b) mefia_ph_c survivors by class and tst.** Observed over 14.1 falls from 1.18 below 0.6 to 0.545 above 1.5, while observed over A0 is flat at 1.20 to 1.30 across all classes. The realized share of T rises from 0.61 at tst 1 to 1.08 at tst 4, with overlapping intervals: weak evidence for a lag. pef_c was not cross-tabulated; its tag link must be rebuilt first (PREREG2 step 2).
 
-**3. Settle gate F's fragility in the same plan.** Pre-register a P1 check of A0 (14.1 with T off) on the New Hampshire and Vermont set. That gives the "L limited" question a second, independent sample.
+**2. Pre-registration 2 for 14.3: drafted and red-teamed to convergence, not registered.** `2026-10-19_v143_T-form-reestimation_PREREG2_DRAFT.md`, revision 4 (md5 05632c89). Four plan red-team rounds (7, 4, 1, 0 MUST). In brief:
+
+- Eight forms: C0f and C0r (14.1 frozen and refitted, as references), C1 (gamma free), C2 (smoothstep threshold, flat above), C3 (rise-then-decay with the C2 shape), C4 (cap 1.5), C5 (size-independent) and C6 (alpha only).
+- Fit on CTRN plus PEF if PEF passes an 80% link test. Selection by leave-one-installation-out CV with a one SE rule; the pick must beat C0r.
+- mefia_ph_c is relabeled "previously inspected", because it shaped the candidates. The New Hampshire and Vermont set is the sealed confirmatory set; only A0's P1 is read from it before selection.
+- Total heavy P1 cannot be met by a correct T: the headroom is 0.029 and survivors run about 1.2 times A0. So the primary heavy gate is P1-S, the survivor-growth component of an exact S, M, I, R decomposition, with a looser no-worse guard (P1-NW). Total P1 is reported.
+- Plan choices left for Aaron: whether PEF joins the fit, which control is primary, and whether the sealed set is built now.
+
+**3. Gate F's fragility** is folded into PREREG2 as gate G-F, an A0 P1 read on the sealed set.
 
 **4. Repo.** Open draft PRs for `v143-prereg1-run-20261019` and `engine-frozen-cardinal-20261019`, both against `docs-overhaul-20261017`. Cardinal has no GitHub token, so these are one-click links for Aaron. Then merge the stack bottom-up after review.
 
