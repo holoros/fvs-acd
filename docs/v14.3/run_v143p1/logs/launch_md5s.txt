@@ -10,3 +10,5 @@ b6ffebdea777ecd60cc6bd5f7dac1ddb  scripts/v143_long200_e0c.sbatch
 09a0234c7ad77297d4d2ed6c33c0854c  scripts/v143_score.R
 0f8ed8e0712d692a1925845495083664  scripts/v143_synthetic_inputs.R
 # re-recorded 2026-10-19T05:38:40-04:00 before the TH step: thresholds_v143.R revised (CTRN and PEF interval records linked at the location level); r1 list in launch_md5s_PREV_20261019.txt; plan md5 7f3e67c2
+6d12b22b3661c77ffc42f710209a3e3d  scripts/v143_assemble.R assembly script, recorded 2026-10-19T06:14:04-04:00 before the assembly step
+06352f1bb640e7fca370b95a54f6cee5  scripts/v143_gates.R revised 2026-10-19T06:16:45-04:00: TH gate parsed th_md5.txt on single spaces and read the md5sum-appended lines as missing; now split on whitespace. Prior gates and score files moved to out/superseded_PREV_20261019/

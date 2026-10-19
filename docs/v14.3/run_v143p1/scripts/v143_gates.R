@@ -111,7 +111,7 @@ if (PART %in% c("k1", "all")) {
     max_abs_diff = NA_real_, n_new_missing = sum(!capok), note = "V141_RELCAP 2.9848 against rds rel_cap at 4 decimals")
   thf <- file.path(ROOT, "logs/th_md5.txt")
   G[[length(G) + 1]] <- data.table(gate = "TH", unit = "logs/th_md5.txt", files = as.integer(file.exists(thf)), identical_md5 = NA,
-    identical_data = file.exists(thf) && all(vapply(strsplit(readLines(thf), " "), function(z) identical(unname(tools::md5sum(file.path(ROOT, z[2]))), z[1]), logical(1))),
+    identical_data = file.exists(thf) && all(vapply(strsplit(trimws(readLines(thf)), "[[:space:]]+"), function(z) identical(unname(as.character(tools::md5sum(file.path(ROOT, z[2])))), z[1]), logical(1))),
     max_abs_diff = NA_real_, n_new_missing = NA_integer_, note = "every TH file still matches its recorded md5; written before any arm output (checked by thresholds_v143.R)")
 }
 R <- rbindlist(G, fill = TRUE)
