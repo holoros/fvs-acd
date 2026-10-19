@@ -1,0 +1,12 @@
+9cce7610dffc02fbf04a7d70e41d6266  scripts/AcadianGY_14.3dev_thinelig.r
+d24b33fd1b543d243f8fd52c28dfd77d  scripts/thresholds_v143.R
+298772e27e90f9e59483186763c576d1  scripts/v143_arm_array.sbatch
+6d12b22b3661c77ffc42f710209a3e3d  scripts/v143_assemble.R
+6088b85dc8ca15993a38122d0747b880  scripts/v143_gates.R
+2fc4673d030447a245b9d37e50ccefec  scripts/v143_grid.sbatch
+f1a96f23ac24becfec9274f203c7657a  scripts/v143_grid_thdump.R
+b6ffebdea777ecd60cc6bd5f7dac1ddb  scripts/v143_long200_e0c.sbatch
+9e3330bd2e12d9e3c91558ca0aedcffe  scripts/v143_prep.R
+09a0234c7ad77297d4d2ed6c33c0854c  scripts/v143_score.R
+0f8ed8e0712d692a1925845495083664  scripts/v143_synthetic_inputs.R
+# re-recorded 2026-10-19T05:38:40-04:00 before the TH step: thresholds_v143.R revised (CTRN and PEF interval records linked at the location level); r1 list in launch_md5s_PREV_20261019.txt; plan md5 7f3e67c2
