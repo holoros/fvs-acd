@@ -440,7 +440,7 @@ them changed an engine file, coefficient or default of 14.1. It adopted volume s
 C2 where tags allow) and scorer r2, named one regional NS candidate (v141LTfi) that passes its
 benchmark gates but has not cleared a Bakuzis grid, and closed the QC height anchor track with the
 shipped 0.111 kept for 14.2. The record is in `scripts/v14.2dev/`, and the release notes are revision
-e of October 16, 2026 (`scripts/v14.2dev/2026-10-16/release-notes/`). PREREG46 and the PREREG47 reading ran on October 26,
+e of October 16, 2026 (`scripts/v14.2dev/2026-10-16/release-notes/`), followed by revision f of October 26, 2026 (`scripts/v14.2dev/2026-10-26/release-notes/`). PREREG46 and the PREREG47 reading ran on October 26,
 2026, when firebreather was reachable again: PREREG46 found no candidate (qc_ez stopped at its fit, qc_lz failed the relative
 height gates and gate C), and the PREREG47 reading found every arm read not credible on the long run, 14.1 too flat and the three
 alternatives too tall (`scripts/v14.2dev/2026-10-26/`).
@@ -467,7 +467,7 @@ Era 10 adds no `AcadianGY_*.r` file. 14.3 pre-registration 1 (the 14.1 thinning 
 eligibility rule was adopted: the three arms stop at rule 3, and gate F is open at a 25% tolerance but closes at 15%, so the
 study is labelled sensitive. Its survivor increment reading shows large residual trees after removals growing about two thirds
 of what 14.1 predicts, whichever way the removal moved Dq. Two read only diagnostics followed, and pre-registration 2
-(re-estimating the form of T) was drafted through four plan red team rounds; it is not registered. The QC height results of
+(re-estimating the form of T) was drafted through four plan red team rounds and registered on October 26, 2026 (revision 5); it has not run. The QC height results of
 PREREG46 and PREREG47 (Era 9, October 26) also inform 14.3. The record is in `docs/v14.3/`, with the run in
 `docs/v14.3/run_v143p1/`.
 

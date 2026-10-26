@@ -97,6 +97,7 @@ are described in `VERSION_HISTORY.md` Era 8; PREREG2 revision 5 is in `docs/v14.
 | 47 | result | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: PREREG47 result (reading r1) | `scripts/v14.2dev/2026-10-26/prereg47/2026-10-26_v142_qc-bakuzis-absolute_RESULT.md` |
 | 47 | draft (not registered) | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_qc-bakuzis-absolute_PREREG47_DRAFT.md` |
 | 48 | draft (not registered) | Splitting the QC stems deficit into survivor mortality and ingrowth, for 14.3: preregistration 48 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_qc-stems-deficit_PREREG48_DRAFT.md` |
+| 48 | plan | Splitting the QC stems deficit into survivor mortality and ingrowth, for 14.3: preregistration 48 (revision 1, registered) | `scripts/v14.2dev/2026-10-26/prereg48/plan/2026-10-26_v142_qc-stems-deficit_PREREG48.md` |
 | 49 | draft (not registered) | NS survival over multi year steps and the v141LTfi Bakuzis question, for 14.3: preregistration 49 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_ns-survival-step_PREREG49_DRAFT.md` |
 
 ## 14.3
@@ -108,3 +109,4 @@ are described in `VERSION_HISTORY.md` Era 8; PREREG2 revision 5 is in `docs/v14.
 | 1 | deviations | 14.3 pre-registration 1: deviations and implementation notes | `docs/v14.3/run_v143p1/result/2026-10-19_v143-prereg1_DEVIATIONS.md` |
 | 1 | exploratory | 14.3 pre-registration 1: autopilot decisions, stress test and next steps | `docs/v14.3/run_v143p1/explore/2026-10-19_v143-prereg1_AUTOPILOT-decisions-stress-nextsteps_REVIEW.md` |
 | 2 | draft (not registered) | The form of the 14.1 thinning release term T, for 14.3: pre-registration 2 (DRAFT revision 4, not registered) | `docs/v14.3/prereg2_draft/2026-10-19_v143_T-form-reestimation_PREREG2_DRAFT.md` |
+| 2 | plan | The form of the 14.1 thinning release term T, for 14.3: pre-registration 2 (revision 5, registered) | `docs/v14.3/2026-10-26_v143_T-form-reestimation_PREREG2.md` |

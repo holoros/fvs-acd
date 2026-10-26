@@ -421,12 +421,14 @@ VERSION_HISTORY Era 9: no engine file was added; the studies ran against the 14.
 | `2026-10-11/prereg46/` | A QC height increment multiplier with a zero in relative height, for 14.3 | 14.3 | registered; run October 26 in `2026-10-26/prereg46/` |
 | `2026-10-11/drafts/` | PREREG47 draft 1 (superseded), PREREG48 and PREREG49 drafts, not registered | 14.3 | draft |
 | `2026-10-15/prereg47/` | Absolute Bakuzis gates for QC on the measured stand list grid, revisions 1 to 5 | 14.3 | registered; read October 26 in `2026-10-26/prereg47/` |
-| `2026-10-16/release-notes/` | 14.2 release notes, revision e, for PREREG16 to PREREG45b and the October 16 cross-version benchmark | 14.2 | current release notes (VERSION_HISTORY Era 9) |
+| `2026-10-16/release-notes/` | 14.2 release notes, revision e, for PREREG16 to PREREG45b and the October 16 cross-version benchmark | 14.2 | superseded by revision f (`2026-10-26/release-notes/`) |
 | `2026-10-26/prereg46/` | PREREG46 run: qc_lz only after the qc_ez rule 1 fit stop, RESULT, deviations D0 to D5, red team records | 14.3 | RESULT: no candidate |
 | `2026-10-26/prereg47/` | PREREG47 thresholds and reading r1 over qc141, p38_fit, qc_rh and qc_lz, RESULT | 14.3 | RESULT: every arm not credible on the long run |
 | `2026-10-26/acdx_arms/` | 14.2 arms p38_fit and qc_rh on the three Maine acdx frames (Cardinal), identity checks against 14.1 | 14.2 | identical to 14.1 |
 | `2026-10-26/zenodo_190/` | drivers and logs of the Zenodo 1.9.0 publication | deposit | published 10.5281/zenodo.23665173 |
 | `2026-10-26/zen1100/` | packaging and 1.10.0 staging scripts | deposit | staged, not published |
+| `2026-10-26/release-notes/` | 14.2 release notes, revision f, adding PREREG46, the PREREG47 reading and the 14.2 arms on the Maine frames | 14.2 | current release notes (VERSION_HISTORY Era 9) |
+| `2026-10-26/prereg48/` | PREREG48 revision 1, registered October 26 on the laptop copy; second arm frozen qc_rh | 14.3 | registered, not run |
 
 ## Notes for readers
 

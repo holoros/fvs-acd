@@ -18,9 +18,9 @@ Start with `../README.md`. This page lists everything else by what a reader is t
 |:--|:--|
 | `../VERSION_HISTORY.md` | every engine version from 12.3.6 to 14.1, with status, gates and stated limitations, in nine eras |
 | `history.md` | the dated status sections the README carried from June to October 16, 2026 |
-| [`v14.3/`](v14.3/) | 14.3 pre-registration 1 (registered October 18, 2026, md5 7f3e67c2), its registration log, change log and the five red team reviews in `review/`; the run of October 18 to 19 in `run_v143p1/` (`result/` holds the RESULT, deviations and tables; `explore/` the post hoc stress test); the unregistered PREREG2 draft in `prereg2_draft/` |
+| [`v14.3/`](v14.3/) | 14.3 pre-registration 1 (registered October 18, 2026, md5 7f3e67c2), its registration log, change log and the five red team reviews in `review/`; the run of October 18 to 19 in `run_v143p1/` (`result/` holds the RESULT, deviations and tables; `explore/` the post hoc stress test); the PREREG2 drafts in `prereg2_draft/` and its registered revision 5 (October 26, md5 b7562e8b) at the top of `v14.3/` |
 | [`preregistrations.md`](preregistrations.md) | index of the 14.2 refinement pre-registrations and results, PREREG13b to PREREG49, and of the 14.3 pre-registrations |
-| `../scripts/v14.2dev/2026-10-16/release-notes/2026-10-16_fvs-acd-v14.2_release-notes_DRAFT.md` | 14.2 release notes, revision e |
+| `../scripts/v14.2dev/2026-10-26/release-notes/2026-10-26_fvs-acd-v14.2_release-notes_DRAFT.md` | 14.2 release notes, revision f (October 26); revision e is in `../scripts/v14.2dev/2026-10-16/release-notes/` |
 | `GY_model_evaluation_scorecard.md` | the multi-dimensional growth and yield evaluation framework the benchmarks score against |
 | `../CHARTER.md`, `HANDOFF_FVS-ACD.md` | the June 2026 site driver modernization charter and its handoff |
 

@@ -16,8 +16,8 @@ here are coordinated with both.
 | Version | State | Where |
 |:--|:--|:--|
 | **14.1** | **current release**, shipped September 24, 2026: 14.0.4 plus two diameter increment terms, L (large stem level) and T (thinning release), both off by default; one named standing gate failure, GT1 | engine files on branch `engines-14.1-20260924`, PR #9 |
-| 14.2 | refinement in progress; no engine file, coefficient or default of 14.1 changed so far | record in `scripts/v14.2dev/` (PREREG46 and the PREREG47 reading in `scripts/v14.2dev/2026-10-26/`), release notes revision e |
-| 14.3 | in study; pre-registration 1 (the 14.1 thinning response limited to partial removals) ran October 18 to 19, 2026: no eligibility rule adopted, and large residual trees after removals grow about two thirds of what 14.1 predicts; pre-registration 2 (re-estimating the form of T) is drafted, not registered | [`docs/v14.3/`](docs/v14.3/), result in [`docs/v14.3/run_v143p1/result/`](docs/v14.3/run_v143p1/result/) |
+| 14.2 | refinement in progress; no engine file, coefficient or default of 14.1 changed so far | record in `scripts/v14.2dev/` (PREREG46 and the PREREG47 reading in `scripts/v14.2dev/2026-10-26/`), release notes revision f (`scripts/v14.2dev/2026-10-26/release-notes/`) |
+| 14.3 | in study; pre-registration 1 (the 14.1 thinning response limited to partial removals) ran October 18 to 19, 2026: no eligibility rule adopted, and large residual trees after removals grow about two thirds of what 14.1 predicts; pre-registration 2 (re-estimating the form of T) was registered on October 26, 2026 and has not run | [`docs/v14.3/`](docs/v14.3/), result in [`docs/v14.3/run_v143p1/result/`](docs/v14.3/run_v143p1/result/) |
 | 13.1 | model of record and the base every 14.x file sources | the benchmarked copy (md5 5894df60) is on Cardinal only; `scripts/AcadianGY_13.1.r` here is an older copy (md5 5140bf9b), see `docs/reference/running-14.1.md` |
 | 12.10.1 | frozen August 2026 operational baseline, packaged for deposit | `zenodo_v12101/` |
 
