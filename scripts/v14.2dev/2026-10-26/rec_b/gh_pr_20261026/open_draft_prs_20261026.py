@@ -20,7 +20,7 @@ WANT = [('v142-autopilot-20261026', 'v142-p46p47-docs-20261026',
 for head, base, title, body in WANT:
     if [p for p in openp if p['head']['ref'] == head]: print('SKIP, PR exists for', head); continue
     c = g('/compare/%s...%s' % (base, head)); print(head, 'ahead', c.get('ahead_by'), 'behind', c.get('behind_by'), 'files', len(c.get('files', [])))
-    assert '—' not in title + body
+    assert chr(0x2014) not in title + body
     if '--go' in sys.argv:
         r = requests.post(R + '/pulls', headers=H, timeout=30, json={'title': title, 'body': body, 'head': head, 'base': base, 'draft': True})
         print(r.status_code, r.json().get('html_url'), 'draft', r.json().get('draft')); assert r.status_code == 201
