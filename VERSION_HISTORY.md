@@ -11,6 +11,8 @@ added 14.0 to 14.1 and the 14.2 refinement. 14.1 is the current release, and its
 branch `engines-14.1-20260924` (PR #9), not yet in this branch's `scripts/`. 13.1 remains the model of
 record that every 14.x file sources. `docs/reference/running-14.1.md` describes how the layers stack.
 
+*Note added October 26, 2026.* Era 10 records the 14.3 studies. The section "What this document does not cover" now closes the document.
+
 ## How to read this
 
 Dates are the file's last-modified timestamp on Cardinal (when the version was finalized), not
@@ -148,14 +150,6 @@ the Bakuzis biological-realism battery passes 4 of 5 relations (one new flag, so
 self-thinning, right at the acceptance boundary, shipped as a disclosed tradeoff). Pass 11 (13
 August) fixed a silent-failure defect in the hierarchical-posterior ingrowth path unrelated to
 ship18's hand-lever configuration (ship18 never touches the hierarchical posterior switches).
-
-## What this document does not cover
-
-This traces the `AcadianGY_*.r` model file lineage only. It does not repeat the full pass-by-pass
-benchmark numbers, which live in the dated handoffs themselves (`docs/handoffs/` for the pre-August
-history, `hardwood-formrisk-wip` branch handoffs for pass 9 onward), nor the Zenodo-deposited
-v12.10.1 package (`zenodo_v12101/`), which packages that frozen version's data and metadata
-separately for citation.
 
 ## Era 7: v14.0, the three-stage linked mortality lever (7 Sep to 17 Sep 2026)
 
@@ -446,9 +440,10 @@ them changed an engine file, coefficient or default of 14.1. It adopted volume s
 C2 where tags allow) and scorer r2, named one regional NS candidate (v141LTfi) that passes its
 benchmark gates but has not cleared a Bakuzis grid, and closed the QC height anchor track with the
 shipped 0.111 kept for 14.2. The record is in `scripts/v14.2dev/`, and the release notes are revision
-e of October 16, 2026 (`scripts/v14.2dev/2026-10-16/release-notes/`). PREREG46 and revisions 1 to 5
-of PREREG47 are registered but not yet run, because firebreather has been unreachable since October
-11, 2026.
+e of October 16, 2026 (`scripts/v14.2dev/2026-10-16/release-notes/`). PREREG46 and the PREREG47 reading ran on October 26,
+2026, when firebreather was reachable again: PREREG46 found no candidate (qc_ez stopped at its fit, qc_lz failed the relative
+height gates and gate C), and the PREREG47 reading found every arm read not credible on the long run, 14.1 too flat and the three
+alternatives too tall (`scripts/v14.2dev/2026-10-26/`).
 
 A cross-version benchmark on October 16, 2026 compared 13.1h, 14.0.4 L2 and 14.1 on the 19 frozen
 benchmark sets, 827 post-harvest Maine FIA stands and 200 yr no-harvest projections of 918 unmanaged
@@ -456,6 +451,30 @@ Maine FIA stands (`docs/benchmarks/2026-10-16_cross-version/`). Version 14.1 has
 absolute biomass bias across the 19 sets (3.8%, against 9.6% for 13.1h), but it overstates biomass
 recovery after heavy removals by 1.39 Mg ha⁻¹ yr⁻¹ and declines in 64 to 84% of stands in each of the
 six named forest types, while 13.1h declines in no more than 2% of stands in any of them. The 14.2 candidate arms p38_fit and qc_rh
-were not run, as their engine copies are on firebreather. The benchmark points 14.3 at a thinning
+were run on October 26, 2026 on the three Maine frames and reproduce 14.1 exactly (every compared value differs by 0),
+as both change only the Quebec height path (`scripts/v14.2dev/2026-10-26/acdx_arms/`). The benchmark points 14.3 at a thinning
 response limited to partial removals, senescence conditioned on forest type, and the diameter growth
 shortfall common to every version.
+
+## Era 10: 14.3 studies (October 17 to 26, 2026)
+
+| Version | Dates | Engine file | Status |
+|:--|:--|:--|:--|
+| none | 17 Oct to 26 Oct | none | no engine file added, 14.1 remains the release |
+
+Era 10 adds no `AcadianGY_*.r` file. 14.3 pre-registration 1 (the 14.1 thinning response limited to partial removals, md5
+7f3e67c2) was registered on October 18, 2026 after five red team rounds and run on OSC Cardinal on October 18 to 19. No
+eligibility rule was adopted: the three arms stop at rule 3, and gate F is open at a 25% tolerance but closes at 15%, so the
+study is labelled sensitive. Its survivor increment reading shows large residual trees after removals growing about two thirds
+of what 14.1 predicts, whichever way the removal moved Dq. Two read only diagnostics followed, and pre-registration 2
+(re-estimating the form of T) was drafted through four plan red team rounds; it is not registered. The QC height results of
+PREREG46 and PREREG47 (Era 9, October 26) also inform 14.3. The record is in `docs/v14.3/`, with the run in
+`docs/v14.3/run_v143p1/`.
+
+## What this document does not cover
+
+This traces the `AcadianGY_*.r` model file lineage only. It does not repeat the full pass-by-pass
+benchmark numbers, which live in the dated handoffs themselves (`docs/handoffs/` for the pre-August
+history, `hardwood-formrisk-wip` branch handoffs for pass 9 onward), nor the Zenodo-deposited
+v12.10.1 package (`zenodo_v12101/`), which packages that frozen version's data and metadata
+separately for citation.

@@ -1,0 +1,5 @@
+arm,label,outcome,failing,all_failing
+qc141,"post hoc (frozen arm, reported beside its registered verdict)",RULE2_NOT_CREDIBLE_LONGRUN,LG late growth,LG late growth;HM;SO
+p38_fit,"post hoc (frozen arm, reported beside its registered verdict)",RULE2_NOT_CREDIBLE_LONGRUN,C offset removed;C raw ceiling,C offset removed;C raw ceiling;SO
+qc_rh,"post hoc (frozen arm, reported beside its registered verdict)",RULE2_NOT_CREDIBLE_LONGRUN,C offset removed;C raw ceiling,C offset removed;C raw ceiling;SO
+qc_lz,"blind (trajectories created after PREREG47 registration, p47/logs/prereg_md5.txt)",RULE2_NOT_CREDIBLE_LONGRUN,C offset removed;C raw ceiling,C offset removed;C raw ceiling;SO

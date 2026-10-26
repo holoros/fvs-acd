@@ -1,0 +1,12 @@
+plan_md5=eb4b753d
+fit qc_lz a=2.2292 b=-1.3631 zero_r=1.6354
+outcome_qc_lz=RULE2_NOT_ADOPTED_HEIGHT
+failing_qc_lz=H relbin;H upper;C offset removed;C raw ceiling;NI Reineke
+fit qc_ez stop: b not negative at the point estimate (a=0.4303 b=0.9219, Newton iter 8)
+outcome_qc_ez=RULE1_HARNESS_FAILURE
+failing_qc_ez=fit stop (b not negative)
+tie_metric_worst_abs_relbin_bias_foldB qc_lz=0.026 qc_ez=not evaluated (rule 1 fit stop)
+repro_reported_fail=
+candidate=none
+deviation=D1 to D3, qc_ez not run (rule 1 fit stop); qc_lz only
+decision_weight=informs 14.3 only; 14.2 keeps QC_AFAC 0.111 and NB_AFAC 0.579

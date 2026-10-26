@@ -7,7 +7,7 @@ adding a study rather than editing this file by hand. The registration record fo
 to PREREG25 have no such record, and the plan texts of PREREG23 and PREREG24 are not here. The 14.1 gate
 pre-registrations (PREREG2 revision 5, and pre-registrations 3 and 4 of September 25 and 26, 2026)
 are described in `VERSION_HISTORY.md` Era 8; PREREG2 revision 5 is in `docs/v14.1/` on branch
-`engines-14.1-20260924`. 14.3 pre-registrations, when they exist, are in `docs/v14.3/`.
+`engines-14.1-20260924`. 14.3 pre-registrations are listed in the 14.3 section at the end of this page. Rows for the October 26 records were added by hand in the generator's format.
 
 | No. | Kind | Title | File |
 |:--|:--|:--|:--|
@@ -88,11 +88,23 @@ are described in `VERSION_HISTORY.md` Era 8; PREREG2 revision 5 is in `docs/v14.
 | 45b | plan | A relative height multiplier for the NB height increment, stand level: pre-registration 45b | `scripts/v14.2dev/2026-10-05/prereg45b/plan/2026-10-05_v142_nb-relht-increment-standlevel_PREREG45b.md` |
 | 45b | result | A relative height multiplier for the NB height increment, stand level: PREREG45b result | `scripts/v14.2dev/2026-10-05/prereg45b/2026-10-05_v142_nb-relht-increment-standlevel_RESULT.md` |
 | 46 | plan | A QC height increment multiplier with a zero in relative height, for 14.3: pre-registration 46 | `scripts/v14.2dev/2026-10-11/prereg46/plan/2026-10-11_v142_qc-relht-zero-form_PREREG46.md` |
+| 46 | result | A QC height increment multiplier with a zero in relative height, for 14.3: PREREG46 result | `scripts/v14.2dev/2026-10-26/prereg46/2026-10-26_v142_qc-relht-zero-form_RESULT.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-11_v142_qc-bakuzis-absolute_PREREG47.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r2.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r3.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r4.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r5.md` |
+| 47 | result | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: PREREG47 result (reading r1) | `scripts/v14.2dev/2026-10-26/prereg47/2026-10-26_v142_qc-bakuzis-absolute_RESULT.md` |
 | 47 | draft (not registered) | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_qc-bakuzis-absolute_PREREG47_DRAFT.md` |
 | 48 | draft (not registered) | Splitting the QC stems deficit into survivor mortality and ingrowth, for 14.3: preregistration 48 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_qc-stems-deficit_PREREG48_DRAFT.md` |
 | 49 | draft (not registered) | NS survival over multi year steps and the v141LTfi Bakuzis question, for 14.3: preregistration 49 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_ns-survival-step_PREREG49_DRAFT.md` |
+
+## 14.3
+
+| No. | Kind | Title | File |
+|:--|:--|:--|:--|
+| 1 | plan | The 14.1 thinning response limited to partial removals, for 14.3: pre-registration 1 | `docs/v14.3/2026-10-18_v143_thin-partial-removal_PREREG1.md` |
+| 1 | result | The 14.1 thinning response limited to partial removals, for 14.3: result of pre-registration 1 | `docs/v14.3/run_v143p1/result/2026-10-19_v143_thin-partial-removal_PREREG1_RESULT_REVIEW.md` |
+| 1 | deviations | 14.3 pre-registration 1: deviations and implementation notes | `docs/v14.3/run_v143p1/result/2026-10-19_v143-prereg1_DEVIATIONS.md` |
+| 1 | exploratory | 14.3 pre-registration 1: autopilot decisions, stress test and next steps | `docs/v14.3/run_v143p1/explore/2026-10-19_v143-prereg1_AUTOPILOT-decisions-stress-nextsteps_REVIEW.md` |
+| 2 | draft (not registered) | The form of the 14.1 thinning release term T, for 14.3: pre-registration 2 (DRAFT revision 4, not registered) | `docs/v14.3/prereg2_draft/2026-10-19_v143_T-form-reestimation_PREREG2_DRAFT.md` |

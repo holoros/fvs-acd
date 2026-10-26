@@ -11,13 +11,13 @@ The canonical model is maintained with Ben Rice (Midgard Natural Resources), and
 implementation of the variant is in Midgard's fork of the Forest Vegetation Simulator. Changes made
 here are coordinated with both.
 
-## Status (October 17, 2026)
+## Status (October 26, 2026)
 
 | Version | State | Where |
 |:--|:--|:--|
 | **14.1** | **current release**, shipped September 24, 2026: 14.0.4 plus two diameter increment terms, L (large stem level) and T (thinning release), both off by default; one named standing gate failure, GT1 | engine files on branch `engines-14.1-20260924`, PR #9 |
-| 14.2 | refinement in progress; no engine file, coefficient or default of 14.1 changed so far | record in `scripts/v14.2dev/`, release notes revision e |
-| 14.3 | planned; pre-registration 1 (the 14.1 thinning response limited to partial removals) registered October 18, 2026 after five red team rounds, not yet run | `docs/v14.3/` |
+| 14.2 | refinement in progress; no engine file, coefficient or default of 14.1 changed so far | record in `scripts/v14.2dev/` (PREREG46 and the PREREG47 reading in `scripts/v14.2dev/2026-10-26/`), release notes revision e |
+| 14.3 | in study; pre-registration 1 (the 14.1 thinning response limited to partial removals) ran October 18 to 19, 2026: no eligibility rule adopted, and large residual trees after removals grow about two thirds of what 14.1 predicts; pre-registration 2 (re-estimating the form of T) is drafted, not registered | [`docs/v14.3/`](docs/v14.3/), result in [`docs/v14.3/run_v143p1/result/`](docs/v14.3/run_v143p1/result/) |
 | 13.1 | model of record and the base every 14.x file sources | the benchmarked copy (md5 5894df60) is on Cardinal only; `scripts/AcadianGY_13.1.r` here is an older copy (md5 5140bf9b), see `docs/reference/running-14.1.md` |
 | 12.10.1 | frozen August 2026 operational baseline, packaged for deposit | `zenodo_v12101/` |
 
@@ -30,9 +30,21 @@ curves decline only in spruce-fir. 13.1h has the smallest post-harvest biomass b
 14.1 on light ones), and it declines in at most 2% of stands in any forest type. Every version underpredicts ten year growth on unmanaged Maine FIA plots by about 10 to 14%
 in biomass.
 
-Open work waits on firebreather, the host of the 14.2 runs, which has been unreachable since
-October 11, 2026: the PREREG46 run and the PREREG47 reading, the 14.2 arms p38_fit and qc_rh on the
-Maine sets, and Zenodo version 1.9.0 and the version after it, which will carry the cross-version benchmark.
+October 26, 2026. Firebreather, the host of the 14.2 runs, refused connections from October 11 to at least October 19
+and is reachable again; the work queued on it ran:
+
+- Zenodo version 1.9.0 was published (10.5281/zenodo.23665173). Version 1.10.0, which adds the cross-version
+  benchmark and the records below, is staged and not published.
+- PREREG46 (a QC height increment multiplier with a zero in relative height, for 14.3) found no candidate. qc_ez stopped at rule 1
+  at its fit (b not negative with the zero fixed at 1.285). qc_lz passed every harness gate but failed rule 2 on the new relative
+  height gates (fold B ratio 1.341 in the 1 to 1.25 bin), and gate C failed too (`scripts/v14.2dev/2026-10-26/prereg46/`).
+- The PREREG47 reading r1 (absolute QC Bakuzis gates) finds every arm read not credible on the long run: 14.1 keeps QC top
+  height nearly flat after its first decades (7 of 36 stands keep gaining in every late window), while p38_fit, qc_rh and qc_lz
+  overshoot the measured frontier (`scripts/v14.2dev/2026-10-26/prereg47/`). 14.2 keeps QC_AFAC 0.111.
+- The 14.2 arms p38_fit and qc_rh reproduce 14.1 exactly on the three Maine frames of the cross-version benchmark
+  (ten year hindcast, post-harvest set, 200 yr projections): every compared value differs by 0. Both arms change only
+  the Quebec height path, so this was the expected identity, now measured
+  (`scripts/v14.2dev/2026-10-26/acdx_arms/`).
 
 ## Quick start
 
@@ -70,11 +82,11 @@ kept with the plan.
 
 | Path | Contents |
 |:--|:--|
-| `docs/index.md` | documentation map, including the branch map |
+| [`docs/index.md`](docs/index.md) | documentation map, including the branch map |
 | `docs/guide/` | the 14.1 user guide |
 | `docs/reference/` | runner guide and switch reference |
-| `VERSION_HISTORY.md` | every engine version, nine eras, from 12.3.6 to 14.1 |
-| `docs/preregistrations.md` | index of the 14.2 pre-registrations and results |
+| [`VERSION_HISTORY.md`](VERSION_HISTORY.md) | every engine version from 12.3.6 to 14.1 in nine eras, and the 14.3 studies in a tenth |
+| [`docs/preregistrations.md`](docs/preregistrations.md) | index of the 14.2 and 14.3 pre-registrations and results |
 | `docs/benchmarks/` | dated benchmark packages, each with its README, figures, aggregate CSVs and scripts |
 | `docs/reports/` | finished reports and decks; superseded versions in `docs/reports/archive/` |
 | `docs/handoffs/` | dated session records, `YYYYMMDD_topic.md` |
@@ -101,7 +113,7 @@ on October 17, 2026; earlier 14.2 refinement folders carry no record of a screen
 ## Citation
 
 Cite the Zenodo concept DOI, 10.5281/zenodo.22996790, which resolves to the latest deposited version
-(1.8.0, 10.5281/zenodo.23168366, as of this writing). `CITATION.cff` carries the same record. The
+(1.9.0, 10.5281/zenodo.23665173, published October 26, 2026, as of this writing). `CITATION.cff` carries the same record. The
 deposit is licensed CC BY 4.0. The code in this repository does not yet carry a license file.
 
 ## Contact
