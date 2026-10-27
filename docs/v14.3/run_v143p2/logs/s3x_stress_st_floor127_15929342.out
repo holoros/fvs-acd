@@ -1,0 +1,144 @@
+stress floor127 start 2026-10-27T17:49:57-04:00
+variant floor127: fit records 46521 (CTRN 46521, PEF 0), clusters 17, PEF joins FALSE
+full C0r: 0.30917 0.07035 pair NA/NA wsse 87403.928936
+full C1: 0.58912 0.06820 0.00000 pair NA/NA wsse 85022.940151
+full C2: 0.59061 0.06836 pair 0.5/0.75 wsse 85033.824466
+full C3: 0.57643 3.28720 pair 0.5/0.75 wsse 84642.987476
+full C4: 0.58912 0.06820 0.00000 pair NA/NA wsse 85022.940148
+full C5: 0.58911 0.06820 pair NA/NA wsse 85022.940145
+full C6: 0.32382 pair NA/NA wsse 87412.738300
+     cand   rlo   rhi   edge
+   <char> <num> <num> <lgcl>
+1:     C2   0.5  0.75   TRUE
+2:     C3   0.5  0.75   TRUE
+      cand  param draws share_at_bound         lo         hi   estimate
+    <char> <char> <int>          <num>      <num>      <num>      <num>
+ 1:    C0r  alpha  2000         0.0000 0.18277518 0.48578273 0.30917025
+ 2:    C0r   beta  2000         0.0030 0.02685410 0.13474197 0.07034608
+ 3:     C1  alpha  2000         0.0000 0.36714040 0.85526719 0.58911904
+ 4:     C1   beta  2000         0.0005 0.02611968 0.14564261 0.06820472
+ 5:     C1  gamma  2000         0.9555 0.00000000 0.11590067 0.00000000
+ 6:     C2  alpha  2000         0.0000 0.37256405 0.85442955 0.59060766
+ 7:     C2   beta  2000         0.0005 0.02636672 0.14739393 0.06836381
+ 8:     C3  alpha  2000         0.0000 0.33817039 0.86337143 0.57642558
+ 9:     C3    tau  2000         0.0010 2.35720455 4.02077293 3.28720304
+10:     C4  alpha  2000         0.0000 0.36762116 0.85525918 0.58911517
+11:     C4   beta  2000         0.0010 0.02611968 0.14653784 0.06820312
+12:     C4  gamma  2000         0.9635 0.00000000 0.08176632 0.00000000
+13:     C5  alpha  2000         0.0000 0.37240655 0.85530296 0.58911133
+14:     C5   beta  2000         0.0005 0.02611971 0.14673264 0.06819950
+15:     C6  alpha  2000         0.0000 0.18982272 0.51701160 0.32382316
+         cand        CV         SE folds
+       <char>     <num>      <num> <int>
+ 1:       C0f 0.1522772 0.01255107    17
+ 2:       C0r 0.1534384 0.01304252    17
+ 3:        C1 0.1497455 0.01154720    17
+ 4:        C2 0.1497597 0.01154679    17
+ 5:        C3 0.1492559 0.01133970    17
+ 6:        C4 0.1497457 0.01154718    17
+ 7:        C5 0.1497456 0.01154718    17
+ 8:        C6 0.1532910 0.01308621    17
+ 9: C2_HLpair 0.1497597 0.01154679    17
+10: C3_HLpair 0.1492559 0.01133970    17
+        cand       ref          diff      se_diff
+      <char>    <char>         <num>        <num>
+1:       C0f       C0r -0.0011612350 7.582656e-04
+2:       C0r       C0r  0.0000000000 0.000000e+00
+3:        C1       C0r -0.0036928903 2.468592e-03
+4:        C2       C0r -0.0036787231 2.458305e-03
+5:        C3       C0r -0.0041824929 2.921602e-03
+6:        C4       C0r -0.0036926936 2.468623e-03
+7:        C5       C0r -0.0036928386 2.468609e-03
+8:        C6       C0r -0.0001473868 9.142798e-05
+9: C3_HLpair C2_HLpair -0.0005037698 5.841960e-04
+         cand         rcl     n     ratio  gated   pass
+       <char>      <fctr> <int>     <num> <lgcl> <lgcl>
+ 1:       C0f     [0,0.6)  4635 0.7003311  FALSE   TRUE
+ 2:       C0f  [0.6,0.85) 10968 1.0580797   TRUE   TRUE
+ 3:       C0f [0.85,1.15) 19245 1.1694806   TRUE  FALSE
+ 4:       C0f  [1.15,1.5)  9904 0.9566609   TRUE   TRUE
+ 5:       C0f   [1.5,Inf)  1769 0.7706231   TRUE  FALSE
+ 6:       C0r     [0,0.6)  4635 0.7003751  FALSE   TRUE
+ 7:       C0r  [0.6,0.85) 10968 1.0658334   TRUE   TRUE
+ 8:       C0r [0.85,1.15) 19245 1.1951479   TRUE  FALSE
+ 9:       C0r  [1.15,1.5)  9904 0.9846425   TRUE   TRUE
+10:       C0r   [1.5,Inf)  1769 0.7930045   TRUE  FALSE
+11:        C1     [0,0.6)  4635 0.6985515  FALSE   TRUE
+12:        C1  [0.6,0.85) 10968 0.9458666   TRUE   TRUE
+13:        C1 [0.85,1.15) 19245 1.0425072   TRUE   TRUE
+14:        C1  [1.15,1.5)  9904 0.9498148   TRUE   TRUE
+15:        C1   [1.5,Inf)  1769 0.9163539   TRUE   TRUE
+16:        C2     [0,0.6)  4635 0.7001078  FALSE   TRUE
+17:        C2  [0.6,0.85) 10968 0.9506326   TRUE   TRUE
+18:        C2 [0.85,1.15) 19245 1.0420328   TRUE   TRUE
+19:        C2  [1.15,1.5)  9904 0.9493475   TRUE   TRUE
+20:        C2   [1.5,Inf)  1769 0.9159333   TRUE   TRUE
+21: C2_HLpair     [0,0.6)  4635 0.7001078  FALSE   TRUE
+22: C2_HLpair  [0.6,0.85) 10968 0.9506326   TRUE   TRUE
+23: C2_HLpair [0.85,1.15) 19245 1.0420328   TRUE   TRUE
+24: C2_HLpair  [1.15,1.5)  9904 0.9493475   TRUE   TRUE
+25: C2_HLpair   [1.5,Inf)  1769 0.9159333   TRUE   TRUE
+26:        C3     [0,0.6)  4635 0.7001990  FALSE   TRUE
+27:        C3  [0.6,0.85) 10968 0.9548795   TRUE   TRUE
+28:        C3 [0.85,1.15) 19245 1.0445423   TRUE   TRUE
+29:        C3  [1.15,1.5)  9904 0.9496626   TRUE   TRUE
+30:        C3   [1.5,Inf)  1769 0.9140346   TRUE   TRUE
+31: C3_HLpair     [0,0.6)  4635 0.7001990  FALSE   TRUE
+32: C3_HLpair  [0.6,0.85) 10968 0.9548795   TRUE   TRUE
+33: C3_HLpair [0.85,1.15) 19245 1.0445423   TRUE   TRUE
+34: C3_HLpair  [1.15,1.5)  9904 0.9496626   TRUE   TRUE
+35: C3_HLpair   [1.5,Inf)  1769 0.9140346   TRUE   TRUE
+36:        C4     [0,0.6)  4635 0.6985514  FALSE   TRUE
+37:        C4  [0.6,0.85) 10968 0.9458661   TRUE   TRUE
+38:        C4 [0.85,1.15) 19245 1.0425065   TRUE   TRUE
+39:        C4  [1.15,1.5)  9904 0.9498136   TRUE   TRUE
+40:        C4   [1.5,Inf)  1769 0.9163522   TRUE   TRUE
+41:        C5     [0,0.6)  4635 0.6985515  FALSE   TRUE
+42:        C5  [0.6,0.85) 10968 0.9458666   TRUE   TRUE
+43:        C5 [0.85,1.15) 19245 1.0425067   TRUE   TRUE
+44:        C5  [1.15,1.5)  9904 0.9498139   TRUE   TRUE
+45:        C5   [1.5,Inf)  1769 0.9163529   TRUE   TRUE
+46:        C6     [0,0.6)  4635 0.7003887  FALSE   TRUE
+47:        C6  [0.6,0.85) 10968 1.0669825   TRUE   TRUE
+48:        C6 [0.85,1.15) 19245 1.1972140   TRUE  FALSE
+49:        C6  [1.15,1.5)  9904 0.9876031   TRUE   TRUE
+50:        C6   [1.5,Inf)  1769 0.7989629   TRUE  FALSE
+         cand         rcl     n     ratio  gated   pass
+       <char>      <fctr> <int>     <num> <lgcl> <lgcl>
+Key: <cand>
+     cand        CV         SE folds          diff      se_diff class_gate
+   <char>     <num>      <num> <int>         <num>        <num>     <lgcl>
+1:    C0r 0.1534384 0.01304252    17  0.0000000000 0.000000e+00      FALSE
+2:     C1 0.1497455 0.01154720    17 -0.0036928903 2.468592e-03       TRUE
+3:     C2 0.1497597 0.01154679    17 -0.0036787231 2.458305e-03       TRUE
+4:     C3 0.1492559 0.01133970    17 -0.0041824929 2.921602e-03       TRUE
+5:     C4 0.1497457 0.01154718    17 -0.0036926936 2.468623e-03       TRUE
+6:     C5 0.1497456 0.01154718    17 -0.0036928386 2.468609e-03       TRUE
+7:     C6 0.1532910 0.01308621    17 -0.0001473868 9.142798e-05      FALSE
+   bound_ok beats_C0r eligible  npar   ord
+     <lgcl>    <lgcl>   <lgcl> <num> <int>
+1:     TRUE     FALSE    FALSE     2    NA
+2:    FALSE      TRUE    FALSE     3     4
+3:     TRUE      TRUE     TRUE     4     3
+4:     TRUE      TRUE     TRUE     4     6
+5:    FALSE      TRUE    FALSE     3     5
+6:     TRUE      TRUE     TRUE     2     2
+7:     TRUE      TRUE    FALSE     1     1
+SELECTION: selected C5 (best eligible C3; tied set C5 C2 C3) 
+     c3_minus_c2          se HL_supported
+           <num>       <num>       <lgcl>
+1: -0.0005037698 0.000584196        FALSE
+9803f38963a78ecaa18dab25e11751b1  /users/PUOM0008/crsfaaron/v143p2/work/fit_floor127_SERVERONLY.rds
+b10d0b57ad0d79e1106686ef88077544  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_selection_record.txt
+2f1c112cf0afe1bb76648ba86f0dbbc9  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_cv_DATA.csv
+821e26b0e7c5148a2119f31af678257d  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_cv_paired_DATA.csv
+95cf88d9e6f1a851511fac9978ebef14  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_class_gate_DATA.csv
+8a0ed2ddc08a5c49d9e4674a42589321  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_selection_DATA.csv
+e667264b4a86ab086a32da4b475ec940  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_bootstrap_bounds_DATA.csv
+e949c3925916b35a70a1dac793f65cc0  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_bootstrap_cor_DATA.csv
+d0de38965ac58dee6e5e419902ebf38d  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_profiles_DATA.csv
+b26c2635f17906e2b9f2fabceb49b34c  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_threshold_pairs_DATA.csv
+bc6a90ee6808ca30c8bdd768320e9641  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_full_fits_DATA.csv
+a2e81e9c34d1213a8f616ef5995f7ca5  /users/PUOM0008/crsfaaron/v143p2/out/fit_floor127_hl_DATA.csv
+FIT_DONE
+STRESS_DONE 2026-10-27T17:59:13-04:00

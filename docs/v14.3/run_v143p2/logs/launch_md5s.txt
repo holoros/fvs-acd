@@ -1,0 +1,37 @@
+# launch md5s, 14.3 PREREG2 real chain, recorded 2026-10-27T06:21:23-04:00 before any step 2 output (plan md5 b7562e8b)
+8699cd2411339a95a05011ae30e70153  scripts/AcadianGY_14.3dev_Tform.r
+451bd102a5cde5ec377ab5bc42a4c3fb  scripts/v143p2_arm_array.sbatch
+b6caf57c1a5da64e641fd9a016ddaeb5  scripts/v143p2_coefs.R
+fc852e16ec15e813d7a6cf161dfb231f  scripts/v143p2_decomp_lib.R
+3ffa66386d74f42fd89548d924fde4f6  scripts/v143p2_decomp.R
+dd928bf2883baf413197e1c7d35cc701  scripts/v143p2_fitframe.R
+1214208ca452d72ce84b5582eef95113  scripts/v143p2_fit.R
+e00aed5eb460a302aadbb2be9ebed8a8  scripts/v143p2_gates.R
+88fc668f2bdee63a7edaab69025777b5  scripts/v143p2_gf.R
+4d35c87fe60dcf90b375c3b045b3d0ad  scripts/v143p2_grid.sbatch
+3e25326027f62e644a2e9e353253dd6d  scripts/v143p2_prep.R
+69f9d32c8b842968908be3d085a7f099  scripts/v143p2_sealed_build.R
+c38625548bcb423cc83ce17fc80f794e  tools/s2a.sbatch
+3449de33e275fba95780482ead9950e9  tools/s2b_gf.sbatch
+52413b94223e8a87a03b8d0293430244  tools/s3_fit.sbatch
+24777326ffaf42b2a56d680fc7296320  tools/submit_step2.sh
+8a5d485a48bdc236c16e2784960856a5  work/tform_coef_C0f.csv  recorded 2026-10-27T06:22:10-04:00 by s2a
+539920731cf6fa8c9efce7b4b491a284  scripts/v143p2_grid_gross.R  recorded 2026-10-27T06:29:58-04:00 before first use
+d21d7364a487f78ef19201035c817377  scripts/v143p2_score4.R  recorded 2026-10-27T06:29:58-04:00 before first use
+5c2a6c2ec5b3ca813537f35dd4e0c4b8  scripts/v143p2_score5.R  recorded 2026-10-27T06:29:58-04:00 before first use
+b063524daef8f3fb58c3b49a5bb419cf  tools/s3x_stress.sbatch  recorded 2026-10-27T06:29:58-04:00 before first use
+ba0e593d4cf7b31b15b7392d49438885  work/tform_coef_full_C0f.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+5c6ce6c7ce7849c980b30a79bf15b2c9  work/tform_coef_full_C0r.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+d466b6446f80e1499a4268ffeb7cba00  work/tform_coef_full_C1.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+9c80955aabd5848fea1a92e79c6fab2d  work/tform_coef_full_C2.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+a6ade1729026b94f735f5617e582f04d  work/tform_coef_full_C3.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+4ce9d72e0a8c921db7356990f33a2eed  work/tform_coef_full_C4.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+a4366e8be44be3b9af420aaaf28c488d  work/tform_coef_full_C5.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+0455e5a20383a27149ff1774dc73d1d1  work/tform_coef_full_C6.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+9c80955aabd5848fea1a92e79c6fab2d  work/tform_coef_SEL.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+e1ac5809af7d4deade15ce7ea0ffda61  work/tform_coef_SEL_loio_SERVERONLY.csv  recorded 2026-10-27T17:52:24-04:00 by g1 after the selection md5
+1602d34214d5cd5522e120deec2f6089  work/v143p2_taskmap_step4_DATA.csv  recorded 2026-10-27T17:53:20-04:00
+7796e0cd9de8921afbd2f0dcb40cac54  scripts/v143p2_score4.R  revised 2026-10-27T17:53:50-04:00 after the dry test (step 2 rds holds r1 apart); before first real use
+  scripts/v143p2_score5.R  revised 2026-10-27T18:10:46-04:00: parenthesis fix after a parse failure (no output written); before any sealed score
+83d15f7ba07d7bf8e218c86212d0cb9d  scripts/v143p2_score5.R  revised 2026-10-27T18:10:47-04:00: parenthesis fix after a parse failure (no output written); before any sealed score
+0502c3588ef41cdb4840e4f2a8b45490  scripts/v143p2_score4.R  revised 2026-10-27T18:21:48-04:00: N0 excludes the sealed set directory; first real run had stopped (no SELN1 output, step 4 taskmap omitted SELN1), no output written

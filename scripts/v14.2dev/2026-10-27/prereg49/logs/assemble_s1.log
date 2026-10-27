@@ -1,0 +1,61 @@
+                                           check  rows rows_ref na_mismatch worst
+                                          <char> <int>    <int>       <int> <num>
+1:    r2 scores v141LTfi against PREREG22 scores    12       12           0     0
+2: structure v141LTfi against PREREG22 structure     6        6           0     0
+Index: <pass>
+                gate
+              <char>
+ 1: Fit reproduction
+ 2:         Fit stop
+ 3:               H0
+ 4:               TR
+ 5:               K1
+ 6:               M1
+ 7:               M2
+ 8:               M3
+ 9:            M4 H1
+10:            M4 H2
+11:            M4 S1
+12:            M4 E3
+13:           M4 E6b
+14:               M5
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               value
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <char>
+ 1:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   68 of 68 cells, worst 4.88e-15
+ 2:                                                                                                                                                                                                                                                                                                                                                                                                                                                 theta 3.55799 (-0.642335 to 9.84292), 2 of 1000 draws nonconverged, Newton 5; NA
+ 3:                                                                                                                                                                                                                                                                                                                                                                                                                                                       worst results 0 (BA_p), worst per tree 0 (dbh), 100 stands, 8774 tree rows
+ 4:                                                                                                                                                                                                                                                                                                                                                                                                                                           worst H 1.53e-16, worst survival 6e-15, 2 stands, 204 rows checked, 116 with H above 0
+ 5:                                                                                                                                                                                                                                                                                                                                                                                                                                                             0 RUN_OK other than 1 in 17918 stands, NS four, after the retry rule
+ 6:                                                                                                                                                                                                                                                                                                                                                                                                                                                   0.930 (0.880 to 0.990), 34 stands; v141LTfi 0.868; whole frame v141LTfis 0.930
+ 7:                                                                                                                                                                                                                                                                                                                                                                                                                                                  0.993 (0.944 to 1.047), 227 stands; v141LTfi 0.921; whole frame v141LTfis 0.993
+ 8: ns_c iv05 0.9893 in (0.9877, 0.9907) yes; ns_c iv06_10 0.9905 in (0.9938, 0.9976) no; ns_c iv11_15 0.9907 in (0.9826, 0.9946) yes; ns_c iv16_20 0.9933 in (0.9893, 0.9981) yes; ns_c iv21_30 0.9922 in (0.9946, 0.9998) no; ns_long_c iv05 0.9894 in (0.9910, 0.9931) no; ns_long_c iv06_10 0.9904 in (0.9922, 0.9958) no; ns_long_c iv11_15 0.9907 in (0.9897, 0.9946) yes; ns_long_c iv16_20 0.9919 in (0.9898, 0.9959) yes; ns_long_c iv21_30 0.9926 in (0.9881, 0.9950) yes; ns_long_c iv31_60 0.9942 in (1.0000, 1.0000) no
+ 9:                                                                                                                                                                                                                                                                                                                                                                                          ns_c all -0.1393 against 1.452; ns_fl all -1.182 against 3.775; ns_long_c all 0.4612 against 2.392; ns_long_fl all -1.284 against 5.469
+10:                                                                                                                                                                                                                                                                                                                                                                                                                        ns_c fold B, 25 cm and over 0.2079 against 0.2498; ns_long_c fold B, 25 cm and over 0.1145 against 0.2143
+11:                                                                                                                                                                                                                                                                                                                                                                                          ns_c B 0.966 against 0.9125; ns_long_c all 0.9634 against 0.9103; ns_fl all 0.9534 against 0.8407; ns_long_fl all 0.9332 against 0.8657
+12:                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ns_c all 23.86 against 23.68; ns_long_c all 23.67 against 22.92
+13:                                                                                                                                                                                                                                                                                                                                                                                                                                                               ns_fl all 4.219 against -2.28; ns_long_fl all 4.903 against -4.489
+14:                                                                                                                                                                                                                                                                                                                                                                                                            ns_c 23.860 against v141LTfi 23.826 (difference -0.034); ns_long_c 23.670 against v141LTfi 23.162 (difference -0.508)
+                                                                 threshold   pass                                                             source
+                                                                    <char> <lgcl>                                                             <char>
+ 1:                                              68 cells at or below 1e-9   TRUE                     fit/gyr142-p49-repro-foldA_DATA_2026-10-26.csv
+ 2:      converged, theta above 0, at most 5 percent of draws nonconverged   TRUE       fit/gyr142-p49-sffr-fit_DATA_2026-10-26.csv; logs/fit_rc.txt
+ 3:                                                       at or below 1e-9   TRUE                                                 logs/h0_result.csv
+ 4:                                         below 1e-12, 2 stands, 3 years   TRUE                                                 logs/tr_result.csv
+ 5:                                                                      0   TRUE                    out/tables/gyr142-p49-fb-K1_DATA_2026-09-27.csv
+ 6:                                                           0.90 to 1.10   TRUE assembled/s1/gyr142-p49-s1-survivors-iv3-foldB_DATA_2026-10-26.csv
+ 7:                                                           0.90 to 1.10   TRUE assembled/s1/gyr142-p49-s1-survivors-iv3-foldB_DATA_2026-10-26.csv
+ 8: inside the observed 95 percent interval, classes with 30 or more trees  FALSE  assembled/s1/gyr142-p49-s1-M3-annual-survival_DATA_2026-10-26.csv
+ 9:                                     |TOPHT bias| below v141LT, NS four   TRUE           assembled/s1/gyr142-p49-s1-M4-detail_DATA_2026-10-26.csv
+10:            |ratio - 1| below 14.1 and PREREG11, fold B, 25 cm and over   TRUE                  out/tables/gyr142-p49-h2-gate_DATA_2026-10-26.csv
+11:                                         |log stems ratio| below v141LT   TRUE           assembled/s1/gyr142-p49-s1-M4-detail_DATA_2026-10-26.csv
+12:                             %RMSE(v141LT) minus %RMSE at or above -0.5  FALSE           assembled/s1/gyr142-p49-s1-M4-detail_DATA_2026-10-26.csv
+13:                                         |C1 bias| no worse than v141LT  FALSE           assembled/s1/gyr142-p49-s1-M4-detail_DATA_2026-10-26.csv
+14:                %RMSE(v141LTfi) minus %RMSE(v141LTfis) at or above -0.5  FALSE                  assembled/s1/gyr142-p49-s1-M5_DATA_2026-10-26.csv
+plan_md5=c218808858938c889ac771b0de5db531
+outcome=RULE2_NOT_ADOPTED
+fis_enters_stage2=FALSE
+harness_ok=TRUE fit_ok=TRUE H0=TRUE TR=TRUE K1=TRUE
+M=M1:TRUE M2:TRUE M3:FALSE M4:FALSE M5:FALSE
+failing=M3;M4 E3;M4 E6b;M5
+decision_weight=informs 14.3 only; 14.2 is unchanged
+S1_ASSEMBLY_DONE

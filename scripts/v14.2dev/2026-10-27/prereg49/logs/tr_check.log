@@ -1,0 +1,7 @@
+     gate    theta stands years_checked_min rows_checked rows_floored
+   <char>    <num>  <int>             <int>        <int>        <int>
+1:     TR 3.557994      2                 3          204            0
+   rows_no_next rows_H_pos  worst_abs_H worst_abs_surv ann_surv_min   pass
+          <int>      <int>        <num>          <num>        <num> <lgcl>
+1:            0        116 1.526557e-16   5.995204e-15    0.9898124   TRUE
+TR_PASS

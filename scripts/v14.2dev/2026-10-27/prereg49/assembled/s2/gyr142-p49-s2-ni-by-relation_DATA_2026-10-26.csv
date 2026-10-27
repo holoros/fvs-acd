@@ -1,0 +1,11 @@
+relation,cand_flags,ref_flags,new_flags,cand_worst,ref_worst,ref_not_evaluated,cand_not_evaluated,marginB_ok,ni_ok,arm
+Eichhorn,2,0,2,0.0312354921639882,0,0,0,FALSE,FALSE,v141LTfi
+Frontier,0,0,0,0,0,0,0,TRUE,TRUE,v141LTfi
+HT_monotone,12,9,5,2.1679227031086,1.9242539607108,0,0,FALSE,FALSE,v141LTfi
+Magnitude,0,0,0,0,0,0,0,TRUE,TRUE,v141LTfi
+Reineke,1,2,0,0.22023823987031,0.314864182040506,13,9,TRUE,TRUE,v141LTfi
+SiteOrder_BAPH,3,3,0,20,20,0,0,TRUE,TRUE,v141LTfi
+SiteOrder_HT,3,3,0,20,20,0,0,TRUE,TRUE,v141LTfi
+SiteOrder_VOL,3,3,0,20,20,0,0,TRUE,TRUE,v141LTfi
+Sukachev,0,0,0,0,0,0,0,TRUE,TRUE,v141LTfi
+YieldDensity,0,0,0,0,0,0,0,TRUE,TRUE,v141LTfi

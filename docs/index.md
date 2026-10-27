@@ -56,7 +56,8 @@ The repository holds several lines of work that have not been merged into `main`
 | `docs-overhaul-20261017` | the documentation set, the user guide and the `scripts/` index | PR #12, stacked on PR #11 |
 | `v143-prereg1-run-20261019` | the 14.3 PREREG1 run and RESULT, the T form diagnostics and the PREREG2 draft | draft PR #13, stacked on PR #12 |
 | `engine-frozen-cardinal-20261019` | the frozen Cardinal engine copies with an md5 manifest | no pull request yet; off PR #12's branch |
-| `v142-p46p47-docs-20261026` | the October 26 runs (PREREG46, the PREREG47 reading, the acdx arms, Zenodo 1.9.0 scripts) and this documentation update | stacked on `v143-prereg1-run-20261019` |
+| `v142-p46p47-docs-20261026` | the October 26 runs (PREREG46, the PREREG47 reading, the acdx arms, Zenodo 1.9.0 scripts) and the October 26 documentation update | draft PR #14, stacked on `v143-prereg1-run-20261019` |
+| `v142-autopilot-20261026` | PREREG2 (14.3) and PREREG48 registration, release notes f and g, the Howland cross-version projections, the PREREG48 and PREREG49 runs, the Zenodo 1.10.0 drivers and this documentation update | draft PR #15, stacked on PR #14 |
 | `mortality-shutoff-repairs-20260908` | mortality shutoff diagnosis and Bakuzis three way comparison | PR #7 into `hardwood-formrisk-wip` |
 | `rescue/dc5df3d` | v12.11 benchmark of August 4, 2026 (height coverage census, rescores, Zenodo deposit package) | kept as a recovery branch; not merged into `main` |
 | `hardwood-formrisk-wip` | 13.1 passes 9 to 11 (August 2026) | diverged from `main`; base of PR #7 |

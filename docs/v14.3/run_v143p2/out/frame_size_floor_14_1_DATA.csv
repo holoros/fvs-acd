@@ -1,0 +1,4 @@
+item,evidence_line,holds
+T applied to every tree record (no size floor),114,TRUE
+Dq over all records with expf > 0 and dbh > 0,145,TRUE
+zero growth below 1.3716 m height kept,121,TRUE

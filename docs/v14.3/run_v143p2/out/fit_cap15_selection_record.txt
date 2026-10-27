@@ -1,0 +1,74 @@
+14.3 PREREG2 selection record, variant cap15, 2026-10-27T17:57:22-0400
+plan md5 b7562e8bbe8e2fb6a0f748d26844940f
+fit frame md5 a382ee8e970ff899e84e08127a20d7ce
+records 46521, clusters 17, PEF joins FALSE
+VERDICT: selected C2 (best eligible C3; tied set C2 C3) 
+LABELS: threshold pair on a grid edge 
+
+Full data fits
+     cand                                             params   pair     wsse
+   <char>                                             <char> <char>    <num>
+1:    C0r                  alpha=0.32958681 beta=0.064548412  NA/NA 87234.81
+2:     C1 alpha=0.45408193 beta=0.069773219 gamma=0.69731032  NA/NA 86582.48
+3:     C2                  alpha=0.54768802 beta=0.062357835  0.5/1 85849.50
+4:     C3                     alpha=0.53990072 tau=3.4177728  0.5/1 85523.48
+5:     C4 alpha=0.45408193 beta=0.069773219 gamma=0.69731032  NA/NA 86582.48
+6:     C5                  alpha=0.48194025 beta=0.076302885  NA/NA 86885.17
+7:     C6                                   alpha=0.35262045  NA/NA 87253.63
+8:    C0f                                                     NA/NA 87268.62
+
+CV (pooled LOIO MSE) and SE
+Index: <cand>
+         cand        CV         SE folds
+       <char>     <num>      <num> <int>
+ 1:       C0f 0.1518294 0.01236291    17
+ 2:       C0r 0.1534018 0.01251075    17
+ 3:        C1 0.1531308 0.01148579    17
+ 4:        C2 0.1516697 0.01137154    17
+ 5:        C3 0.1513872 0.01128265    17
+ 6:        C4 0.1531308 0.01148579    17
+ 7:        C5 0.1534697 0.01133924    17
+ 8:        C6 0.1532405 0.01256605    17
+ 9: C2_HLpair 0.1513336 0.01135441    17
+10: C3_HLpair 0.1509484 0.01124375    17
+
+Paired differences against C0r
+Index: <cand>
+        cand       ref          diff      se_diff
+      <char>    <char>         <num>        <num>
+1:       C0f       C0r -1.572395e-03 0.0004817774
+2:       C0r       C0r  0.000000e+00 0.0000000000
+3:        C1       C0r -2.710021e-04 0.0013438211
+4:        C2       C0r -1.732064e-03 0.0015178735
+5:        C3       C0r -2.014534e-03 0.0018666055
+6:        C4       C0r -2.710021e-04 0.0013438211
+7:        C5       C0r  6.798069e-05 0.0016550117
+8:        C6       C0r -1.612931e-04 0.0001324344
+9: C3_HLpair C2_HLpair -3.852102e-04 0.0005218277
+
+Selection table
+Key: <cand>
+Index: <eligible>
+     cand        CV         SE folds          diff      se_diff class_gate
+   <char>     <num>      <num> <int>         <num>        <num>     <lgcl>
+1:    C0r 0.1534018 0.01251075    17  0.000000e+00 0.0000000000      FALSE
+2:     C1 0.1531308 0.01148579    17 -2.710021e-04 0.0013438211      FALSE
+3:     C2 0.1516697 0.01137154    17 -1.732064e-03 0.0015178735       TRUE
+4:     C3 0.1513872 0.01128265    17 -2.014534e-03 0.0018666055       TRUE
+5:     C4 0.1531308 0.01148579    17 -2.710021e-04 0.0013438211      FALSE
+6:     C5 0.1534697 0.01133924    17  6.798069e-05 0.0016550117      FALSE
+7:     C6 0.1532405 0.01256605    17 -1.612931e-04 0.0001324344      FALSE
+   bound_ok beats_C0r eligible  npar   ord
+     <lgcl>    <lgcl>   <lgcl> <num> <int>
+1:     TRUE     FALSE    FALSE     2    NA
+2:     TRUE     FALSE    FALSE     3     4
+3:     TRUE      TRUE     TRUE     4     3
+4:     TRUE      TRUE     TRUE     4     6
+5:     TRUE     FALSE    FALSE     3     5
+6:     TRUE     FALSE    FALSE     2     2
+7:     TRUE      TRUE    FALSE     1     1
+
+HL criterion
+     c3_minus_c2           se HL_supported
+           <num>        <num>       <lgcl>
+1: -0.0003852102 0.0005218277        FALSE

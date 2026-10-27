@@ -443,7 +443,11 @@ shipped 0.111 kept for 14.2. The record is in `scripts/v14.2dev/`, and the relea
 e of October 16, 2026 (`scripts/v14.2dev/2026-10-16/release-notes/`), followed by revision f of October 26, 2026 (`scripts/v14.2dev/2026-10-26/release-notes/`). PREREG46 and the PREREG47 reading ran on October 26,
 2026, when firebreather was reachable again: PREREG46 found no candidate (qc_ez stopped at its fit, qc_lz failed the relative
 height gates and gate C), and the PREREG47 reading found every arm read not credible on the long run, 14.1 too flat and the three
-alternatives too tall (`scripts/v14.2dev/2026-10-26/`).
+alternatives too tall (`scripts/v14.2dev/2026-10-26/`). PREREG48 placed the QC stems deficit in ingrowth past the scoring floor
+(rule 3 on 14.1 and qc_rh), traced by an independent check to engine ingrowth entering near 5 cm, below QC floors of 9.1 to 33.7 cm.
+PREREG49 (October 26 to 27) did not adopt its NS survival step (annual survival by interval and two PREREG22 gates fail) and did
+not clear v141LTfi on measured stand lists, whose median 100 year top height loss against v141LT is 15.6%. Release notes
+revision g carries both (`scripts/v14.2dev/2026-10-27/release-notes/`).
 
 A cross-version benchmark on October 16, 2026 compared 13.1h, 14.0.4 L2 and 14.1 on the 19 frozen
 benchmark sets, 827 post-harvest Maine FIA stands and 200 yr no-harvest projections of 918 unmanaged
@@ -456,18 +460,18 @@ as both change only the Quebec height path (`scripts/v14.2dev/2026-10-26/acdx_ar
 response limited to partial removals, senescence conditioned on forest type, and the diameter growth
 shortfall common to every version.
 
-## Era 10: 14.3 studies (October 17 to 26, 2026)
+## Era 10: 14.3 studies (October 17 to 27, 2026)
 
 | Version | Dates | Engine file | Status |
 |:--|:--|:--|:--|
-| none | 17 Oct to 26 Oct | none | no engine file added, 14.1 remains the release |
+| none | 17 Oct to 27 Oct | none | no engine file added, 14.1 remains the release |
 
 Era 10 adds no `AcadianGY_*.r` file. 14.3 pre-registration 1 (the 14.1 thinning response limited to partial removals, md5
 7f3e67c2) was registered on October 18, 2026 after five red team rounds and run on OSC Cardinal on October 18 to 19. No
 eligibility rule was adopted: the three arms stop at rule 3, and gate F is open at a 25% tolerance but closes at 15%, so the
 study is labelled sensitive. Its survivor increment reading shows large residual trees after removals growing about two thirds
 of what 14.1 predicts, whichever way the removal moved Dq. Two read only diagnostics followed, and pre-registration 2
-(re-estimating the form of T) was drafted through four plan red team rounds and registered on October 26, 2026 (revision 5); it has not run. The QC height results of
+(re-estimating the form of T) was drafted through four plan red team rounds and registered on October 26, 2026 (revision 5). It ran on Cardinal on October 27, 2026: the registered selection picked C2, which passed every harness gate but failed the survivor gate on mefia_ph_c, so it is not adopted (rule 3) and 14.3 keeps the 14.1 T; the sealed NH and VT confirmation is open, with 68 of 108 stands on climate site index (`docs/v14.3/run_v143p2/`). The QC height results of
 PREREG46 and PREREG47 (Era 9, October 26) also inform 14.3. The record is in `docs/v14.3/`, with the run in
 `docs/v14.3/run_v143p1/`.
 
