@@ -29,3 +29,14 @@ anyone and no PR was merged. Builds on `20261026c_fvs-acd-howland-firebreather-i
 QC ingrowth entry size and floor handling (PREREG48); an NS survival form keyed on stand state, or a scorer convention
 (PREREG49); a T form beyond the registered family, since C2 narrows but does not close the large stem survivor gap on mefia_ph_c (0.867 against 0.565 under 14.1) and its residual changes sign across classes (PREREG2); a
 sealed confirmation set with at least 30 heavy stands and ESI coverage.
+
+## Update, evening of 27 October 2026 (checkpoint)
+
+Aaron asked to resolve all open items and recommendations, update GitHub and checkpoint. Done since the section above:
+
+- Drafted, not registered: PREREG50, QC ingrowth entry size and scoring floor handling (`outputs/2026-10/fvs-acd-v14.2-recs/drafts/2026-10-27_v142_qc-ingrowth-entry-floor_PREREG50_DRAFT.md`, md5 5b45519d), and 14.3 PREREG3, a T form with a class varying shape (`outputs/2026-10/fvs-acd-v143/2026-10-27_v143_T-form-class-shape_PREREG3_DRAFT.md`, md5 72c9c7e4). Each was red teamed in a fresh read and lists open choices with a recommended option. Key finding: the runner already has `ING_MIN_FROM_SCORE=1` (ingrowth enters at the stand floor), used by the NS arms and never by the QC arms. The PREREG2 NH and VT set is no longer sealed for 14.3, since C2 was scored on it.
+- GitHub: both drafts and their index rows pushed to branch `v142-autopilot-20261026` (PR #15, draft) at 34805799. No merge.
+- FCCL version check: a Gmail draft "FVS-ACD version for the FCCL-II runs" is staged with no recipient, because Ben Rice's address was not in contacts and Gmail search hit its quota. Aaron adds the address and sends.
+- `active-projects.md` section 9 has a 27 October entry; `last-session-handoff.md` points here.
+
+Still Aaron's: merging PRs #9 to #16 (then the repo front page updates), the LICENSE decision, revoking the June classic token, Seven Islands v33 title lines, deleting the p36 tgz and p38 duplicates (no delete grant in this session), and the choices in the two drafts before registration. No scheduled task was added this evening; the outage check-in of 18:31 could not be deleted from here.
