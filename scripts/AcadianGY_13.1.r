@@ -14,7 +14,7 @@
 library(dplyr) # needed arrange, mutate, left_join, tibble, select, group_by, summarise, ungroup, case_when, all_of
 library(purrr) # needed for pmap_*
 
-AcadianVersionTag = "AcadianV13.1"
+AcadianVersionTag = "AcadianV13.2"
 
 # ---------------------------------------------------------------------------
 # v13.1 (DRAFT) hierarchical recruitment and mortality: the fitted posteriors REPLACE
@@ -1307,11 +1307,25 @@ calc_ddbh = function(tree.data, plot.data, csi = stand$csi, region = stand$regio
       dplyr::mutate(idx.hw.mod = match(sp, ddbh.hw.mod.spp.df$species, nomatch = match('PB', ddbh.hw.mod.spp.df$species)),
                     hw.mod.spp.coeff = ddbh.hw.mod.spp.df$spp.coeff[idx.hw.mod],
                     hw.mod.dbh.interaction = ddbh.hw.mod.spp.df$dbh.interaction[idx.hw.mod])%>%
+      # VECTORIZATION FIX, 27 August 2026. ddbh_hw_mod is a SCALAR function whose leading
+      # validity gate is an `if`, so handing it whole columns raised "the condition has
+      # length > 1" under R >= 4.2 the moment a stand carried a tree with a non-NA form and
+      # risk, i.e. any hardwood. ifelse() evaluates its `yes` branch only when at least one
+      # element of the test is TRUE, so an all-softwood stand never triggered it and projected
+      # normally, while a stand with even one hardwood errored out of AcadianGYOneStand and was
+      # silently discarded by the benchmark runner's per-stand tryCatch. Applied element-wise
+      # with purrr::pmap_dbl, which is the convention this same file already uses for
+      # ddbh_thin_mod, ddbh_sbw_mod, dht_hw_mod, tsurv_sbw_mod and tsurv_hw_mod. This is a
+      # vectorization fix ONLY: ddbh_hw_mod's body is untouched and each row receives exactly
+      # the scalar arguments the original call intended, so no modifier's numerical behaviour
+      # changes. The outer ifelse gate is retained for readability and is redundant with
+      # ddbh_hw_mod's own is.na(form)/is.na(risk) gate, which returns 1 for those rows anyway.
       dplyr::mutate(ddbh.form.risk.mod = ifelse(!is.na(form) & !is.na(risk),
-                                                ddbh_hw_mod(sp = sp, dbh = dbh, bal = bal,
-                                                            form = form, risk = risk, 
-                                                            spp.coeff = hw.mod.spp.coeff, 
-                                                            dbh.interaction = hw.mod.dbh.interaction), 1))%>% 
+                                                purrr::pmap_dbl(list(sp = sp, dbh = dbh, bal = bal,
+                                                                     form = form, risk = risk,
+                                                                     spp.coeff = hw.mod.spp.coeff,
+                                                                     dbh.interaction = hw.mod.dbh.interaction),
+                                                                ddbh_hw_mod), 1))%>% 
       select( -idx.hw.mod, 
               -hw.mod.spp.coeff, -hw.mod.dbh.interaction)
   } else {
@@ -2284,6 +2298,17 @@ tsurv_hw_mod = function(dbh, bal, ba.plot, form, b0, b1) {
   
 }
 
+# Call-site NA guard for tsurv_hw_mod (27 August 2026). tsurv_hw_mod's leading `if (form ==
+# 'F1')` is not NA-safe, and the mortality call site's ifelse() gate evaluates its `yes`
+# branch over every row, softwoods included, which carry form NA. This wrapper returns a
+# placeholder 1 for exactly the rows that gate discards, and delegates unchanged otherwise.
+# It adds NO numerical behaviour: every row the gate admits reaches tsurv_hw_mod with
+# byte-identical arguments.
+.tsurvhw_guard = function(dbh, bal, ba.plot, form, b0, b1) {
+  if (is.na(form) || is.na(b0)) return(1)
+  tsurv_hw_mod(dbh = dbh, bal = bal, ba.plot = ba.plot, form = form, b0 = b0, b1 = b1)
+}
+
 #' Plot thinning survival modifier
 #' 
 #' @param year.thin Numeric: Commercial thinning year
@@ -2514,9 +2539,23 @@ calc_mortality = function(tree.data, plot.data, region = stand$region,
     tree = tree %>%
       dplyr::left_join(tsurv.hw.spp, 
                        by = 'sp') %>%
+      # VECTORIZATION FIX (2), 27 August 2026. Companion to the calc_ddbh fix above, and only
+      # reachable once that one is in place, since calc_ddbh errored first and masked this.
+      # tsurv_hw_mod is already applied element-wise with purrr::pmap_dbl, yet ifelse()
+      # evaluates its `yes` branch over EVERY row, so the softwood rows the gate exists to
+      # exclude still reach the function, whose first statement is a bare `if (form == 'F1')`.
+      # A softwood carries form NA after split_formrisk, so that `if` raised "missing value
+      # where TRUE/FALSE needed" and the stand was discarded by the runner's per-stand
+      # tryCatch exactly as the calc_ddbh defect discarded it. Unlike ddbh_hw_mod, dht_hw_mod,
+      # ddbh_thin_mod and ddbh_sbw_mod, tsurv_hw_mod carries no NA-safe validity gate of its
+      # own. The guard below is a CALL-SITE wrapper only: tsurv_hw_mod's body is untouched and
+      # the wrapper short-circuits exactly the rows the surrounding ifelse gate discards
+      # anyway, returning a placeholder 1 that ifelse() then throws away. Every row the gate
+      # admits calls tsurv_hw_mod with byte-identical arguments, so no modifier's numerical
+      # behaviour changes.
       dplyr::mutate(tsurv.hw.mod = ifelse(!is.na(form) & gsub('[^0-9]', '', form) %in% 1:8 & sp %in% c('RO', 'YB', 'RM', 'PB', 'QA') & !is.na(b0),
-                                          purrr::pmap_dbl(list(dbh, bal, ba.plot, form, b0, b1), 
-                                                          tsurv_hw_mod),
+                                          purrr::pmap_dbl(list(dbh, bal, ba.plot, form, b0, b1),
+                                                          .tsurvhw_guard),
                                           1)) %>%
       dplyr::select(-b0, -b1)
   } else {
@@ -3052,6 +3091,22 @@ calc_mortality = function(tree.data, plot.data, region = stand$region,
         .ir_c = tryCatch(if (!is.null(ops$ingrowth.rd.center) && !is.na(ops$ingrowth.rd.center)) ops$ingrowth.rd.center else 0.58, error=function(e) 0.58)
         .ir_k = tryCatch(if (!is.null(ops$ingrowth.rd.k) && !is.na(ops$ingrowth.rd.k)) ops$ingrowth.rd.k else 8, error=function(e) 8)
         .rel = 1 / (1 + exp(.ir_k * (dplyr::coalesce(plot.data$rd.mod, 0) - .ir_c)))
+        # v13.3 CANDIDATE (pass 33): size-structure (maturity) gate on density-released
+        # ingrowth. Gated ops$use.ingrowth.matgate (default FALSE => .rel unchanged, this
+        # block byte-identical to pass 31/32 behavior). When TRUE, .rel is further scaled by
+        # g(QMD) = 1/(1+exp(k*(qmd - qc))), qc default 12.7 cm (the FIA seedling-sapling to
+        # poletimber stand-size boundary, 5 in), k default 0.6. Rationale (pass 32 Bakuzis
+        # diagnosis, results/bakuzis/): after an sdimort-driven mid-rotation crash, the RD-only
+        # release refills the freed density headroom with volume-free recruits, so stem count
+        # rebuilds while volume does not and the stand stagnates below its pre-crash volume.
+        # Reserving the release pulse for juvenile size structures (QMD near or below qc)
+        # leaves a crashed mature stand's headroom to survivor BA/volume recovery instead.
+        .mg_on = tryCatch(if (!is.null(ops$use.ingrowth.matgate)) isTRUE(ops$use.ingrowth.matgate) else FALSE, error=function(e) FALSE)
+        if (.mg_on) {
+          .mg_qc = tryCatch(if (!is.null(ops$ingrowth.matgate.qc) && !is.na(ops$ingrowth.matgate.qc)) ops$ingrowth.matgate.qc else 12.7, error=function(e) 12.7)
+          .mg_k  = tryCatch(if (!is.null(ops$ingrowth.matgate.k)  && !is.na(ops$ingrowth.matgate.k))  ops$ingrowth.matgate.k  else 0.6,  error=function(e) 0.6)
+          .rel = .rel * (1 / (1 + exp(.mg_k * (dplyr::coalesce(plot.data$qmd, 0) - .mg_qc))))
+        }
         plot.data$ingrowth.ph = plot.data$ingrowth.ph * .rel
       }
 
