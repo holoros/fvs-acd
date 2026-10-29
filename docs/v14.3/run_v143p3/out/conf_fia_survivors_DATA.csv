@@ -1,0 +1,11 @@
+rcl,survivor_trees,state,survivor_trees_esi,gated_class
+"[0,0.6)",15,ME,15,FALSE
+"[0.6,0.85)",13,ME,13,TRUE
+"[0.85,1.15)",37,ME,37,TRUE
+"[1.15,1.5)",48,ME,48,TRUE
+"[1.5,Inf)",101,ME,101,TRUE
+"[0,0.6)",2,NH,2,FALSE
+"[0.6,0.85)",1,NH,1,TRUE
+"[0.85,1.15)",1,NH,1,TRUE
+"[1.15,1.5)",6,NH,6,TRUE
+"[1.5,Inf)",11,NH,11,TRUE

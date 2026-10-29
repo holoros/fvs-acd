@@ -1,0 +1,85 @@
+2c2
+< #SBATCH --job-name=acdxL200
+---
+> #SBATCH --job-name=v143p4L2
+7,12c7,13
+< #SBATCH --array=1-93
+< #SBATCH --output=/users/PUOM0008/crsfaaron/acdx_20261016/long200/logs/%x_%A_%a.out
+< # FVS-ACD cross-version benchmark (October 16, 2026): 200 yr no-harvest projections of the 918 unmanaged Maine FIA
+< # pairs (frame mefia_l_c, t1 tree lists) for v13.1h, v14.1 (v141LT; equals qc141 on Maine) and 14.0.4 (v141off).
+< # Runner: long200 copy (md5 3d05cbad) of the counters runner, differing only in TIMELIM and BIOMASS in the trajectory.
+< # Arm environments are verbatim from bench141 (14.x) and the Seven Islands v13.1h launcher. New outputs only. No em dashes.
+---
+> #SBATCH --output=/users/PUOM0008/crsfaaron/v143p4/logs/l200_%A_%a.out
+> # 14.3 pre-registration 4 (revision 1, md5 a15bd92a): 200 yr no-harvest arms on the 918 mefia_l_c t1 lists. COPY of the frozen
+> # acdx long200 launcher cardinal_mcp_job_3936542.slurm; its environment block from "source /etc/profile.d/lmod.sh" to the end
+> # of the arm branch is below VERBATIM (asserted by build_v143p4.sh) and runs with COL=v141LT (the 14.1 branch). Changes, and
+> # nothing else: taskmap and output root under ~/v143p4; the arm ARM from the taskmap; V141_REPORT_DIR per arm; V141_FILE pointed
+> # at the senft overlay; SENFT switches per arm (off, candL, candS, D1). Same long200 runner (3d05cbad), TIMELIM 3000.
+> # New outputs only. No em dashes.
+16c17,19
+< R1=/users/PUOM0008/crsfaaron/acdx_20261016/long200
+---
+> ROOT=${V143P4_ROOT:-/users/PUOM0008/crsfaaron/v143p4}
+> R0L=/users/PUOM0008/crsfaaron/acdx_20261016/long200
+> R1=$ROOT/out/l200
+18c21
+< TM=$R1/work/long200_taskmap_DATA_2026-10-16.csv
+---
+> TM=${V143_TASKMAP:?set V143_TASKMAP}
+21,22c24,25
+< IFS=, read -r COL CHUNK SET FROM TO <<< "$ROW"
+< export PAIRS_FILE=$R1/work/long200_mefia_l_c_pairs_DATA_2026-10-16.csv INIT_FILE=$FR/bench_gyr_${SET}_tree_init.csv T2_FILE=$FR/bench_gyr_${SET}_tree_t2.csv
+---
+> IFS=, read -r ARM CHUNK SET FROM TO <<< "$ROW"; COL=v141LT
+> export PAIRS_FILE=${V143_L2PAIRS:-$R0L/work/long200_mefia_l_c_pairs_DATA_2026-10-16.csv} INIT_FILE=$FR/bench_gyr_${SET}_tree_init.csv T2_FILE=$FR/bench_gyr_${SET}_tree_t2.csv
+25,26c28,29
+< mkdir -p $R1/out/$COL/$SET
+< export CONFIG_TAG=$R1/out/$COL/$SET/c$(printf %03d $CHUNK)
+---
+> mkdir -p $R1/$ARM/$SET
+> export CONFIG_TAG=$R1/$ARM/$SET/c$(printf %03d $CHUNK)
+28a32,33
+> MD5F=${V143_MD5FILE:-$ROOT/logs/launch_md5s.txt}
+> lmd5() { awk -v f="$1" '$2==f {print $1}' $MD5F | tail -1; }
+58c63,91
+< RUNNER=$R1/scripts/2026-10-16_acdx_long200_runner.R; chk $RUNNER 3d05cbad$(md5sum $RUNNER | cut -c9-32)
+---
+> 
+> ## ---- end of the verbatim block; PREREG4 arm settings follow ----
+> export LSDG_V141=1 THIN_V141=1
+> export V141_REPORT_DIR=$R1/$ARM/counters; mkdir -p $V141_REPORT_DIR
+> export V143_V141_BASE=$V141_FILE
+> OVL=$ROOT/scripts/AcadianGY_14.3dev_senft.r
+> W_OVL=$(lmd5 scripts/AcadianGY_14.3dev_senft.r); [ -n "$W_OVL" ] || { echo "FATAL overlay md5 not in launch_md5s.txt"; exit 4; }
+> chk $OVL $W_OVL
+> export V141_FILE=$OVL
+> unset SENFT SENFT_FORM SENFT_COEF SENFT_TRACE || true
+> EW=${V143_WORK:-$ROOT/work}; SO=${V143_SO:-$ROOT/serveronly_SERVERONLY}
+> case "$ARM" in
+>   off)   export SENFT=0 ;;
+>   g0)    export SENFT=1 SENFT_FORM=L SENFT_COEF=$EW/grid_coef_g0.csv STAND_KEEP_FILE=$SO/keep_foldA_SERVERONLY.csv
+>          export SENFT_TRACE=$R1/$ARM/$SET/trace_c$(printf %03d $CHUNK)_SERVERONLY.rds ;;
+>   gL_*)  export SENFT=1 SENFT_FORM=L SENFT_COEF=$EW/grid_coef_${ARM#gL_}.csv STAND_KEEP_FILE=$SO/keep_foldA_SERVERONLY.csv ;;
+>   gS_*)  export SENFT=1 SENFT_FORM=S SENFT_COEF=$EW/grid_coef_${ARM#gS_}.csv STAND_KEEP_FILE=$SO/keep_foldA_SERVERONLY.csv ;;
+>   candL) export SENFT=1 SENFT_FORM=L SENFT_COEF=$EW/senft_coef_L.csv ;;
+>   candS) export SENFT=1 SENFT_FORM=S SENFT_COEF=$EW/senft_coef_S.csv ;;
+>   D1)    export SENFT=1 SENFT_FORM=L SENFT_COEF=$EW/senft_coef_D1.csv ;;
+>   *) echo "FATAL unknown ARM $ARM"; exit 2 ;;
+> esac
+> if [ -n "${SENFT_COEF:-}" ]; then
+>   [ -s "$SENFT_COEF" ] || { echo "FATAL no coefficient file $SENFT_COEF"; exit 5; }
+>   W_C=$(lmd5 work/$(basename $SENFT_COEF)); [ -n "$W_C" ] || { echo "FATAL coefficient md5 not in launch_md5s.txt"; exit 4; }
+>   chk $SENFT_COEF $W_C
+> fi
+> if [ -n "${STAND_KEEP_FILE:-}" ]; then [ -s "$STAND_KEEP_FILE" ] || { echo "FATAL no keep file"; exit 5; }; fi
+> RUNNER=$R0L/scripts/2026-10-16_acdx_long200_runner.R; chk $RUNNER 3d05cbade76bbe298e5e93ca6c7b8230
+61c94
+< echo "[acdxL200] COL=$COL task=$SLURM_ARRAY_TASK_ID chunk=$CHUNK rows=$FROM..$TO host=$(hostname) start=$(date -Is)"
+---
+> echo "[v143p4L2] ARM=$ARM task=$SLURM_ARRAY_TASK_ID chunk=$CHUNK rows=$FROM..$TO SENFT=${SENFT:-unset} FORM=${SENFT_FORM:-none} COEF=$(basename ${SENFT_COEF:-none}) host=$(hostname) start=$(date -Is)"
+63,64c96
+< echo "[acdxL200] DONE end=$(date -Is)"
+< 
+---
+> echo "[v143p4L2] DONE end=$(date -Is)"

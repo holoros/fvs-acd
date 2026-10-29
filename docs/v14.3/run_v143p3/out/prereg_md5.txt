@@ -1,0 +1,1 @@
+20364c4b065615317ea7feccb87f5919  2026-10-28_v143_T-form-class-shape_PREREG3.md  v143 PREREG3 revision 1 registered 2026-10-28T06:00:59-0400 on Aaron's pre-approval of every open choice at its recommended option, after the step 1 confirmation set counts (out/conf_pooled_DATA.csv md5 c9d9e406, open by rule) and one red team round. Before any v143p3 frame, fit or outcome read.

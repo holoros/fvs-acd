@@ -1,0 +1,30 @@
+gate,arm,pass,value,detail
+H1a,off/g0,TRUE,0,"19 files of checks, 133 kinds compared"
+H1b,off/g0,TRUE,0,"1 files of checks, 7 kinds compared"
+H2,off/g0,TRUE,0,"1 files of checks, 7 kinds compared"
+H5,L SF,TRUE,,R non-decreasing in delta over the 7 grid points
+H5,L NSF,TRUE,,R non-decreasing in delta over the 7 grid points
+H5,S SF,TRUE,,R non-decreasing in delta over the 7 grid points
+H5,S NSF,TRUE,,R non-decreasing in delta over the 7 grid points
+H4,all all,TRUE,1,"t1 class equals overlay first call class, n 446"
+H3_bridge,v141LT frozen,FALSE,0.00046518876168955,"matching sets per metric: BA 12, BIOMASS 12, TOTVOL 12"
+H7_l200,D1,TRUE,1,share of stands frozen 14.1 ran that the arm ran
+H3_basis,frozen,TRUE,1.06718678037143,"FIADB over engine biomass at t1, median; benchmark 1.0672"
+LR1_tol0.30,v131h,FALSE,0.900400916380298,EAC 0.000 vs 0.305; SF 0.005 vs 0.906
+LR1_tol0.20,v131h,FALSE,0.900400916380298,EAC 0.000 vs 0.305; SF 0.005 vs 0.906
+LR1_tol0.40,v131h,FALSE,0.900400916380298,SF 0.005 vs 0.906
+LR1_tol0.30,v141LT,FALSE,0.83,AB 0.805 vs 0.000; EAC 0.810 vs 0.305; MBB 0.806 vs 0.165; OAK 0.741 vs 0.040; WRPH 0.840 vs 0.010
+LR1_tol0.20,v141LT,FALSE,0.83,AB 0.805 vs 0.000; EAC 0.810 vs 0.305; MBB 0.806 vs 0.165; OAK 0.741 vs 0.040; SF 0.665 vs 0.906; WRPH 0.840 vs 0.010
+LR1_tol0.40,v141LT,FALSE,0.83,AB 0.805 vs 0.000; EAC 0.810 vs 0.305; MBB 0.806 vs 0.165; OAK 0.741 vs 0.040; WRPH 0.840 vs 0.010
+LR1_tol0.30,D1,FALSE,0.32823596792669,SF 0.577 vs 0.906
+LR1_tol0.20,D1,FALSE,0.32823596792669,AB 0.260 vs 0.000; SF 0.577 vs 0.906
+LR1_tol0.40,D1,TRUE,0.32823596792669,""
+LR2,v131h,FALSE,,OAK yr 100 1.959; SF yr 200 2.354
+LR2,v141LT,FALSE,,MBB yr 200 0.558
+LR2,D1,FALSE,,AB yr 100 2.649; AB yr 200 2.985; EAC yr 100 2.807; MBB yr 100 2.057; MBB yr 200 2.575; OAK yr 100 2.908; WRPH yr 100 2.132
+BK1,D1,FALSE,1,AB 0.701; EAC 0.714; MBB 0.798; OAK 1.000; WRPH 0.840
+BK2,D1,FALSE,0.814814814814815,EAC 0.524; MBB 0.129; OAK 0.815
+BK3,D1,FALSE,,types with 14.1 lower limit above 0: AB; candidate lower limits: AB -0.200
+BK4,D1,TRUE,0.924372883491698,""
+BK5,D1,TRUE,-0.0936890502573353,""
+H6_timing,candidates,TRUE,0,candidate or D1 result files written before the selection md5 time: 0 of 31

@@ -1,0 +1,8 @@
+source,value
+ALS map mean 2012 (Mg C ha-1),77.2795884516371
+ALS map mean 2025 (Mg C ha-1),92.2099737709798
+ALS endpoint rate 2012 to 2025 (Mg C ha-1 yr-1),1.14849117841098
+ALS trend_rate in summary.json (Mg C ha-1 yr-1),0.903139080931059
+"14.1 (L on) mean net change yr 1 to 13, ESI 15, x 0.5 C fraction (Mg C ha-1 yr-1); 95% interval -0.167 to 0.088",-0.0420972812572559
+"14.0.4 L2 mean net change yr 1 to 13, ESI 15, x 0.5 C fraction (Mg C ha-1 yr-1); 95% interval -0.207 to 0.040",-0.0862928441721339
+"13.1h mean net change yr 1 to 13, ESI 15, x 0.5 C fraction (Mg C ha-1 yr-1); 95% interval -1.067 to -0.535",-0.802718502455636

@@ -1,0 +1,86 @@
+wrote p50-pools.csv 18 rows
+wrote p50-floorgroup-counts.csv 5 rows
+     fold           grp     N
+   <char>        <char> <int>
+1:      A   31 to 34 cm    10
+2:      A 9.1 to 9.7 cm   138
+3:      A         other     5
+4:      B   31 to 34 cm     7
+5:      B 9.1 to 9.7 cm   153
+wrote p50-gates.csv 8 rows
+     gate
+   <char>
+1:     G0
+2:     G1
+3:     G2
+4:     G3
+5:     G4
+6:     G5
+7:     G6
+8:     G7
+                                                                                                                                                                                              value
+                                                                                                                                                                                             <char>
+1:                                                                                                                                             dev 24.22615 points, D 37465, I_o 47607, I_p 65.4935
+2:                                                                                                                      min 5.0 cm, median 5.67 cm, 7 of 6042 records at the floor, all sizes 51728
+3:  results 313 of 313 identical (header TRUE); pred_t2_tree 313 of 313 identical (header TRUE); t1_split_tree 313 of 313 identical (header TRUE); pred_yr1_tree 313 of 313 identical (header TRUE)
+4: E1 378 of 378 traced, max differences 0, 0, 0; 1461 year 1 records, max entry DBH minus floor 0; S2 378 of 378 traced, max differences 0, 0, 0; 1461 year 1 records, max entry DBH minus floor 0
+5:                                                                                                                       20 stands: max relative difference total 0, shares 0, species mismatches 0
+6:                                                                                                                                                       E1 378 of 378 RUN_OK; S2 378 of 378 RUN_OK
+7:                                                                                                     378 stands; stand_frame against fold_of 0 differ; fold_of against the PREREG22 rule 0 differ
+8:                                                                                                                                      29 files contain ING_MIN_FROM_SCORE=1; 0 also name a QC set
+                                                   threshold   pass
+                                                      <char> <lgcl>
+1: 24.22615, 37465, 47607, 65.4935 to the published rounding   TRUE
+2:     5.0, 5.67, 7 of 6042, 51728 to the published rounding   TRUE
+3:                    identical text on every screened stand   TRUE
+4:                                          at or below 1e-9   TRUE
+5:                     at or below 1e-9, no species mismatch   TRUE
+6:                                                0 failures   TRUE
+7:                                                 identical   TRUE
+8:                                                label only   TRUE
+wrote p50-decision.csv 4 rows
+wrote p50-verdict.csv 5 rows
+                  item
+                <char>
+1:                mode
+2:             verdict
+3:              labels
+4: survivor ratio note
+5:                  L2
+                                                                                                                                                                                                                       value
+                                                                                                                                                                                                                      <char>
+1:                                                                                                                                                                                                                      full
+2:                                                                                                rule 3: artifact (HA); 14.3 track is a benchmark and runner convention (ingrowth threshold matched to the inventory floor)
+3:                                                                                                                                                                previously inspected population; threshold support unknown
+4:                                                                                                                                                          E1 survivor ratio 1.0943 (1.0489 to 1.1472), inside 0.90 to 1.10
+5: L2 threshold support: not found. No record of the threshold range in the fit data of the engine's ingrowth equations (Li, Weiskittel and Kershaw 2011 GNLS parameters, ENG lines 2774 to 2779) was found on firebreather.
+wrote p50-rmse.csv 4 rows
+     fold    arm stands QMD_rmse_pct BA_rmse_pct C1_vol_rmse_pct C1_vol_ratio
+   <char> <char>  <int>        <num>       <num>           <num>        <num>
+1:      A     R0    153    19.655382    36.24654        41.27237     1.063579
+2:      A     E1    153    12.127719    36.60429        44.73827     1.160101
+3:      B     R0    160    20.566405    37.31572        46.75564     1.114560
+4:      B     E1    160     9.424718    36.72107        48.47417     1.211421
+   QMD_ratio  BA_ratio
+       <num>     <num>
+1: 1.1083193 0.9742640
+2: 0.9914356 1.1003313
+3: 1.1471505 0.9983289
+4: 1.0176427 1.1287741
+     fold    arm stands          D   dev_pts        X      X_lo     X_hi   I_o
+   <char> <char>  <int>      <num>     <num>    <num>     <num>    <num> <int>
+1:      A     R0    153  33851.870 21.888495 0.000000 0.0000000 0.000000 41642
+2:      A     E1    153  -2886.538 -1.866425 1.085270 0.8404541 1.517647 41642
+3:      A     S2    153 -11457.701 -7.408507 1.338466 1.0432775 1.857449 41642
+4:      B     R0    160  37465.256 24.226150 0.000000 0.0000000 0.000000 47607
+5:      B     E1    160  -2720.308 -1.759032 1.072609 0.8700364 1.408342 47607
+6:      B     S2    160 -11105.936 -7.181429 1.296433 1.0480154 1.691472 47607
+           I_p       SR
+         <num>    <num>
+1:   185.98909 1.067285
+2: 36909.45566 1.067417
+3: 45495.56038 1.067285
+4:    65.49347 1.094134
+5: 40235.24543 1.094282
+6: 48636.68591 1.094134
+P50_BOOT_DONE

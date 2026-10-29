@@ -1,0 +1,207 @@
+md5 ok /users/PUOM0008/crsfaaron/v143p3/scripts/v143p3_fit.R 2851769df5665e8153345e84238a01e0
+start 2026-10-28T19:04:33-04:00 root /users/PUOM0008/crsfaaron/v143p3 variant ctrnonly
+variant ctrnonly: records 55492 (CTRN 46521, FIA 8971), CTRN installations 17, FIA plots 375, K 6, draws 200
+full T0c: alpha=0.547688 beta=0.0623577 cell 0.5/1/NA value 0.14936039
+full T1: alpha=0.645792 beta=0.0600225 delta=2 gmin=0.606992 cell 0.6/1/1.15 value 0.14884175
+full T2: alpha=0.643582 beta=0.0612471 rm=1.0829 s=0.282968 cell NA/NA/NA value 0.14914496
+full T4: alpha=0.774826 beta=0.0601607 kappa=1.75472 cell 0.5/1.15/1 value 0.14892617
+full T3: alpha=0.615202 beta=0.0605146 c1=0 c2=0.422989 c4=0.770774 c5=0.645516 cell NA/NA/NA value 0.14922939
+full TL: alpha=0.547688 beta=0.0623577 kfia=0 cell 0.5/1/NA value 0.14936039
+     form
+   <char>
+1:    T0c
+2:     T1
+3:     T2
+4:     T4
+5:     T3
+6:     TL
+                                                                          params
+                                                                          <char>
+1:                                               alpha=0.5476876 beta=0.06235765
+2:                     alpha=0.64579247 beta=0.060022456 delta=2 gmin=0.60699191
+3:                   alpha=0.64358238 beta=0.061247141 rm=1.0829005 s=0.28296782
+4:                              alpha=0.77482625 beta=0.060160699 kappa=1.754721
+5: alpha=0.61520247 beta=0.060514581 c1=0 c2=0.4229888 c4=0.770774 c5=0.64551579
+6:                                        alpha=0.5476876 beta=0.06235765 kfia=0
+     rlo   rhi    rd objective
+   <num> <num> <num>     <num>
+1:   0.5  1.00    NA 0.1493604
+2:   0.6  1.00  1.15 0.1488418
+3:    NA    NA    NA 0.1491450
+4:   0.5  1.15  1.00 0.1489262
+5:    NA    NA    NA 0.1492294
+6:   0.5  1.00    NA 0.1493604
+     form   edge rd_at_top
+   <char> <lgcl>    <lgcl>
+1:    T0c  FALSE     FALSE
+2:     T1  FALSE     FALSE
+3:     T2  FALSE     FALSE
+4:     T4   TRUE     FALSE
+5:     T3  FALSE     FALSE
+6:     TL  FALSE     FALSE
+CV done in 30.5 min
+     form         CV          SE   CV_CTRN    SE_CTRN     CV_FIA      SE_FIA
+   <char>      <num>       <num>     <num>      <num>      <num>       <num>
+1:    T0f 0.11130278 0.006175065 0.1529217 0.01211163 0.06968385 0.002415406
+2:    T0c 0.09789194 0.005784538 0.1516695 0.01137156 0.04411440 0.002128623
+3:     T1 0.09748563 0.005676889 0.1513790 0.01114909 0.04359223 0.002146178
+4:     T2 0.09741191 0.005676787 0.1517115 0.01114931 0.04311236 0.002143953
+5:     T4 0.09723943 0.005708468 0.1513849 0.01121318 0.04309395 0.002147335
+6:     T3 0.09759293 0.005691053 0.1517924 0.01118277 0.04339345 0.002120844
+7:     TL 0.09789194 0.005784538 0.1516695 0.01137156 0.04411440 0.002128623
+     form    ref          diff      se_diff     diff_CTRN      se_CTRN
+   <char> <char>         <num>        <num>         <num>        <num>
+1:    T0f    T0c  0.0134108411 0.0008705892  1.252235e-03 0.0012021863
+2:    T0c    T0c  0.0000000000 0.0000000000  0.000000e+00 0.0000000000
+3:     T1    T0c -0.0004063106 0.0002539321 -2.904533e-04 0.0004939560
+4:     T2    T0c -0.0004800330 0.0003438567  4.197701e-05 0.0006347074
+5:     T4    T0c -0.0006525073 0.0002688821 -2.845632e-04 0.0005022694
+6:     T3    T0c -0.0002990116 0.0002184003  1.229240e-04 0.0004186950
+7:     TL    T0c  0.0000000000 0.0000000000  0.000000e+00 0.0000000000
+        diff_FIA       se_FIA
+           <num>        <num>
+1:  0.0255694467 0.0012595437
+2:  0.0000000000 0.0000000000
+3: -0.0005221678 0.0001180404
+4: -0.0010020430 0.0002647568
+5: -0.0010204515 0.0001921347
+6: -0.0007209471 0.0001244556
+7:  0.0000000000 0.0000000000
+      form    src         rcl     n     ratio  gated   pass
+    <char> <char>      <fctr> <int>     <num> <lgcl> <lgcl>
+ 1:    T0c   CTRN     [0,0.6)  4635 0.6966168  FALSE   TRUE
+ 2:    T0c   CTRN  [0.6,0.85) 10968 0.9420068   TRUE   TRUE
+ 3:    T0c   CTRN [0.85,1.15) 19245 1.0325099   TRUE   TRUE
+ 4:    T0c   CTRN  [1.15,1.5)  9904 0.9553936   TRUE   TRUE
+ 5:    T0c   CTRN   [1.5,Inf)  1769 0.9292136   TRUE   TRUE
+ 6:    T0c    FIA     [0,0.6)  1511 1.2462029  FALSE   TRUE
+ 7:    T0c    FIA  [0.6,0.85)   889 1.0563138   TRUE   TRUE
+ 8:    T0c    FIA [0.85,1.15)  1163 0.9213298   TRUE   TRUE
+ 9:    T0c    FIA  [1.15,1.5)  1695 0.9135932   TRUE   TRUE
+10:    T0c    FIA   [1.5,Inf)  3713 0.8276897   TRUE  FALSE
+11:    T0f   CTRN     [0,0.6)  4635 0.6605513  FALSE   TRUE
+12:    T0f   CTRN  [0.6,0.85) 10968 0.9939849   TRUE   TRUE
+13:    T0f   CTRN [0.85,1.15) 19245 1.1467273   TRUE  FALSE
+14:    T0f   CTRN  [1.15,1.5)  9904 0.9511300   TRUE   TRUE
+15:    T0f   CTRN   [1.5,Inf)  1769 0.7706231   TRUE  FALSE
+16:    T0f    FIA     [0,0.6)  1511 1.1954720  FALSE   TRUE
+17:    T0f    FIA  [0.6,0.85)   889 1.1289125   TRUE  FALSE
+18:    T0f    FIA [0.85,1.15)  1163 0.9990125   TRUE   TRUE
+19:    T0f    FIA  [1.15,1.5)  1695 0.8543207   TRUE  FALSE
+20:    T0f    FIA   [1.5,Inf)  3713 0.4972635   TRUE  FALSE
+21:     T1   CTRN     [0,0.6)  4635 0.6962095  FALSE   TRUE
+22:     T1   CTRN  [0.6,0.85) 10968 0.9509894   TRUE   TRUE
+23:     T1   CTRN [0.85,1.15) 19245 0.9841476   TRUE   TRUE
+24:     T1   CTRN  [1.15,1.5)  9904 0.9913775   TRUE   TRUE
+25:     T1   CTRN   [1.5,Inf)  1769 1.0317502   TRUE   TRUE
+26:     T1    FIA     [0,0.6)  1511 1.2622932  FALSE   TRUE
+27:     T1    FIA  [0.6,0.85)   889 1.0798803   TRUE   TRUE
+28:     T1    FIA [0.85,1.15)  1163 0.8890961   TRUE  FALSE
+29:     T1    FIA  [1.15,1.5)  1695 0.9717423   TRUE   TRUE
+30:     T1    FIA   [1.5,Inf)  3713 0.9007114   TRUE   TRUE
+31:     T2   CTRN     [0,0.6)  4635 0.6863101  FALSE   TRUE
+32:     T2   CTRN  [0.6,0.85) 10968 0.9296313   TRUE   TRUE
+33:     T2   CTRN [0.85,1.15) 19245 0.9966340   TRUE   TRUE
+34:     T2   CTRN  [1.15,1.5)  9904 0.9703412   TRUE   TRUE
+35:     T2   CTRN   [1.5,Inf)  1769 1.1440913   TRUE  FALSE
+36:     T2    FIA     [0,0.6)  1511 1.2379639  FALSE   TRUE
+37:     T2    FIA  [0.6,0.85)   889 1.0463386   TRUE   TRUE
+38:     T2    FIA [0.85,1.15)  1163 0.8948615   TRUE  FALSE
+39:     T2    FIA  [1.15,1.5)  1695 0.9721260   TRUE   TRUE
+40:     T2    FIA   [1.5,Inf)  3713 1.1019943   TRUE  FALSE
+41:     T3   CTRN     [0,0.6)  4635 0.6985299  FALSE   TRUE
+42:     T3   CTRN  [0.6,0.85) 10968 0.9343761   TRUE   TRUE
+43:     T3   CTRN [0.85,1.15) 19245 0.9869960   TRUE   TRUE
+44:     T3   CTRN  [1.15,1.5)  9904 0.9933473   TRUE   TRUE
+45:     T3   CTRN   [1.5,Inf)  1769 1.0221043   TRUE   TRUE
+46:     T3    FIA     [0,0.6)  1511 1.2325758  FALSE   TRUE
+47:     T3    FIA  [0.6,0.85)   889 1.0399247   TRUE   TRUE
+48:     T3    FIA [0.85,1.15)  1163 0.8999976   TRUE  FALSE
+49:     T3    FIA  [1.15,1.5)  1695 0.9574909   TRUE   TRUE
+50:     T3    FIA   [1.5,Inf)  3713 0.8984543   TRUE  FALSE
+51:     T4   CTRN     [0,0.6)  4635 0.6956601  FALSE   TRUE
+52:     T4   CTRN  [0.6,0.85) 10968 0.9495387   TRUE   TRUE
+53:     T4   CTRN [0.85,1.15) 19245 0.9877018   TRUE   TRUE
+54:     T4   CTRN  [1.15,1.5)  9904 0.9793732   TRUE   TRUE
+55:     T4   CTRN   [1.5,Inf)  1769 1.0732322   TRUE   TRUE
+56:     T4    FIA     [0,0.6)  1511 1.2483976  FALSE   TRUE
+57:     T4    FIA  [0.6,0.85)   889 1.0557775   TRUE   TRUE
+58:     T4    FIA [0.85,1.15)  1163 0.8909369   TRUE  FALSE
+59:     T4    FIA  [1.15,1.5)  1695 0.9664099   TRUE   TRUE
+60:     T4    FIA   [1.5,Inf)  3713 1.0060118   TRUE   TRUE
+61:     TL   CTRN     [0,0.6)  4635 0.6966168  FALSE   TRUE
+62:     TL   CTRN  [0.6,0.85) 10968 0.9420068   TRUE   TRUE
+63:     TL   CTRN [0.85,1.15) 19245 1.0325099   TRUE   TRUE
+64:     TL   CTRN  [1.15,1.5)  9904 0.9553936   TRUE   TRUE
+65:     TL   CTRN   [1.5,Inf)  1769 0.9292136   TRUE   TRUE
+66:     TL    FIA     [0,0.6)  1511 1.2462029  FALSE   TRUE
+67:     TL    FIA  [0.6,0.85)   889 1.0563138   TRUE   TRUE
+68:     TL    FIA [0.85,1.15)  1163 0.9213298   TRUE   TRUE
+69:     TL    FIA  [1.15,1.5)  1695 0.9135932   TRUE   TRUE
+70:     TL    FIA   [1.5,Inf)  3713 0.8276897   TRUE  FALSE
+      form    src         rcl     n     ratio  gated   pass
+    <char> <char>      <fctr> <int>     <num> <lgcl> <lgcl>
+bootstrap done in 5.0 min
+      form  param draws failed share_at_bound         lo        hi   estimate
+    <char> <char> <int>  <int>          <num>      <num>     <num>      <num>
+ 1:    T0c  alpha   200      0          0.000 0.32800534 0.8062167 0.54768760
+ 2:    T0c   beta   200      0          0.000 0.02362656 0.1383039 0.06235765
+ 3:     T1  alpha   200      0          0.000 0.36044551 0.9261126 0.64579247
+ 4:     T1   beta   200      0          0.000 0.02147711 0.1299348 0.06002246
+ 5:     T1  delta   200      0          0.660 0.29283956 2.0000000 2.00000000
+ 6:     T1   gmin   200      0          0.035 0.10685174 0.9055613 0.60699191
+ 7:     T2  alpha   200      0          0.000 0.40961763 0.9144920 0.64358238
+ 8:     T2   beta   200      0          0.000 0.02234313 0.1273473 0.06124714
+ 9:     T2     rm   200      0          0.000 0.97574800 1.3580784 1.08290054
+10:     T2      s   200      0          0.000 0.20384780 0.4155699 0.28296782
+11:     T4  alpha   200      0          0.000 0.36874382 1.2010262 0.77482625
+12:     T4   beta   200      0          0.000 0.02204797 0.1282740 0.06016070
+13:     T4  kappa   200      0          0.045 0.00000000 3.3955174 1.75472097
+14:     T3  alpha   200      0          0.000 0.33750429 0.8995434 0.61520247
+15:     T3   beta   200      0          0.000 0.02061812 0.1290441 0.06051458
+16:     T3     c1   200      0          0.935 0.00000000 0.1338004 0.00000000
+17:     T3     c2   200      0          0.070 0.00000000 0.7415269 0.42298880
+18:     T3     c4   200      0          0.000 0.63407229 1.0360112 0.77077400
+19:     T3     c5   200      0          0.010 0.21648458 1.2797374 0.64551579
+20:     TL  alpha   200      0          0.000 0.32800534 0.8062167 0.54768760
+21:     TL   beta   200      0          0.000 0.02362656 0.1383039 0.06235765
+22:     TL   kfia   200      0          0.000 0.00000000 0.0000000 0.00000000
+      form  param draws failed share_at_bound         lo        hi   estimate
+    <char> <char> <int>  <int>          <num>      <num>     <num>      <num>
+Key: <form>
+     form         CV          SE   CV_CTRN    SE_CTRN     CV_FIA      SE_FIA
+   <char>      <num>       <num>     <num>      <num>      <num>       <num>
+1:     T1 0.09748563 0.005676889 0.1513790 0.01114909 0.04359223 0.002146178
+2:     T2 0.09741191 0.005676787 0.1517115 0.01114931 0.04311236 0.002143953
+3:     T4 0.09723943 0.005708468 0.1513849 0.01121318 0.04309395 0.002147335
+            diff      se_diff class_gate_CTRN class_gate_FIA class_gate
+           <num>        <num>          <lgcl>         <lgcl>     <lgcl>
+1: -0.0004063106 0.0002539321            TRUE          FALSE      FALSE
+2: -0.0004800330 0.0003438567           FALSE          FALSE      FALSE
+3: -0.0006525073 0.0002688821            TRUE          FALSE      FALSE
+   bound_ok beats_T0c eligible  npar   ord
+     <lgcl>    <lgcl>   <lgcl> <num> <int>
+1:    FALSE      TRUE    FALSE     7     3
+2:     TRUE      TRUE    FALSE     4     1
+3:     TRUE      TRUE    FALSE     6     2
+SELECTION: H0: no eligible form beats T0c by more than one SE of the paired pooled CV difference 
+   TL_minus_selected    se TL_beats_selected
+               <num> <num>            <lgcl>
+1:                NA    NA                NA
+b79e34944a81496c4ec2e772fe107293  /users/PUOM0008/crsfaaron/v143p3/work/fit3_ctrnonly_SERVERONLY.rds
+a2ea159daf22d16cd491c26afdfb7350  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_selection_record.txt
+0616fe3218e42cb49a88417de1916a52  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_cv_DATA.csv
+7ab134d2cc64bdfb8c45fd43e8437228  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_cv_by_source_DATA.csv
+843e1b830ec9a2158c11fd94616f6206  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_cv_paired_DATA.csv
+c28c38780f2b213e6587a2365239cfa8  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_class_gate_DATA.csv
+9196656e99698f4b9f9284a6498689ed  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_class_gate_summary_DATA.csv
+acc467d8b16dab5dfba2af36170ff58c  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_selection_DATA.csv
+cbcc105a4edbc15b7dc8c5510172249d  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_bootstrap_bounds_DATA.csv
+59ba95f07456a8a4b288587cf08626dc  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_bootstrap_cor_DATA.csv
+bcb9dffb332ba12f31b4d12739627913  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_full_fits_DATA.csv
+7c4a5ef454693e1d20ed9734dcd1e6a0  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_grid_objective_DATA.csv
+33d597bee1dc163b1a9273c751f0d3c2  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_edge_DATA.csv
+b693bd8ad32e59514f96efdd07fe9aa5  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_hv2_DATA.csv
+887ab56d1de96c95516a3e533009ee29  /users/PUOM0008/crsfaaron/v143p3/out/fit3_ctrnonly_fia_by_rf_DATA.csv
+FIT3_DONE
+end 2026-10-28T19:58:48-04:00

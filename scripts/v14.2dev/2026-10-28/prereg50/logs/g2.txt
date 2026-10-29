@@ -1,0 +1,15 @@
+G2 full: 313 screened stands
+            kind stands identical differ frozen_missing g2_missing lines_frozen
+          <char>  <int>     <int>  <int>          <int>      <int>        <int>
+1:       results    313       313      0              0          0          313
+2:  pred_t2_tree    313       313      0              0          0        41474
+3: t1_split_tree    313       313      0              0          0        30011
+4: pred_yr1_tree    313       313      0              0          0        31206
+   lines_g2 header_ok   pass
+      <int>    <lgcl> <lgcl>
+1:      313      TRUE   TRUE
+2:    41474      TRUE   TRUE
+3:    30011      TRUE   TRUE
+4:    31206      TRUE   TRUE
+wrote p50-G2.csv 4 rows
+P50_G2_DONE

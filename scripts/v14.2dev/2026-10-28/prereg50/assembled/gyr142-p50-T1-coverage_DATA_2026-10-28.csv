@@ -1,0 +1,5 @@
+cut,fold,stands,t1_fail,t1_worst_scaled,map_fail,covered
+FALSE,A,153,0,0,0,153
+FALSE,B,160,0,0,0,160
+TRUE,A,33,0,0,0,33
+TRUE,B,32,0,0,0,32

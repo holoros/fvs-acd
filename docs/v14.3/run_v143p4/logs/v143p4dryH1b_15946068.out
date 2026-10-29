@@ -1,0 +1,22 @@
+    label          kind files  rows  cols worst_abs n_diff char_mismatch
+   <char>        <char> <int> <int> <int>     <num>  <int>         <int>
+1:    H1b  completeness    NA     2    NA        NA     NA            NA
+2:    H1b       results     1     2    53         0      0             0
+3:    H1b  pred_t2_tree     1  2450     6         0      0             0
+4:    H1b pred_yr1_tree     1   261     6         0      0             0
+5:    H1b         pd_t1     1   250     5         0      0             0
+6:    H1b         pd_t2     1  2450     5         0      0             0
+7:    H1b t1_split_tree     1   250     4         0      0             0
+8:    H1b          traj     1    82    31         0      0             0
+                                                                                 note
+                                                                               <char>
+1: stands in arm 2; frozen RUN_OK 2; arm RUN_OK 2; frozen RUN_OK also RUN_OK in arm 2
+2:                                                                                   
+3:                                                                                   
+4:                                                                                   
+5:                                                                                   
+6:                                                                                   
+7:                                                                                   
+8:                                                                                   
+IDENTICAL
+CMP_DONE H1b

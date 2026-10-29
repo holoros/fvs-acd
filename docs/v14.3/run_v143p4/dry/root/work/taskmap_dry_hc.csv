@@ -1,0 +1,16 @@
+task,arm,chunk,set,from,to
+1,off,1,mefia_l_c,1,3
+2,g0,1,mefia_l_c,1,3
+3,gL_m200,1,mefia_l_c,1,3
+4,gL_m150,1,mefia_l_c,1,3
+5,gL_m100,1,mefia_l_c,1,3
+6,gL_m050,1,mefia_l_c,1,3
+7,gL_p050,1,mefia_l_c,1,3
+8,gL_p100,1,mefia_l_c,1,3
+9,gS_m200,1,mefia_l_c,1,3
+10,gS_m150,1,mefia_l_c,1,3
+11,gS_m100,1,mefia_l_c,1,3
+12,gS_m050,1,mefia_l_c,1,3
+13,gS_p050,1,mefia_l_c,1,3
+14,gS_p100,1,mefia_l_c,1,3
+15,candL,1,mefia_l_c,1,3

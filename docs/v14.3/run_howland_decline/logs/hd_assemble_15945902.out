@@ -1,0 +1,5 @@
+[hd_assemble] start 2026-10-28T06:06:29-04:00 md5 52dc3c0bfe03e6fa49e3907f9ab88db3
+Error in setkeyv(ans, key) : 
+  some columns are not in the data.table: [chunks_complete]
+Calls: kv ... data.table -> setkeyv -> stopf -> raise_condition -> signal
+Execution halted

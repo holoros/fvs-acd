@@ -1,0 +1,5 @@
+kind,stands,identical,differ,frozen_missing,g2_missing,lines_frozen,lines_g2,header_ok,pass
+results,313,313,0,0,0,313,313,TRUE,TRUE
+pred_t2_tree,313,313,0,0,0,41474,41474,TRUE,TRUE
+t1_split_tree,313,313,0,0,0,30011,30011,TRUE,TRUE
+pred_yr1_tree,313,313,0,0,0,31206,31206,TRUE,TRUE
