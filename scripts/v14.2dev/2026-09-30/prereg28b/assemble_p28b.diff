@@ -1,0 +1,68 @@
+0a1,3
+> ## PREREG28b assembly: copy of the PREREG28 assembly (md5 2734ff5d) with only the arm names, job roots, dry run stand ins,
+> ## output names and verdict text changed. Candidate p28b_small (1.265 below 25 cm, 0.111 at and above); p28_g0 (H0) and
+> ## p28_cand (reported) are read from ~/jobs/v142p28. No coordinates. No em dashes.
+9c12
+< source("/home/aaron/jobs/v142p28/scripts/2026-09-29_v142_p23_hkey.R")
+---
+> source("/home/aaron/jobs/v142p28b/scripts/2026-09-29_v142_p23_hkey.R")
+11c14
+< J <- "/home/aaron/jobs/v142p28"; P23 <- "/home/aaron/jobs/v142p23"; DRY <- Sys.getenv("P28_DRYRUN") == "1"; O <- if (DRY) file.path(J, "dryrun/assembled") else file.path(J, "assembled"); if (dir.exists(O)) stop("REFUSE ", O, " exists"); dir.create(O)
+---
+> J <- "/home/aaron/jobs/v142p28b"; P28 <- "/home/aaron/jobs/v142p28"; P23 <- "/home/aaron/jobs/v142p23"; DRY <- Sys.getenv("P28B_DRYRUN") == "1"; O <- if (DRY) file.path(J, "dryrun/assembled") else file.path(J, "assembled"); if (dir.exists(O)) stop("REFUSE ", O, " exists"); dir.create(O)
+21,23c24,26
+< CAND <- "p28_cand"; REF <- "p19_a0111"; TOPC <- "p23_a1061"
+< AR <- data.table(arm = c("p19_a0030", "p19_a0111", "p23_a1061", "p23_a1250", "p28_g0", "p28_cand"), qc_afac = c(0.030, 0.111, 1.061, 1.250, 0.111, NA))
+< AR[, root := fifelse(startsWith(arm, "p19"), P19, fifelse(startsWith(arm, "p23"), P23, J))]; AR[, src := arm]
+---
+> CAND <- "p28b_small"; REF <- "p19_a0111"; TOPC <- "p23_a1061"
+> AR <- data.table(arm = c("p19_a0030", "p19_a0111", "p23_a1061", "p23_a1250", "p28_g0", "p28_cand", "p28b_small"), qc_afac = c(0.030, 0.111, 1.061, 1.250, 0.111, NA, NA))
+> AR[, root := fifelse(startsWith(arm, "p19"), P19, fifelse(startsWith(arm, "p23"), P23, fifelse(startsWith(arm, "p28b"), J, P28)))]; AR[, src := arm]
+25c28
+< if (DRY) { AR[arm == "p28_g0", `:=`(src = "p19_a0111", root = P19)]; AR[arm == "p28_cand", `:=`(src = "p23_a1061", root = P23)] }
+---
+> if (DRY) { AR[arm == "p28_g0", `:=`(src = "p19_a0111", root = P19)]; AR[arm == "p28_cand", `:=`(src = "p23_a1061", root = P23)]; AR[arm == "p28b_small", `:=`(src = "p23_a1250", root = P23)] }
+27c30
+<   fifelse(startsWith(src, "p23"), file.path(P23, "tables/gyr142-p23-fb-stands_DATA_2026-09-27.csv"), file.path(J, "tables/gyr142-p28-fb-stands_DATA_2026-09-27.csv"))))]
+---
+>   fifelse(startsWith(src, "p23"), file.path(P23, "tables/gyr142-p23-fb-stands_DATA_2026-09-27.csv"), fifelse(root == J, file.path(J, "tables/gyr142-p28b-fb-stands_DATA_2026-09-27.csv"), file.path(P28, "tables/gyr142-p28b-fb-stands_DATA_2026-09-27.csv")))))]
+45c48
+< K1 <- rbindlist(lapply(c("p28_g0", "p28_cand"), function(a) rbindlist(lapply(c("qc_c", "qc_fl"), function(s) { r <- res(a, s)
+---
+> K1 <- rbindlist(lapply(c("p28_g0", "p28_cand", "p28b_small"), function(a) rbindlist(lapply(c("qc_c", "qc_fl"), function(s) { r <- res(a, s)
+98c101
+< w_out(HT, "gyr142-p28-hinc_DATA_2026-09-30.csv")
+---
+> w_out(HT, "gyr142-p28b-hinc_DATA_2026-09-30.csv")
+111,112c114,115
+<   data.table(gate = "K1 failures", detail = sprintf("RUN_OK other than 1 for p28_cand after retries: qc_c %d, qc_fl %d", K1[arm == CAND & set == "qc_c"]$not_ok, K1[arm == CAND & set == "qc_fl"]$not_ok), pass = k1_pass),
+<   data.table(gate = "H_inc pooled", detail = sprintf("fold B ratio %.3f [%.3f, %.3f] for p28_cand against %.3f at 0.111 (|dev| %.3f against %.3f); %d trees on %d sites", c1$ratio, c1$ratio_lo, c1$ratio_hi, c0$ratio, abs(c1$ratio - 1), abs(c0$ratio - 1), c1$trees, c1$sites), pass = abs(c1$ratio - 1) < abs(c0$ratio - 1)),
+---
+>   data.table(gate = "K1 failures", detail = sprintf("RUN_OK other than 1 for p28b_small after retries: qc_c %d, qc_fl %d", K1[arm == CAND & set == "qc_c"]$not_ok, K1[arm == CAND & set == "qc_fl"]$not_ok), pass = k1_pass),
+>   data.table(gate = "H_inc pooled", detail = sprintf("fold B ratio %.3f [%.3f, %.3f] for p28b_small against %.3f at 0.111 (|dev| %.3f against %.3f); %d trees on %d sites", c1$ratio, c1$ratio_lo, c1$ratio_hi, c0$ratio, abs(c1$ratio - 1), abs(c0$ratio - 1), c1$trees, c1$sites), pass = abs(c1$ratio - 1) < abs(c0$ratio - 1)),
+114c117
+<   data.table(gate = "TOPHT reading", detail = sprintf("published TOPHT bias %+.2f percent for p28_cand against %+.2f at 1.061 (%s) and %+.2f at 0.111; dominant cohort t2 level %.3f against %.3f at 0.111 (%s, margin %.2f)", s1$topht_bias_pct, sT$topht_bias_pct, if (top_worse) "worse" else "not worse", s0$topht_bias_pct, d1$level_t2, d0$level_t2, if (dom_out) "outside margin" else "within margin", M_DOM), pass = !top_worse && !dom_out),
+---
+>   data.table(gate = "TOPHT reading", detail = sprintf("published TOPHT bias %+.2f percent for p28b_small against %+.2f at 1.061 (%s) and %+.2f at 0.111; dominant cohort t2 level %.3f against %.3f at 0.111 (%s, margin %.2f)", s1$topht_bias_pct, sT$topht_bias_pct, if (top_worse) "worse" else "not worse", s0$topht_bias_pct, d1$level_t2, d0$level_t2, if (dom_out) "outside margin" else "within margin", M_DOM), pass = !top_worse && !dom_out),
+126c129
+<   "Rule 6: every gate passes; the size dependent QC anchor (1.265 below 25 cm, 0.030 at and above) is the 14.2 QC candidate, a regional usage setting, pending a Bakuzis QC grid"
+---
+>   "Rule 6: every gate passes; the small tree only QC anchor (1.265 below 25 cm, 0.111 at and above) is a 14.2 QC candidate, a regional usage setting, pending a Bakuzis QC grid; the choice against PREREG28 follows the PREREG28b TOPHT rule"
+128,130c131,133
+< w_out(GATES, "gyr142-p28-gates_DATA_2026-09-30.csv"); w_out(H0, "gyr142-p28-H0_DATA_2026-09-30.csv"); w_out(K1, "gyr142-p28-K1_DATA_2026-09-30.csv")
+< w_out(cls_tab, "gyr142-p28-classgate_DATA_2026-09-30.csv"); w_out(STS, "gyr142-p28-stands-summary_DATA_2026-09-30.csv")
+< writeLines(c(sprintf("candidate=%s", CAND), sprintf("reference=%s", REF), sprintf("topht_comparator=%s", TOPC), paste0("verdict=", verdict)), file.path(O, "gyr142-p28-verdict_DATA_2026-09-30.txt"))
+---
+> w_out(GATES, "gyr142-p28b-gates_DATA_2026-09-30.csv"); w_out(H0, "gyr142-p28b-H0_DATA_2026-09-30.csv"); w_out(K1, "gyr142-p28b-K1_DATA_2026-09-30.csv")
+> w_out(cls_tab, "gyr142-p28b-classgate_DATA_2026-09-30.csv"); w_out(STS, "gyr142-p28b-stands-summary_DATA_2026-09-30.csv")
+> writeLines(c(sprintf("candidate=%s", CAND), sprintf("reference=%s", REF), sprintf("topht_comparator=%s", TOPC), paste0("verdict=", verdict)), file.path(O, "gyr142-p28b-verdict_DATA_2026-09-30.txt"))
+133c136
+< F[, armlab := factor(c(p19_a0030 = "0.030", p19_a0111 = "0.111", p23_a1061 = "1.061", p23_a1250 = "1.250", p28_cand = "Pair 1.265 / 0.030")[arm], levels = c("0.030", "0.111", "1.061", "1.250", "Pair 1.265 / 0.030"))]
+---
+> F[, armlab := factor(c(p19_a0030 = "0.030", p19_a0111 = "0.111", p23_a1061 = "1.061", p23_a1250 = "1.250", p28_cand = "Pair 1.265 / 0.030", p28b_small = "Small only 1.265 / 0.111")[arm], levels = c("0.030", "0.111", "1.061", "1.250", "Pair 1.265 / 0.030", "Small only 1.265 / 0.111"))]
+143,144c146,147
+< ggsave(file.path(O, "gyr142-p28-hinc_2026-09-30.png"), g, width = 7.5, height = 6, dpi = 300)
+< cat("P28_ASSEMBLE_DONE\n")
+---
+> ggsave(file.path(O, "gyr142-p28b-hinc_2026-09-30.png"), g, width = 7.5, height = 6, dpi = 300)
+> cat("P28B_ASSEMBLE_DONE\n")

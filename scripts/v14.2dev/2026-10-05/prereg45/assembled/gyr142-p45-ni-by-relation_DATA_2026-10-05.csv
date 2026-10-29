@@ -1,0 +1,11 @@
+relation,cand_flags,ref_flags,new_flags,cand_worst,ref_worst,ni_ok
+Eichhorn,0,3,0,0,Inf,TRUE
+Frontier,0,0,0,0,0,TRUE
+HT_monotone,9,36,0,0.920292324050997,1.0425836899891,TRUE
+Magnitude,0,0,0,0,0,TRUE
+Reineke,11,12,2,1.12375145316954,0.767519778555008,FALSE
+SiteOrder_BAPH,3,3,0,20,20,TRUE
+SiteOrder_HT,3,3,0,20,20,TRUE
+SiteOrder_VOL,3,3,0,20,20,TRUE
+Sukachev,0,0,0,0,0,TRUE
+YieldDensity,0,1,0,0,0.0399496353591547,TRUE

@@ -1,0 +1,3 @@
+PREREG34 revision 1 md5 16bab8a586e527d5af62ccf1f0fb7cf1 recorded 2026-10-01T06:51:09-03:00 before any new fold B quantity
+ns_long_c bin v141LTf fold B reference 1.024717
+Rule 2: (a) and (c) supported and the residual check passes on the explaining subset; the form is safe on the population it was fit for, and the ns_long_fl 10 to 19 year bin is named a program and frame effect

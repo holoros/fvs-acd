@@ -1,0 +1,6 @@
+check,rows,worst,pass
+fit reproduction (fit_p45.R),698,0,TRUE
+R3 field tag counts A,1,0,TRUE
+R3 field tag counts B,1,0,TRUE
+RS frozen stand summaries = PREREG38,32,4.54747350886464e-13,TRUE
+RH frozen height rows = PREREG38,76,4.88498130835069e-15,TRUE

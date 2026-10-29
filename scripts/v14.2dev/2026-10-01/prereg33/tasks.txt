@@ -1,0 +1,12 @@
+task qc141 BF start 2026-10-01T07:42:08-03:00 load 1.11
+task p33_dyn BF start 2026-10-01T07:42:08-03:00 load 1.11
+task qc141 BF exit 0 2026-10-01T07:51:22-03:00
+task qc141 SM start 2026-10-01T07:51:22-03:00 load 2.00
+task p33_dyn BF exit 0 2026-10-01T07:51:22-03:00
+task p33_dyn SM start 2026-10-01T07:51:22-03:00 load 2.00
+task p33_dyn SM exit 0 2026-10-01T08:01:24-03:00
+task qc141 MX start 2026-10-01T08:01:24-03:00 load 2.08
+task qc141 SM exit 0 2026-10-01T08:01:29-03:00
+task p33_dyn MX start 2026-10-01T08:01:29-03:00 load 2.07
+task qc141 MX exit 0 2026-10-01T08:11:20-03:00
+task p33_dyn MX exit 0 2026-10-01T08:11:33-03:00

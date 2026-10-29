@@ -1,0 +1,28 @@
+1c1
+< # PREREG44 task wrapper: run_p41.sh (md5 d7fd3101) with job paths, log tag and driver changed and P44_STANDS exported; diff in ../diffs/.
+---
+> # PREREG45 task wrapper (run_p44.sh with job root, driver and md5, arm case and tag changed). PREREG44 task wrapper: run_p41.sh (md5 d7fd3101) with job paths, log tag and driver changed and P44_STANDS exported; diff in ../diffs/.
+18c18
+< export CONFIG_TAG=/home/aaron/jobs/v142p44/logs/tag_${ARM}_${MODE}
+---
+> export CONFIG_TAG=/home/aaron/jobs/v142p45/logs/tag_${ARM}_${MODE}
+33c33
+< export V141_RELCAP=2.9848 V141_DLO=12.7 V141_DHI=15.0 V141_REPORT_DIR=/home/aaron/jobs/v142p44/logs/counters_$ARM
+---
+> export V141_RELCAP=2.9848 V141_DLO=12.7 V141_DHI=15.0 V141_REPORT_DIR=/home/aaron/jobs/v142p45/logs/counters_$ARM
+40c40
+<   p38_fit) export QC_AFAC=1.242 QC_AFAC_SMALL=1.242 QC_AFAC_LARGE=1.242 QC_AFAC_KNOT=25 ;;
+---
+>   qc_rh) FF=/home/aaron/jobs/v142p45/fit/gyr142-p45-qcrh-fit_DATA_2026-10-05.csv; chk $FF $(cut -d" " -f1 /home/aaron/jobs/v142p45/logs/fit_md5.txt); export QC_RH_A=$(awk -F, '$1=="a"{print $3}' $FF) QC_RH_B=$(awk -F, '$1=="b"{print $3}' $FF) QC_RH_RFILL=0.815 ;;
+47c47
+< D=/home/aaron/jobs/v142p44/scripts/driver_p44.R; chk $D 7d5da479e5016f8d4f00568c93e9efe0
+---
+> D=/home/aaron/jobs/v142p45/scripts/driver_p45.R; chk $D 06465636a88ff0c2559dd1b1b2d21b26
+49c49
+< echo "[p44] ARM=$ARM MODE=$MODE IMULT=$IMULT QC_AFAC=$QC_AFAC SMALL=${QC_AFAC_SMALL:-unset} LARGE=${QC_AFAC_LARGE:-unset} KNOT=${QC_AFAC_KNOT:-unset} SMD=$P31_SMD ELEV=$P31_ELEV NYR=$P31_NYR start=$(date -Is)"
+---
+> echo "[p45] ARM=$ARM MODE=$MODE IMULT=$IMULT QC_AFAC=$QC_AFAC SMALL=${QC_AFAC_SMALL:-unset} LARGE=${QC_AFAC_LARGE:-unset} KNOT=${QC_AFAC_KNOT:-unset} SMD=$P31_SMD ELEV=$P31_ELEV NYR=$P31_NYR start=$(date -Is)"
+51c51
+< echo "[p44] DONE $OUT end=$(date -Is)"
+---
+> echo "[p45] DONE $OUT end=$(date -Is)"

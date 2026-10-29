@@ -1,0 +1,108 @@
+                 gate
+               <char>
+ 1:                G0
+ 2:               G0b
+ 3:                G1
+ 4:                G2
+ 5:       NI Eichhorn
+ 6:       NI Frontier
+ 7:    NI HT_monotone
+ 8:      NI Magnitude
+ 9:        NI Reineke
+10: NI SiteOrder_BAPH
+11:   NI SiteOrder_HT
+12:  NI SiteOrder_VOL
+13:       NI Sukachev
+14:   NI YieldDensity
+                                                                                                     value
+                                                                                                    <char>
+ 1:                        gate=G0 stands=3 requested=3 columns=12 worst_scaled=0 worst_col=BA_p pass=TRUE
+ 2: gate=G0b rows_new=101 rows_frozen=101 columns=23 frozen_md5=256839cd69d22c606a32045398dac097 pass=TRUE
+ 3:                                                           72 of 72 trajectories complete with 101 rows
+ 4:                                              worst scaled age 0 difference 2.56e-15 over 72 stand arms
+ 5:                               flags p38_fit 1, qc141 3, new 0; worst margin p38_fit 0.01324, qc141 Inf
+ 6:                                       flags p38_fit 0, qc141 0, new 0; worst margin p38_fit 0, qc141 0
+ 7:                             flags p38_fit 11, qc141 36, new 0; worst margin p38_fit 4.869, qc141 1.043
+ 8:                                       flags p38_fit 0, qc141 0, new 0; worst margin p38_fit 0, qc141 0
+ 9:                            flags p38_fit 11, qc141 12, new 3; worst margin p38_fit 1.101, qc141 0.7675
+10:                                     flags p38_fit 3, qc141 3, new 0; worst margin p38_fit 20, qc141 20
+11:                                     flags p38_fit 3, qc141 3, new 0; worst margin p38_fit 20, qc141 20
+12:                                     flags p38_fit 3, qc141 3, new 0; worst margin p38_fit 20, qc141 20
+13:                                       flags p38_fit 0, qc141 0, new 0; worst margin p38_fit 0, qc141 0
+14:                           flags p38_fit 3, qc141 1, new 2; worst margin p38_fit 0.06156, qc141 0.03995
+                                             threshold   pass
+                                                <char> <lgcl>
+ 1:                                            <= 1e-9   TRUE
+ 2:                                          identical   TRUE
+ 3:                                                all   TRUE
+ 4:                 <= 1e-6 and all stand arms present   TRUE
+ 5: no new flag; candidate worst margin <= qc141 worst   TRUE
+ 6: no new flag; candidate worst margin <= qc141 worst   TRUE
+ 7: no new flag; candidate worst margin <= qc141 worst  FALSE
+ 8: no new flag; candidate worst margin <= qc141 worst   TRUE
+ 9: no new flag; candidate worst margin <= qc141 worst  FALSE
+10: no new flag; candidate worst margin <= qc141 worst   TRUE
+11: no new flag; candidate worst margin <= qc141 worst   TRUE
+12: no new flag; candidate worst margin <= qc141 worst   TRUE
+13: no new flag; candidate worst margin <= qc141 worst   TRUE
+14: no new flag; candidate worst margin <= qc141 worst  FALSE
+                                                    provenance
+                                                        <char>
+ 1: driver_p44 g0 against frozen p19_a0111 qc_c (md5 979101be)
+ 2:     driver_p44 grid against frozen PREREG31 dry trajectory
+ 3:                                  out/traj_<arm>_S<bin>.csv
+ 4:                  measured qc_c t1 tree list (md5 6fb1ff68)
+ 5:                                         PREREG44 relations
+ 6:                                         PREREG44 relations
+ 7:                                         PREREG44 relations
+ 8:                                         PREREG44 relations
+ 9:                                         PREREG44 relations
+10:                                         PREREG44 relations
+11:                                         PREREG44 relations
+12:                                         PREREG44 relations
+13:                                         PREREG44 relations
+14:                                         PREREG44 relations
+Key: <relation>
+Index: <marginB_ok>
+          relation cand_flags ref_flags new_flags  cand_worst   ref_worst
+            <char>      <int>     <int>     <int>       <num>       <num>
+ 1:       Eichhorn          1         3         0  0.01323546         Inf
+ 2:       Frontier          0         0         0  0.00000000  0.00000000
+ 3:    HT_monotone         11        36         0  4.86926128  1.04258369
+ 4:      Magnitude          0         0         0  0.00000000  0.00000000
+ 5:        Reineke         11        12         3  1.10077330  0.76751978
+ 6: SiteOrder_BAPH          3         3         0 20.00000000 20.00000000
+ 7:   SiteOrder_HT          3         3         0 20.00000000 20.00000000
+ 8:  SiteOrder_VOL          3         3         0 20.00000000 20.00000000
+ 9:       Sukachev          0         0         0  0.00000000  0.00000000
+10:   YieldDensity          3         1         2  0.06156244  0.03994964
+    ref_not_evaluated cand_not_evaluated marginB_ok  ni_ok
+                <int>              <int>     <lgcl> <lgcl>
+ 1:                 1                  0       TRUE   TRUE
+ 2:                 0                  0       TRUE   TRUE
+ 3:                 0                  0      FALSE  FALSE
+ 4:                 0                  0       TRUE   TRUE
+ 5:                15                 15      FALSE  FALSE
+ 6:                 0                  0       TRUE   TRUE
+ 7:                 0                  0       TRUE   TRUE
+ 8:                 0                  0       TRUE   TRUE
+ 9:                 0                  0       TRUE   TRUE
+10:                 0                  0      FALSE  FALSE
+       arm sdi_bin inv_dHT inv_dVOL
+    <char>   <int>   <int>    <int>
+1:   qc141       1      19       20
+2:   qc141       2      20       20
+3:   qc141       3       4       20
+4: p38_fit       1      20       20
+5: p38_fit       2      20       20
+6: p38_fit       3      18       15
+plan_md5=37cde199f4a6c499c5c9fb4982baf271
+outcome=RULE2_NOT_CLEARED
+harness_ok=TRUE NI_ok=FALSE
+stands=36 new_flags=5
+new_flag_units=Reineke:E1_S2_2;Reineke:E2_S2_3;Reineke:E4_S1_1;YieldDensity:E3;YieldDensity:E4
+marginB_fail_relations=HT_monotone;Reineke;YieldDensity
+reineke_not_evaluated qc141=15 p38_fit=15 of 36
+HT_ratio_50=1.116..2.099 HT_ratio_100=1.049..2.833 VOL_ratio_100=0.948..1.700
+decision_weight=informs 14.3 only; cannot reopen the 14.2 QC decision (Aaron, 5 October 2026)
+ASSEMBLY_DONE

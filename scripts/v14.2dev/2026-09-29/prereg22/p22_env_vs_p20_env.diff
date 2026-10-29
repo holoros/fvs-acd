@@ -1,0 +1,33 @@
+2,5c2,8
+< # PREREG20 shared environment (sourced by run_task_p20.sh and run_retry_p20.sh). The bench141 v141LT block verbatim from
+< # run_task_p17.sh, with the PREREG20 changes listed in run_task_p20.sh. Parameters are the PREREG20 fixed values.
+< P20_B1=0.034416; P20_B2=0.005072
+< p20_env() { local COL=$1 SET=$2
+---
+> # PREREG22 shared environment (sourced by run_task_p22.sh, run_retry_p22.sh and run_smoke_p22.sh). Copy of
+> # ~/jobs/v142p20/home/p20_env.sh (md5 8edd89f4); the bench141 v141LT block is verbatim. Changes: the column case adds the
+> # joint arm v141LTfi (PREREG20 height form plus PREREG9 threshold matching with IMULT m*), the ingrowth part is set only
+> # for NS sets, and IMULT for v141LTfi comes from P22_IMULT, which must be a PREREG18 grid value. The runner is the PREREG20
+> # runner, unedited (md5 65392afb). No coordinates. No em dashes.
+> P22_B1=0.034416; P22_B2=0.005072
+> p22_env() { local COL=$1 SET=$2
+25a29
+>   local NSSET=0
+27c31
+<     ns_c|ns_fl|ns_long_c|ns_long_fl) export SRC_TST=UNKNOWN ;;
+---
+>     ns_c|ns_fl|ns_long_c|ns_long_fl) export SRC_TST=UNKNOWN; NSSET=1 ;;
+29c33
+<     *) echo "FATAL set $SET not in PREREG20"; exit 5 ;;
+---
+>     *) echo "FATAL set $SET not in PREREG22"; exit 5 ;;
+32,33c36,41
+<     g0_off) : ;;                                              # correction switched off: must reproduce frozen v141LT
+<     v141LTf|ctl_memat) export HTFIX_B1=$P20_B1 HTFIX_B2=$P20_B2 ;;
+---
+>     g0_off) : ;;                                              # both parts off, IMULT 2.5: must reproduce frozen v141LT
+>     ctl_memat) export HTFIX_B1=$P22_B1 HTFIX_B2=$P22_B2 ;;    # height part on; the NS ingrowth setting is never set for Maine
+>     v141LTfi|v141LTfi_smoke)
+>       [ "$NSSET" = 1 ] || { echo "FATAL $COL on non NS set $SET"; exit 5; }
+>       case "${P22_IMULT:-}" in 1.5|1.75|2.0|2.25) : ;; *) echo "FATAL P22_IMULT='${P22_IMULT:-}' is not a PREREG18 grid value"; exit 6 ;; esac
+>       export HTFIX_B1=$P22_B1 HTFIX_B2=$P22_B2 ING_MIN_FROM_SCORE=1 IMULT=$P22_IMULT ;;

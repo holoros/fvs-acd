@@ -1,0 +1,12 @@
+80337abaaf4ae63dca8fcf2f0875d806  scripts/build_driver_p31.sh
+ae758ed8254f311430a861a669d58565  scripts/chain_p31.sh
+0f2885639b766b00e0beb34431e1e966  scripts/g0c_p31.sh
+501780da3871dbbf3911197b4813041f  scripts/run_p31.sh
+5dd0f8db02d1ec2fb073a28af3d33e13  scripts/assemble_p31.R
+467fb5188a868ed4be4cba9e5a53a3dc  scripts/driver_p31.R
+b0e9ed5776f1c611afa252716a2aff49  scripts/g0_cmp_p31.R
+99f235928416d86c5f12a3371738ce25  scripts/thresholds_p31.R
+b11ac95a9ece429e953719f55f2ed5ed  verify_20260930/rederive_p31.R
+b24be6316699c80cb5ee35e3f0a457f7  verify_20260930/run_rederive_p31.sh
+23c502a7185bdc3f5f1b9a3100a9e2d3  figs/fig_p31.R
+3461fc7585b137464dc42c7dd9307654  plan/2026-09-30_v142_bakuzis-qc-p28b_PREREG31.md

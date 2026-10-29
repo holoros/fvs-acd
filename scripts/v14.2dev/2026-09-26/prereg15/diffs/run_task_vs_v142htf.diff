@@ -1,0 +1,30 @@
+2,3c2,4
+< # PREREG11 firebreather driver: one task of work/htfix_taskmap. Env mirrors recs/htfix/scripts/2026-09-26_v142_htfix_array.sbatch
+< # (itself a frozen copy of the bench141 array), with paths rebased to this bundle's HOME. No em dashes.
+---
+> # PREREG15 firebreather driver: one task of work/p15_taskmap. Frozen copy of v142htf/home/run_task.sh (diff in ../diffs/):
+> # taskmap, per set TST files (bench141 MNAP rule), HTFIX_B unset, high ingrowth branch removed, bench141 unset lines added.
+> # Env = the bench141 array v141LT branch. Engine, coefficient and runner chk values unchanged. No em dashes.
+5c6
+< T=$1; R1=$HOME; TM=$R1/work/htfix_taskmap_DATA_2026-09-26.csv
+---
+> T=$1; R1=$HOME; TM=$R1/work/p15_taskmap_DATA_2026-09-26.csv
+7a9
+> [ "$COL" = v141LT ] || { echo "bad COL $COL (PREREG15 runs v141LT only)"; exit 2; }
+30,32c32,35
+< case "$SET" in ns_c|ns_fl|ns_long_c|ns_long_fl) export SRC_TST=UNKNOWN ;; *) export TST_FILE=$R1/work/v142_bench141_tst_${SET}_DATA_2026-09-25.csv TST_COL=TST ;; esac
+< export HTFIX_B=$(cat $R1/work/htfix_b.txt)
+< if [ "$COL" = v141LThi ]; then export ING_MIN_FROM_SCORE=1 IMULT=1.0; fi
+---
+> export TST_FILE=$R1/work/v142_p15_tst_${SET}_DATA_2026-09-26.csv TST_COL=TST; [ -s "$TST_FILE" ] || { echo "FATAL no tst file $TST_FILE"; exit 5; }
+> unset HTFIX_B ING_MIN_FROM_SCORE SRC_TST SCORE_MINDBH_FIXED STAND_KEEP_FILE MGD_FILE MGD_COL MGD_UNMANAGED SRC_MANAGED V1211_MGD_PERSTAND || true
+> unset LINKED_MORTMULT NOSDI NOCON LINKED_FIX1 LINKED_FIX2 LINKED_FIX3 LINKED_FIX1B LINKED_FIX4 LINKED_FIX5 LINKED_DREF NMAX USE_MODS REIN || true
+> unset SMALLTREE_COEF SMALLTREE_IVREF SMALLTREE_LO SMALLTREE_HI ACD_V141_BASE ING_V141 ING_V141_ENTRY ING_V141_KAPPA ING_V141_T ING_V141_COEF_DIR SCORECARD || true
+36c39
+< echo "[v142htf-fb] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO HTFIX_B=$HTFIX_B IMULT=$IMULT ING=${ING_MIN_FROM_SCORE:-0} host=$(hostname) start=$(date -Is)"
+---
+> echo "[v142p15-fb] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO HTFIX_B=${HTFIX_B:-unset} IMULT=$IMULT TST_FILE=$TST_FILE host=$(hostname) start=$(date -Is)"
+38c41
+< echo "[v142htf-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"
+---
+> echo "[v142p15-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"

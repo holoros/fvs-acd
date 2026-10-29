@@ -1,0 +1,133 @@
+input md5s: 49 files written to logs/input_md5.txt
+S4: field tag and run t2 frames agree on 7 columns other than TREE over 68584 rows: TRUE
+p19_a0111: D5 stands without a record on both sides: QC__30004466L2__2003_2016_C
+p19_a0111: 160 stands on 152 sites; S1 worst TOPHT_o 4.97e-14, TOPHT_p 7.46e-14
+p38_fit: D5 stands without a record on both sides: QC__30004466L2__2003_2016_C
+p38_fit: 160 stands on 152 sites; S1 worst TOPHT_o 4.97e-14, TOPHT_p 7.46e-14
+          arm                                 check        worst   pass
+       <char>                                <char>        <num> <lgcl>
+ 1: p19_a0111                S1 stand TOPHT_o worst 4.973799e-14   TRUE
+ 2: p19_a0111                S1 stand TOPHT_p worst 7.460699e-14   TRUE
+ 3: p19_a0111 S1 D6 against PREREG38 topht_bias_pct 2.042810e-14   TRUE
+ 4: p19_a0111     S2 D0 against PREREG38 hinc level 4.440892e-14   TRUE
+ 5: p19_a0111      S2 D0 records against hinc trees 0.000000e+00   TRUE
+ 6: p19_a0111     S3 stands against PREREG38 stands 0.000000e+00   TRUE
+ 7:   p38_fit                S1 stand TOPHT_o worst 4.973799e-14   TRUE
+ 8:   p38_fit                S1 stand TOPHT_p worst 7.460699e-14   TRUE
+ 9:   p38_fit S1 D6 against PREREG38 topht_bias_pct 7.460699e-14   TRUE
+10:   p38_fit     S2 D0 against PREREG38 hinc level 3.330669e-14   TRUE
+11:   p38_fit      S2 D0 records against hinc trees 0.000000e+00   TRUE
+12:   p38_fit     S3 stands against PREREG38 stands 0.000000e+00   TRUE
+OUTCOME p38_fit: dominant source G2 (observed height handling), 9.29 points of a 16.78 point gap (share 0.553, interval 7.28 to 11.33) 
+OUTCOME qc141: dominant source G2 (observed height handling), 9.04 points of a 16.50 point gap (share 0.548, interval 7.16 to 11.21) 
+consistent across arms: TRUE 
+          arm   rung      value       lo     hi n_units
+       <char> <char>      <num>    <num>  <num>   <int>
+ 1: p19_a0111     D0 -10.208752 -12.5951 -8.048      83
+ 2: p19_a0111     D1  -9.656576 -11.8748 -7.530      84
+ 3: p19_a0111     D2  -7.975909 -10.1236 -5.910     100
+ 4: p19_a0111     D3   1.063049  -0.9675  3.160     147
+ 5: p19_a0111     D4   2.743483   0.8560  4.772     147
+ 6: p19_a0111     D5   5.829751   3.6256  8.129     159
+ 7: p19_a0111     D6   6.289043   4.0362  8.760     160
+ 8:   p38_fit     D0  -0.567044  -2.5102  1.349      83
+ 9:   p38_fit     D1   0.009355  -2.1618  2.287      84
+10:   p38_fit     D2   1.605155  -0.4516  3.660     100
+11:   p38_fit     D3  10.890823   9.0276 12.899     147
+12:   p38_fit     D4  12.685335  10.8345 14.576     147
+13:   p38_fit     D5  15.717028  13.6497 17.914     159
+14:   p38_fit     D6  16.212491  14.0131 18.552     160
+Index: <group__arm>
+          arm  group                         name   value   share       lo
+       <char> <char>                       <char>   <num>   <num>    <num>
+ 1: p19_a0111     G1 aggregation and record rules  2.2328 0.13534  0.82534
+ 2: p19_a0111     G2     observed height handling  9.0390 0.54789  7.15785
+ 3: p19_a0111     G3                         fate  1.6804 0.10186  0.78371
+ 4: p19_a0111     G4            t2 rank selection  3.0863 0.18707  1.45856
+ 5: p19_a0111     G5   recruits and unlinked rows  0.4593 0.02784 -0.01311
+ 6: p19_a0111    gap              gap D6 minus D0 16.4978 1.00000 13.99927
+ 7:   p38_fit     G1 aggregation and record rules  2.1722 0.12946  0.98168
+ 8:   p38_fit     G2     observed height handling  9.2857 0.55339  7.27924
+ 9:   p38_fit     G3                         fate  1.7945 0.10695  0.93624
+10:   p38_fit     G4            t2 rank selection  3.0317 0.18068  1.33651
+11:   p38_fit     G5   recruits and unlinked rows  0.4955 0.02953 -0.01437
+12:   p38_fit    gap              gap D6 minus D0 16.7795 1.00000 14.25586
+        hi
+     <num>
+ 1:  3.759
+ 2: 11.208
+ 3:  2.607
+ 4:  4.974
+ 5:  1.198
+ 6: 19.215
+ 7:  3.477
+ 8: 11.327
+ 9:  2.651
+10:  4.979
+11:  1.290
+12: 19.326
+          arm                                                           item
+       <char>                                                         <char>
+ 1: p19_a0111                                  Q1 observed D6 set himp share
+ 2: p19_a0111            Q1 observed D6 set finite heights at or below 1.3 m
+ 3: p19_a0111                                     Q1 observed D6 set records
+ 4: p19_a0111                                  Q1 observed D3 set himp share
+ 5: p19_a0111            Q1 observed D3 set finite heights at or below 1.3 m
+ 6: p19_a0111                                     Q1 observed D3 set records
+ 7: p19_a0111           Q2 observed D6 set sum himp over sum measured height
+ 8: p19_a0111                                                     Q2 records
+ 9: p19_a0111        Q3 observed D6 records that are t1 dom survivors, share
+10: p19_a0111 Q3 predicted D6 records that are t1 dom rows with ing 0, share
+11: p19_a0111                                     Q4 records per stand D0 D1
+12: p19_a0111                                        Q4 records per stand D2
+13: p19_a0111                               Q4 records per stand D3 observed
+14: p19_a0111                              Q4 records per stand D4 predicted
+15:   p38_fit                                  Q1 observed D6 set himp share
+16:   p38_fit            Q1 observed D6 set finite heights at or below 1.3 m
+17:   p38_fit                                     Q1 observed D6 set records
+18:   p38_fit                                  Q1 observed D3 set himp share
+19:   p38_fit            Q1 observed D3 set finite heights at or below 1.3 m
+20:   p38_fit                                     Q1 observed D3 set records
+21:   p38_fit           Q2 observed D6 set sum himp over sum measured height
+22:   p38_fit                                                     Q2 records
+23:   p38_fit        Q3 observed D6 records that are t1 dom survivors, share
+24:   p38_fit Q3 predicted D6 records that are t1 dom rows with ing 0, share
+25:   p38_fit                                     Q4 records per stand D0 D1
+26:   p38_fit                                        Q4 records per stand D2
+27:   p38_fit                               Q4 records per stand D3 observed
+28:   p38_fit                              Q4 records per stand D4 predicted
+          arm                                                           item
+       <char>                                                         <char>
+       value
+       <num>
+ 1:   0.6055
+ 2:   0.0000
+ 3: 649.0000
+ 4:   0.6264
+ 5:   0.0000
+ 6: 447.0000
+ 7:   0.8919
+ 8: 256.0000
+ 9:   0.6086
+10:   0.9418
+11:   1.5833
+12:   1.6700
+13:   3.0408
+14:   4.0272
+15:   0.6055
+16:   0.0000
+17: 649.0000
+18:   0.6264
+19:   0.0000
+20: 447.0000
+21:   0.8919
+22: 256.0000
+23:   0.6086
+24:   0.9387
+25:   1.5833
+26:   1.6700
+27:   3.0408
+28:   4.0272
+       value
+       <num>
+P39_ASSEMBLE_DONE

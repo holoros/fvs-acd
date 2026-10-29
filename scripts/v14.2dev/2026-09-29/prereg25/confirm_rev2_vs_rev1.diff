@@ -1,0 +1,8 @@
+0a1
+> ## rev2: STAND prefix pattern accepts NS_LONG__ (rev1 stopped on ns_long_c before any ratio was computed).
+24,25c25,26
+<   stopifnot(all(grepl("^NS__NS_(RS|OP)_", x$STAND)))
+<   x[, .(set = s, STAND, sidx, fold, SP, D1, H1, dho = (H2 - H1) / iv, dhf = (Hpf - H1) / iv, prog = fifelse(grepl("^NS__NS_RS_", STAND), "NS_RS", "NS_OP"))] }))
+---
+>   stopifnot(all(grepl("^NS(_LONG)?__NS_(RS|OP)_", x$STAND)))
+>   x[, .(set = s, STAND, sidx, fold, SP, D1, H1, dho = (H2 - H1) / iv, dhf = (Hpf - H1) / iv, prog = fifelse(grepl("^NS(_LONG)?__NS_RS_", STAND), "NS_RS", "NS_OP"))] }))

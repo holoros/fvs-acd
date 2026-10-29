@@ -1,0 +1,39 @@
+--- /home/aaron/jobs/v142p41/scripts/run_p41.sh	2026-10-02 13:53:52.234379554 -0300
++++ /home/aaron/jobs/v142p44/scripts/run_p44.sh	2026-10-05 13:16:53.582376820 -0300
+@@ -1,3 +1,4 @@
++# PREREG44 task wrapper: run_p41.sh (md5 d7fd3101) with job paths, log tag and driver changed and P44_STANDS exported; diff in ../diffs/.
+ #!/bin/bash
+ # PREREG41 task wrapper (run_p31.sh with job paths, arm case and log tag changed). Usage: run_p41.sh ARM MODE OUT [CELLS_CSV]. The environment block is PREREG28b run_task_p28b.sh
+ # (md5 3969483d) verbatim from OMP_NUM_THREADS to the unset line (the bench141 v141LT block: IMULT 2.5, no height form, no
+@@ -14,7 +15,7 @@
+ FR=$HOME/magplot/verify/gydbreg20260916/frames
+ export PAIRS_FILE=$FR/bench_gyr_${SET}_pairs.csv INIT_FILE=$FR/bench_gyr_${SET}_tree_init.csv T2_FILE=$FR/bench_gyr_${SET}_tree_t2.csv SITE_FILE=$FR/bench_gyr_${SET}_site_esi.csv
+ unset CHUNK_FROM CHUNK_TO STAND_KEEP_FILE || true
+-export CONFIG_TAG=/home/aaron/jobs/v142p41/logs/tag_${ARM}_${MODE}
++export CONFIG_TAG=/home/aaron/jobs/v142p44/logs/tag_${ARM}_${MODE}
+ chk() { local m; m=$(md5sum "$1" | cut -d' ' -f1); [ "$m" = "$2" ] || { echo "FATAL md5 $1 $m != $2"; exit 4; }; }
+ export OMP_NUM_THREADS=1 R_DATATABLE_NUM_THREADS=1 R_LIBS_USER=/home/aaron/R/x86_64-pc-linux-gnu-library/4.5
+ export USE_HIER_ING=FALSE USE_HIER_MORT=FALSE HIER_POSTDIR=$HOME/v13_kickoff SPLIT=TRUE
+@@ -29,7 +30,7 @@
+ export MODEL_FILE=$HOME/v14_0_4_20260917/AcadianGY_14.0.4.r; chk $MODEL_FILE 61f95d99f896e8e513930d6e33a7391a
+ export DBA_V1404=1 LINKED_MODE=L2 SMALLTREE=0
+ export V141=1 V141_FILE=$HOME/v14_1_20260923/AcadianGY_14.1.r V141_COEF=$HOME/magplot/verify/gydbreg20260916/v141_20260923/work/v141_option3_offline_coefs_r5_2026-09-23.rds
+-export V141_RELCAP=2.9848 V141_DLO=12.7 V141_DHI=15.0 V141_REPORT_DIR=/home/aaron/jobs/v142p41/logs/counters_$ARM
++export V141_RELCAP=2.9848 V141_DLO=12.7 V141_DHI=15.0 V141_REPORT_DIR=/home/aaron/jobs/v142p44/logs/counters_$ARM
+ chk $V141_FILE 0bf27dde81240e6bdf59c9a90f0051bd; chk $V141_COEF c8f02f5841e98b93cb532b6fa9b1fc51
+ export LSDG_V141=1 THIN_V141=1
+ case "$SET" in qc_c|qc_fl) export SRC_TST=UNKNOWN ;; *) echo "FATAL set $SET not in PREREG28b"; exit 5 ;; esac
+@@ -41,9 +42,10 @@
+ esac
+ unset TREE_OUT || true
+ chk $HOME/runner_p28_fb.R 0a2b27421ee7b25eaab7f4591ce3af97
++export P44_STANDS=$CELLS
+ export P31_MODE=$MODE P31_OUT=$OUT P31_ARM=$ARM P31_CELLS=$CELLS P31_NYR=${P31_NYR:-100} P31_SMD=${P31_SMD:-9.1} P31_ELEV=${P31_ELEV:-385}
+-D=/home/aaron/jobs/v142p31/scripts/driver_p31.R; chk $D 467fb5188a868ed4be4cba9e5a53a3dc
++D=/home/aaron/jobs/v142p44/scripts/driver_p44.R; chk $D 7d5da479e5016f8d4f00568c93e9efe0
+ cd $HOME/magplot/verify
+-echo "[p41] ARM=$ARM MODE=$MODE IMULT=$IMULT QC_AFAC=$QC_AFAC SMALL=${QC_AFAC_SMALL:-unset} LARGE=${QC_AFAC_LARGE:-unset} KNOT=${QC_AFAC_KNOT:-unset} SMD=$P31_SMD ELEV=$P31_ELEV NYR=$P31_NYR start=$(date -Is)"
++echo "[p44] ARM=$ARM MODE=$MODE IMULT=$IMULT QC_AFAC=$QC_AFAC SMALL=${QC_AFAC_SMALL:-unset} LARGE=${QC_AFAC_LARGE:-unset} KNOT=${QC_AFAC_KNOT:-unset} SMD=$P31_SMD ELEV=$P31_ELEV NYR=$P31_NYR start=$(date -Is)"
+ Rscript $D
+-echo "[p41] DONE $OUT end=$(date -Is)"
++echo "[p44] DONE $OUT end=$(date -Is)"

@@ -1,0 +1,22 @@
+verifier arm labels: both qc141 p38_fit p19_a0030 p19_a0060 p19_a0111 p19_a0250 p19_a0500 p19_a1000 p23_a1061 p23_a1250 p28b_small 
+assembly: outcome=RULE2_NOT_CLEARED  verifier: 2 NA NA 
+81 of 91 items agree; worst 1e-9 item diff 0
+                       item     arm assembly verifier    kind  agree
+                     <char>  <char>   <char>   <char>  <char> <lgcl>
+ 1:          Eichhorn ni_ok p38_fit     TRUE        1 logical  FALSE
+ 2:          Frontier ni_ok p38_fit     TRUE        1 logical  FALSE
+ 3:       HT monotone ni_ok p38_fit     TRUE        1 logical  FALSE
+ 4:         Magnitude ni_ok p38_fit     TRUE        1 logical  FALSE
+ 5:           Reineke ni_ok p38_fit    FALSE        0 logical  FALSE
+ 6:  Site ordering BA ni_ok p38_fit    FALSE        0 logical  FALSE
+ 7:  Site ordering HT ni_ok p38_fit     TRUE        1 logical  FALSE
+ 8: Site ordering VOL ni_ok p38_fit     TRUE        1 logical  FALSE
+ 9:          Sukachev ni_ok p38_fit     TRUE        1 logical  FALSE
+10:     Yield density ni_ok p38_fit     TRUE        1 logical  FALSE
+     gate   pass
+   <char> <lgcl>
+1:     G0   TRUE
+2:    G0c   TRUE
+3:     G1   TRUE
+4:     G2   TRUE
+P41_COMPARE_DONE

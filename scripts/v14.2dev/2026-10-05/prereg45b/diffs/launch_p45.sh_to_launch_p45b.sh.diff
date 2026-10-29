@@ -1,0 +1,8 @@
+7c7
+<     n=$(pgrep -f "run_task_p45.sh" | wc -l); l=$(awk '{print $1}' /proc/loadavg)
+---
+>     n=$(pgrep -f "run_task_p45b.sh" | wc -l); l=$(awk '{print $1}' /proc/loadavg)
+11c11
+<   ( bash $HOME/../scripts/run_task_p45.sh $t > logs/task_${t}.log 2>&1; echo "task $t exit $?" >> logs/_status_${TAGS}.txt ) &
+---
+>   ( bash $HOME/../scripts/run_task_p45b.sh $t > logs/task_${t}.log 2>&1; echo "task $t exit $?" >> logs/_status_${TAGS}.txt ) &

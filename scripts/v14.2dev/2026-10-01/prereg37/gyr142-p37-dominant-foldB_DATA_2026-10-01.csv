@@ -1,0 +1,12 @@
+quantity,estimate,lo,hi,boot_na
+R_dom,1.33215508490721,1.09628880301238,1.56100019786037,0
+delta_dht_equation,0.950291487218081,0.372001570609641,1.31274577864835,0
+m_site_curve,0.768804839319016,0.675817197361549,0.85731104902141,0
+obs_over_curve_increment_at_frame_ESI,0.660511209694696,0.530571853302594,0.787509051975838,0
+obs_dom_stand_incr_m_yr,0.192284573891717,,,
+curve_incr_at_frame_ESI_m_yr,0.272756357618631,,,
+p0_dom_m_yr,0.148447615632455,,,
+dominant_records,133,,,
+dominant_stands,84,,,
+stands_dropped_H1d_ge_A,0,,,
+mean_frame_ESI_dom_stands,18.7073095238095,,,

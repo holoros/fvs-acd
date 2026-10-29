@@ -1,0 +1,7 @@
+plan_md5=55b7b4614dbb5b2e7a560f4fdb8e3251
+assembly=r2
+verdict_PREREG23=Rule 6: every gate passes (V2, B1, B2 cited as passed) (row index: Rule 3: class 25 and over worse by more than 0.03; changed=TRUE)
+verdict_PREREG28=Rule 6: every gate passes (V2, B1, B2 cited as passed) (row index: Rule 6: every gate passes (V2, B1, B2 cited as passed); changed=FALSE)
+verdict_PREREG28b=Rule 6: every gate passes (V2, B1, B2 cited as passed) (row index: Rule 6: every gate passes (V2, B1, B2 cited as passed); changed=FALSE)
+verdict_PREREG33=Rule 3: benchmark passes, Bakuzis non inferiority fails (cited, unchanged) (row index: Rule 3: benchmark passes, Bakuzis non inferiority fails (cited, unchanged); changed=FALSE)
+counts_row_index=57515 (4529) counts_field_tag=50434 (9780) agree_PREREG36=FALSE; scope 378 RUN_OK stands, t2 height only (added): 11632 (1569) and 10226 (2299), agree=TRUE

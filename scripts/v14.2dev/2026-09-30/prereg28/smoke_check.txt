@@ -1,0 +1,15 @@
+p28_g0: 5 stands QC__30000019L2__2001_2015_C QC__30000213L2__2012_2018_C QC__30000223L2__2013_2018_C QC__30000229L2__2013_2018_C QC__30000273L2__2013_2018_C, RUN_OK 5, worst results 0, worst trees 0 (rows 814/814)
+      big below25_dht     n
+   <lgcl>       <num> <int>
+1:  FALSE           0   606
+2:   TRUE           0    48
+p28_unset: 5 stands QC__30000019L2__2001_2015_C QC__30000213L2__2012_2018_C QC__30000223L2__2013_2018_C QC__30000229L2__2013_2018_C QC__30000273L2__2013_2018_C, RUN_OK 5, worst results 0, worst trees 0 (rows 814/814)
+      big below25_dht     n
+   <lgcl>       <num> <int>
+1:  FALSE           0   606
+2:   TRUE           0    48
+p28_cand: 5 stands QC__30000019L2__2001_2015_C QC__30000213L2__2012_2018_C QC__30000223L2__2013_2018_C QC__30000229L2__2013_2018_C QC__30000273L2__2013_2018_C, RUN_OK 5, worst results 0.214, worst trees 0.314 (rows 814/814)
+      big below25_dht     n
+   <lgcl>       <num> <int>
+1:  FALSE   1.1537797   606
+2:   TRUE   0.4656216    48

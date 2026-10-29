@@ -1,0 +1,8 @@
+row index all: stands 2200 matched 57515 subset 4529 sameSP 36890 sameSP_H2 9742 sameSP_H1 8396 anyH2 14515
+row index runok: stands 378 matched 11632 subset 646 sameSP 7224 sameSP_H2 1569 sameSP_H1 1391 anyH2 2489
+row index screened: stands 313 matched 9925 subset 565 sameSP 6330 sameSP_H2 1338 sameSP_H1 1196 anyH2 2065
+row index screenedB: stands 160 matched 4882 subset 301 sameSP 3041 sameSP_H2 676 sameSP_H1 598 anyH2 1063
+field tag all: stands 2200 matched 50434 subset 9780 sameSP 50434 sameSP_H2 13574 sameSP_H1 10894 anyH2 13574
+field tag runok: stands 378 matched 10226 subset 1665 sameSP 10226 sameSP_H2 2299 sameSP_H1 1886 anyH2 2299
+field tag screened: stands 313 matched 8831 subset 1435 sameSP 8831 sameSP_H2 1935 sameSP_H1 1609 anyH2 1935
+field tag screenedB: stands 160 matched 4291 subset 737 sameSP 4291 sameSP_H2 988 sameSP_H1 829 anyH2 988

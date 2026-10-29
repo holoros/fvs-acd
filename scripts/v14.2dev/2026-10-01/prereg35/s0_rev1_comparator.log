@@ -1,0 +1,33 @@
+                          check    run     table  ref_md5   r2_md5  rows       worst   pass
+                         <char> <char>    <char>   <char>   <char> <int>       <num> <lgcl>
+ 1:    S0 i p16 vs r2 same plan     fb     gates 868da274 868da274    10          NA   TRUE
+ 2:    S0 i p16 vs r2 same plan     fb    scores e1c42301 e1c42301    19          NA   TRUE
+ 3:    S0 i p16 vs r2 same plan     fb   htshare 0bb71b09 0bb71b09     3          NA   TRUE
+ 4:    S0 i p16 vs r2 same plan     fb admission 5cc6714b 5cc6714b     3          NA   TRUE
+ 5:    S0 i p16 vs r2 same plan     fb     c2cov 3c7ed057 3c7ed057     2          NA   TRUE
+ 6:    S0 i p16 vs r2 same plan     fb   c2align c37e9bf6 c37e9bf6     4          NA   TRUE
+ 7:    S0 i p16 vs r2 same plan     fb    stands 9b234fd9 9b234fd9   752          NA   TRUE
+ 8:    S0 i p16 vs r2 same plan  state     gates a52dc64a a52dc64a     3          NA   TRUE
+ 9:    S0 i p16 vs r2 same plan  state    scores 9c154304 9c154304     4          NA   TRUE
+10:    S0 i p16 vs r2 same plan  state   htshare 6f7f994b 6f7f994b     1          NA   TRUE
+11:    S0 i p16 vs r2 same plan  state admission 49e3c99d 49e3c99d     1          NA   TRUE
+12:    S0 i p16 vs r2 same plan  state     c2cov 168bad66 168bad66     1          NA   TRUE
+13:    S0 i p16 vs r2 same plan  state   c2align 42e66e3b 42e66e3b     2          NA   TRUE
+14:    S0 i p16 vs r2 same plan  state    stands a768d8d4 a768d8d4   348          NA   TRUE
+15: S0 ii r2 vs frozen Cardinal     fb    scores a3ed3b76 e1c42301    19    2.321384  FALSE
+16: S0 ii r2 vs frozen Cardinal     fb   htshare 04913a93 0bb71b09     3    0.000000   TRUE
+17: S0 ii r2 vs frozen Cardinal     fb admission dc1c8937 5cc6714b     3         Inf  FALSE
+18: S0 ii r2 vs frozen Cardinal     fb     c2cov 06c35edb 3c7ed057     2 1406.000000  FALSE
+19: S0 ii r2 vs frozen Cardinal     fb   c2align 05c3b965 c37e9bf6     4    0.000000   TRUE
+20: S0 ii r2 vs frozen Cardinal     fb     gates fc7541fa 868da274    10    0.000000   TRUE
+21: S0 ii r2 vs frozen Cardinal     fb    stands d600f398 9b234fd9   752   30.173465  FALSE
+22:    S0 ii r2 vs frozen State  state     gates a52dc64a a52dc64a     3          NA   TRUE
+23:    S0 ii r2 vs frozen State  state    scores 9c154304 9c154304     4          NA   TRUE
+24:    S0 ii r2 vs frozen State  state   htshare 6f7f994b 6f7f994b     1          NA   TRUE
+25:    S0 ii r2 vs frozen State  state admission 49e3c99d 49e3c99d     1          NA   TRUE
+26:    S0 ii r2 vs frozen State  state     c2cov 168bad66 168bad66     1          NA   TRUE
+27:    S0 ii r2 vs frozen State  state   c2align 42e66e3b 42e66e3b     2          NA   TRUE
+28:    S0 ii r2 vs frozen State  state    stands a768d8d4 a768d8d4   348          NA   TRUE
+                          check    run     table  ref_md5   r2_md5  rows       worst   pass
+                         <char> <char>    <char>   <char>   <char> <int>       <num> <lgcl>
+S0 FAIL: 24 of 28 comparisons pass

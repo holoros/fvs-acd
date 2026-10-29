@@ -1,0 +1,10 @@
+80,83c80,83
+< DM <- TR[age %in% c(0, 1, 25, 50, 75, 100), .(DHTM_cohort_min = min(DHTM_cohort, na.rm = TRUE), DHTM_cohort_max = max(DHTM_cohort, na.rm = TRUE),
+<   DHTM_ing_min = suppressWarnings(min(DHTM_ing, na.rm = TRUE)), DHTM_ing_max = suppressWarnings(max(DHTM_ing, na.rm = TRUE)),
+<   cohort_ge25_max = max(TPH_cohort_ge25), cohort_ge25_share_max = max(TPH_cohort_ge25/pmax(TPH_cohort, 1e-9)),
+<   DHTM_ge25_min = suppressWarnings(min(DHTM_cohort_ge25, na.rm = TRUE)), DHTM_ge25_max = suppressWarnings(max(DHTM_cohort_ge25, na.rm = TRUE))), by = .(arm, age)]
+---
+> DM <- TR[age %in% c(0, 1, 25, 50, 75, 100), .(DHTM_cohort_min = min(as.numeric(DHTM_cohort), na.rm = TRUE), DHTM_cohort_max = max(as.numeric(DHTM_cohort), na.rm = TRUE),
+>   DHTM_ing_min = suppressWarnings(min(as.numeric(DHTM_ing), na.rm = TRUE)), DHTM_ing_max = suppressWarnings(max(as.numeric(DHTM_ing), na.rm = TRUE)),
+>   cohort_ge25_max = max(as.numeric(TPH_cohort_ge25)), cohort_ge25_share_max = max(TPH_cohort_ge25/pmax(TPH_cohort, 1e-9)),
+>   DHTM_ge25_min = suppressWarnings(min(as.numeric(DHTM_cohort_ge25), na.rm = TRUE)), DHTM_ge25_max = suppressWarnings(max(as.numeric(DHTM_cohort_ge25), na.rm = TRUE))), by = .(arm, age)]

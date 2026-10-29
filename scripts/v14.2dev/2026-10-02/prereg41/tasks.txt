@@ -1,0 +1,8 @@
+task qc141 dry start 2026-10-02T13:54:26-03:00 load 0.08
+task p38_fit BF start 2026-10-02T13:54:26-03:00 load 0.08
+task qc141 dry exit 0 2026-10-02T13:55:22-03:00
+task p38_fit SM start 2026-10-02T13:55:22-03:00 load 1.23
+task p38_fit BF exit 0 2026-10-02T14:03:54-03:00
+task p38_fit MX start 2026-10-02T14:03:54-03:00 load 2.04
+task p38_fit SM exit 0 2026-10-02T14:05:34-03:00
+task p38_fit MX exit 0 2026-10-02T14:13:51-03:00

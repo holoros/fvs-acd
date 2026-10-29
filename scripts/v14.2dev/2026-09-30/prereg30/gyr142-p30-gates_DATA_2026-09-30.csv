@@ -1,0 +1,16 @@
+gate,detail,value,ref,margin,pass,arm
+H0,worst scaled 5.33e-15 over 81966 fold B key trees; K1 not OK 0,5.32659750018839e-15,1e-09,0,TRUE,v141LT
+L1,pooled level ratio,1.004090259347,1.0152100745613,0,TRUE,v141LTf
+L2,"level ratio, below 12.7",1.00038519132135,1.00139306056899,0.03,TRUE,v141LTf
+L2,"level ratio, 12.7 to 25",1.00773688548252,1.02277040544089,0.03,TRUE,v141LTf
+L2,"level ratio, 25 and over",0.998749922538093,1.0219984228265,0.03,TRUE,v141LTf
+L3,dominant cohort level,0.992537290073692,1.01525302061044,0.02,TRUE,v141LTf
+L4,published TOPHT bias percent,0.405395870312547,2.37093841319384,0,TRUE,v141LTf
+L5,"level ratio, interval 10 years and over",1.03680435973976,1.06284116414744,0.02,TRUE,v141LTf
+L1,pooled level ratio,1.0041054036339,1.0152100745613,0,TRUE,v141LTfi (reported)
+L2,"level ratio, below 12.7",1.00040276869434,1.00139306056899,0.03,TRUE,v141LTfi (reported)
+L2,"level ratio, 12.7 to 25",1.00775330912909,1.02277040544089,0.03,TRUE,v141LTfi (reported)
+L2,"level ratio, 25 and over",0.998752326851275,1.0219984228265,0.03,TRUE,v141LTfi (reported)
+L3,dominant cohort level,0.992541984413793,1.01525302061044,0.02,TRUE,v141LTfi (reported)
+L4,published TOPHT bias percent,0.415655419751138,2.37093841319384,0,TRUE,v141LTfi (reported)
+L5,"level ratio, interval 10 years and over",1.03687943491406,1.06284116414744,0.02,TRUE,v141LTfi (reported)

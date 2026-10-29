@@ -1,0 +1,5 @@
+138 of 138 items agree; worst point diff (tol 1e-9 items) 6.22e-14; worst H or fit diff 3.55e-15
+Empty data.table (0 rows and 7 cols): item,arm,assembly,verifier,diff,tol...
+assembly decision: decision=Rule 3: T_M and T_H pass; p38_fit eligible for a Bakuzis QC grid under a separate pre-registration with T_M in place of the published TOPHT gate 
+verifier decision: rule 3: T_M passes (|B_M| 1.6044 <= 10) and T_H passes (|B_H| 6.5993 <= 10); published TOPHT rejection of 1.242 attributed to the observed height rule; p38_fit eligible for the Bakuzis QC grid under a separate pre-registration 
+P40_COMPARE_DONE

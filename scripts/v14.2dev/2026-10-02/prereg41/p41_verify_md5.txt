@@ -1,0 +1,12 @@
+61b8a9cafa1b06a43a7abd21e5232190  vA.R
+dd8c34238ae196d0ea058078f21cc8bd  vB.R
+8ecd6ba72da921915f8ebe1cc5ca281b  explore_reineke.R
+53d41b105bd075126b3185b702c23df0  combine.R
+6ff262359b00cff76b8c6392412dab69  vA.log
+43ec68a66df1eace4ebd9fdfc83a3fb8  vB.log
+218fd39054f28b6f9bb3dcbb24e7e5c3  verify_run.log
+e22f58c492b827bd72596e4682968300  explore_reineke.log
+388783f0dea9b3c98a1caa44977caa54  partA_DATA_2026-10-02.csv
+df817522c38753dd4100b33784fa3ebc  partA_units_DATA_2026-10-02.csv
+37932f5471bdfccaeeb49f58a9645fd8  partB_DATA_2026-10-02.csv
+975f3002603e13fa0751e2421fcbd1a6  p41_verify_DATA_2026-10-02.csv

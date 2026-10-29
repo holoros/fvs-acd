@@ -1,0 +1,14 @@
+arm,check,worst,pass
+p19_a0111,S1 stand TOPHT_o worst,4.9737991503207e-14,TRUE
+p19_a0111,S1 stand TOPHT_p worst,7.46069872548105e-14,TRUE
+p19_a0111,S1 D6 against PREREG38 topht_bias_pct,2.04281036531029e-14,TRUE
+p19_a0111,S2 D0 against PREREG38 hinc level,4.44089209850063e-14,TRUE
+p19_a0111,S2 D0 records against hinc trees,0,TRUE
+p19_a0111,S3 stands against PREREG38 stands,0,TRUE
+p38_fit,S1 stand TOPHT_o worst,4.9737991503207e-14,TRUE
+p38_fit,S1 stand TOPHT_p worst,7.46069872548105e-14,TRUE
+p38_fit,S1 D6 against PREREG38 topht_bias_pct,7.46069872548105e-14,TRUE
+p38_fit,S2 D0 against PREREG38 hinc level,3.33066907387547e-14,TRUE
+p38_fit,S2 D0 records against hinc trees,0,TRUE
+p38_fit,S3 stands against PREREG38 stands,0,TRUE
+both,S4 field tag t2 frame against run frame t2 (columns other than TREE),0,TRUE

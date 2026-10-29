@@ -1,0 +1,5 @@
+plan_md5=d032682d
+fit a=0.9595 b=-1.1239
+outcome=RULE4_NOT_CLEARED_LONGRUN
+failing=C bound;NI Reineke
+decision_weight=informs 14.3 only; 14.2 keeps QC_AFAC 0.111

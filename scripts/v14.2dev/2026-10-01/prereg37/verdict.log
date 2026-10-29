@@ -1,0 +1,79 @@
+                                                arm           cell   esi   age
+                                             <char>         <char> <num> <int>
+ 1:                            QC_AFAC 1 (PREREG37) BF_E17.3_N3000  17.3     0
+ 2:                            QC_AFAC 1 (PREREG37) BF_E17.3_N3000  17.3    25
+ 3:                            QC_AFAC 1 (PREREG37) BF_E17.3_N3000  17.3    50
+ 4:                            QC_AFAC 1 (PREREG37) BF_E19.8_N3000  19.8     0
+ 5:                            QC_AFAC 1 (PREREG37) BF_E19.8_N3000  19.8    25
+ 6:                            QC_AFAC 1 (PREREG37) BF_E19.8_N3000  19.8    50
+ 7:                            QC_AFAC 1 (PREREG37) MX_E19.8_N3000  19.8     0
+ 8:                            QC_AFAC 1 (PREREG37) MX_E19.8_N3000  19.8    25
+ 9:                            QC_AFAC 1 (PREREG37) MX_E19.8_N3000  19.8    50
+10:                  QC_AFAC 0.111 (PREREG31 qc141) BF_E17.3_N3000  17.3     0
+11:                  QC_AFAC 0.111 (PREREG31 qc141) BF_E17.3_N3000  17.3    25
+12:                  QC_AFAC 0.111 (PREREG31 qc141) BF_E17.3_N3000  17.3    50
+13:                  QC_AFAC 0.111 (PREREG31 qc141) BF_E19.8_N3000  19.8     0
+14:                  QC_AFAC 0.111 (PREREG31 qc141) BF_E19.8_N3000  19.8    25
+15:                  QC_AFAC 0.111 (PREREG31 qc141) BF_E19.8_N3000  19.8    50
+16:                  QC_AFAC 0.111 (PREREG31 qc141) MX_E19.8_N3000  19.8     0
+17:                  QC_AFAC 0.111 (PREREG31 qc141) MX_E19.8_N3000  19.8    25
+18:                  QC_AFAC 0.111 (PREREG31 qc141) MX_E19.8_N3000  19.8    50
+19: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) BF_E17.3_N3000  17.3     0
+20: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) BF_E17.3_N3000  17.3    25
+21: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) BF_E17.3_N3000  17.3    50
+22: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) BF_E19.8_N3000  19.8     0
+23: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) BF_E19.8_N3000  19.8    25
+24: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) BF_E19.8_N3000  19.8    50
+25: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) MX_E19.8_N3000  19.8     0
+26: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) MX_E19.8_N3000  19.8    25
+27: QC_AFAC 1.265 below 25 cm (PREREG31 p28b_small) MX_E19.8_N3000  19.8    50
+                                                arm           cell   esi   age
+                                             <char>         <char> <num> <int>
+       HT HT_over_ESI run_ok
+    <num>       <num>  <int>
+ 1:  5.06       0.292      1
+ 2:  7.88       0.456      1
+ 3: 11.75       0.679      1
+ 4:  5.06       0.255      1
+ 5:  8.16       0.412      1
+ 6: 12.18       0.615      1
+ 7:  4.56       0.230      1
+ 8:  7.97       0.402      1
+ 9: 16.00       0.808      1
+10:  5.06       0.292      1
+11:  4.76       0.275      1
+12:  5.08       0.294      1
+13:  5.06       0.255      1
+14:  4.92       0.248      1
+15:  5.25       0.265      1
+16:  4.56       0.230      1
+17:  7.37       0.372      1
+18: 12.97       0.655      1
+19:  5.06       0.292      1
+20:  8.95       0.517      1
+21: 14.17       0.819      1
+22:  5.06       0.255      1
+23:  9.27       0.468      1
+24: 14.70       0.742      1
+25:  4.56       0.230      1
+26:  9.06       0.458      1
+27: 18.47       0.933      1
+       HT HT_over_ESI run_ok
+    <num>       <num>  <int>
+                    rule                          result
+                  <char>                          <char>
+1:                    G0                  NOT REPRODUCED
+2: G0 row index artifact                            TRUE
+3:                    H1                            TRUE
+4:                    H2                           FALSE
+5:   H3 (dominant level)                            TRUE
+6:                 Stall unanchored equation also stalls
+                                                                                                       basis
+                                                                                                      <char>
+1:                                                           S_field 1.265 (0.949 to 1.897) against S* 3.376
+2:                                                                           S_row 5.210 (-30.564 to 45.218)
+3: D_H1 0.573 (0.362 to 0.836), s_H1 1.74, s_H2 -0.73, beta_rel -1.534 (-2.013 to -1.050), fold A D_H1 0.506
+4:                                            D_H2 -0.239 (-0.360 to -0.131), s_H2 -0.73, fold A D_H2 -0.112
+5:                                                                 m 0.769 (0.676 to 0.857), threshold 0.135
+6:                                                                HT50/ESI at QC_AFAC 1: 0.679, 0.615, 0.808
+P37_VERDICT_DONE

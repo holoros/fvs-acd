@@ -1,0 +1,36 @@
+2,3c2,3
+< # PREREG38 scoring (modelled on PREREG28b run_score_p28b.sh md5 c1e915b5; job root, taskmap, arm list, scorer r2, plan and
+< # tag changed; C0 and C1 only, no C2 pass). p38_fit qc_c and qc_fl chunk results are joined and host time limit stands
+---
+> # PREREG45 scoring (run_score_p38.sh with job root, taskmap, arm, plan and tag changed). PREREG38 scoring (modelled on PREREG28b run_score_p28b.sh md5 c1e915b5; job root, taskmap, arm list, scorer r2, plan and
+> # tag changed; C0 and C1 only, no C2 pass). qc_rh qc_c and qc_fl chunk results are joined and host time limit stands
+5c5
+< # is read by C0 or C1). Scorer r2 (265fc695, unedited) then scores p38_fit and frozen p19_a0111 (the latter
+---
+> # is read by C0 or C1). Scorer r2 (265fc695, unedited) then scores qc_rh and frozen p19_a0111 (the latter
+8c8
+< J=/home/aaron/jobs/v142p38; H=$J/home; X=/home/aaron/jobs/v142p19/in/xfer; P19=/home/aaron/jobs/v142p19
+---
+> J=/home/aaron/jobs/v142p45; H=$J/home; X=/home/aaron/jobs/v142p19/in/xfer; P19=/home/aaron/jobs/v142p19
+14c14
+< TM=$H/work/p38_taskmap_DATA_2026-10-01.csv
+---
+> TM=$H/work/p45_taskmap_DATA_2026-10-05.csv
+27,28c27,28
+< for s in qc_c qc_fl; do join_arm p38_fit $s; done
+< P=plan/p38_plan_fb.csv; [ -e $P ] && { echo "REFUSE $P"; exit 5; }
+---
+> for s in qc_c qc_fl; do join_arm qc_rh $s; done
+> P=plan/p45_plan_fb.csv; [ -e $P ] && { echo "REFUSE $P"; exit 5; }
+31c31
+<   echo "$s,$s,p38_fit,$J/results/p38_fit/gyr_p38_fit_${s}_results.csv,$H/out/p38_fit/$s;$H/out_retry_a1/p38_fit/$s;$H/out_retry_a2/p38_fit/$s;$H/out_retry_a3/p38_fit/$s,$H/magplot/verify/gydbreg20260916/frames,$H/magplot/verify/gydbreg20260916/frames,FALSE,$X/score/work/siteidx_${s}.rds,TRUE" >> $P
+---
+>   echo "$s,$s,qc_rh,$J/results/qc_rh/gyr_qc_rh_${s}_results.csv,$H/out/qc_rh/$s;$H/out_retry_a1/qc_rh/$s;$H/out_retry_a2/qc_rh/$s;$H/out_retry_a3/qc_rh/$s,$H/magplot/verify/gydbreg20260916/frames,$H/magplot/verify/gydbreg20260916/frames,FALSE,$X/score/work/siteidx_${s}.rds,TRUE" >> $P
+36c36
+< VC_OUT=$J/tables VC_PLAN=$J/$P VC_TAG=p38-fb Rscript $SC; rc=$?; echo "SCORE C0 C1 EXIT $rc"; [ $rc -eq 0 ] || exit $rc
+---
+> VC_OUT=$J/tables VC_PLAN=$J/$P VC_TAG=p45-fb Rscript $SC; rc=$?; echo "SCORE C0 C1 EXIT $rc"; [ $rc -eq 0 ] || exit $rc
+39c39
+< echo P38_SCORE_DONE
+---
+> echo P45_SCORE_DONE

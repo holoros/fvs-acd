@@ -1,0 +1,18 @@
+md5 d600f398 /home/aaron/jobs/v142p18/in/cardinal/gyr142-volconv-stands_DATA_2026-09-27.csv
+md5 a3ed3b76 /home/aaron/jobs/v142vc/cardinal/tables_r1/gyr142-volconv-scores_DATA_2026-09-27.csv
+md5 97ac93f0 /home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_nb_c_results.csv
+md5 e475736f /home/aaron/jobs/v142p20/results/v141LTf/gyr_v141LTf_ns_long_c_results.csv
+md5 59176541 /home/aaron/jobs/v142p19/results/nbctl_a1000/gyr_nbctl_a1000_nb_c_results.csv
+md5 eef09653 /home/aaron/jobs/v142p19/in/siteidx_nb_c.rds
+       label empty_t2     D     H     L     R     U
+      <char>    <int> <int> <int> <int> <int> <int>
+1: mefia_l_c        2     0     0     0     2     0
+2:   medev_c        2     0     0     0     2     0
+3:      nb_c       33     0     0     0    33     0
+4: ns_long_c        1     0     0     0     1     0
+nb_c results: scored 355, TOTVOL_o 0: 33, BA_o 0: 33, non finite BA or QMD: 0
+ns_long_c results: scored 8549, TOTVOL_o 0: 1, BA_o 0: 1, non finite BA or QMD: 0
+bootstrap draws B = 2000 
+Error in eval(jsub, SDenv, parent.frame()) : object 'ratio_lo' not found
+Calls: [ -> [.data.table -> eval -> eval -> pmax
+Execution halted

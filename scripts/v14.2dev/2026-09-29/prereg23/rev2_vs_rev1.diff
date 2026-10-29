@@ -1,0 +1,5 @@
+46c46,47
+< stl <- function(root, arm, stf) { S <- fread(stf)[label == "qc_c" & arm == ..arm]; S[, STAND := as.character(STAND)]
+---
+> ## rev2: `..arm` is not valid in a data.table i clause; the argument is renamed arm_ (rev1 halted at this line)
+> stl <- function(root, arm_, stf) { arm <- arm_; S <- fread(stf)[label == "qc_c" & arm == arm_]; S[, STAND := as.character(STAND)]

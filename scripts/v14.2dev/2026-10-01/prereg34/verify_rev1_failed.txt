@@ -1,0 +1,3 @@
+Error in .checkTypos(e, names_x) : Object 'STAND' not found amongst []
+Calls: rbindlist ... <Anonymous> -> .checkTypos -> stopf -> raise_condition -> signal
+Execution halted

@@ -1,0 +1,11 @@
+verifier arm labels: both qc141 p38_fit p19_a0030 p19_a0060 p19_a0111 p19_a0250 p19_a0500 p19_a1000 p23_a1061 p23_a1250 p28b_small 
+assembly: outcome=RULE2_NOT_CLEARED  verifier: 2 NA NA 
+91 of 91 items agree; worst 1e-9 item diff 0
+Empty data.table (0 rows and 6 cols): item,arm,assembly,verifier,kind,agree
+     gate   pass
+   <char> <lgcl>
+1:     G0   TRUE
+2:    G0c   TRUE
+3:     G1   TRUE
+4:     G2   TRUE
+P41_COMPARE_DONE

@@ -1,0 +1,12 @@
+42c42
+< ROOT     <- "/users/PUOM0008/crsfaaron"
+---
+> ROOT     <- Sys.getenv("P29_IN", "/home/aaron/jobs/v142p29/in")   # pass 29: frozen copy of pass 28b builder; bundle root on firebreather
+44c44
+< DB_MD5   <- Sys.getenv("GYR_DB_MD5", "c028a0eaa9dcf06f3a9d1c2b1f6882ce")   # pass 28: md5 from env
+---
+> DB_MD5   <- Sys.getenv("GYR_DB_MD5", "")   # pass 29: md5 from env only (launcher sets it from the step 1 copy)
+55c55
+< TAG_STABLE  <- c(BAXTER = 1L, CTRN = 1L, NS = 1L, NS_LONG = 1L, NSPOOL = 1L)   # pass 28b: NS family carries source tags (pass 28 database)
+---
+> TAG_STABLE  <- c(BAXTER = 1L, CTRN = 1L, NS = 1L, NS_LONG = 1L, NSPOOL = 1L, MNAP = 1L)   # pass 29: MNAP carries round 1 TP_ID tags (TreeLink, stem map); untracked rows (Tree 9,000,000 and up) stay out of tag churn [SET ON AUTOPILOT]

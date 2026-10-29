@@ -1,0 +1,11 @@
+chain start 2026-10-05T13:18:22-03:00 pid=1623614
+g0run exit 0 2026-10-05T13:18:41-03:00
+g0cmp exit 0 2026-10-05T13:18:42-03:00
+g0brun exit 0 2026-10-05T13:19:39-03:00
+g0bcmp exit 0 2026-10-05T13:19:39-03:00
+grid exit 0 2026-10-05T13:49:27-03:00
+assemble exit 1 2026-10-05T13:49:30-03:00
+CHAIN_STOP at assemble (exit 1) 2026-10-05T13:49:30-03:00
+assemble_r2 exit 0 2026-10-05T13:50:21-03:00
+outcome RULE2_NOT_CLEARED
+CHAIN_DONE 2026-10-05T13:50:21-03:00 (assembly by r2, manual step)

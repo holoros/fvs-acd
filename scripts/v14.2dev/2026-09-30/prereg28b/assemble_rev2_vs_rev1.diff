@@ -1,0 +1,4 @@
+30c30
+<   fifelse(startsWith(src, "p23"), file.path(P23, "tables/gyr142-p23-fb-stands_DATA_2026-09-27.csv"), fifelse(root == J, file.path(J, "tables/gyr142-p28b-fb-stands_DATA_2026-09-27.csv"), file.path(P28, "tables/gyr142-p28b-fb-stands_DATA_2026-09-27.csv")))))]
+---
+>   fifelse(startsWith(src, "p23"), file.path(P23, "tables/gyr142-p23-fb-stands_DATA_2026-09-27.csv"), fifelse(root == J, file.path(J, "tables/gyr142-p28b-fb-stands_DATA_2026-09-27.csv"), file.path(P28, "tables/gyr142-p28-fb-stands_DATA_2026-09-27.csv")))))]

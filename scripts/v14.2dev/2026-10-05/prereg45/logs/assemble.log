@@ -1,0 +1,111 @@
+margins M_CLS 0.030 M_DOM 0.020; abs 0.04; bound C 1.175; fit a 0.9595 b -1.1239
+      set stands trees worst_results worst_trees   pass
+   <char>  <int> <int>         <num>       <num> <lgcl>
+1:   qc_c     58  7950             0           0   TRUE
+2:  qc_fl     19  3644             0           0   TRUE
+      arm    set stands not_ok timelimit_left
+   <char> <char>  <int>  <int>          <int>
+1:  qc_rh   qc_c    378      0              0
+2:  qc_rh  qc_fl     19      0              0
+RS: frozen stand summaries against PREREG38, worst 4.55e-13 over 32 rows
+R3: field tag records fold A 698 (PREREG37 698), fold B 737 (PREREG37 737)
+RH: frozen field tag height rows against PREREG38, worst 4.88e-15 over 76 rows
+         arm   ratio bias_small  bias_mid bias_large worst_abs_rel  topht
+      <char>   <num>      <num>     <num>      <num>         <num>  <num>
+1: p19_a0111 0.09314  -0.190336 -0.140962  -0.120273       0.22720  6.289
+2: p19_a1000 0.84589  -0.062623 -0.013062   0.004182       0.09500 14.091
+3: p23_a1061 0.89793  -0.053701 -0.004244   0.012648       0.08569 14.625
+4:   p38_fit 1.05259  -0.027117  0.021947   0.037712       0.09820 16.212
+5:     qc_rh 1.00306   0.002287  0.002069  -0.014468       0.03027 14.145
+   dom_level  rmse   p_H1  p_CLS  p_REL  p_TOP   p_V2   p_B1   p_B2
+       <num> <num> <lgcl> <lgcl> <lgcl> <lgcl> <lgcl> <lgcl> <lgcl>
+1:    0.8979 46.76  FALSE  FALSE  FALSE   TRUE   TRUE   TRUE   TRUE
+2:    0.9737 46.79  FALSE  FALSE  FALSE   TRUE   TRUE   TRUE   TRUE
+3:    0.9789 46.79  FALSE  FALSE  FALSE   TRUE   TRUE   TRUE   TRUE
+4:    0.9943 46.80   TRUE   TRUE  FALSE  FALSE   TRUE   TRUE   TRUE
+5:    0.9797 46.81   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
+RL: frozen PREREG44 relations reproduced, worst 4.44e-15 over 328 rows
+Key: <relation>
+          relation cand_flags ref_flags new_flags cand_worst   ref_worst  ni_ok
+            <char>      <int>     <int>     <int>      <num>       <num> <lgcl>
+ 1:       Eichhorn          0         3         0  0.0000000         Inf   TRUE
+ 2:       Frontier          0         0         0  0.0000000  0.00000000   TRUE
+ 3:    HT_monotone          9        36         0  0.9202923  1.04258369   TRUE
+ 4:      Magnitude          0         0         0  0.0000000  0.00000000   TRUE
+ 5:        Reineke         11        12         2  1.1237515  0.76751978  FALSE
+ 6: SiteOrder_BAPH          3         3         0 20.0000000 20.00000000   TRUE
+ 7:   SiteOrder_HT          3         3         0 20.0000000 20.00000000   TRUE
+ 8:  SiteOrder_VOL          3         3         0 20.0000000 20.00000000   TRUE
+ 9:       Sukachev          0         0         0  0.0000000  0.00000000   TRUE
+10:   YieldDensity          0         1         0  0.0000000  0.03994964   TRUE
+Key: <arm>
+       arm stands median_rel0 median_rel100 max_rel100 n_over share_over
+    <char>  <int>       <num>         <num>      <num>  <int>      <num>
+1: p38_fit     36    0.784382     1.5149670   1.820484     34  0.9444444
+2:   qc141     36    0.784382     0.9160986   1.126014      0  0.0000000
+3:   qc_rh     36    0.784382     1.3087608   1.478317     32  0.8888889
+   median_HT100 mean_HT100 pass_C
+          <num>      <num> <lgcl>
+1:     28.55111   28.00999  FALSE
+2:     17.34243   17.29256   TRUE
+3:     24.43850   24.43758  FALSE
+           gate
+         <char>
+ 1:          H0
+ 2:          K1
+ 3:          G0
+ 4:         G0b
+ 5:          G1
+ 6:          G2
+ 7:    H1 level
+ 8:   H classes
+ 9:     H relht
+10:       TOPHT
+11:          V2
+12:          B1
+13:          B2
+14:     C bound
+15: NI long run
+                                                                                                             detail
+                                                                                                             <char>
+ 1:                                                     qc_rh0 vs p19_a1000: worst results 0.00e+00, trees 0.00e+00
+ 2:                                                                                                        not ok 0
+ 3:                                                                               driver_p45 g0 vs frozen p19_a0111
+ 4:                                                                                 driver_p45 grid vs PREREG31 dry
+ 5:                                                                             36 of 36 trajectories with 101 rows
+ 6:                                                                                          worst 2.56e-15 over 36
+ 7:                                                          ratio 1.003 [0.897, 1.143]; qc141 0.093; p38_fit 1.053
+ 8:                                              bias +0.002, +0.002, -0.014 m/yr; worst worse than qc141 by -0.106
+ 9: rel below 0.5 -0.010 (164); rel 0.5 to 0.75 -0.009 (269); rel 0.75 to 1 +0.010 (242); rel 1 to 1.25 +0.030 (62)
+10:                                                   TOPHT +14.14% vs limit +14.63%; dominant 0.980 vs qc141 0.898
+11:                                                                                            %RMSE 46.81 vs 46.76
+12:                                                                                                0.35 vs 0.17 pts
+13:                                                                                              24.55 vs 24.23 pts
+14:                                                                        median rel100 1.309, 32 of 36 over 1.175
+15:                                                                                    new flags 2; failing Reineke
+      pass
+    <lgcl>
+ 1:   TRUE
+ 2:   TRUE
+ 3:   TRUE
+ 4:   TRUE
+ 5:   TRUE
+ 6:   TRUE
+ 7:   TRUE
+ 8:   TRUE
+ 9:   TRUE
+10:   TRUE
+11:   TRUE
+12:   TRUE
+13:   TRUE
+14:  FALSE
+15:  FALSE
+plan_md5=d032682d
+fit a=0.9595 b=-1.1239
+outcome=RULE4_NOT_CLEARED_LONGRUN
+failing=C bound;NI Reineke
+decision_weight=informs 14.3 only; 14.2 keeps QC_AFAC 0.111
+Warning message:
+<ggplot> %+% x was deprecated in ggplot2 4.0.0.
+ℹ Please use <ggplot> + x instead. 
+P45_ASSEMBLE_DONE

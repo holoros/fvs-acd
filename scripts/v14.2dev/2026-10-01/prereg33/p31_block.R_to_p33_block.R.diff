@@ -1,0 +1,20 @@
+--- /home/aaron/jobs/v142p31/scripts/parts/p31_block.R	2026-09-30 20:19:59.599357873 -0300
++++ /home/aaron/jobs/v142p33/scripts/parts/p33_block.R	2026-10-01 07:01:12.321917226 -0300
+@@ -1,4 +1,4 @@
+-## ==== PREREG31 BLOCK (replaces runner lines 420 to 486) ===========================================================
++## ==== PREREG33 BLOCK: the PREREG31 block, which replaces runner lines 420 to 486 (here 434 to 500), with qcdyn added ===========================================================
+ ## Modes: P31_MODE=g0 projects named real QC stands (P31_G0_STANDS, comma separated) for their own interval and writes one
+ ## result row per stand in the runner's column layout; P31_MODE=grid projects the synthetic cells listed in P31_CELLS
+ ## (a CSV: cell,mix,esi,n0) for P31_NYR years and writes one summary row per cell per year. Same structure as PREREG26.
+@@ -30,9 +30,10 @@
+   cur <- htfx(cur, p); if (!is.null(rec)) rec(cur, 0L, n_init)
+   for (yr in seq_len(nyr)) {
+     ops$stand.tst <<- if (is.na(.tst0)) NA_real_ else .tst0 + (yr - 1L)
++    cur <- qcdyn(cur, p, n_init)   # PREREG33, as runner_p33_fb.R
+     nx <- AcadianGYOneStand(tree = cur, stand = stand, ops = ops)
+     if (is.null(nx) || nrow(nx) == 0) stop("empty")
+-    cur <- htfx(bf(nx), p); if (!is.null(rec)) rec(cur, yr, n_init)
++    cur <- qcdyn(htfx(bf(nx), p), p, n_init); if (!is.null(rec)) rec(cur, yr, n_init)   # PREREG33, as runner_p33_fb.R
+   }
+   attr(cur, "n_init") <- n_init; cur
+ }

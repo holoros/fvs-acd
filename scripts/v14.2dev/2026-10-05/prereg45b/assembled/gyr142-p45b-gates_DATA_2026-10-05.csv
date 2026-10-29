@@ -1,0 +1,17 @@
+gate,detail,pass
+G0n,worst 1.85e-15 over 355 stands,TRUE
+H0b,"results 0, trees 0 over 55 stands",TRUE
+G0,"",TRUE
+G0b,"",TRUE
+K1,not ok 0,TRUE
+G1,72 of 72,TRUE
+G2,worst 2.63e-15,TRUE
+F9 fit,70 stands; a 189.000000 b 5.096402,TRUE
+H1,"ratio 0.556 [0.403, 0.835]; nb141 0.281; nb_one 0.484",FALSE
+H relht,below 0.75 -0.102 (27); 0.75 to 1 -0.253 (28); 1 and over -0.025 (29),FALSE
+TOPHT,+9.49% vs nb141 +1.04% (limit 10.00),TRUE
+V2 (C0),34.61 vs 34.48,TRUE
+B1,2.11 vs 2.64,TRUE
+B2,14.19 vs 13.12,TRUE
+C bound,"median 1.230, 1 of 36 over 1.384",TRUE
+NI long run,"new flags 2; failing HT_monotone,Reineke",FALSE

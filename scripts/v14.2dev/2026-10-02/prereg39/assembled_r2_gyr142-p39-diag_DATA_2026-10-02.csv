@@ -1,0 +1,29 @@
+arm,item,value
+p19_a0111,Q1 observed D6 set himp share,0.605546995377504
+p19_a0111,Q1 observed D6 set finite heights at or below 1.3 m,0
+p19_a0111,Q1 observed D6 set records,649
+p19_a0111,Q1 observed D3 set himp share,0.626398210290828
+p19_a0111,Q1 observed D3 set finite heights at or below 1.3 m,0
+p19_a0111,Q1 observed D3 set records,447
+p19_a0111,Q2 observed D6 set sum himp over sum measured height,0.891922182429288
+p19_a0111,Q2 records,256
+p19_a0111,"Q3 observed D6 records that are t1 dom survivors, share",0.608628659476117
+p19_a0111,"Q3 predicted D6 records that are t1 dom rows with ing 0, share",0.941805733846812
+p19_a0111,Q4 records per stand D0 D1,1.58333333333333
+p19_a0111,Q4 records per stand D2,1.67
+p19_a0111,Q4 records per stand D3 observed,3.04081632653061
+p19_a0111,Q4 records per stand D4 predicted,4.02721088435374
+p38_fit,Q1 observed D6 set himp share,0.605546995377504
+p38_fit,Q1 observed D6 set finite heights at or below 1.3 m,0
+p38_fit,Q1 observed D6 set records,649
+p38_fit,Q1 observed D3 set himp share,0.626398210290828
+p38_fit,Q1 observed D3 set finite heights at or below 1.3 m,0
+p38_fit,Q1 observed D3 set records,447
+p38_fit,Q2 observed D6 set sum himp over sum measured height,0.891922182429288
+p38_fit,Q2 records,256
+p38_fit,"Q3 observed D6 records that are t1 dom survivors, share",0.608628659476117
+p38_fit,"Q3 predicted D6 records that are t1 dom rows with ing 0, share",0.938705529361337
+p38_fit,Q4 records per stand D0 D1,1.58333333333333
+p38_fit,Q4 records per stand D2,1.67
+p38_fit,Q4 records per stand D3 observed,3.04081632653061
+p38_fit,Q4 records per stand D4 predicted,4.02721088435374

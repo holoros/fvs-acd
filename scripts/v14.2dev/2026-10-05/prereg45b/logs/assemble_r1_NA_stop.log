@@ -1,0 +1,60 @@
+Index: <arm>
+      arm stands       obs       pred     ratio  ratio_lo  ratio_hi       bias
+   <char>  <int>     <num>      <num>     <num>     <num>     <num>      <num>
+1:  nb141     84 0.2825893 0.07927288 0.2805233 0.2079439 0.4340470 -0.2033164
+2: nb_one     84 0.2825893 0.13675642 0.4839406 0.3512383 0.7570107 -0.1458329
+3:  nb_rh     84 0.2825893 0.15707283 0.5558343 0.4025712 0.8353208 -0.1255165
+      arm       relb stands        obs       pred        bias
+   <char>     <fctr>  <int>      <num>      <num>       <num>
+1:  nb141 below 0.75     27 0.37098765 0.08857194 -0.28241571
+2:  nb141  0.75 to 1     28 0.38907738 0.07990568 -0.30917170
+3:  nb141 1 and over     29 0.09747126 0.07000414 -0.02746712
+4: nb_one below 0.75     27 0.37098765 0.15309762 -0.21789003
+5: nb_one  0.75 to 1     28 0.38907738 0.13778614 -0.25129124
+6: nb_one 1 and over     29 0.09747126 0.12054798  0.02307672
+7:  nb_rh below 0.75     27 0.37098765 0.26920832 -0.10177934
+8:  nb_rh  0.75 to 1     28 0.38907738 0.13657659 -0.25250079
+9:  nb_rh 1 and over     29 0.09747126 0.07246028 -0.02501098
+Index: <arm>
+      arm stands topht_bias_pct c0_rmse_pct   ba_pts stems_pts
+   <char>  <int>          <num>       <num>    <num>     <num>
+1:  nb141    172       1.043402    34.47953 2.643465  13.11548
+2: nb_one    172       3.447646    34.04912 2.510427  13.47877
+3:  nb_rh    172       9.491591    34.60899 2.112677  14.19410
+Key: <relation>
+          relation cand_flags ref_flags new_flags   cand_worst   ref_worst
+            <char>      <int>     <int>     <int>        <num>       <num>
+ 1:       Eichhorn          1         2         0  0.039089754  0.24911692
+ 2:       Frontier          1         1         0  0.043437456  0.09747771
+ 3:    HT_monotone         11        23         2  2.164679963  2.04779063
+ 4:      Magnitude          0         1         0  0.000000000  0.05466461
+ 5:        Reineke          1         3         0  0.310457814  0.17104403
+ 6: SiteOrder_BAPH          3         3         0 20.000000000 20.00000000
+ 7:   SiteOrder_HT          3         3         0 20.000000000 20.00000000
+ 8:  SiteOrder_VOL          3         3         0 20.000000000 20.00000000
+ 9:       Sukachev          3         3         0  2.000000000  2.00000000
+10:   YieldDensity          1         3         0  0.007352369  0.04035014
+     ni_ok
+    <lgcl>
+ 1:   TRUE
+ 2:   TRUE
+ 3:  FALSE
+ 4:   TRUE
+ 5:  FALSE
+ 6:   TRUE
+ 7:   TRUE
+ 8:   TRUE
+ 9:   TRUE
+10:   TRUE
+Key: <arm>
+      arm stands median_rel0 median_rel100 max_rel100 n_over share_over
+   <char>  <int>       <num>         <num>      <num>  <int>      <num>
+1:  nb141     36   0.4089085      1.037641   1.739409      1 0.02777778
+2:  nb_rh     36   0.4089085      1.230317   1.527951      1 0.02777778
+   mean_HT100 pass_C
+        <num> <lgcl>
+1:   18.94024   TRUE
+2:   22.42772   TRUE
+Error in if (!harness) "RULE1_HARNESS_FAILURE" else if (!(p_H1 && p_REL)) "RULE2_NOT_ADOPTED_HEIGHT" else if (!(p_TOP &&  : 
+  missing value where TRUE/FALSE needed
+Execution halted

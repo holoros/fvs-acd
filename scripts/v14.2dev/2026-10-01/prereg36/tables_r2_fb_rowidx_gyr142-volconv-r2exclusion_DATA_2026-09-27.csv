@@ -1,0 +1,4 @@
+label,arm,in_results,scored,not_run_runok,not_run_nonfinite,excluded_harvest,excluded_with_record,excluded_without_record,excluded_lost,vo_zero_retained,pass
+nb_c,v141LT,355,355,0,0,0,0,0,0,33,TRUE
+qc_c,v141LT,378,378,0,0,65,65,0,0,0,TRUE
+qc_fl,v141LT,19,19,0,0,11,11,0,0,0,TRUE
