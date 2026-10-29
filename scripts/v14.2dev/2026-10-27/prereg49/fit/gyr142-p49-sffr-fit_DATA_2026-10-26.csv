@@ -1,0 +1,2 @@
+form,param,estimate,lo,hi,newton_iter,boot_B,boot_nonconverged,boot_negative,seed,stands,sites,records,surv_o,surv_ratio_null,surv_ratio_fit,fit_stop,stop_reason,dry,note
+sf_fr,theta,3.55799389956026,-0.642334852477941,9.84292168117152,5,1000,2,53,20261026,1901,864,169545,1488625,0.993033751412194,1,FALSE,"",FALSE,"H_t = (t - 1) h, h = -log p, p = (e2/e1)^(1/iv) from frozen v141LTfi; ns_c fold A NS_OP"

@@ -1,0 +1,36 @@
+rule plural 
+       ftg plural     N
+    <char> <char> <int>
+ 1:     AB    NSF   119
+ 2:     AB     SF    45
+ 3:    EAC    NSF    32
+ 4:    EAC     SF    11
+ 5:    MBB    NSF   199
+ 6:    MBB     SF    38
+ 7:    OAK    NSF    49
+ 8:    OAK     SF     1
+ 9:    OTH    NSF     6
+10:    OTH     SF     3
+11:     SF     SF   359
+12:     SF    NSF    11
+13:   WRPH    NSF    43
+14:   WRPH     SF     2
+agreement SF vs not SF: 0.879 (n 918)
+rule major 
+       ftg  major     N
+    <char> <char> <int>
+ 1:     AB    NSF   122
+ 2:     AB     SF    42
+ 3:    EAC    NSF    32
+ 4:    EAC     SF    11
+ 5:    MBB    NSF   202
+ 6:    MBB     SF    35
+ 7:    OAK    NSF    49
+ 8:    OAK     SF     1
+ 9:    OTH    NSF     6
+10:    OTH     SF     3
+11:     SF     SF   350
+12:     SF    NSF    20
+13:   WRPH    NSF    44
+14:   WRPH     SF     1
+agreement SF vs not SF: 0.877 (n 918)

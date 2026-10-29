@@ -1,0 +1,4 @@
+L2 threshold support: not found. No record of the threshold range in the fit data of the engine's ingrowth equations (Li, Weiskittel and Kershaw 2011 GNLS parameters, ENG lines 2774 to 2779) was found on firebreather.
+Read 2026-10-28 from lookups_L2_candidates.txt (71 candidate files): copies of the engine and of AcadianGY.R in FVS interface trees (citation only), koa manuscript text and a publication list (citation only), the PREREG43 search hit list (no threshold range), and git mirrors under ~/repos-mirror (fvs_remodeling, fvs-modern, fvs-acd; a git grep of fvs-acd for an ingrowth fit threshold range returned nothing).
+Related but not a record of the engine's fit: ~/jobs/ingrowth_refit_20260917 is a separate ingrowth refit whose prediction table carries per stand thresholds (values such as 9.1 and 12.7 cm appear); it is not the source of the engine coefficients and was not used.
+The laptop repository was not searched by this run (plan, Support limit).

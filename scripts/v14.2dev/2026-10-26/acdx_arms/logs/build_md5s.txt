@@ -1,0 +1,11 @@
+e782957cc297e60f1f22744aea96d529  src/gyr142-p38-qcafac-fit_DATA_2026-10-01.csv
+24cb959a3fc80f3c87761f9dc3737fd0  src/gyr142-p45-qcrh-fit_DATA_2026-10-05.csv
+e85b3612d4bf9475309042436c761701  src/runner_p45_fb.R
+d8a1dc5c748a49830d782b284877465a  scripts/arms_b141.sbatch
+1bf4e5dfb4802644bbd039de002c1e09  scripts/arms_long200.sbatch
+497a342f55f7d3a8623c5616773221be  scripts/arms_ph.sbatch
+e85b3612d4bf9475309042436c761701  scripts/runner_arms_10y_ph.R
+d9fd22d0ce1eb5de73f510ebd6d5cb73  scripts/runner_arms_long200.R
+071555507406ee37d7d4eb5710080ee4  work/arms_b141_taskmap_DATA_2026-10-26.csv
+f3945bf165f07b0e909a2125700db463  work/arms_long200_taskmap_DATA_2026-10-26.csv
+9dcd89821a479e79fa55bdabb2d51d72  work/arms_ph_taskmap_DATA_2026-10-26.csv

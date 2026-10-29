@@ -1,0 +1,3 @@
+a4bcdb952df14f362155a91e6a707d2d  build_zenodo_1100g.py
+4d3586f2edfbef73338daf05175dc60c  zen_upload_1100g.py
+d79e9cddfa3d7d69a4a5c21fb2f65bdb  zen_publish_1100g.py

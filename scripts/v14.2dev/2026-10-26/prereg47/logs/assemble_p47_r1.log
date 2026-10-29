@@ -1,0 +1,181 @@
+Key: <arm>
+       arm files md5_ok                     md5_note
+    <char> <int> <lgcl>                       <char>
+1: p38_fit     3   TRUE md5 equal to launch_md5s.txt
+2:   qc141     3   TRUE md5 equal to launch_md5s.txt
+3:   qc_lz     3   TRUE md5 equal to launch_md5s.txt
+4:   qc_rh     3   TRUE md5 equal to launch_md5s.txt
+                                                                               label
+                                                                              <char>
+1:                     post hoc (frozen arm, reported beside its registered verdict)
+2:                     post hoc (frozen arm, reported beside its registered verdict)
+3: blind (trajectories created after PREREG47 registration, p47/logs/prereg_md5.txt)
+4:                     post hoc (frozen arm, reported beside its registered verdict)
+   cells complete cells_match_qc141 arm_ok
+   <int>    <int>            <lgcl> <lgcl>
+1:    36       36              TRUE   TRUE
+2:    36       36              TRUE   TRUE
+3:    36       36              TRUE   TRUE
+4:    36       36              TRUE   TRUE
+                                                              check
+                                                             <char>
+ 1:                                    md5 plan PREREG47 revision 5
+ 2:                  md5 plan PREREG47 revision 4 (superseded by 5)
+ 3:                       md5 plan PREREG47 revision 3 (superseded)
+ 4:                       md5 plan PREREG47 revision 2 (superseded)
+ 5:         md5 plan PREREG47 revision 1 (superseded for CL and SO)
+ 6:                        md5 assemble_p44_r2.R (relations source)
+ 7:                       md5 frontier_p45_DATA.csv (gate C bounds)
+ 8:                     md5 st2_offset.R (gate C offset definition)
+ 9:                                    md5 PREREG44 relations table
+10:                                    md5 PREREG45 relations table
+11:                                  md5 PREREG45 credibility table
+12:                                     md5 ST2 gate C offset table
+13:                      thresholds_p47 md5 recorded before reading
+14:                                       thresholds_p47 source md5
+15:                                     F_HT, S_HT and MG_LO finite
+16:                                         launch_md5s.txt present
+17:                      assemble_p47.R md5 recorded before reading
+18:                                   thresholds_p31 md5 (reported)
+19:      relations() reproduces PREREG44 relations (qc141, p38_fit)
+20:               relations() reproduces PREREG45 relations (qc_rh)
+21:                         gate C and CL bounds from frontier file
+22:                      gate C offset reproduces ST2 (frozen arms)
+23: raw HT/ESI at 100 reproduces PREREG45 credibility (frozen arms)
+                                                              check
+                                                             <char>
+                                                                                                                                                                                                              value
+                                                                                                                                                                                                             <char>
+ 1:                                                                                                                                                                                d93f3035f8b9cb691c4c413bcc84bb1d
+ 2:                                                                                                                                                                                4fa7aea184e53887d56b742417e58a72
+ 3:                                                                                                                                                                                21a36a308728d16bc89fb7361e30e633
+ 4:                                                                                                                                                                                6a77fa5fc0ff66d23aa863292f0e6b14
+ 5:                                                                                                                                                                                7f64d22c3128de9d15e08f18bd4ba58d
+ 6:                                                                                                                                                                                5ac535e67d10f3fa103a3617043efc50
+ 7:                                                                                                                                                                                63826d67b93754b48aa0947d6cf072a9
+ 8:                                                                                                                                                                                567fa63daecf9bac5a6922d3c0be7ef8
+ 9:                                                                                                                                                                                6d3e0a380b6433c50b6bc9528dc63579
+10:                                                                                                                                                                                050463b22371be301d9ed10774b6ef71
+11:                                                                                                                                                                                3305d4e8f9ed2ad7fb9d4d9858f068ba
+12:                                                                                                                                                                                f7adf2fb35cab26c2f1d49135881e614
+13:                                                                                                                                                                                e9609cfb551390ddc168e52a7ea57419
+14:                                                                                                                                                                                979101bedafe16c090ce84d1e5e46a07
+15:                                                                                                                                                                      F_HT 9.5176 m, S_HT 11, MG_LO -0.0247 m/yr
+16:                                                                                                                                                                                                            TRUE
+17:                                                                                                                                                                                02257096e36f04197d7a9534ec2ea97c
+18:                                                                                                                                                                                fa5a852af4d673423da62de538242b66
+19: 328 of 328 rows; Eichhorn 1.7e-16, Frontier 5e-16, HT_monotone 4.4e-15, Magnitude 5.6e-16, Reineke 4.7e-15, SiteOrder_BAPH 3.9e-16, SiteOrder_HT 5e-16, SiteOrder_VOL 4.4e-16, Sukachev 0, YieldDensity 4.7e-16
+20: 164 of 164 rows; Eichhorn 3.1e-16, Frontier 5e-16, HT_monotone 5e-16, Magnitude 5.6e-16, Reineke 4.7e-15, SiteOrder_BAPH 1.7e-16, SiteOrder_HT 2.5e-16, SiteOrder_VOL 4.4e-16, Sukachev 0, YieldDensity 1.4e-16
+21:                                                                                                                                                                             bound 1.175, max 1.2851, q50 0.8147
+22:                                                                                                                                                                                      worst 4.44e-15 over 3 arms
+23:                                                                                                                                                                                         worst 4e-15 over 3 arms
+                                                                                                                                                                                                              value
+                                                                                                                                                                                                             <char>
+                              expect   pass
+                              <char> <lgcl>
+ 1: d93f3035f8b9cb691c4c413bcc84bb1d   TRUE
+ 2: 4fa7aea184e53887d56b742417e58a72   TRUE
+ 3: 21a36a308728d16bc89fb7361e30e633   TRUE
+ 4: 6a77fa5fc0ff66d23aa863292f0e6b14   TRUE
+ 5: 7f64d22c3128de9d15e08f18bd4ba58d   TRUE
+ 6: 5ac535e67d10f3fa103a3617043efc50   TRUE
+ 7: 63826d67b93754b48aa0947d6cf072a9   TRUE
+ 8: 567fa63daecf9bac5a6922d3c0be7ef8   TRUE
+ 9: 6d3e0a380b6433c50b6bc9528dc63579   TRUE
+10: 050463b22371be301d9ed10774b6ef71   TRUE
+11: 3305d4e8f9ed2ad7fb9d4d9858f068ba   TRUE
+12: f7adf2fb35cab26c2f1d49135881e614   TRUE
+13: e9609cfb551390ddc168e52a7ea57419   TRUE
+14: 979101bedafe16c090ce84d1e5e46a07   TRUE
+15:                           finite   TRUE
+16:                             TRUE   TRUE
+17: 02257096e36f04197d7a9534ec2ea97c   TRUE
+18:                         reported   TRUE
+19:               <= 1e-9, every row   TRUE
+20:               <= 1e-9, every row   TRUE
+21:           1.175, 1.285 and 0.815   TRUE
+22:                  <= 1e-9, 3 arms   TRUE
+23:                  <= 1e-9, 3 arms   TRUE
+                              expect   pass
+                              <char> <lgcl>
+                                             note
+                                           <char>
+ 1:                                              
+ 2:                                              
+ 3:                                              
+ 4:                                              
+ 5:                                              
+ 6:                                              
+ 7:                                              
+ 8:                                              
+ 9:                                              
+10:                                              
+11:                                              
+12:                                              
+13:                       logs/thresholds_md5.txt
+14:                                              
+15:                                              
+16:                                              
+17:                                              
+18: frontier a 5.0914 b -1.4690 BA 51.73 SDI 1178
+19:                                              
+20:                                              
+21:                                              
+22:                                              
+23:                                              
+                                             note
+                                           <char>
+Key: <arm>
+       arm median_rel100_corr n_over_corr median_rel100   p_C1   p_C2 F_flags
+    <char>              <num>       <int>         <num> <lgcl> <lgcl>   <int>
+1: p38_fit             1.4176          31        1.5150  FALSE  FALSE       0
+2:   qc141             0.8375           0        0.9161   TRUE   TRUE       0
+3:   qc_lz             1.1818          19        1.2851  FALSE  FALSE       0
+4:   qc_rh             1.2049          24        1.3088  FALSE  FALSE       0
+   M_flags S_viol HM_worst_fall_m HM_stands_over_0.01   p_HM SO_inv_dHT   p_SO
+     <int>  <num>           <num>               <int> <lgcl>      <int> <lgcl>
+1:       0      0          4.8693                  11   TRUE          6  FALSE
+2:       0      0          1.0426                  36  FALSE          3  FALSE
+3:       0      0          0.9593                   8   TRUE          6  FALSE
+4:       0      0          0.9203                   9   TRUE          6  FALSE
+     p_YD R_median_slope E_below_015 YD_below_015
+   <lgcl>          <num>      <lgcl>       <lgcl>
+1:   TRUE         -1.267       FALSE        FALSE
+2:   TRUE         -1.214       FALSE        FALSE
+3:   TRUE         -1.242        TRUE         TRUE
+4:   TRUE         -1.264        TRUE         TRUE
+       arm
+    <char>
+1:   qc141
+2: p38_fit
+3:   qc_rh
+4:   qc_lz
+                                                                               label
+                                                                              <char>
+1:                     post hoc (frozen arm, reported beside its registered verdict)
+2:                     post hoc (frozen arm, reported beside its registered verdict)
+3:                     post hoc (frozen arm, reported beside its registered verdict)
+4: blind (trajectories created after PREREG47 registration, p47/logs/prereg_md5.txt)
+                      outcome                        failing
+                       <char>                         <char>
+1: RULE2_NOT_CREDIBLE_LONGRUN                 LG late growth
+2: RULE2_NOT_CREDIBLE_LONGRUN C offset removed;C raw ceiling
+3: RULE2_NOT_CREDIBLE_LONGRUN C offset removed;C raw ceiling
+4: RULE2_NOT_CREDIBLE_LONGRUN C offset removed;C raw ceiling
+                         all_failing
+                              <char>
+1:              LG late growth;HM;SO
+2: C offset removed;C raw ceiling;SO
+3: C offset removed;C raw ceiling;SO
+4: C offset removed;C raw ceiling;SO
+plan_md5=d93f3035 (revision 5; revisions 1 7f64d22c, 2 6a77fa5f, 3 21a36a30, 4 4fa7aea1)
+mode=reading
+harness_ok=TRUE
+F_HT=9.5176 S_HT=11 MG_LO=-0.0247
+outcome_qc141=RULE2_NOT_CREDIBLE_LONGRUN [post hoc (frozen arm, reported beside its registered verdict)]; failing=LG late growth; all_failing=LG late growth;HM;SO
+outcome_p38_fit=RULE2_NOT_CREDIBLE_LONGRUN [post hoc (frozen arm, reported beside its registered verdict)]; failing=C offset removed;C raw ceiling; all_failing=C offset removed;C raw ceiling;SO
+outcome_qc_rh=RULE2_NOT_CREDIBLE_LONGRUN [post hoc (frozen arm, reported beside its registered verdict)]; failing=C offset removed;C raw ceiling; all_failing=C offset removed;C raw ceiling;SO
+outcome_qc_lz=RULE2_NOT_CREDIBLE_LONGRUN [blind (trajectories created after PREREG47 registration, p47/logs/prereg_md5.txt)]; failing=C offset removed;C raw ceiling; all_failing=C offset removed;C raw ceiling;SO
+reported_not_gated=R median slope window, E 0.15, YD 0.15 (no external source in the records; PREREG47 choice 4a)
+decision_weight=reported beside each arm's registered verdict; informs 14.3 only; 14.2 keeps QC_AFAC 0.111; no 14.2 verdict reopened
+P47_ASSEMBLE_DONE

@@ -1,0 +1,17 @@
+Reproduction: fold A table 68 of 68 cells, worst 4.88e-15, fold A keys equal PREREG27: TRUE
+record level surv_p against stand_comp: worst scaled 1.72e-15 over 1901 stands
+theta point estimate 3.55799389956026, Newton iterations 5
+       ivc stands  surv_o ratio_null ratio_fit
+    <fctr>  <int>   <num>      <num>     <num>
+1:    iv05   1742 1373750     0.9982    1.0032
+2: iv06_10     83   59950     0.9617    0.9777
+3: iv11_15     44   32150     0.9247    0.9606
+4: iv16_20     26   19050     0.8741    0.9298
+5: iv21_30      6    3725     0.7899    0.8634
+     form  param estimate         lo       hi newton_iter boot_B boot_nonconverged boot_negative     seed stands sites records  surv_o surv_ratio_null surv_ratio_fit fit_stop stop_reason    dry
+   <char> <char>    <num>      <num>    <num>       <int>  <int>             <int>         <int>    <int>  <int> <int>   <int>   <num>           <num>          <num>   <lgcl>      <char> <lgcl>
+1:  sf_fr  theta 3.557994 -0.6423349 9.842922           5   1000                 2            53 20261026   1901   864  169545 1488625       0.9930338              1    FALSE              FALSE
+                                                                                      note
+                                                                                    <char>
+1: H_t = (t - 1) h, h = -log p, p = (e2/e1)^(1/iv) from frozen v141LTfi; ns_c fold A NS_OP
+FIT_DONE

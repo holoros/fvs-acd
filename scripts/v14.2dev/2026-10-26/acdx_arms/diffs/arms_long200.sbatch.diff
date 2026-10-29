@@ -1,0 +1,42 @@
+2c2,3
+< #SBATCH --job-name=acdxL200
+---
+> #SBATCH --job-name=acdxAL200
+> # ACDX ARMS COPY (2026-10-26) of /users/PUOM0008/crsfaaron/acdx_20261016/long200/scripts/cardinal_mcp_job_3936542.slurm: arms p38_fit and qc_rh (taskmap column 2), v141LT env verbatim plus arm exports, runner /users/PUOM0008/crsfaaron/acdx_arms_20261026/scripts/runner_arms_long200.R. Diff in /users/PUOM0008/crsfaaron/acdx_arms_20261026/diffs.
+7,8c8,9
+< #SBATCH --array=1-93
+< #SBATCH --output=/users/PUOM0008/crsfaaron/acdx_20261016/long200/logs/%x_%A_%a.out
+---
+> #SBATCH --array=1-NTASK
+> #SBATCH --output=/users/PUOM0008/crsfaaron/acdx_arms_20261026/logs/%x_%A_%a.out
+18c19
+< TM=$R1/work/long200_taskmap_DATA_2026-10-16.csv
+---
+> TM=/users/PUOM0008/crsfaaron/acdx_arms_20261026/work/arms_long200_taskmap_DATA_2026-10-26.csv
+21c22
+< IFS=, read -r COL CHUNK SET FROM TO <<< "$ROW"
+---
+> IFS=, read -r ARM CHUNK SET FROM TO <<< "$ROW"; COL=v141LT
+25,26c26,27
+< mkdir -p $R1/out/$COL/$SET
+< export CONFIG_TAG=$R1/out/$COL/$SET/c$(printf %03d $CHUNK)
+---
+> mkdir -p /users/PUOM0008/crsfaaron/acdx_arms_20261026/long200/out/$ARM/$SET
+> export CONFIG_TAG=/users/PUOM0008/crsfaaron/acdx_arms_20261026/long200/out/$ARM/$SET/c$(printf %03d $CHUNK)
+51c52
+<   export V141_RELCAP=2.9848 V141_DLO=12.7 V141_DHI=15.0 V141_REPORT_DIR=$R1/out/counters_$COL
+---
+>   export V141_RELCAP=2.9848 V141_DLO=12.7 V141_DHI=15.0 V141_REPORT_DIR=/users/PUOM0008/crsfaaron/acdx_arms_20261026/long200/out/counters_$ARM
+58c59,68
+< RUNNER=$R1/scripts/2026-10-16_acdx_long200_runner.R; chk $RUNNER 3d05cbad$(md5sum $RUNNER | cut -c9-32)
+---
+> ## acdx arms (2026-10-26): v141LT environment above, verbatim, plus the frozen 14.2 arm exports (firebreather run_task_p38.sh
+> ## 423e0162 and run_task_p45.sh ba24284a). Both act only where PROV is QC.
+> unset HTFIX_B ING_MIN_FROM_SCORE QC_AFAC_SMALL QC_AFAC_LARGE QC_AFAC_KNOT QC_RH_A QC_RH_B QC_RH_RFILL || true
+> case "$ARM" in
+>   p38_fit) FF=/users/PUOM0008/crsfaaron/acdx_arms_20261026/src/gyr142-p38-qcafac-fit_DATA_2026-10-01.csv; chk $FF e782957cc297e60f1f22744aea96d529; QV=$(awk -F, 'NR==2 && $1=="QC_AFAC_FIT" {print $2}' $FF); [[ "$QV" =~ ^[0-9]\.[0-9]{3}$ ]] || { echo "FATAL fit value $QV"; exit 2; }; export QC_AFAC=$QV QC_AFAC_SMALL=$QV QC_AFAC_LARGE=$QV QC_AFAC_KNOT=25 ;;
+>   qc_rh) FF=/users/PUOM0008/crsfaaron/acdx_arms_20261026/src/gyr142-p45-qcrh-fit_DATA_2026-10-05.csv; chk $FF 24cb959a3fc80f3c87761f9dc3737fd0; QA=$(awk -F, '$1=="a"{print $3}' $FF); QB=$(awk -F, '$1=="b"{print $3}' $FF); [[ "$QA" =~ ^-?[0-9]+\.[0-9]+$ && "$QB" =~ ^-?[0-9]+\.[0-9]+$ ]] || { echo "FATAL fit values $QA $QB"; exit 2; }; export QC_RH_A=$QA QC_RH_B=$QB QC_RH_RFILL=0.815 ;;
+>   *) echo "bad ARM $ARM"; exit 2 ;;
+> esac
+> echo "[acdxarms] ARM=$ARM QC_AFAC=$QC_AFAC SMALL=${QC_AFAC_SMALL:-unset} RH_A=${QC_RH_A:-unset} RH_B=${QC_RH_B:-unset}"
+> RUNNER=/users/PUOM0008/crsfaaron/acdx_arms_20261026/scripts/runner_arms_long200.R; chk $RUNNER d9fd22d0ce1eb5de73f510ebd6d5cb73

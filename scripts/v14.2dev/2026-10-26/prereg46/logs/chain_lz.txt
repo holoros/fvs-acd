@@ -1,0 +1,18 @@
+chain start 2026-10-26T09:23:12-03:00 pid=25282
+fit exit 0 2026-10-26T09:27:21-03:00
+fit md5 7e3881f9; ez stop record md5 e999098f 2026-10-26T09:27:21-03:00
+build exit 0 2026-10-26T09:27:22-03:00
+g0run exit 0 2026-10-26T09:27:41-03:00
+g0cmp exit 0 2026-10-26T09:27:42-03:00
+g0brun exit 0 2026-10-26T09:28:39-03:00
+g0bcmp exit 0 2026-10-26T09:28:39-03:00
+g0xrun exit 0 2026-10-26T09:37:55-03:00
+g0xcmp exit 0 2026-10-26T09:37:56-03:00
+tr_qc_lz exit 0 2026-10-26T09:38:06-03:00
+trchk_qc_lz exit 0 2026-10-26T09:38:06-03:00
+bench done 2026-10-26T10:02:36-03:00: 24 exit 0, 0 nonzero
+retry qc_lz done 2026-10-26T10:02:37-03:00: RETRY_DONE qc_lz remaining: 0
+retry qc_lz0 done 2026-10-26T10:02:37-03:00: RETRY_DONE qc_lz0 remaining: 0
+score exit 0 2026-10-26T10:02:43-03:00
+grid exit 0 2026-10-26T10:22:45-03:00
+CHAIN_DONE ready for assembly 2026-10-26T10:22:45-03:00

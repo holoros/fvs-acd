@@ -1,0 +1,4 @@
+source,sites,sites_2plus_visits,sites_3plus_visits,stands_treatment_before_v1_none_inside,with_v0_for_rule7_class,heavy_rule7,treatment_types,treatment_pct_recorded,tst_min,tst_max,esi_covered,esi_coverage
+3 New Brunswick plots (NB_CLI),9042,214,0,111,0,0,CC:41;CLR:11;RPF:14;TC:7;TTP:38,111,1,41,111,1.0
+3 New Brunswick plots (NFI_GP),20,20,11,11,5,0,CC:1;CLR:7;TC:1;TTP:2,11,2,35,11,1.0
+4 Quebec MAGPlot PREREG19 cut flag (cut inside the interval by the flag's definition),,,,0,0,0,cut flag: 65 qc_c and 11 qc_fl stands [FST]; none with the cut before t1,,,,,

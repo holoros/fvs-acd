@@ -1,0 +1,9 @@
+plan_md5=c218808858938c889ac771b0de5db531
+arms=v141LT,v141LTfi
+fis_entered=FALSE
+outcome_v141LTfi=RULE2_NOT_CLEARED
+combined=no candidate arm cleared
+prereg30_reading_v141LTfi=median loss inside 14 to 25 percent: does not support the PREREG30 synthetic start reading
+frontier_bound=1.456
+stands=36
+decision_weight=informs 14.3 only; no outcome changes 14.2

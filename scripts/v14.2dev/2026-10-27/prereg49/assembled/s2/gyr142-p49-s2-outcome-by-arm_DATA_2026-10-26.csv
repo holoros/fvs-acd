@@ -1,0 +1,2 @@
+arm,harness_ok,A_ok,B_ok,outcome,new_flag_units,marginB_fail_relations
+v141LTfi,TRUE,FALSE,FALSE,RULE2_NOT_CLEARED,Eichhorn:S1;Eichhorn:S2;HT_monotone:E1_S3_2;HT_monotone:E3_S3_3;HT_monotone:E4_S1_3;HT_monotone:E4_S3_1;HT_monotone:E4_S3_3,Eichhorn;HT_monotone

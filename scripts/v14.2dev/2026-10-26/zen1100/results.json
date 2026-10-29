@@ -1,0 +1,41 @@
+{
+ "branch": "v142-p46p47-docs-20261026",
+ "pr_v143": "draft PR #13, stacked on PR #12",
+ "pr_engine": "no pull request yet; off PR #12's branch",
+ "p46_readme": "PREREG46 (a QC height increment multiplier with a zero in relative height, for 14.3) found no candidate. qc_ez stopped at rule 1\n  at its fit (b not negative with the zero fixed at 1.285). qc_lz passed every harness gate but failed rule 2 on the new relative\n  height gates (fold B ratio 1.341 in the 1 to 1.25 bin), and gate C failed too (`scripts/v14.2dev/2026-10-26/prereg46/`).",
+ "p47_readme": "The PREREG47 reading r1 (absolute QC Bakuzis gates) finds every arm read not credible on the long run: 14.1 keeps QC top\n  height nearly flat after its first decades (7 of 36 stands keep gaining in every late window), while p38_fit, qc_rh and qc_lz\n  overshoot the measured frontier (`scripts/v14.2dev/2026-10-26/prereg47/`). 14.2 keeps QC_AFAC 0.111.",
+ "prereg_rows_after": [
+  [
+   "| 46 | plan | A QC height increment multiplier with a zero in relative height, for 14.3: pre-registration 46 | `scripts/v14.2dev/2026-10-11/prereg46/plan/2026-10-11_v142_qc-relht-zero-form_PREREG46.md` |",
+   "| 46 | result | A QC height increment multiplier with a zero in relative height, for 14.3: PREREG46 result | `scripts/v14.2dev/2026-10-26/prereg46/2026-10-26_v142_qc-relht-zero-form_RESULT.md` |"
+  ],
+  [
+   "| 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r5.md` |",
+   "| 47 | result | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: PREREG47 result (reading r1) | `scripts/v14.2dev/2026-10-26/prereg47/2026-10-26_v142_qc-bakuzis-absolute_RESULT.md` |"
+  ]
+ ],
+ "v143_rows": [
+  "| 1 | plan | The 14.1 thinning response limited to partial removals, for 14.3: pre-registration 1 | `docs/v14.3/2026-10-18_v143_thin-partial-removal_PREREG1.md` |",
+  "| 1 | result | The 14.1 thinning response limited to partial removals, for 14.3: result of pre-registration 1 | `docs/v14.3/run_v143p1/result/2026-10-19_v143_thin-partial-removal_PREREG1_RESULT_REVIEW.md` |",
+  "| 1 | deviations | 14.3 pre-registration 1: deviations and implementation notes | `docs/v14.3/run_v143p1/result/2026-10-19_v143-prereg1_DEVIATIONS.md` |",
+  "| 1 | exploratory | 14.3 pre-registration 1: autopilot decisions, stress test and next steps | `docs/v14.3/run_v143p1/explore/2026-10-19_v143-prereg1_AUTOPILOT-decisions-stress-nextsteps_REVIEW.md` |",
+  "| 2 | draft (not registered) | The form of the 14.1 thinning release term T, for 14.3: pre-registration 2 (DRAFT revision 4, not registered) | `docs/v14.3/prereg2_draft/2026-10-19_v143_T-form-reestimation_PREREG2_DRAFT.md` |"
+ ],
+ "p46p47_vh": "PREREG46 and the PREREG47 reading ran on October 26,\n2026, when firebreather was reachable again: PREREG46 found no candidate (qc_ez stopped at its fit, qc_lz failed the relative\nheight gates and gate C), and the PREREG47 reading found every arm read not credible on the long run, 14.1 too flat and the three\nalternatives too tall (`scripts/v14.2dev/2026-10-26/`).",
+ "era10": "## Era 10: 14.3 studies (October 17 to 26, 2026)\n\n| Version | Dates | Engine file | Status |\n|:--|:--|:--|:--|\n| none | 17 Oct to 26 Oct | none | no engine file added, 14.1 remains the release |\n\nEra 10 adds no `AcadianGY_*.r` file. 14.3 pre-registration 1 (the 14.1 thinning response limited to partial removals, md5\n7f3e67c2) was registered on October 18, 2026 after five red team rounds and run on OSC Cardinal on October 18 to 19. No\neligibility rule was adopted: the three arms stop at rule 3, and gate F is open at a 25% tolerance but closes at 15%, so the\nstudy is labelled sensitive. Its survivor increment reading shows large residual trees after removals growing about two thirds\nof what 14.1 predicts, whichever way the removal moved Dq. Two read only diagnostics followed, and pre-registration 2\n(re-estimating the form of T) was drafted through four plan red team rounds; it is not registered. The QC height results of\nPREREG46 and PREREG47 (Era 9, October 26) also inform 14.3. The record is in `docs/v14.3/`, with the run in\n`docs/v14.3/run_v143p1/`.",
+ "p46p47_sr": "PREREG46 and the PREREG47 reading ran on October 26, 2026 (`2026-10-26/`).",
+ "sr_repl": [
+  [
+   "| `2026-10-11/prereg46/` | A QC height increment multiplier with a zero in relative height, for 14.3 | 14.3 | registered, not run |",
+   "| `2026-10-11/prereg46/` | A QC height increment multiplier with a zero in relative height, for 14.3 | 14.3 | registered; run October 26 in `2026-10-26/prereg46/` |"
+  ],
+  [
+   "| `2026-10-15/prereg47/` | Absolute Bakuzis gates for QC on the measured stand list grid, revisions 1 to 5 | 14.3 | registered, dry run only |",
+   "| `2026-10-15/prereg47/` | Absolute Bakuzis gates for QC on the measured stand list grid, revisions 1 to 5 | 14.3 | registered; read October 26 in `2026-10-26/prereg47/` |"
+  ],
+  [
+   "| `2026-10-16/release-notes/` | 14.2 release notes, revision e, for PREREG16 to PREREG45b and the October 16 cross-version benchmark | 14.2 | current release notes (VERSION_HISTORY Era 9) |",
+   "| `2026-10-16/release-notes/` | 14.2 release notes, revision e, for PREREG16 to PREREG45b and the October 16 cross-version benchmark | 14.2 | current release notes (VERSION_HISTORY Era 9) |\n| `2026-10-26/prereg46/` | PREREG46 run: qc_lz only after the qc_ez rule 1 fit stop, RESULT, deviations D0 to D5, red team records | 14.3 | RESULT: no candidate |\n| `2026-10-26/prereg47/` | PREREG47 thresholds and reading r1 over qc141, p38_fit, qc_rh and qc_lz, RESULT | 14.3 | RESULT: every arm not credible on the long run |\n| `2026-10-26/acdx_arms/` | 14.2 arms p38_fit and qc_rh on the three Maine acdx frames (Cardinal), identity checks against 14.1 | 14.2 | identical to 14.1 |\n| `2026-10-26/zenodo_190/` | drivers and logs of the Zenodo 1.9.0 publication | deposit | published 10.5281/zenodo.23665173 |\n| `2026-10-26/zen1100/` | packaging and 1.10.0 staging scripts | deposit | staged, not published |"
+  ]
+ ]
+}

@@ -1,0 +1,2 @@
+62610094ab1944d09ead7aa1f2d85494  scripts/v143p4_assemble.R  # recorded 2026-10-28T06:31:14-0400 before the assembly runs (after the selection record; no candidate eligible; D1 running)
+dcc589feaba7a7ce2e76c9e8ef6c3557  scripts/v143p4_fig_r1.R  # recorded 2026-10-28T06:50:14-0400 before it runs: figure re-render from assembled CSV (caption clipped in the assembly figure)

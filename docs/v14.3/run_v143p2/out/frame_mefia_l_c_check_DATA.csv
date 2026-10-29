@@ -1,0 +1,2 @@
+stands,t1_trees,t2_trees,tag_linked,linked_same_species,linked_d2_ge_d1_minus_1cm,share_same_species,share_plausible,chain_stands_with_both_visits,chain_t1_signature_equal,direct_survivors_linked,chained_survivors_linked,chained_share_of_t1_trees,holds_observed_survivor_increments
+918,37621,48207,35473,14440,25299,0.407070166041778,0.713190313759761,918,918,577,24507,0.651418090959836,TRUE

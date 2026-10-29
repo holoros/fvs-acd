@@ -1,0 +1,26 @@
+         subset stands heavy_stands esi_coverage S_obs_heavy implied_release
+         <char>  <int>        <int>        <num>       <num>           <num>
+1:      overall    108           16    0.3703704    2.064252       0.4887076
+2:          ESI     40            7    1.0000000    1.833405       0.5128150
+3: CSI_fallback     68            9    0.0000000    2.243800       0.4699575
+   gap_A0_heavy gap_141_heavy   P1S_141     P1S_A0 P1NW_bound_release
+          <num>         <num>     <num>      <num>              <num>
+1:   -0.4631036     0.4298804 0.3422891 -0.4887076          0.5051924
+2:   -0.2785222     0.7937345 0.4636095 -0.5128150          0.6679260
+3:   -0.6066669     0.1468827 0.2479287 -0.4699575          0.3803239
+   P1NW_bound_141 v1_classes_30 open_141_not_overshoot open_esi_lt_80
+            <num>         <int>                 <lgcl>         <lgcl>
+1:      0.4298804             4                  FALSE           TRUE
+2:      0.7937345             4                  FALSE          FALSE
+3:      0.1468827             4                  FALSE           TRUE
+   open_heavy_lt_30 open_v1_classes_lt_3   open
+             <lgcl>               <lgcl> <lgcl>
+1:             TRUE                FALSE   TRUE
+2:             TRUE                FALSE   TRUE
+3:             TRUE                FALSE   TRUE
+6d05899ba16dff304dc3f4f8b508349e  /users/PUOM0008/crsfaaron/v143p2/out/score5a_identity_DATA.csv
+0b05d4cadd163d361c667f0ffd573c07  /users/PUOM0008/crsfaaron/v143p2/out/score5a_preconditions_DATA.csv
+SCORE5_DONE
+# step 5a md5s 2026-10-27T18:17:31-04:00
+6d05899ba16dff304dc3f4f8b508349e  out/score5a_identity_DATA.csv
+0b05d4cadd163d361c667f0ffd573c07  out/score5a_preconditions_DATA.csv

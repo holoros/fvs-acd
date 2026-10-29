@@ -1,0 +1,2 @@
+selected,failing,verdict,tolerance_sensitive,heavy_label
+C2,V1 P1-S P2/P3 N1 V1-L,"rule 3: V1 fails, not adopted",FALSE,"heavy AGB gap carried, attributed to I; total heavy gap 0.800"

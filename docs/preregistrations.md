@@ -7,7 +7,7 @@ adding a study rather than editing this file by hand. The registration record fo
 to PREREG25 have no such record, and the plan texts of PREREG23 and PREREG24 are not here. The 14.1 gate
 pre-registrations (PREREG2 revision 5, and pre-registrations 3 and 4 of September 25 and 26, 2026)
 are described in `VERSION_HISTORY.md` Era 8; PREREG2 revision 5 is in `docs/v14.1/` on branch
-`engines-14.1-20260924`. 14.3 pre-registrations, when they exist, are in `docs/v14.3/`.
+`engines-14.1-20260924`. 14.3 pre-registrations are listed in the 14.3 section at the end of this page. Rows for the October 26 records were added by hand in the generator's format.
 
 | No. | Kind | Title | File |
 |:--|:--|:--|:--|
@@ -88,11 +88,43 @@ are described in `VERSION_HISTORY.md` Era 8; PREREG2 revision 5 is in `docs/v14.
 | 45b | plan | A relative height multiplier for the NB height increment, stand level: pre-registration 45b | `scripts/v14.2dev/2026-10-05/prereg45b/plan/2026-10-05_v142_nb-relht-increment-standlevel_PREREG45b.md` |
 | 45b | result | A relative height multiplier for the NB height increment, stand level: PREREG45b result | `scripts/v14.2dev/2026-10-05/prereg45b/2026-10-05_v142_nb-relht-increment-standlevel_RESULT.md` |
 | 46 | plan | A QC height increment multiplier with a zero in relative height, for 14.3: pre-registration 46 | `scripts/v14.2dev/2026-10-11/prereg46/plan/2026-10-11_v142_qc-relht-zero-form_PREREG46.md` |
+| 46 | result | A QC height increment multiplier with a zero in relative height, for 14.3: PREREG46 result | `scripts/v14.2dev/2026-10-26/prereg46/2026-10-26_v142_qc-relht-zero-form_RESULT.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-11_v142_qc-bakuzis-absolute_PREREG47.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r2.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r3.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r4.md` |
 | 47 | plan | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-15/prereg47/plan/2026-10-15_v142_qc-bakuzis-absolute_PREREG47r5.md` |
+| 47 | result | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: PREREG47 result (reading r1) | `scripts/v14.2dev/2026-10-26/prereg47/2026-10-26_v142_qc-bakuzis-absolute_RESULT.md` |
 | 47 | draft (not registered) | Absolute Bakuzis gates for QC on the measured stand list grid, for 14.3: preregistration 47 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_qc-bakuzis-absolute_PREREG47_DRAFT.md` |
 | 48 | draft (not registered) | Splitting the QC stems deficit into survivor mortality and ingrowth, for 14.3: preregistration 48 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_qc-stems-deficit_PREREG48_DRAFT.md` |
+| 48 | plan | Splitting the QC stems deficit into survivor mortality and ingrowth, for 14.3: preregistration 48 (revision 1, registered) | `scripts/v14.2dev/2026-10-26/prereg48/plan/2026-10-26_v142_qc-stems-deficit_PREREG48.md` |
 | 49 | draft (not registered) | NS survival over multi year steps and the v141LTfi Bakuzis question, for 14.3: preregistration 49 | `scripts/v14.2dev/2026-10-11/drafts/2026-10-11_v142_ns-survival-step_PREREG49_DRAFT.md` |
+| 48 | result | Splitting the QC stems deficit into survivor mortality and ingrowth: PREREG48 result (revision r1, with verification addendum) | `scripts/v14.2dev/2026-10-26/rec_b/v142p48/2026-10-26_v142_qc-stems-deficit_RESULT.md` |
+| 49 | plan | NS survival over multi year steps and the v141LTfi Bakuzis question, for 14.3: preregistration 49 (revision 1, registered) | `scripts/v14.2dev/2026-10-27/prereg49/plan/2026-10-26_v142_ns-survival-step_PREREG49.md` |
+| 49 | result | NS survival over multi year steps and the v141LTfi Bakuzis question: PREREG49 result | `scripts/v14.2dev/2026-10-27/prereg49/2026-10-27_v142_ns-survival-step_RESULT.md` |
+| 50 | draft (not registered) | QC ingrowth entry size and scoring floor handling, for 14.3: preregistration 50 | `scripts/v14.2dev/2026-10-27/drafts/2026-10-27_v142_qc-ingrowth-entry-floor_PREREG50_DRAFT.md` |
+| 50 | plan | QC ingrowth entry size and scoring floor handling, for 14.3: preregistration 50 (revision 1, registered) | `scripts/v14.2dev/2026-10-28/prereg50/plan/2026-10-28_v142_qc-ingrowth-entry-floor_PREREG50.md` |
+| 50 | result | QC ingrowth entry size and scoring floor handling: PREREG50 result (revision r1, after an independent verification; earlier text `_PREV_20261028b`) | `scripts/v14.2dev/2026-10-28/prereg50/2026-10-28_v142_qc-ingrowth-entry-floor_RESULT.md` |
+| 50 | deviations | PREREG50: deviations | `scripts/v14.2dev/2026-10-28/prereg50/2026-10-28_v142_qc-ingrowth-entry-floor_DEVIATIONS.md` |
+
+## 14.3
+
+| No. | Kind | Title | File |
+|:--|:--|:--|:--|
+| 1 | plan | The 14.1 thinning response limited to partial removals, for 14.3: pre-registration 1 | `docs/v14.3/2026-10-18_v143_thin-partial-removal_PREREG1.md` |
+| 1 | result | The 14.1 thinning response limited to partial removals, for 14.3: result of pre-registration 1 | `docs/v14.3/run_v143p1/result/2026-10-19_v143_thin-partial-removal_PREREG1_RESULT_REVIEW.md` |
+| 1 | deviations | 14.3 pre-registration 1: deviations and implementation notes | `docs/v14.3/run_v143p1/result/2026-10-19_v143-prereg1_DEVIATIONS.md` |
+| 1 | exploratory | 14.3 pre-registration 1: autopilot decisions, stress test and next steps | `docs/v14.3/run_v143p1/explore/2026-10-19_v143-prereg1_AUTOPILOT-decisions-stress-nextsteps_REVIEW.md` |
+| 2 | draft (not registered) | The form of the 14.1 thinning release term T, for 14.3: pre-registration 2 (DRAFT revision 4, not registered) | `docs/v14.3/prereg2_draft/2026-10-19_v143_T-form-reestimation_PREREG2_DRAFT.md` |
+| 2 | plan | The form of the 14.1 thinning release term T, for 14.3: pre-registration 2 (revision 5, registered) | `docs/v14.3/2026-10-26_v143_T-form-reestimation_PREREG2.md` |
+| 2 | result | The form of the 14.1 thinning release term T, for 14.3: result of pre-registration 2 | `docs/v14.3/run_v143p2/2026-10-27_v143_T-form-reestimation_RESULT.md` |
+| 2 | deviations | 14.3 pre-registration 2: deviations and implementation notes | `docs/v14.3/run_v143p2/2026-10-27_v143-prereg2_DEVIATIONS.md` |
+| 3 | draft (not registered) | A T form with a class varying shape, beyond the PREREG2 family, for 14.3: pre-registration 3 | `docs/v14.3/prereg3_draft/2026-10-27_v143_T-form-class-shape_PREREG3_DRAFT.md` |
+| 3 | plan | A T form with a class varying shape, beyond the PREREG2 family, for 14.3: pre-registration 3 (revision 1, registered) | `docs/v14.3/run_v143p3/plan/2026-10-28_v143_T-form-class-shape_PREREG3.md` |
+| 3 | result | The form of the 14.1 thinning release term T beyond the PREREG2 family: result of pre-registration 3 (revision r1, after an independent verification; earlier text `_PREV_20261028b`) | `docs/v14.3/run_v143p3/2026-10-28_v143_T-form-class-shape_RESULT.md` |
+| 3 | deviations | 14.3 pre-registration 3: deviations and implementation notes | `docs/v14.3/run_v143p3/2026-10-28_v143-prereg3_DEVIATIONS.md` |
+| 4 | plan | Senescence conditioned on forest type, for 14.3: pre-registration 4 (revision 1, registered) | `docs/v14.3/run_v143p4/plan/2026-10-28_v143_senescence-forest-type_PREREG4.md` |
+| 4 | result | Senescence conditioned on forest type: result of pre-registration 4 (revision r1, after an independent verification; earlier text `_PREV_20261028b`; deviations D1 to D9 are a section of this file) | `docs/v14.3/run_v143p4/2026-10-28_v143_senescence-forest-type_RESULT.md` |
+| Howland | plan | Howland decline diagnostic, for 14.3 (registered; diagnostic arms, not candidates) | `docs/v14.3/run_howland_decline/2026-10-28_v143_howland-decline-diagnostic_PREREG.md` |
+| Howland | result | Howland decline diagnostic: RESULT (revision r1, after an independent verification; earlier text `_PREV_20261028b`) | `docs/v14.3/run_howland_decline/2026-10-28_v143_howland-decline-diagnostic_RESULT.md` |
+| Howland | deviations | Howland decline diagnostic: deviations | `docs/v14.3/run_howland_decline/2026-10-28_v143_howland-decline-diagnostic_DEVIATIONS.md` |

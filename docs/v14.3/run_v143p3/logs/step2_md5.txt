@@ -1,0 +1,7 @@
+8f1db5a79ba640eed81dee99bfcbbb2e  work/fitframe3_SERVERONLY.rds  frame written 2026-10-28T06:28:08-0400, before any fit
+1932e2489d2465c6d363c4e4d51a6670  out/frame3_class_records_DATA.csv
+2afdea99080324a4eb12f7ff52baf154  out/frame3_counts_DATA.csv
+d6ec19f45a939e0a01d86409546c6f3d  out/frame3_fia_folds_DATA.csv
+6ffcd8cb039dd8e9d9f435242d18dcf8  out/frame3_fia_harvest_type_DATA.csv
+ed62728a19b3b98f10c5330c127e785c  out/frame3_map_check_DATA.csv
+baf172ab9dc3e0ef412585ae382f4a2e  out/frame3_support_DATA.csv

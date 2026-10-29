@@ -1,0 +1,5 @@
+170a171,174
+> ## PREREG49 (2026-10-26): survival step switch. When P49_SF_OVERLAY is set, that overlay file is sourced here, after the engine,
+> ## the V132 block and the 14.1 overlay and before make_ops; it rebinds nothing unless SF_FORM is set. Unset, nothing changes.
+> if (nzchar(Sys.getenv("P49_SF_OVERLAY", ""))) { .p49_sf_file <- Sys.getenv("P49_SF_OVERLAY"); source(.p49_sf_file)
+>   cat(sprintf("p49: survival overlay md5 %s SF_FORM=%s SF_THETA=%s\n", as.character(tools::md5sum(.p49_sf_file)), Sys.getenv("SF_FORM", "unset"), Sys.getenv("SF_THETA", "unset"))) }

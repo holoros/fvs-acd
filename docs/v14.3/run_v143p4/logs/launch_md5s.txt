@@ -1,0 +1,33 @@
+# PREREG4 launch md5s, recorded 2026-10-28T06:00:28-0400 before the chain (frame step, dry run, harness, grid). Plan md5 a15bd92af86cf7194926e32d8e7e102c.
+4568950445ac50eb9ded0a0545a0718b  scripts/AcadianGY_14.3dev_senft.r
+bbed3783a140de0bc7acbf15df0c0118  scripts/build_v143p4.sh
+7ce5a8193579ed012dfa6f45116ccdd5  scripts/v143p4_frame.R
+5484cf4e0f8ffbbe7571b8b030fe5541  scripts/v143p4_hc_array.sbatch
+b5e6673e872a5affa7542f0b1c7f25ae  scripts/v143p4_l200_array.sbatch
+736bb7dae4635fb26b7daad3dfa09fce  scripts/v143p4_cmp.R
+1d11ab2345422e0fe5318d9234b54469  scripts/v143p4_fit.R
+c106a0032bb4f9d5107326347ec7b521  tools/rjob.sbatch
+ed22780de66b2f31eea8b07e675cfe40  work/grid_coef_g0.csv
+d835eba7b6aec1de1308eb985afdce10  work/grid_coef_m050.csv
+0547cbf645dda172ae821d03fd7b8552  work/grid_coef_m100.csv
+a90fc5243836274973ce5202800fc2cc  work/grid_coef_m150.csv
+6e77812af303a2f30baeb6879336afd0  work/grid_coef_m200.csv
+18697e62bc66622910a0c0601a0191ca  work/grid_coef_p050.csv
+86dcb3aecca61f9096999eaa40a3e186  work/grid_coef_p100.csv
+b5e633b2247ea9f9234e5f5e93e01002  work/senft_coef_D1.csv
+fd152110b6c9a56441bcbb77e74fc13e  work/taskmap_hc_candL.csv
+0d849d0cadee11ba126c181a21cfbed5  work/taskmap_hc_candS.csv
+34653719561b0765d640841ef326d5b0  work/taskmap_hc_grid.csv
+db783d19e22ae4e7668b2f4a99fc4431  work/taskmap_hc_off.csv
+896b0e27fe6815e86d7d242cb3062fd1  work/taskmap_l200_candL.csv
+ea8905554cef6ce320e3defa56233af9  work/taskmap_l200_candS.csv
+59fff8f377327c0bbddc4f0ea779207a  work/taskmap_l200_D1.csv
+2e53338d5889684e7303af85280bae53  work/taskmap_l200_off.csv
+e117c246a8ccc64c480eebc58712a7a8  tools/rjob.sbatch  # appended 2026-10-28T06:03:28-0400: rjob awk failed on the absent assemble_md5.txt under pipefail (job 15945982 failed in 1 s before running anything); fixed, previous copy tools/rjob_PREV_20261028.sbatch
+cbd7f83c631929e242fe6cad5c69aacd  tools/cmp_all.sbatch  # appended 2026-10-28T06:06:35-0400 before use (identity check driver; dry run setup)
+cac833d442b6575cbe79fcce973d7ce1  tools/dry_setup.sh  # appended 2026-10-28T06:06:35-0400 before use (identity check driver; dry run setup)
+d1e6c286f355a9edcf54d335c5ef52d6  tools/fit_record.sbatch  # appended 2026-10-28T06:09:03-0400 after the dry run passed (dry H1a, H1b, H2 IDENTICAL), before stage 4
+d49991663553a57ac7e0b05428ca0501  tools/launch_s4.sh  # appended 2026-10-28T06:09:03-0400 after the dry run passed (dry H1a, H1b, H2 IDENTICAL), before stage 4
+c6c50f08a159ce27b52512689a741998  tools/dry_check.R  # appended 2026-10-28T06:09:03-0400 after the dry run passed (dry H1a, H1b, H2 IDENTICAL), before stage 4
+ac16bf9403d65c7521f0f92cb4c9b2d8  tools/diag_mort_measure.R  # appended 2026-10-28T06:27:37-0400 post-selection diagnostic, not registered
+1419e02526adad2472ab35e4785230d3  tools/diag_t2_content.R  # appended 2026-10-28T06:29:17-0400 post-selection diagnostic 2, not registered

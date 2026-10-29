@@ -1,0 +1,21 @@
+assembled gyr142-p50-decision_DATA_2026-10-28.csv 
+assembled gyr142-p50-floorgroup-counts_DATA_2026-10-28.csv 
+assembled gyr142-p50-G1_DATA_2026-10-28.csv 
+assembled gyr142-p50-G2_DATA_2026-10-28.csv 
+assembled gyr142-p50-G3_DATA_2026-10-28.csv 
+assembled gyr142-p50-G4_DATA_2026-10-28.csv 
+assembled gyr142-p50-G5_DATA_2026-10-28.csv 
+assembled gyr142-p50-G6_DATA_2026-10-28.csv 
+assembled gyr142-p50-gates_DATA_2026-10-28.csv 
+assembled gyr142-p50-input-md5_DATA_2026-10-28.csv 
+assembled gyr142-p50-pools_DATA_2026-10-28.csv 
+assembled gyr142-p50-rmse_DATA_2026-10-28.csv 
+assembled gyr142-p50-T1-coverage_DATA_2026-10-28.csv 
+assembled gyr142-p50-verdict_DATA_2026-10-28.csv 
+Verdict (fold B, all screened stands): rule 3: artifact (HA); 14.3 track is a benchmark and runner convention (ingrowth threshold matched to the inventory floor)
+Labels: previously inspected population; threshold support unknown
+X_E1 1.0726 (0.8700 to 1.4083); X_S2 1.2964 (1.0480 to 1.6915); D_R0 37465, D_E1 -2720, D_S2 -11106
+Floor 9.1 to 9.7 cm group (153 stands expected): rule 3: artifact (HA); 14.3 track is a benchmark and runner convention (ingrowth threshold matched to the inventory floor)
+E1 survivor ratio 1.0943 (1.0489 to 1.1472), inside 0.90 to 1.10
+No outcome changes 14.2.
+P50_ASSEMBLE_DONE

@@ -1,0 +1,83 @@
+== fia_data
+total 33353616
+drwxr-xr-x   3 crsfaaron PUOM0008      57344 Jul 18 07:03 .
+drwx------ 311 crsfaaron PUOM0008     122880 Oct 28 05:42 ..
+-rw-r--r--   1 crsfaaron PUOM0008   19608436 Jul  8 17:28 AL_COND.csv
+-rw-r--r--   1 crsfaaron PUOM0008    9279659 Jul  8 17:28 AL_PLOT.csv
+-rw-r--r--   1 crsfaaron PUOM0008    6272639 Jun 12 08:54 AL_PLOTGEOM.csv
+-rw-r--r--   1 crsfaaron PUOM0008     205685 Jun 12 08:54 AL_POP_ESTN_UNIT.csv
+-rw-r--r--   1 crsfaaron PUOM0008      25345 Jul  8 17:28 AL_POP_EVAL.csv
+-rw-r--r--   1 crsfaaron PUOM0008       5846 Jul  8 17:28 AL_POP_EVAL_GRP.csv
+-rw-r--r--   1 crsfaaron PUOM0008      21179 Jul  8 17:28 AL_POP_EVAL_TYP.csv
+-rw-r--r--   1 crsfaaron PUOM0008   57692905 Jul  8 17:28 AL_POP_PLOT_STRATUM_ASSGN.csv
+-rw-r--r--   1 crsfaaron PUOM0008     540348 Jul  8 17:28 AL_POP_STRATUM.csv
+-rw-r--r--   1 crsfaaron PUOM0008   14913780 Jul  8 17:28 AL_SUBP_COND_CHNG_MTRX.csv
+-rw-r--r--   1 crsfaaron PUOM0008  541771776 Jul  8 17:28 AL_TREE.csv
+-rw-r--r--   1 crsfaaron PUOM0008  202534698 Jun 12 08:54 AL_TREE_GRM_BEGIN.csv
+-rw-r--r--   1 crsfaaron PUOM0008  235525962 Jul  8 17:28 AL_TREE_GRM_COMPONENT.csv
+-rw-r--r--   1 crsfaaron PUOM0008  217650637 Jul  8 17:28 AL_TREE_GRM_MIDPT.csv
+-rw-r--r--   1 crsfaaron PUOM0008   18390830 Jul  8 17:28 AR_COND.csv
+-rw-r--r--   1 crsfaaron PUOM0008    9661622 Jul  8 17:28 AR_PLOT.csv
+-rw-r--r--   1 crsfaaron PUOM0008    6839834 Jun 12 08:54 AR_PLOTGEOM.csv
+-rw-r--r--   1 crsfaaron PUOM0008     185438 Jun 12 08:54 AR_POP_ESTN_UNIT.csv
+-rw-r--r--   1 crsfaaron PUOM0008      19098 Jul  8 17:28 AR_POP_EVAL.csv
+-rw-r--r--   1 crsfaaron PUOM0008       4391 Jul  8 17:28 AR_POP_EVAL_GRP.csv
+-rw-r--r--   1 crsfaaron PUOM0008      16132 Jul  8 17:28 AR_POP_EVAL_TYP.csv
+-rw-r--r--   1 crsfaaron PUOM0008   45347704 Jul  8 17:28 AR_POP_PLOT_STRATUM_ASSGN.csv
+-rw-r--r--   1 crsfaaron PUOM0008     490346 Jul  8 17:28 AR_POP_STRATUM.csv
+-rw-r--r--   1 crsfaaron PUOM0008   15366703 Jul  8 17:28 AR_SUBP_COND_CHNG_MTRX.csv
+-rw-r--r--   1 crsfaaron PUOM0008  442008167 Jul  8 17:28 AR_TREE.csv
+-rw-r--r--   1 crsfaaron PUOM0008  165696905 Jun 12 08:54 AR_TREE_GRM_BEGIN.csv
+-rw-r--r--   1 crsfaaron PUOM0008  196839618 Jul  8 17:28 AR_TREE_GRM_COMPONENT.csv
+-rw-r--r--   1 crsfaaron PUOM0008  168793152 Jul  8 17:28 AR_TREE_GRM_MIDPT.csv
+-rw-r--r--   1 crsfaaron PUOM0008   14113056 May 30 08:50 AZ_COND.csv
+-rw-r--r--   1 crsfaaron PUOM0008    9681250 May 30 08:50 AZ_PLOT.csv
+-rw-r--r--   1 crsfaaron PUOM0008    7219231 Jun 12 08:53 AZ_PLOTGEOM.csv
+-rw-r--r--   1 crsfaaron PUOM0008     199888 Jun 12 08:53 AZ_POP_ESTN_UNIT.csv
+-rw-r--r--   1 crsfaaron PUOM0008      16960 May 30 08:50 AZ_POP_EVAL.csv
+-rw-r--r--   1 crsfaaron PUOM0008       3456 May 30 08:50 AZ_POP_EVAL_GRP.csv
+-rw-r--r--   1 crsfaaron PUOM0008      12780 May 30 08:50 AZ_POP_EVAL_TYP.csv
+-rw-r--r--   1 crsfaaron PUOM0008   85897614 May 30 08:50 AZ_POP_PLOT_STRATUM_ASSGN.csv
+-rw-r--r--   1 crsfaaron PUOM0008     689344 May 30 08:50 AZ_POP_STRATUM.csv
+-rw-r--r--   1 crsfaaron PUOM0008   10237319 May 30 08:50 AZ_SUBP_COND_CHNG_MTRX.csv
+-rw-r--r--   1 crsfaaron PUOM0008  114436689 May 30 08:50 AZ_TREE.csv
+-rw-r--r--   1 crsfaaron PUOM0008   20830812 Jun 12 08:53 AZ_TREE_GRM_BEGIN.csv
+-rw-r--r--   1 crsfaaron PUOM0008   57519066 May 30 08:50 AZ_TREE_GRM_COMPONENT.csv
+-rw-r--r--   1 crsfaaron PUOM0008   22053297 May 30 08:50 AZ_TREE_GRM_MIDPT.csv
+-rw-r--r--   1 crsfaaron PUOM0008   16111502 Jul  8 17:28 CA_COND.csv
+-rw-r--r--   1 crsfaaron PUOM0008    9636397 Jul  8 17:28 CA_PLOT.csv
+-rw-r--r--   1 crsfaaron PUOM0008    5595960 Jun 12 08:54 CA_PLOTGEOM.csv
+-rw-r--r--   1 crsfaaron PUOM0008      13091 Jun 12 08:54 CA_POP_ESTN_UNIT.csv
+-rw-r--r--   1 crsfaaron PUOM0008       6537 Jun 12 08:54 CA_POP_EVAL.csv
+-rw-r--r--   1 crsfaaron PUOM0008       2182 Jun 12 08:54 CA_POP_EVAL_GRP.csv
+-rw-r--r--   1 crsfaaron PUOM0008       5252 Jun 12 08:54 CA_POP_EVAL_TYP.csv
+-rw-r--r--   1 crsfaaron PUOM0008   44047351 Jun 12 08:54 CA_POP_PLOT_STRATUM_ASSGN.csv
+-rw-r--r--   1 crsfaaron PUOM0008    1622214 Jun 12 08:54 CA_POP_STRATUM.csv
+-rw-r--r--   1 crsfaaron PUOM0008   21134816 Jun 12 08:54 CA_SUBP_COND_CHNG_MTRX.csv
+-rw-r--r--   1 crsfaaron PUOM0008  261369114 Jul  8 17:28 CA_TREE.csv
+-rw-r--r--   1 crsfaaron PUOM0008   78948154 Jun 12 08:54 CA_TREE_GRM_BEGIN.csv
+-rw-r--r--   1 crsfaaron PUOM0008   72804376 Jun 12 08:53 CA_TREE_GRM_COMPONENT.csv
+-rw-r--r--   1 crsfaaron PUOM0008   80249386 Jun 12 08:54 CA_TREE_GRM_MIDPT.csv
+drwxr-xr-x   4 crsfaaron PUOM0008       4096 Mar 19  2026 climate
+== ME/NH latest MEASYEAR
+fia_data/ME_PLOT.csv [('2017', 714), ('2018', 740), ('2019', 688), ('2020', 747), ('2021', 718), ('2022', 707), ('2023', 705), ('2024', 716)]
+fia_data/NH_PLOT.csv [('2017', 163), ('2018', 186), ('2019', 182), ('2020', 177), ('2021', 174), ('2022', 153), ('2023', 210), ('2024', 183)]
+fia_data/VT_PLOT.csv [('2018', 147), ('2019', 181), ('2020', 184), ('2021', 142), ('2022', 189), ('2023', 177), ('2024', 183), ('2025', 3)]
+== ESI rasters
+total 1266451
+drwxr-xr-x 4 crsfaaron PUOM0008       4096 Oct  9 09:41 .
+drwxr-xr-x 7 crsfaaron PUOM0008      16384 Oct  9 09:41 ..
+-rw-r--r-- 1 crsfaaron PUOM0008       2094 Oct  9 09:41 Acadian_ESI_v8_240m_map.png
+-rw-r--r-- 1 crsfaaron PUOM0008    1251103 Oct  9 09:41 Acadian_ESI_v8_240m.tif
+-rw-r--r-- 1 crsfaaron PUOM0008        994 Oct  9 09:41 Acadian_ESI_v8_240m.tif.aux.xml
+-rw-r--r-- 1 crsfaaron PUOM0008     442797 Oct  9 09:41 Acadian_ESI_v8_30m_map.png
+-rw-r--r-- 1 crsfaaron PUOM0008 1223525561 Oct  9 09:41 Acadian_ESI_v8_30m.tif
+-rw-r--r-- 1 crsfaaron PUOM0008     693563 Oct  9 09:41 Acadian_ESI_v8_preview_1km.tif
+-rw-r--r-- 1 crsfaaron PUOM0008     146218 Oct  9 09:41 Acadian_ESI_v8_preview_map.png
+-rw-r--r-- 1 crsfaaron PUOM0008     538976 Oct  9 09:41 Acadian_ESI_v8soil_250m_map.png
+-rw-r--r-- 1 crsfaaron PUOM0008   21290951 Oct  9 09:41 Acadian_ESI_v8soil_250m.tif
+-rw-r--r-- 1 crsfaaron PUOM0008   42115620 Oct  9 09:41 acadian_v8_model.rds
+-rw-r--r-- 1 crsfaaron PUOM0008    4835568 Oct  9 09:41 acadian_v8soil_model.rds
+drwxr-xr-x 2 crsfaaron PUOM0008       4096 Oct  9 09:41 future
+-rw-r--r-- 1 crsfaaron PUOM0008    1885973 Oct  9 09:41 stress_si_validation.csv
+drwxr-xr-x 2 crsfaaron PUOM0008       4096 Oct  9 09:41 strips
