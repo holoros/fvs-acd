@@ -1,0 +1,56 @@
+brms map cols: STAND, PROV, sdimax_brms  n= 2424 
+
+[ctrn] n=4
+                   STAND csi_site   PROV sdimax_brms
+                  <char>    <num> <char>       <num>
+1: CTRN_AP_80_I2014_2015    14.26   <NA>          NA
+2:  CTRN_DR_2_I2009_2011    15.81   <NA>          NA
+3:  CTRN_RC_2_I2002_2003    17.16   <NA>          NA
+4:  CTRN_PE_1_I2002_2003    18.11   <NA>          NA
+  insufficient sdimax coverage for a rank correlation
+
+[nb] n=4
+            STAND csi_site   PROV sdimax_brms
+           <char>    <num> <char>       <num>
+1: 30301953S1_I01    17.44     NB    692.9760
+2: 30300989L1_I01    18.24     NB   1000.0340
+3: 30300707L1_I01    18.76     NB    655.7754
+4: 30303199L1_I01    19.36     NB   1271.5671
+  spearman(csi, sdimax) = 0.400
+
+[qc] n=4
+            STAND csi_site   PROV sdimax_brms
+           <char>    <num> <char>       <num>
+1: 30012291L2_I08    17.34     QC    908.1079
+2: 30000824L2_I01    18.52     QC    824.9208
+3: 30000611L2_I01    19.04     QC    859.5987
+4: 30000659L2_I01    19.52     QC    833.3192
+  spearman(csi, sdimax) = -0.400
+
+[ns] n=4
+             STAND csi_site   PROV sdimax_brms
+            <char>    <num> <char>       <num>
+1: NS_OP_1198_1989     8.90   <NA>          NA
+2: NS_RS_7806_1978    12.12   <NA>          NA
+3: NS_OP_1089_1998    14.70   <NA>          NA
+4: NS_OP_1137_1983    17.80   <NA>          NA
+  insufficient sdimax coverage for a rank correlation
+
+[memat] n=4
+                 STAND csi_site   PROV sdimax_brms
+                <char>    <num> <char>       <num>
+1: MEM_145024199010661    12.87   <NA>          NA
+2: MEM_222517665010661    13.64   <NA>          NA
+3: MEM_171137646020004    15.44   <NA>          NA
+4: MEM_107546072010661    18.20   <NA>          NA
+  insufficient sdimax coverage for a rank correlation
+
+[mefia_l] n=4
+                 STAND csi_site   PROV sdimax_brms
+                <char>    <num> <char>       <num>
+1: ME_L_52704709010538    12.39   <NA>          NA
+2: ME_L_52773003010538    13.47   <NA>          NA
+3: ME_L_52826897010538    14.92   <NA>          NA
+4: ME_L_52794754010538    17.89   <NA>          NA
+  insufficient sdimax coverage for a rank correlation
+

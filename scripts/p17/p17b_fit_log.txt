@@ -1,0 +1,236 @@
+=== pass 17 plot_ba_incr POOLED refit, corrected ME_FIA_L + BAXTER survivor matching ===
+ 2026-08-14 12:34:19 
+
+model sourced (read-only, helper functions only) OK
+
+loaded corrected survivor sums: ME_FIA_L 933 stands, BAXTER 91 stands, SILC_L 137 stands
+
+[build] mefia_long - tree rows: 37652  unmatched species: 0  ( 0 %)
+[build] mefia_long - plots after csi/rd join+filter: 933 
+[build] mefia_long - using CORRECTED survivor matching (pass 17 remediation): 24500 real survivor pairs across 905 stands (vs the broken TREE-index join previously used)
+[build] ns_long - DATA QUALITY: dropped 109959 duplicate STAND,TREE rows from tree_init and 108477 from tree_t2 (kept first occurrence)
+[build] ns_long - tree rows: 234341  unmatched species: 0  ( 0 %)
+[build] ns_long - plots after csi/rd join+filter: 5524 
+[build] ctrn - tree rows: 122692  unmatched species: 0  ( 0 %)
+[build] ctrn - plots after csi/rd join+filter: 1086 
+[build] baxter - tree rows: 5628  unmatched species: 0  ( 0 %)
+[build] baxter - plots after csi/rd join+filter: 91 
+[build] baxter - using CORRECTED survivor matching (pass 17 remediation): 3584 real survivor pairs across 91 stands (vs the broken TREE-index join previously used)
+[build] pef - DATA QUALITY: dropped 73110 duplicate STAND,TREE rows from tree_init and 76296 from tree_t2 (kept first occurrence)
+[build] pef - tree rows: 117612  unmatched species: 0  ( 0 %)
+[build] pef - plots after csi/rd join+filter: 2853 
+[build] silc_l - tree rows: 2127  unmatched species: 0  ( 0 %)
+[build] silc_l - plots after csi/rd join+filter: 137 
+[build] silc_l - using CORRECTED survivor matching (pass 17 remediation): 1462 real survivor pairs across 123 stands (vs the broken TREE-index join previously used)
+
+[pool] total rows before fitting filters: 10624 
+
+[screen] DROPPING 101 rows with |raw annual survivor BA increment| > 3 m2/ha/yr. By source:
+    PROV  n
+1 BAXTER  1
+2   CTRN  3
+3     NS 97
+[screen] rows retained: 10523 of 10624 
+
+[pool] retained after fitting filters: 9199 of 10523 
+
+=== per-source retained-sample summary (pass 17, corrected) ===
+     PROV n_rows n_sites csi_min csi_p25 csi_med csi_p75 csi_max  rd_min rd_med
+   BAXTER     90      90   13.00   13.00   13.00   13.00   13.00 0.07991 0.6163
+     CTRN   1082     166   11.47   15.10   16.60   17.62   21.00 0.07608 0.5565
+ ME_FIA_L    899     899   10.04   13.17   14.02   15.88   23.04 0.04824 0.4553
+       NS   5205    1883   11.40   17.90   20.10   22.52   35.20 0.03901 0.4784
+      PEF   1806     370   12.11   15.00   18.59   20.36   26.00 0.04250 0.3784
+   SILC_L    117     117   16.74   17.85   18.63   18.96   19.23 0.04568 0.1828
+ rd_max interval_min interval_max
+ 1.0152            8           13
+ 1.5036            1            5
+ 1.2909            4           25
+ 1.8829            1           40
+ 1.5377            2           20
+ 0.6078            5           15
+
+=== pooled csi (pass 17, ME_FIA_L + BAXTER corrected, SILC_L excluded) ===
+pooled n_rows: 9199  n_sites: 3525   csi: min 10.04  p25 15.75  median 18.6  p75 21.1  max 35.2 
+
+DONE part 1 (data assembly)
+ 2026-08-14 12:34:25 
+
+=== response: rt_surv - primary: survivor BA growth, fixed EXPF, all trees  n = 9199  n_sites = 3525 ===
+  [mixed] elapsed: 1.1 s
+=== response: rt_net - sensitivity: net BA change (mortality+harvest+ingrowth net)  n = 9198  n_sites = 3524 ===
+  FIXED FIT FAILED for rt_net : step halving factor reduced below minimum in NLS step 
+=== response: rt_lg - sensitivity: survivor growth, DBH1>=12.7cm trees only  n = 8790  n_sites = 3427 ===
+  [mixed] elapsed: 1.1 s
+
+--- rt_surv : FIXED Form A ---
+       Value Std.Error    t-value  p-value
+a0  0.200106  0.009660  20.715314 0.000000
+a1 -0.001712  0.001040  -1.645976 0.099803
+a2 -0.048660  0.003293 -14.776451 0.000000
+a3 -0.005619  0.000269 -20.916433 0.000000
+AIC: -19981.21  BIC: -19945.57 
+
+--- rt_surv : FIXED Form B ---
+       Value Std.Error    t-value  p-value
+a0  0.194559  0.009658  20.143893 0.000000
+a1 -0.001998  0.001038  -1.925186 0.054237
+a2 -0.047103  0.003290 -14.319005 0.000000
+a3 -0.005345  0.000270 -19.775352 0.000000
+a4  0.037016  0.004901   7.552849 0.000000
+AIC: -20036.11  BIC: -19993.35 
+
+--- rt_surv : MIXED Form A ---
+                Value Std.Error   DF    t-value p-value
+(Intercept)  0.214635  0.020423 5672  10.509283       0
+lrd         -0.021405  0.001154 5672 -18.551201       0
+lcsi        -0.063569  0.006728 3518  -9.448342       0
+lhw         -0.005208  0.000425 5672 -12.256016       0
+AIC: -24171.61 
+VarCorr:
+            Variance     StdDev    
+PROV =      pdLogChol(1)           
+(Intercept) 0.0003568476 0.01889041
+SITE =      pdLogChol(1)           
+(Intercept) 0.0032653744 0.05714345
+Residual    0.0138158280 0.11754075
+
+--- rt_surv : MIXED Form B ---
+                Value Std.Error   DF    t-value p-value
+(Intercept)  0.193925  0.020559 5671   9.432526       0
+lrd         -0.022551  0.001133 5671 -19.911884       0
+lcsi        -0.056344  0.006868 3518  -8.203763       0
+lhw         -0.004544  0.000429 5671 -10.582929       0
+c_int        0.109433  0.005389 5671  20.306684       0
+AIC: -24554.86 
+
+--- rt_lg : FIXED Form A ---
+       Value Std.Error    t-value p-value
+a0  0.014135  0.003576   3.952867 7.8e-05
+a1  0.003313  0.000389   8.523914 0.0e+00
+a2  0.007249  0.001215   5.965424 0.0e+00
+a3 -0.001515  0.000101 -14.969677 0.0e+00
+AIC: -37018.2  BIC: -36982.79 
+
+--- rt_lg : FIXED Form B ---
+       Value Std.Error    t-value p-value
+a0  0.014840  0.003572   4.154272 3.3e-05
+a1  0.003481  0.000389   8.943272 0.0e+00
+a2  0.007115  0.001213   5.863332 0.0e+00
+a3 -0.001577  0.000102 -15.510678 0.0e+00
+a4 -0.010207  0.001861  -5.484528 0.0e+00
+AIC: -37046.25  BIC: -37003.76 
+
+--- rt_lg : MIXED Form A ---
+                Value Std.Error   DF    t-value  p-value
+(Intercept) -0.006192  0.008377 5361  -0.739162 0.459841
+lrd         -0.000090  0.000448 5361  -0.200479 0.841114
+lcsi         0.015310  0.002380 3420   6.433495 0.000000
+lhw         -0.001731  0.000151 5361 -11.451031 0.000000
+AIC: -40406.8 
+VarCorr:
+            Variance     StdDev    
+PROV =      pdLogChol(1)           
+(Intercept) 0.0001523169 0.01234167
+SITE =      pdLogChol(1)           
+(Intercept) 0.0003455584 0.01858920
+Residual    0.0021246550 0.04609398
+
+--- rt_lg : MIXED Form B ---
+                Value Std.Error   DF    t-value  p-value
+(Intercept) -0.006066  0.008368 5360  -0.724904 0.468542
+lrd         -0.000052  0.000449 5360  -0.115149 0.908332
+lcsi         0.015267  0.002377 3420   6.421842 0.000000
+lhw         -0.001740  0.000151 5360 -11.507761 0.000000
+c_int       -0.002399  0.002145 5360  -1.118148 0.263554
+AIC: -40406.04 
+
+DONE part 2 (fixed + mixed fits)
+ 2026-08-14 12:34:28 
+
+
+[boot] rt_surv form A - 2000 reps...
+  converged reps: 1868 / 2000   elapsed: 179.7 s
+  bootstrap 95% CIs (2.5,50,97.5):
+                    2.5%       50%     97.5%
+a1.a1           -0.00546  -0.00181   0.00178
+a2.a2           -0.05933  -0.04881  -0.03943
+a3.a3           -0.00676  -0.00563  -0.00455
+pct_dba_12to20 -42.21116 -37.28749 -32.15656
+
+[boot] rt_surv form B - 2000 reps...
+  converged reps: 1889 / 2000   elapsed: 192.2 s
+  bootstrap 95% CIs (2.5,50,97.5):
+                    2.5%       50%     97.5%
+a1.a1           -0.00602  -0.00206   0.00171
+a2.a2           -0.05774  -0.04721  -0.03725
+a3.a3           -0.00647  -0.00537  -0.00428
+a4.a4            0.01714   0.03735   0.05960
+pct_dba_12to20 -39.46423 -34.62932 -29.09574
+
+[boot] rt_lg form A - 2000 reps...
+  converged reps: 1995 / 2000   elapsed: 120.8 s
+  bootstrap 95% CIs (2.5,50,97.5):
+                   2.5%      50%    97.5%
+a1.a1           0.00189  0.00329  0.00466
+a2.a2           0.00298  0.00722  0.01159
+a3.a3          -0.00192 -0.00151 -0.00114
+pct_dba_12to20  5.54424 14.29420 24.50245
+
+[boot] rt_lg form B - 2000 reps...
+  converged reps: 1995 / 2000   elapsed: 135.1 s
+  bootstrap 95% CIs (2.5,50,97.5):
+                   2.5%      50%    97.5%
+a1.a1           0.00204  0.00340  0.00476
+a2.a2           0.00299  0.00687  0.01120
+a3.a3          -0.00196 -0.00158 -0.00121
+a4.a4          -0.01805 -0.01036 -0.00189
+pct_dba_12to20  3.42677 11.63139 22.26785
+
+=== FINAL FIXED-EFFECTS COEFFICIENT + BOOTSTRAP CI TABLE (pass 17) ===
+ response form param     estimate  analytic_se boot_lo95 boot_hi95
+  rt_surv    A    a0  0.200105764 0.0096597988        NA        NA
+  rt_surv    A    a1 -0.001712425 0.0010403707        NA        NA
+  rt_surv    A    a2 -0.048659736 0.0032930598        NA        NA
+  rt_surv    A    a3 -0.005618782 0.0002686300        NA        NA
+  rt_surv    B    a0  0.194558886 0.0096584553        NA        NA
+  rt_surv    B    a1 -0.001998159 0.0010379042        NA        NA
+  rt_surv    B    a2 -0.047102858 0.0032895342        NA        NA
+  rt_surv    B    a3 -0.005344578 0.0002702646        NA        NA
+  rt_surv    B    a4  0.037015719 0.0049008951        NA        NA
+    rt_lg    A    a0  0.014134955 0.0035758743        NA        NA
+    rt_lg    A    a1  0.003312576 0.0003886214        NA        NA
+    rt_lg    A    a2  0.007249146 0.0012151938        NA        NA
+    rt_lg    A    a3 -0.001514679 0.0001011832        NA        NA
+    rt_lg    B    a0  0.014840249 0.0035722866        NA        NA
+    rt_lg    B    a1  0.003480611 0.0003891877        NA        NA
+    rt_lg    B    a2  0.007114772 0.0012134351        NA        NA
+    rt_lg    B    a3 -0.001576577 0.0001016446        NA        NA
+    rt_lg    B    a4 -0.010206614 0.0018609832        NA        NA
+=== Bakuzis-lite: fitted rt_surv vs csi, at median rd/hw (pass 17) ===
+ csi rt_formA_fixed rt_formB_fixed rt_formA_mixed rt_formB_mixed
+  10      0.0756422      0.0725350     0.07229960     0.06471487
+  12      0.0667705      0.0645619     0.06070966     0.05625954
+  14      0.0592695      0.0578207     0.05091050     0.04911066
+  16      0.0527719      0.0519813     0.04242208     0.04291803
+  18      0.0470406      0.0468305     0.03493476     0.03745573
+  20      0.0419138      0.0422230     0.02823713     0.03256954
+  22      0.0372761      0.0380550     0.02217838     0.02814945
+  24      0.0330421      0.0342499     0.01664718     0.02411422
+  26      0.0291472      0.0307495     0.01155897     0.02040217
+  28      0.0255412      0.0275087     0.00684802     0.01696534
+  30      0.0221840      0.0244916     0.00246223     0.01376574
+  32      0.0190436      0.0216693    -0.00164040     0.01077270
+  34      0.0160936      0.0190181    -0.00549423     0.00796118
+[Bakuzis-lite] Form A, fixed-effects - FLAG: rt DECREASES monotonically with csi (inverted)
+[Bakuzis-lite] Form B, fixed-effects - FLAG: rt DECREASES monotonically with csi (inverted)
+[Bakuzis-lite] Form A, mixed - FLAG: rt DECREASES monotonically with csi (inverted)
+[Bakuzis-lite] Form B, mixed - FLAG: rt DECREASES monotonically with csi (inverted)
+
+=== HEADLINE: a2 (lcsi coefficient), rt_surv primary response, pass 17 addendum vs pass 17 vs pass 16 ===
+pass 17 addendum (ME_FIA_L+BAXTER+SILC_L all corrected): a2 = -0.0487  SE = 0.0033  boot 95% CI [ -0.0593 , -0.0394 ]
+pass 17 (ME_FIA_L+BAXTER corrected, SILC_L excluded): a2 = -0.0486 [-0.0592,-0.0391]
+pass 16 (broken ME_FIA_L/BAXTER survivor match): a2 = -0.0976 [-0.112,-0.083]
+
+DONE ALL
+ 2026-08-14 12:44:56 

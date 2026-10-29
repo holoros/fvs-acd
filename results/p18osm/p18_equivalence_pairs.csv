@@ -1,0 +1,7 @@
+ns_treatment,pair,model_A,A_intercept_equiv,A_slope_equiv,model_B,B_intercept_equiv,B_slope_equiv,pair_verdict
+NS,v13.1 SHIPPING vs OSM-ACD v2.26.1,v13.1 SHIPPING,FALSE,FALSE,OSM-ACD v2.26.1,TRUE,FALSE,NOT EQUIVALENT (at least one model's CI exits its region)
+NS,v13.1 SHIPPING vs CANDIDATE v12.11,v13.1 SHIPPING,FALSE,FALSE,CANDIDATE v12.11,TRUE,FALSE,NOT EQUIVALENT (at least one model's CI exits its region)
+NS,CANDIDATE v12.11 vs OSM-ACD v2.26.1,CANDIDATE v12.11,TRUE,FALSE,OSM-ACD v2.26.1,TRUE,FALSE,NOT EQUIVALENT (at least one model's CI exits its region)
+NS-long,v13.1 SHIPPING vs OSM-ACD v2.26.1,v13.1 SHIPPING,FALSE,FALSE,OSM-ACD v2.26.1,TRUE,FALSE,NOT EQUIVALENT (at least one model's CI exits its region)
+NS-long,v13.1 SHIPPING vs CANDIDATE v12.11,v13.1 SHIPPING,FALSE,FALSE,CANDIDATE v12.11,FALSE,FALSE,NOT EQUIVALENT (at least one model's CI exits its region)
+NS-long,CANDIDATE v12.11 vs OSM-ACD v2.26.1,CANDIDATE v12.11,FALSE,FALSE,OSM-ACD v2.26.1,TRUE,FALSE,NOT EQUIVALENT (at least one model's CI exits its region)

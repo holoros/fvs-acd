@@ -1,0 +1,110 @@
+=== G0 provenance: file count and ladder completeness per arm ===
+  h1check_sdioff   traj files=6, all 6 sources carry 6 rungs=TRUE  PASS
+  matgate_sdioff   traj files=6, all 6 sources carry 6 rungs=TRUE  PASS
+  h1check_sdion    traj files=6, all 6 sources carry 6 rungs=TRUE  PASS
+
+=== G1 cross-layer: age-1 identity across ladder rungs (same tree list) ===
+  ctrn      h1check_sdioff   age1 TPH spread  1.11 pct, BA spread  0.55 pct  PASS
+  ctrn      matgate_sdioff   age1 TPH spread  0.60 pct, BA spread  0.47 pct  PASS
+  ctrn      h1check_sdion    age1 TPH spread  1.08 pct, BA spread  0.55 pct  PASS
+  nb        h1check_sdioff   age1 TPH spread 37.90 pct, BA spread 37.90 pct  FAIL
+  nb        matgate_sdioff   age1 TPH spread 37.90 pct, BA spread 37.90 pct  FAIL
+  nb        h1check_sdion    age1 TPH spread 37.89 pct, BA spread 37.89 pct  FAIL
+  qc        h1check_sdioff   age1 TPH spread  1.80 pct, BA spread  2.12 pct  PASS
+  qc        matgate_sdioff   age1 TPH spread  1.58 pct, BA spread  2.10 pct  PASS
+  qc        h1check_sdion    age1 TPH spread  1.57 pct, BA spread  1.91 pct  PASS
+  ns        h1check_sdioff   age1 TPH spread  1.60 pct, BA spread  0.73 pct  PASS
+  ns        matgate_sdioff   age1 TPH spread  1.07 pct, BA spread  0.64 pct  PASS
+  ns        h1check_sdion    age1 TPH spread  1.58 pct, BA spread  0.73 pct  PASS
+  memat     h1check_sdioff   age1 TPH spread  1.29 pct, BA spread  0.84 pct  PASS
+  memat     matgate_sdioff   age1 TPH spread  0.00 pct, BA spread  0.79 pct  PASS
+  memat     h1check_sdion    age1 TPH spread  1.25 pct, BA spread  0.84 pct  PASS
+  mefia_l   h1check_sdioff   age1 TPH spread  2.04 pct, BA spread  0.95 pct  PASS
+  mefia_l   matgate_sdioff   age1 TPH spread  2.01 pct, BA spread  0.95 pct  PASS
+  mefia_l   h1check_sdion    age1 TPH spread  2.03 pct, BA spread  0.95 pct  PASS
+
+=== G2 value range ===
+  out-of-range rows across all files: 0  PASS
+
+=== G4 OBJECTIVE: site response with the stand held fixed ===
+spearman(csi, terminal VOL). Passes 32 and 33 measured this across four DIFFERENT real stands
+and reported inversions. Here only csi varies, isolating the model's actual site response.
+
+  ctrn       h1check sdioff term=+1.00 peak=+1.00  matgate sdioff term=+1.00 peak=+1.00  h1check sdion term=+1.00 peak=+1.00 
+  nb         h1check sdioff term=+1.00 peak=+1.00  matgate sdioff term=+1.00 peak=+1.00  h1check sdion term=+1.00 peak=+1.00 
+  qc         h1check sdioff term=+1.00 peak=+1.00  matgate sdioff term=+1.00 peak=+1.00  h1check sdion term=+1.00 peak=+1.00 
+  ns         h1check sdioff term=+1.00 peak=+1.00  matgate sdioff term=+1.00 peak=+1.00  h1check sdion term=+1.00 peak=+1.00 
+  memat      h1check sdioff term=+0.31 peak=+0.31  matgate sdioff term=+1.00 peak=+1.00  h1check sdion term=+0.09 peak=+0.09 
+  mefia_l    h1check sdioff term=+0.94 peak=+1.00  matgate sdioff term=+1.00 peak=+1.00  h1check sdion term=+1.00 peak=+1.00 
+
+=== Terminal and peak detail, production arm (h1check_sdioff) ===
+--- ctrn ---
+    site maxage peakVOL termVOL termBA termQMD termTPH termHT
+   <int>  <int>   <num>   <num>  <num>   <num>   <num>  <num>
+1:    10    100   275.5   275.4   27.9    20.9     813   23.4
+2:    12    100   280.8   279.2   28.2    21.0     813   23.5
+3:    14    100   290.9   282.3   28.3    21.3     797   23.7
+4:    16    100   300.7   295.2   29.5    21.4     818   23.9
+5:    18    100   310.7   307.6   30.6    21.5     840   24.1
+6:    20    100   321.4   320.2   31.7    21.6     862   24.4
+--- nb ---
+    site maxage peakVOL termVOL termBA termQMD termTPH termHT
+   <int>  <int>   <num>   <num>  <num>   <num>   <num>  <num>
+1:    10    100   214.8   214.8   30.6    21.1     875   22.2
+2:    12    100   222.2   222.2   31.0    21.0     892   22.5
+3:    14    100   228.7   228.7   31.2    20.9     910   22.8
+4:    16    100   234.4   234.4   31.4    20.7     929   23.2
+5:    18    100   241.7   241.7   31.6    20.6     947   23.6
+6:    20    100   252.1   252.1   32.0    20.8     941   24.0
+--- qc ---
+    site maxage peakVOL termVOL termBA termQMD termTPH termHT
+   <int>  <int>   <num>   <num>  <num>   <num>   <num>  <num>
+1:    10    100   158.4    66.2   10.4    16.0     517   14.2
+2:    12    100   166.1    73.0   11.1    15.9     557   14.7
+3:    14    100   174.3    80.0   11.8    15.8     598   15.2
+4:    16    100   182.3    87.5   12.5    15.8     638   15.7
+5:    18    100   190.0    95.4   13.2    15.7     678   16.2
+6:    20    100   197.5   103.7   13.9    15.7     717   16.7
+--- ns ---
+    site maxage peakVOL termVOL termBA termQMD termTPH termHT
+   <int>  <int>   <num>   <num>  <num>   <num>   <num>  <num>
+1:    10    100   231.9   229.6   27.1    20.7     806   21.7
+2:    12    100   233.0   231.0   27.1    20.6     815   21.8
+3:    14    100   236.5   236.5   27.5    20.5     836   22.0
+4:    16    100   242.5   241.1   27.7    20.5     839   22.2
+5:    18    100   250.9   250.2   28.5    20.5     865   22.4
+6:    20    100   259.0   258.7   29.1    20.4     892   22.7
+--- memat ---
+    site maxage peakVOL termVOL termBA termQMD termTPH termHT
+   <int>  <int>   <num>   <num>  <num>   <num>   <num>  <num>
+1:    10    100   420.2   420.2   40.3    18.0    1583   25.3
+2:    12    100   440.2   440.2   42.4    18.1    1646   25.5
+3:    14    100   445.9   445.9   43.0    19.4    1450   25.8
+4:    16    100   443.0   443.0   42.1    20.8    1243   26.3
+5:    18    100   436.9   436.9   41.4    21.8    1106   26.6
+6:    20    100   441.1   441.1   41.6    22.6    1042   26.9
+--- mefia_l ---
+    site maxage peakVOL termVOL termBA termQMD termTPH termHT
+   <int>  <int>   <num>   <num>  <num>   <num>   <num>  <num>
+1:    10    100   133.6   133.6   21.3    16.6     982   21.4
+2:    12    100   133.7   132.2   20.7    16.6     962   21.6
+3:    14    100   138.8   135.9   21.0    16.5     982   21.8
+4:    16    100   145.2   139.6   21.2    16.4    1006   22.1
+5:    18    100   151.3   142.5   21.3    16.3    1022   22.3
+6:    20    100   157.8   145.4   21.3    16.2    1032   22.6
+
+=== G3 magnitude: SDImax site term on vs off, production arm ===
+  ctrn      max terminal VOL deviation  0.88 pct  (within 5 pct)
+  nb        max terminal VOL deviation  1.61 pct  (within 5 pct)
+  qc        max terminal VOL deviation  0.14 pct  (within 5 pct)
+  ns        max terminal VOL deviation  0.91 pct  (within 5 pct)
+  memat     max terminal VOL deviation  0.63 pct  (within 5 pct)
+  mefia_l   max terminal VOL deviation  2.48 pct  (within 5 pct)
+
+== GATE FAILURES ==
+G1 nb/h1check_sdioff
+G1 nb/matgate_sdioff
+G1 nb/h1check_sdion 
+
+wrote /users/PUOM0008/crsfaaron/magplot/verify/bakuzis_p34/p34_csiladder_terminal.csv  (108 rows)
+=== P34 GATES DONE ===

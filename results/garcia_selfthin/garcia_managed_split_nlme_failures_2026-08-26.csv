@@ -1,0 +1,4 @@
+subset,n,failure_mode
+unmanaged_or_unlabelled_2360,2360,nlme failed under both random-effect structures; beta: step halving factor reduced below minimum in PNLS step | alpha: step halving factor reduced below minimum in PNLS step
+managed_only_627,627,"nlme failed under both random-effect structures; beta: Singularity in backsolve at level 0, block 1 | alpha: Singularity in backsolve at level 0, block 1"
+unmanaged_labelled_only_no_mefia_2039,2039,nlme failed under both random-effect structures; beta: step halving factor reduced below minimum in PNLS step | alpha: step halving factor reduced below minimum in PNLS step

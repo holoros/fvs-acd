@@ -22,3 +22,21 @@ FVS-ACD_Hennigar_Aug2026.pdf
 __pycache__/
 *.pyc
 *.tmp
+
+# ---- Added 2026-07-25 (v12.11 candidate preservation) ----
+# Category 2: dated churn snapshots. The current file is the source of truth;
+# _PREV*/_backup* copies are local history only and stay out of git.
+*_PREV*
+*_backup*
+
+# Category 3: build and run artifacts (regenerable, never hand edited).
+# unzipped pptx tree from deck QA
+unpacked/
+# scratch scripts and scratch markdown
+_tmp_*
+_scratch_*
+_deck_check.md
+# rendered deck slides for visual QA
+qa-slide-*.jpg
+# LibreOffice / python-pptx temp export, random-named pptx
+ziihoSdB

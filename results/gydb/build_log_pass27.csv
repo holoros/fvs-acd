@@ -1,0 +1,16 @@
+Dataset,Provider,Level,Message
+9,NS,INFO,"starting build (v2, post-fix)"
+9,NS,WARNING,"151627 (VisitID,Tree) collisions found in source TREE numbering; renumbered sequentially per visit (TREE is not a stable identity in this source)"
+9,NS,INFO,inserted 544444 tree records (t1+t2)
+9,NS,INFO,build complete
+10,NS_LONG,INFO,starting build
+10,NS_LONG,WARNING,"nulled 1 t2 HT value(s) outside [0.01,110] m"
+10,NS_LONG,WARNING,"218436 (VisitID,Tree) collisions found in source TREE numbering; renumbered sequentially per visit (TREE is not a stable identity in this source)"
+10,NS_LONG,INFO,inserted 705997 tree records (t1+t2)
+10,NS_LONG,INFO,build complete
+11,NB,INFO,starting build
+11,NB,INFO,inserted 28955 tree records (t1+t2)
+11,NB,INFO,build complete
+12,QC,INFO,"starting build (v2, post-fix)"
+12,QC,INFO,inserted 134372 tree records (t1+t2)
+12,QC,INFO,build complete

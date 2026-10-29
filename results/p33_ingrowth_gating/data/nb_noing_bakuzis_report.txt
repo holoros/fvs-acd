@@ -1,0 +1,31 @@
+================================================================
+BAKUZIS ASSESSMENT:/users/PUOM0008/crsfaaron/magplot/verify/bakuzis_p33/nb_noing_traj.csv
+================================================================
+
+[1/3 Monotonicity] HT increasing, TPH decreasing with age:
+  h1_noingrowth site 17.4: HT_up=TRUE TPH_down=FALSE
+  h1_noingrowth site 18.2: HT_up=FALSE TPH_down=TRUE
+  h1_noingrowth site 18.8: HT_up=TRUE TPH_down=TRUE
+  h1_noingrowth site 19.4: HT_up=FALSE TPH_down=TRUE
+
+[1/7 Site ordering] HT and VOL ordered by site at each age:
+  h1_noingrowth: HT inversions=100/100  VOL inversions=100/100
+
+[4 Reineke] log(TPH)~log(QMD) self-thinning slope (target ~ -1.605):
+  h1_noingrowth site 17.4: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  h1_noingrowth site 18.2: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  h1_noingrowth site 18.8: not in a self-thinning regime (QMD capped/flat) - Reineke n/a
+  h1_noingrowth site 19.4: slope=-2.82 FLAG
+
+[8 Eichhorn] volume-height site independence (CV of VOL across sites at matched HT):
+
+================================================================
+FLAGS: 6
+  - TPH not monotone down (h1_noingrowth site 17.4)
+  - HT not monotone up (h1_noingrowth site 18.2)
+  - HT not monotone up (h1_noingrowth site 19.4)
+  - HT site-ordering inverted 100x (h1_noingrowth)
+  - VOL site-ordering inverted 100x (h1_noingrowth) [check self-thinning/SDImax]
+  - Reineke slope -2.82 off (h1_noingrowth site 19.4)
+================================================================
+Interpret with references/bakuzis-method.md: map each flag to the responsible submodel and a refinement.

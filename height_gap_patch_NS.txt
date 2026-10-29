@@ -1,0 +1,73 @@
+FVS-ACD v13.1  --  sub-2.5 cm height-imputation gap fix
+PATCH (namespaced proposal; do NOT apply in place. The main thread integrates.)
+Author track: sub-2.5 cm height-imputation gap. Date: 2026-07-23.
+Target file: ~/AcadianGY_13.1_DRAFT.r  (line numbers as of the 22 Jul 13:17 draft, 230259 bytes)
+Anchor: "Height and crown ratio" block, per-cycle height imputation, calc_ht() gate.
+
+------------------------------------------------------------------------------
+CURRENT BEHAVIOR (the gate), lines 3878-3881
+------------------------------------------------------------------------------
+3878    calc_ht(plot.data = plot.smry) %>%
+3879    dplyr::mutate(#use predicted height if missing or > 50m and DBH> 2.5cm
+3880           ht= dplyr::case_when((ht %in% c(NA, 0)| ht>50) & dbh>2.5 ~pht,
+3881                        TRUE ~ ht)) %>%
+
+A tree with dbh <= 2.5 cm and a missing/invalid height (NA, 0, or > 50 m) matches
+neither the first arm (blocked by "& dbh>2.5") nor is corrected by TRUE ~ ht, so its
+height stays NA. Downstream calc_hcb and the crown-ratio resolve then never complete,
+the diameter/height increment functions return non-finite or zero, and the stem is
+frozen for the whole projection. Empirical trace (20260721_crown_ratio_investigation.md):
+a white spruce (WS) starting at 2.12 cm DBH sat at NA height and NA crown ratio for all
+20 projected years.
+
+------------------------------------------------------------------------------
+PROPOSED FIX (single inserted line; line 3880 kept byte-identical)
+------------------------------------------------------------------------------
+3878    calc_ht(plot.data = plot.smry) %>%
+3879    dplyr::mutate(#use predicted height if missing or > 50m; DBH>2.5 -> large-tree pht, DBH<=2.5 -> anchored small-tree pht
+3880           ht= dplyr::case_when((ht %in% c(NA, 0)| ht>50) & dbh>2.5 ~pht,
+3880a >>>>>                 (ht %in% c(NA, 0)| ht>50) & dbh<=2.5 ~ pmin(pmax(pht, 1.37), 50),
+3881                        TRUE ~ ht)) %>%
+
+Net functional change: exactly ONE inserted line (marked 3880a). The comment on 3879 is
+updated for clarity but that is cosmetic; the validated change is the single new arm.
+Do not alter pred_ht (line 629) or calc_ht (line 654); leave them byte-identical.
+
+The new arm, verbatim (24 leading spaces to align with the TRUE arm):
+                        (ht %in% c(NA, 0)| ht>50) & dbh<=2.5 ~ pmin(pmax(pht, 1.37), 50),
+
+------------------------------------------------------------------------------
+WHY THIS FORM (design rationale)
+------------------------------------------------------------------------------
+1. No second equation is needed. pred_ht (line 629) is a constrained Chapman-Richards:
+      ht = 1.37 + ((c0 + c0.spp) + csi^c1) * (1 - exp(-c2*dbh))^(c3 + c3.spp + c4*log(ccf+1) + c5*bal)
+   As dbh -> 0+, (1 - exp(-c2*dbh)) -> 0, raised to a positive exponent -> 0, so ht -> 1.37,
+   i.e. the curve already passes through breast height at DBH near zero and is monotonically
+   increasing in dbh whenever the multiplier and exponent are positive. That is exactly the
+   seedling/sapling behavior the scope note (section 6) asks for, so we EXTEND the existing
+   prediction into the 0-2.5 cm range rather than introduce a separate small-tree equation.
+2. The guard pmin(pmax(pht, 1.37), 50) enforces the breast-height anchor (floor 1.37 m) and
+   preserves the existing upper sanity bound (cap 50 m). The floor rarely binds because pht
+   is >= 1.37 by construction; the cap guards the rare parameter combination (large BAL
+   driving the exponent toward zero) that a naive extrapolation could otherwise inflate. This
+   is presumably why the original 2.5 cm guard was placed there, and the guard removes that risk.
+3. The two arms are mutually exclusive on dbh (> 2.5 vs <= 2.5). The > 2.5 arm is textually
+   unchanged and evaluated first, so no dbh > 2.5 tree can ever reach the new arm.
+4. Height is not an input to any competition metric: calc_bal (line 3544) is basal-area based,
+   calc_crown (line 519) uses mcw = a1*dbh^a2 and mca from DBH and expf, and SDI is DBH based,
+   and all of them run BEFORE this height gate (calc_bal ~3791, calc_crown ~3855, gate 3878).
+   Therefore imputing small-tree heights cannot change any large-tree growth within a cycle.
+
+------------------------------------------------------------------------------
+PARITY / GUARDRAIL EXPECTATION
+------------------------------------------------------------------------------
+On a stand with NO sub-2.5 cm stems the patch is inert: byte-identical to the unpatched
+draft over a full projection. On a stand WITH sub-2.5 cm stems the previously frozen stems
+now receive a finite height, a crown ratio, and a nonzero increment; large trees are
+unchanged at the cycle where imputation happens (height is not fed back into competition).
+Add to the guardrail battery: assert no live tree finishes a projection with NA height,
+NA crown base, or NA crown ratio.
+
+Validation script (namespaced): ~/v13_kickoff/htgap_test_NS.R
+Patched test copy (namespaced): ~/v13_kickoff/AcadianGY_13.1_DRAFT_htgap_NS.r
+This patch is ungated, cheap, and ships independently of the RO / Castle coefficient work.

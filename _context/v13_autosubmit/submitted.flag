@@ -1,0 +1,17 @@
+FVS-ACD v13 fits submitted to Cardinal (OSC PUOM0008)
+submit_utc: 2026-07-07T15:11:26Z
+v130_joint_anchor  jobid: 12255489  (RESUBMITTED 2026-07-07T15:13:15Z; original 12255451 failed at 3s)
+                   v130_joint.sbatch, 2h/24G/8cpu; status_file: ~/v130_joint/v130_status.txt == fit_complete
+v131_mort_ingrowth jobid: 12255452  (v131_refit.sbatch, 8h/48G/8cpu; status_file: ~/v13_kickoff/v131r_status.txt == fit_complete)
+patch_applied: v130 BA section referenced `years` (lowercase) but live v131g_fitset has `YEARS` (uppercase).
+               Added alias `v131g[, years := as.numeric(YEARS)]` after setDT. Height section unaffected (uses ne, has lowercase years).
+markers_resolved: v130 BA anchor -> esi-free fallback (no PLT_CHR on v131g) + random 10-fold (no LAT/LON); height anchor uses esi + spatial folds. v131 ingrowth uses recruit-flag path (TREESTATUS1/2, DBH1/2 cm, TPH2); stand_key join byte-identical to v131g. Domain scorecard done via ecoregion join.
+
+--- v5 submitted 2026-07-20 ~13:21 ET (Aaron present) ---
+v131_mort_ingrowth_refit v5  jobid: 12470707  (v131_refit_v5.sbatch, 72h/48G/16cpu; node c0013; script v131_mort_ingrowth_refit_v5.R)
+FIX vs v4 (12410391 TIMEOUT): keep eco crossed intercept but swap its sd prior half-normal(0,1) -> boundary-avoiding gamma(2,3)
+  (mode 0.33, 0 density at sd=0) on BOTH mortality and ingrowth, to close the eco variance funnel (sd_l95 1.3e-7 in 12275867)
+  that drove the divergences + deep trees. region/fortype sd priors unchanged. Kept adapt_delta 0.99, capped max_treedepth 15->12.
+  YEARS/years casing already fixed in v3 script. No mgmt hazard term (management = growth release). status_file: ~/v13_kickoff/v131r_status.txt.
+Stale guard: Jul 9 v131r_mort_*.csv (from 12275867) moved to ~/v13_kickoff/_prev_12275867/ so the harvest cannot misread them as v5.
+Harvest watcher: scheduled task harvest-v131-refit-v4 re-armed for 2026-07-21 07:30 ET (reschedules itself +12h if still running).
