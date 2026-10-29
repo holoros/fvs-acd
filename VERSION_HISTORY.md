@@ -6,6 +6,11 @@ through the current model of record `AcadianGY_13.1.r`). Sourced from the dated 
 traceable to one of those. Where a detail could not be verified from a primary source it is marked
 `[unverified]` rather than guessed. No em dashes.
 
+*Note added October 17, 2026.* The paragraph above dates from August 13, 2026. Eras 7 to 9 have since
+added 14.0 to 14.1 and the 14.2 refinement. 14.1 is the current release, and its engine files are on
+branch `engines-14.1-20260924` (PR #9), not yet in this branch's `scripts/`. 13.1 remains the model of
+record that every 14.x file sources. `docs/reference/running-14.1.md` describes how the layers stack.
+
 ## How to read this
 
 Dates are the file's last-modified timestamp on Cardinal (when the version was finalized), not
@@ -19,7 +24,7 @@ means the file is pinned as an unchanging reference point other work is scored a
 | Version | Date | Size | Status |
 |---|---|---|---|
 | `12.3.6` | 21 May | 154 KB | prototype |
-| `12.3.6_uploaded` | 21 May | 154 KB | prototype (byte-identical upload copy of 12.3.6, `[unverified]` whether any diff exists) |
+| `12.3.6_uploaded` | 21 May | 154 KB | prototype (upload copy; checked October 17, 2026: not byte identical to 12.3.6, md5 86b65c71 against a410e66d, and its `AcadianVersionTag` reads AcadianV12.3.5) |
 | `12.3.7` | 22 May | 155 KB | prototype |
 | `12.3.7_dbg` | 26 May | 155 KB | prototype, debug build |
 | `12.3.8` | 26 May | 155 KB | prototype |
@@ -355,7 +360,7 @@ installations or an independently sourced release duration for this species grou
 document may report GT1 as passing.
 
 The v141 copy of the Phase D runner ships as
-`scripts/phaseD/2026-09-25_v141_phaseD_runner_p23_tst.R` (md5 8471121e3a880e838b42923250a94cdd),
+`scripts/phaseD/2026-09-25_v141_phaseD_runner_p23_tst.R` on branch `engines-14.1-20260924` (md5 8471121e3a880e838b42923250a94cdd),
 because without it a reviewer cloning the repository cannot reproduce a single hooked number. It is
 its 14.0.4 parent plus four additive blocks and one changed line: an optional source of the overlay
 under `V141=1`, a per stand years since thinning resolved from data with the precedence a per stand
@@ -427,3 +432,30 @@ it back, and at 160 yr median basal area is 1.1 percent above L alone. One diagn
 in the 6,000 trees ha⁻¹ thinned cells, T deepens a late rotation top height dip of 0.36 to 0.51 m.
 It also produces one top height site order inversion at 160 yr (ESI 16 at 27.12 m against ESI 14 at
 27.25 m).
+
+## Era 9: 14.2 refinement and cross-version benchmark (September 27 to October 16, 2026)
+
+| Version | Date | Size | Status |
+|---|---|---|---|
+| none | 27 Sep to 16 Oct | none | no engine file added, 14.1 remains the release |
+
+Era 9 adds no `AcadianGY_*.r` file. The 14.2 refinement, on branch `v142-refinement-20260926`, ran the
+preregistered studies PREREG16 to PREREG45b against the 14.1 benchmark record through rescoring,
+offline recomputation or copied runners whose new switches default to 14.1 behavior, and none of
+them changed an engine file, coefficient or default of 14.1. It adopted volume scoring under C1 (or
+C2 where tags allow) and scorer r2, named one regional NS candidate (v141LTfi) that passes its
+benchmark gates but has not cleared a Bakuzis grid, and closed the QC height anchor track with the
+shipped 0.111 kept for 14.2. The record is in `scripts/v14.2dev/`, and the release notes are revision
+e of October 16, 2026 (`scripts/v14.2dev/2026-10-16/release-notes/`). PREREG46 and revisions 1 to 5
+of PREREG47 are registered but not yet run, because firebreather has been unreachable since October
+11, 2026.
+
+A cross-version benchmark on October 16, 2026 compared 13.1h, 14.0.4 L2 and 14.1 on the 19 frozen
+benchmark sets, 827 post-harvest Maine FIA stands and 200 yr no-harvest projections of 918 unmanaged
+Maine FIA stands (`docs/benchmarks/2026-10-16_cross-version/`). Version 14.1 has the smallest median
+absolute biomass bias across the 19 sets (3.8%, against 9.6% for 13.1h), but it overstates biomass
+recovery after heavy removals by 1.39 Mg ha⁻¹ yr⁻¹ and declines in 64 to 84% of stands in each of the
+six named forest types, while 13.1h declines in no more than 2% of stands in any of them. The 14.2 candidate arms p38_fit and qc_rh
+were not run, as their engine copies are on firebreather. The benchmark points 14.3 at a thinning
+response limited to partial removals, senescence conditioned on forest type, and the diameter growth
+shortfall common to every version.
