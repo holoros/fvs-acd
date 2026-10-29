@@ -1,0 +1,20 @@
+      gate   unit files identical_md5 identical_data max_abs_diff n_new_missing
+    <char> <char> <int>        <lgcl>         <lgcl>        <num>         <int>
+ 1:     H4    C0f     1            NA           TRUE 0.000000e+00           972
+ 2:     H5    C0f     1            NA           TRUE 0.000000e+00            NA
+ 3:     H4    C0r     1            NA           TRUE 0.000000e+00           972
+ 4:     H5    C0r     1            NA           TRUE 0.000000e+00            NA
+ 5:     H4     C1     1            NA           TRUE 0.000000e+00           972
+ 6:     H5     C1     1            NA           TRUE 0.000000e+00            NA
+ 7:     H4     C2     1            NA           TRUE 0.000000e+00           972
+ 8:     H5     C2     1            NA           TRUE 0.000000e+00            NA
+ 9:     H4     C3     1            NA           TRUE 2.220446e-16           972
+10:     H5     C3     1            NA           TRUE 0.000000e+00            NA
+11:     H4     C4     1            NA           TRUE 0.000000e+00           972
+12:     H5     C4     1            NA           TRUE 2.400000e+01            NA
+13:     H4     C5     1            NA           TRUE 0.000000e+00           972
+14:     H5     C5     1            NA           TRUE 0.000000e+00            NA
+15:     H4     C6     1            NA           TRUE 0.000000e+00           972
+16:     H5     C6     1            NA           TRUE 0.000000e+00            NA
+4febf65bda8e417227fbc1f7f3e16112  /users/PUOM0008/crsfaaron/v143p2/out/gates_tr_DATA.csv
+GATES_DONE

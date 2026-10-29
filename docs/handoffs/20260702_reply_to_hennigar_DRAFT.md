@@ -1,6 +1,7 @@
 # Draft reply to Chris Hennigar, Acadian G&Y meeting (18 August)
 
-*Draft for Aaron to review, edit the attendance line, and send. Not sent. To:
+*Draft for Aaron to review, edit the attendance line, and send. Not sent. Updated 7 July 2026 with the
+v12.10.1 stress-test result and an explicit ask for the managed remeasurement database. To:
 christopher.hennigar@nrcan-rncan.gc.ca; consider cc Adam Dick.*
 
 Subject: Re: Acadian G&Y Meeting
@@ -31,15 +32,30 @@ material to each:
   lacked), so we built the FVS analogue as a principled direct-effect modifier following the Chapter 11
   framework in our own book (planted as a sustained Type 2 effect, PCT as a transient Type 1 effect). It
   closes the managed-stand gap to OSM and beats OSM on planted stands, and it stays a gated modifier rather
-  than a refit. I fit it as a robust additive direct-effect release (planted about +3.8 m2/ha basal area,
-  PCT +2.4) rather than an unstable multiplicative ratio, and cross-validated it: it holds out of sample,
-  including across the New Brunswick to Quebec province block (managed mean absolute bias about 1.5 vs OSM
-  8.3 out of fold). I think that framing, and the modifier, are useful for the group.
+  than a refit. I fit it as a robust additive direct-effect release (planted about +3.8 m² ha⁻¹ basal area,
+  PCT +2.4) rather than an unstable multiplicative ratio, and cross-validated it: out of fold the managed
+  mean absolute bias is about 1.3 vs OSM 8.3 and planted about 4.0 vs OSM 16.7, and it holds across the New
+  Brunswick to Quebec province block (PCT 4.1 vs OSM 3.7). I think that framing, and the modifier, are
+  useful for the group. Two honesty notes I will put on the table rather than bury: OSM still holds a small
+  edge on the pooled unmanaged inventory domain (it is a very good model there), and our recruitment is
+  under-predicting observed ingrowth, which is a disclosed limit and a v13 target rather than something I
+  will paper over.
 - Integrating climate. We have current and 2030 climate site surfaces and can talk about how to use the
   projected one as a scenario without contaminating the validated base.
 - AI and productivity. A lot of this benchmark and the refinements were done with an AI-assisted workflow,
   and I am happy to share how that accelerated things and where it needed a human check (it caught and
   corrected one of our own analysis errors, which is a good story in itself).
+
+One concrete ask ahead of the meeting. The single thing that would most move the next FVS-ACD version is the
+managed remeasurement database: the New Brunswick and Nova Scotia PSP treatment histories (PCT and planting
+dates, spacing, and the remeasured stand trajectories), and whatever managed calibration data the group is
+willing to pool under a common schema. That was meant to be the shared piece years ago and it never came
+across, so I built the management modifier from FIA treatment and stand-origin codes and the MagPlot
+management group instead. It works and it cross-validates, but the true New Brunswick versus Quebec transfer,
+and moving the management effect from a gated modifier into a properly fitted growth-scale release in v13,
+both need those provincial treatment histories. If we can agree in August on a harmonized data-sharing
+arrangement, that unblocks the most valuable part of the fall work. I am glad to reciprocate with the
+harmonized NSVB-scored benchmark data and the scorecard code.
 
 I will send a short brief a week or two ahead so you can fold it into the agenda. Looking forward to it, and
 here is hoping for a quiet fire season.

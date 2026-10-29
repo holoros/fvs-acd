@@ -1,0 +1,42 @@
+=== A. Is the Bakuzis site-ordering test confounded? ===
+The builder picks 4 DIFFERENT REAL STANDS at csi quantiles. If those stands also differ in
+initial density, size structure, species composition and elevation, then a site-ordering
+inversion may reflect stand-to-stand differences rather than a site-response defect.
+
+---------- ctrn ----------
+standlog cols: SITE, STAND, PROV, interval_years, ELEV, esi8, csi_site, esi_cov, MANAGED, single_site_source 
+                   STAND   csi   ELEV n_trees   TPH    BA   QMD pctSW n_spp
+                  <char> <num> <lgcl>   <int> <num> <num> <num> <num> <int>
+1: CTRN_AP_80_I2014_2015  14.3     NA     326  4028  41.9  11.5    78     8
+2:  CTRN_DR_2_I2009_2011  15.8     NA     129  1594  26.4  14.5    95     7
+3:  CTRN_RC_2_I2002_2003  17.2     NA     111  1371  24.8  15.2   100     1
+4:  CTRN_PE_1_I2002_2003  18.1     NA     141  1742  25.1  13.5   100     4
+  spearman(csi, initial TPH)=-0.40  (csi, initial BA)=-0.80  (csi, pctSW)=0.95  (csi, QMD)=0.40
+
+---------- memat ----------
+standlog cols: SITE, STAND, PROV, interval_years, ELEV, esi8, csi_site, esi_cov, MANAGED, single_site_source 
+                 STAND   csi  ELEV n_trees   TPH    BA   QMD pctSW n_spp
+                <char> <num> <num>   <int> <num> <num> <num> <num> <int>
+1: MEM_145024199010661  12.9 207.3      52  2307  29.7  12.8    11    11
+2: MEM_222517665010661  13.6 445.0      44  1847  29.9  14.4     3     6
+3: MEM_171137646020004  15.4 213.4      77  6938  40.8   8.7    79     7
+4: MEM_107546072010661  18.2 329.2      48  1225  46.2  21.9    52     9
+  spearman(csi, initial TPH)=-0.40  (csi, initial BA)=1.00  (csi, pctSW)=0.60  (csi, QMD)=0.40
+
+---------- mefia_l ----------
+standlog cols: SITE, STAND, PROV, interval_years, ELEV, esi8, csi_site, esi_cov, MANAGED, single_site_source 
+  init file multisrc/bench_mefia_l_tree_init.csv not found, skipping composition
+
+=== B. Magnitude of the gated SDImax site term (Weiskittel and Kuehne 2019) ===
+Term is 222.7836/csi when ops$sdimax.site.term is TRUE, else the constant 15.6.
+  csi= 8.0  site term= 27.85  (delta from the 15.6 constant = +12.25)
+  csi=10.0  site term= 22.28  (delta from the 15.6 constant =  +6.68)
+  csi=12.0  site term= 18.57  (delta from the 15.6 constant =  +2.97)
+  csi=14.0  site term= 15.91  (delta from the 15.6 constant =  +0.31)
+  csi=16.0  site term= 13.92  (delta from the 15.6 constant =  -1.68)
+  csi=18.0  site term= 12.38  (delta from the 15.6 constant =  -3.22)
+  csi=20.0  site term= 11.14  (delta from the 15.6 constant =  -4.46)
+
+  Term is DECREASING in csi. Full swing csi 8 to 20 is 16.7 SDI units.
+  Typical SDImax in these runs is 650 to 1300, so this term moves SDImax by roughly 1 to 2 percent
+  and in the direction OPPOSITE to the pass 33 hypothesis.

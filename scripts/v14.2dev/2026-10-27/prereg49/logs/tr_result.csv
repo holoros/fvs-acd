@@ -1,0 +1,2 @@
+gate,theta,stands,years_checked_min,rows_checked,rows_floored,rows_no_next,rows_H_pos,worst_abs_H,worst_abs_surv,ann_surv_min,pass
+TR,3.55799389956026,2,3,204,0,0,116,1.52655665885959e-16,5.99520433297585e-15,0.989812383186792,TRUE

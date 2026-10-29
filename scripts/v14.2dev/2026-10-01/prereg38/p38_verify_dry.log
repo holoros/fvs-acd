@@ -1,0 +1,51 @@
+plan md5 ok
+run and field tag frames agree on STAND SP DBH HT EXPF: 65788 68584 
+population stands RUN_OK==1: 378 screened: 313 fold A: 153 fold B: 160 
+field tag records fold A: 698 fold B: 737 
+  pred dir /home/aaron/jobs/v142p19/home/out/p19_a0111/qc_c 19 files
+p19_a0111 fold B records with prediction: 737 of 737 
+  pred dir /home/aaron/jobs/v142p28b/home/out/p28b_small/qc_c 19 files
+p28b_small fold B records with prediction: 737 of 737 
+  pred dir /home/aaron/jobs/v142p23/home/out/p23_a1061/qc_c 19 files
+p23_a1061 fold B records with prediction: 737 of 737 
+                  item        arm         value
+                <char>     <char>         <num>
+ 1:  tag_records_foldA   fieldtag 698.000000000
+ 2:  tag_records_foldB   fieldtag 737.000000000
+ 3:    tag_sites_foldB   fieldtag 136.000000000
+ 4:       hinc_n_foldB  p19_a0111 737.000000000
+ 5:         hinc_ratio  p19_a0111   0.093135407
+ 6:   hinc_bias_lt12.7  p19_a0111  -0.190335661
+ 7: hinc_bias_12.7to25  p19_a0111  -0.140961810
+ 8:     hinc_bias_ge25  p19_a0111  -0.120273115
+ 9:          dom_level  p19_a0111   0.897912480
+10:              dom_n  p19_a0111 133.000000000
+11:       hinc_n_foldB p28b_small 737.000000000
+12:         hinc_ratio p28b_small   0.979307750
+13:   hinc_bias_lt12.7 p28b_small  -0.023729569
+14: hinc_bias_12.7to25 p28b_small   0.025276319
+15:     hinc_bias_ge25 p28b_small  -0.120273113
+16:          dom_level p28b_small   0.960684803
+17:              dom_n p28b_small 133.000000000
+18:       hinc_n_foldB  p23_a1061 737.000000000
+19:         hinc_ratio  p23_a1061   0.897927433
+20:   hinc_bias_lt12.7  p23_a1061  -0.053700541
+21: hinc_bias_12.7to25  p23_a1061  -0.004244143
+22:     hinc_bias_ge25  p23_a1061   0.012648071
+23:          dom_level  p23_a1061   0.978862970
+24:              dom_n  p23_a1061 133.000000000
+25:      stand_n_foldB  p19_a0111 160.000000000
+26:     topht_bias_pct  p19_a0111   6.289042840
+27:           ba_ratio  p19_a0111   0.998328884
+28:        stems_ratio  p19_a0111   0.757738502
+29:               c1_n  p19_a0111 160.000000000
+30:        c1_rmse_pct  p19_a0111  46.755638599
+31:      stand_n_foldB  p23_a1061 160.000000000
+32:     topht_bias_pct  p23_a1061  14.625214646
+33:           ba_ratio  p23_a1061   1.001935842
+34:        stems_ratio  p23_a1061   0.754107758
+35:               c1_n  p23_a1061 160.000000000
+36:        c1_rmse_pct  p23_a1061  46.794983138
+                  item        arm         value
+                <char>     <char>         <num>
+P38_VERIFY_DONE

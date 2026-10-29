@@ -1,0 +1,2 @@
+26edc881b0803bc09b39ae2bf2a5e70a  scripts/v143p3_conf_nbqc.py
+f9956c30823f79db8cec663dfefed5b0  scripts/v143p3_conf_pool.py

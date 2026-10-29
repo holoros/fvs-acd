@@ -1,0 +1,12 @@
+2c2
+< # PREREG38 launcher (copy of PREREG28b launch_p28b.sh md5 cdf1bfe0; strict load test). PREREG28b launcher (copy of PREREG28 launch_p28.sh md5 51f3c1f7). PREREG28 launcher (copy of PREREG23 launch_p23.sh, itself a copy of PREREG19 launch_p19.sh md5 25786453): runs the tasks listed in a task id file, at most 2 at once (the shared host cap), and holds each launch
+---
+> # PREREG45 launcher (PREREG38 launch_p38.sh, driver name only). PREREG38 launcher (copy of PREREG28b launch_p28b.sh md5 cdf1bfe0; strict load test). PREREG28b launcher (copy of PREREG28 launch_p28.sh md5 51f3c1f7). PREREG28 launcher (copy of PREREG23 launch_p23.sh, itself a copy of PREREG19 launch_p19.sh md5 25786453): runs the tasks listed in a task id file, at most 2 at once (the shared host cap), and holds each launch
+7c7
+<     n=$(pgrep -f "run_task_p38.sh" | wc -l); l=$(awk '{print $1}' /proc/loadavg)
+---
+>     n=$(pgrep -f "run_task_p45.sh" | wc -l); l=$(awk '{print $1}' /proc/loadavg)
+11c11
+<   ( bash $HOME/../scripts/run_task_p38.sh $t > logs/task_${t}.log 2>&1; echo "task $t exit $?" >> logs/_status_${TAGS}.txt ) &
+---
+>   ( bash $HOME/../scripts/run_task_p45.sh $t > logs/task_${t}.log 2>&1; echo "task $t exit $?" >> logs/_status_${TAGS}.txt ) &

@@ -1,0 +1,34 @@
+55c55,59
+< TAG_STABLE  <- c(BAXTER = 1L, CTRN = 1L, NS = 1L, NS_LONG = 1L, NSPOOL = 1L, MNAP = 1L)   # pass 29: MNAP carries round 1 TP_ID tags (TreeLink, stem map); untracked rows (Tree 9,000,000 and up) stay out of tag churn [SET ON AUTOPILOT]
+---
+> TAG_STABLE  <- c(BAXTER = 1L, CTRN = 1L, NS = 1L, NS_LONG = 1L, NSPOOL = 1L, MNAP = 1L)   # pass 29b: MNAP is now the State owner set only; MNAP_TNC is deliberately NOT tag stable (tag free churn, like NB)
+> ## pass 29b: owner split of MNAP. Owner per plot key from the pass 29 step 1 plot table; plots of any other owner enter neither set.
+> MNAP_OWN <- fread(Sys.getenv("P29B_OWNERS", "MISSING_P29B_OWNERS"), select = c("PLOTKEY", "Owner"), colClasses = "character")
+> stopifnot(nrow(MNAP_OWN) > 0, !anyDuplicated(MNAP_OWN$PLOTKEY))
+> MNAP_SPLIT <- c(MNAP = "State", MNAP_TNC = "TNC")
+256c260
+<               MEDEV = "fia0_treated_screened_at_source", MNAP = "source0_ecoreserve_PLACEHOLDER",
+---
+>               MEDEV = "fia0_treated_screened_at_source", MNAP = "source0_ecoreserve_PLACEHOLDER", MNAP_TNC = "source0_ecoreserve_PLACEHOLDER",
+260c264
+<              MEMAT = "ME_FIA_M", MEDEV = "ME_FIA_M", MNAP = "MNAP", NS = "NS", NS_LONG = "NS",
+---
+>              MEMAT = "ME_FIA_M", MEDEV = "ME_FIA_M", MNAP = "MNAP", MNAP_TNC = "MNAP", NS = "NS", NS_LONG = "NS",
+262c266
+< VDS <- c(setNames(as.list(ds$Name), ds$Name), list(NSPOOL = c("NS_LONG", "NS")))
+---
+> VDS <- c(setNames(as.list(ds$Name), ds$Name), list(NSPOOL = c("NS_LONG", "NS"), MNAP_TNC = "MNAP"))   # pass 29b: TNC virtual set over dataset 8
+310a315,319
+>   if (vds %in% names(MNAP_SPLIT)) {   # pass 29b owner split
+>     keepk <- MNAP_OWN[Owner == MNAP_SPLIT[[vds]], PLOTKEY]
+>     xadd(vds, "all", "plot_keys_other_owner_excluded", vv[!(PLOTKEY %in% keepk), uniqueN(PLOTKEY)], "plot keys", "pass 29b owner split")
+>     vv <- vv[PLOTKEY %in% keepk]
+>   }
+330c339
+<   if (vds == "MNAP") lk[, LINK_SRC := "raw"]
+---
+>   if (vds %in% c("MNAP", "MNAP_TNC")) lk[, LINK_SRC := "raw"]
+491c500
+<     } else if (DS == "MNAP") {
+---
+>     } else if (DS %in% c("MNAP", "MNAP_TNC")) {

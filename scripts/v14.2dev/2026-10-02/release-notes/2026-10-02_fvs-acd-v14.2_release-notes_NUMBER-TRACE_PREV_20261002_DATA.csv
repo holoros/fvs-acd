@@ -1,0 +1,206 @@
+number_as_written,meaning,source_file,source_line
+September 27,first study date (PREREG16 written and run),/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,3
+14.1,"shipped FVS-ACD release, unchanged",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,9
+14.2,target release of the refinement,/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,13
+3%,PREREG16 convention gap threshold,/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,9
+12 of 20,sets whose C0/C1 gap exceeds 3% under 14.1,/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,9
++13.9%,"C0/C1 gap, baxter_c",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,10
++10.4%,"C0/C1 gap, frozen MNAP TNC",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,10
++9.6%,"C0/C1 gap, MNAP State",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,11
+0.0%,"C0/C1 gap, mefia_l_c",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,19
++27,"baxter_c 14.1 volume bias under C0, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,89
++12,"baxter_c 14.1 volume bias under C1, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,89
++0.6,"MNAP State volume bias under C0, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,90
+-8.2,"MNAP State volume bias under C1, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,90
++1.7,"ns_long_fl volume bias under C0, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,91
+-4.5,"ns_long_fl volume bias under C1, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,91
+-14,"pef_fl volume bias under C0, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,92
+-19,"pef_fl volume bias under C1, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,92
+-4.7,"silc_l_c volume bias under C0, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,93
++3.6,"silc_l_c volume bias under C1, percent",/home/aaron/jobs/v142vc/2026-09-27_v142_volume-scoring-convention_PREREG16_RESULT.md,93
+48,lines added to build scorer r2,/home/aaron/jobs/v142p35/2026-10-01_v142_scorer-checks-r2_RESULT.md,6
+0,lines removed to build scorer r2,/home/aaron/jobs/v142p35/2026-10-01_v142_scorer-checks-r2_RESULT.md,6
+38.6%,qc_c row index C2 pairs that are the same tree under field tags,/home/aaron/jobs/v142p36/2026-10-01_v142_c2-tag-identity-r2-adoption_RESULT.md,13
+15.6%,qc_fl row index C2 pairs that are the same tree under field tags,/home/aaron/jobs/v142p36/2026-10-01_v142_c2-tag-identity-r2-adoption_RESULT.md,14
+0.003 to 0.006,change in QC C2 from the field tag correction,/home/aaron/jobs/v142p36/2026-10-01_v142_c2-tag-identity-r2-adoption_RESULT.md,76
+1.073,"screened qc_c C2, frozen row index",/home/aaron/jobs/v142p36/2026-10-01_v142_c2-tag-identity-r2-adoption_RESULT.md,72
+1.079,"screened qc_c C2, field tag",/home/aaron/jobs/v142p36/2026-10-01_v142_c2-tag-identity-r2-adoption_RESULT.md,72
+2.5,PREREG17 selected IMULT m*,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-27_v142_ns-ingrowth-multiplier-C1_RESULT.md,13
+1.5 and 2.25,PREREG18 grid bounds,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-imult-refine_RESULT.md,1
+1.5,PREREG18 selected m* (lower edge),/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-imult-refine_RESULT.md,12
+1.0074,held out ns_c fold B C1 volume ratio at 1.5,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-imult-refine_RESULT.md,26
+0.9969 to 1.0179,interval of that ratio,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-imult-refine_RESULT.md,26
+2.5,IMULT where stems cross 1,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-imult-refine_RESULT.md,51
+1.0,"Maine IMULT, unchanged",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-imult-refine_RESULT.md,17
+25 cm,size threshold of the PREREG20 height form,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-height-form-25cm_RESULT.md,1
+0.034416,PREREG20 b1,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-height-form-25cm_RESULT.md,6
+0.005072,PREREG20 b2,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-height-form-25cm_RESULT.md,6
+1.250,"ns_c fold B 25 cm and over height increment ratio, 14.1",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-height-form-25cm_RESULT.md,24
+0.792,same ratio under PREREG20 form,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-height-form-25cm_RESULT.md,24
++5.47%,"ns_long_fl TOPHT bias, 14.1",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-height-form-25cm_RESULT.md,23
+-1.75%,"ns_long_fl TOPHT bias, PREREG20 form",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-height-form-25cm_RESULT.md,23
+0.08,"E6b miss on ns_fl, points",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_ns-height-form-25cm_RESULT.md,67
+1.5,IMULT paired with the height form in v141LTfi,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_ns-height-by-ingrowth_RESULT.md,16
+0.002,bound on interaction terms on the ratios,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_ns-height-by-ingrowth_RESULT.md,38
+4 to 12%,stems shortfall under the pair,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_ns-height-by-ingrowth_RESULT.md,53
+40%,NS_RS height increment under prediction at every size,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_ns-small-tree-height_RESULT.md,14
+12.7 cm,small tree class bound in PREREG25,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_ns-small-tree-height_RESULT.md,1
+16 to 60,"interval class for D1 survivor ratio, years",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,45
+0.868,"ns_c fold B survivor ratio, 16 to 60 years",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,45
+0.921,"ns_long_c fold B survivor ratio, 16 to 60 years",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,45
+0.987 to 0.991,"predicted annual survival, fold B",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,55
+0.980 to 0.983,"observed annual survival at 5 years, fold B",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,54
+5,"interval length, years, for that survival",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,54
+0.992 to 1.000,"observed annual survival beyond 20 years, fold B",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,54
+20,"interval length, years",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,55
+2,RESULT revision used for PREREG27,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_ns-interval-imult_RESULT.md,5
+0.82,"best NS_RS quartile ratio, any state variable",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_nsrs-state-and-nsop-refit_RESULT.md,41
+100 to 455 m²,NS_RS plot size range,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_nsrs-state-and-nsop-refit_RESULT.md,43
+400 m²,NS_OP fixed plot size,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_nsrs-state-and-nsop-refit_RESULT.md,44
+1.0152,"ns_long_c fold B pooled level ratio, 14.1",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,24
+1.0041,"same, v141LTf",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,24
+1.1194,"level ratio at 20 years and over, 14.1",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,39
+1.0734,"level ratio at 20 years and over, v141LTf",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,40
++2.37%,"ns_long_c fold B TOPHT bias, 14.1",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,29
++0.41%,"same, v141LTf",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,29
+35 years,"longest interval, ns_long_c",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,66
+40 years,"longest interval, ns_long_fl",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,67
+100 years,projection age at which the PREREG26 loss size is untested,/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,68
+10 to 19,"ns_long_fl interval bin, years",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,55
+0.9353,"ns_long_fl 10 to 19 year bin level, 14.1",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,56
+0.9186,"same, v141LTf",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,56
+62%,NS_RS share of trees in the ns_long_fl 10 to 19 year bin,/home/aaron/jobs/v142p34/2026-10-01_v142_ns-long-fl-mid-interval_RESULT.md,13
+0.556,program composition share of the bin gap,/home/aaron/jobs/v142p34/2026-10-01_v142_ns-long-fl-mid-interval_RESULT.md,32
+1.0197,"NS_OP bin level, 14.1",/home/aaron/jobs/v142p34/2026-10-01_v142_ns-long-fl-mid-interval_RESULT.md,37
+0.9964,"NS_OP bin level, v141LTf",/home/aaron/jobs/v142p34/2026-10-01_v142_ns-long-fl-mid-interval_RESULT.md,37
+0.030,lowest QC_AFAC on the PREREG19 grid,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_qc-anchor-C1_RESULT_r2.md,15
+1.000,highest QC_AFAC on the PREREG19 grid,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_qc-anchor-C1_RESULT_r2.md,16
+0.0067,screened qc_c fold A C1 span across the grid,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_qc-anchor-C1_RESULT_r2.md,24
+0.010,flat threshold,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_qc-anchor-C1_RESULT_r2.md,24
+24%,QC stems shortfall on fold B at every anchor,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_qc-anchor-C1_RESULT_r2.md,68
+2,RESULT revision used for PREREG19,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_qc-anchor-C1_RESULT_r2.md,3
+0.111,shipped QC anchor,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_qc-anchor-hinc_RESULT.md,18
+0.086,fold B pooled height increment ratio at 0.111,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_qc-anchor-hinc_RESULT.md,24
+1.061,PREREG23 candidate anchor,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_qc-anchor-hinc_RESULT.md,1
+0.828,fold B pooled ratio at 1.061,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_qc-anchor-hinc_RESULT.md,24
+-0.021,"25 cm and over bias at 0.111, m yr-1",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_qc-anchor-hinc_RESULT.md,16
++0.099,"25 cm and over bias at 1.061, m yr-1",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_qc-anchor-hinc_RESULT.md,16
+0.077,"worsening of the 25 cm and over class, m yr-1",/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-29_v142_qc-anchor-hinc_RESULT.md,17
+1.265,"small tree anchor below 25 cm (PREREG28, 28b)",/home/aaron/jobs/v142p28/2026-09-30_v142_qc-anchor-size_RESULT.md,1
+0.030,PREREG28 large tree anchor,/home/aaron/jobs/v142p28/2026-09-30_v142_qc-anchor-size_RESULT.md,1
+0.875,PREREG28 fold B pooled ratio,/home/aaron/jobs/v142p28/2026-09-30_v142_qc-anchor-size_RESULT.md,19
+0.883,PREREG28b fold B pooled ratio,/home/aaron/jobs/v142p28b/2026-09-30_v142_qc-anchor-small-only_RESULT.md,23
++11.64%,"PREREG28 TOPHT bias, screened qc_c fold B",/home/aaron/jobs/v142p28b/2026-09-30_v142_qc-anchor-small-only_RESULT.md,15
++11.97%,PREREG28b TOPHT bias,/home/aaron/jobs/v142p28b/2026-09-30_v142_qc-anchor-small-only_RESULT.md,15
+0.33,"TOPHT difference, points",/home/aaron/jobs/v142p28b/2026-09-30_v142_qc-anchor-small-only_RESULT.md,15
+0.5,"choice rule threshold, points",/home/aaron/jobs/v142p28b/2026-09-30_v142_qc-anchor-small-only_RESULT.md,16
++6.29%,TOPHT bias at 0.111,/home/aaron/jobs/v142p28b/2026-09-30_v142_qc-anchor-small-only_RESULT.md,44
++11.14%,PREREG33 TOPHT bias,/home/aaron/jobs/v142p33/2026-10-01_v142_qc-anchor-dynamic_RESULT.md,15
+1.089,MNAP State model t2 height level against himp (H_p),/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_mnap-state-height_RESULT.md,23
+0.993,MNAP State observed t2 level (H_o),/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_mnap-state-height_RESULT.md,24
+32%,MNAP t1 trees without measured height,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_mnap-state-height_RESULT.md,11
+21%,t2 height excess of trees imputed at t1,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_mnap-state-height_RESULT.md,13
+5.5%,t2 height excess of trees measured at t1,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_mnap-state-height_RESULT.md,13
+2.4,model over observed height growth factor,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_mnap-state-height_RESULT.md,14
+55 to 45,split of the gap between imputation and increment,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_mnap-state-height_RESULT.md,10
+38,stands with empty observed t2 list,/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,13
+33 of 355,nb_c stands with empty observed t2,/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,20
+5 cm,scoring floor,/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,13
+0.956,"nb_c C1 volume ratio, published admission",/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,47
+0.954,"nb_c C1 volume ratio, empty stands excluded",/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,47
+1.187,"nb_c stems ratio, published admission",/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,49
+1.140,"nb_c stems ratio, excluded",/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,49
+0.987,"PREREG14 NB V_p/V_o, published",/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,62
+0.985,PREREG14 NB V_p/V_o under exclusion,/home/aaron/jobs/v142p32/2026-09-30_v142_nb-empty-t2-audit_RESULT.md,62
+8,"v141LTfi worst BA site ordering margin, inversions",/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,11
+7,"v141LT worst BA site ordering margin, inversions",/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,11
+"6,000",stems ha-1 in the failing balsam fir cell,/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,33
+1.5,IMULT in threshold matching blamed for the margin,/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,12
+100,projection year of top height comparison,/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,15
+14 to 25%,reduction of 100 year top height by the height form,/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,15
+18 m,ESI of the balsam fir example,/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,59
+16.2 m,"balsam fir top height at year 100, height form",/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,59
+20.8 m,same under 14.1,/home/aaron/jobs/v142p26/2026-09-30_v142_bakuzis-ns-v141LTfi_RESULT.md,59
+1.496,p28b_small Reineke worst margin,/home/aaron/jobs/v142p31/2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,13
+1.266,qc141 Reineke worst margin,/home/aaron/jobs/v142p31/2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,13
+14,p28b_small BA ordering worst inversions,/home/aaron/jobs/v142p31/2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,14
+13,qc141 BA ordering worst inversions,/home/aaron/jobs/v142p31/2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,14
+0.111,anchor every seeded tree keeps under qc141,/home/aaron/jobs/v142p31/2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,44
+100,years the anchor applies in the grid,/home/aaron/jobs/v142p31/2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,44
+50,age for the top height to ESI ratio,/home/aaron/jobs/v142p31/2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,45
+0.26 to 0.80,qc141 top height at 50 over ESI,/home/aaron/jobs/v142p31/2026-09-30_v142_bakuzis-qc-p28b_RESULT.md,45
+1.412,PREREG33 Reineke worst margin,/home/aaron/jobs/v142p33/2026-10-01_v142_qc-anchor-dynamic_RESULT.md,17
+1.266,qc141 Reineke worst margin (PREREG33 table),/home/aaron/jobs/v142p33/2026-10-01_v142_qc-anchor-dynamic_RESULT.md,17
+7.0 m,old harness ESI offset between ns_c and ns_long_c,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-30_v142_nsrs-state-and-nsop-refit_RESULT.md,56
+24,"QC stems deficit, points, shared by every arm",/home/aaron/jobs/v142p28/2026-09-30_v142_qc-anchor-size_RESULT.md,50
+"11,632",qc_c tag matches attributed by PREREG19 r2 to the key based match,/home/aaron/jobs/gh_v142/zenodo_upload_p36/results/2026-09-28_v142_qc-anchor-C1_RESULT_r2.md,6
+20260926,date stamp in branch name,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,5
+3e429c13,commit,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+58f04eb2,"commit, PREREG16",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+793b0239,"commit, PREREG17",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+3aff1c88,"commit, PREREG19 to 21",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+b05d58b5,"commit, PREREG18, 22 to 25, PREREG19 correction",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+96697305,"commit, PREREG22 result",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+5fe43221,"commit, PREREG26 to 29",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+6e42f330,"commit, PREREG30 to 32",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+fe7898f7,"commit, PREREG33 to 35",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+d93b4aad,"commit, PREREG36 (branch head, confirmed in push_v142_p36.out)",/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+10.5281/zenodo.22996790,Zenodo concept DOI,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,8
+1.6.0,Zenodo version,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,8
+10.5281/zenodo.23082910,Zenodo 1.6.0 DOI,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,8
+1.7.0,Zenodo version being published,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,1
+737,fold B tag matched records under MAGPlot field tags,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,47
+301,fold B records under row index pairing,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,48
+1.169,"pooled observed over unanchored predicted increment R, field tag, fold B",/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,47
+0.943,"R at 25 cm and over, field tag, fold B",/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,47
+0.643 to 1.235,interval of that R,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,47
+0.271,"R at 25 cm and over, row index, fold B",/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,48
+1.265,size contrast S under field tags,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,22
+3.376,preregistered S threshold,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,22
+1.17,single QC_AFAC that fits under field tags,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,54
+0.111,shipped anchor that does not fit under field tags,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,54
+0.62 to 0.81,"unanchored top height over ESI at age 50, seedling start",/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,18
+50,age for that ratio,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,18
+25 cm,size class bound in PREREG37,/home/aaron/jobs/v142p37/2026-10-01_v142_qc-height-structure_RESULT.md,15
+21,last study in commit range PREREG19 to 21,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+25,last study in commit range PREREG22 to 25,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+29,last study in commit range PREREG26 to 29,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+32,last study in commit range PREREG30 to 32,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+35,last study in commit range PREREG33 to 35,/home/aaron/jobs/gh_v142/zenodo_upload_p36/README.md,6
+0.0006,"largest difference between v141LTfi and v141LTf level ratios, fold B (PREREG30)",/home/aaron/jobs/v142p30/2026-09-30_v142_ns-long-interval-height_RESULT.md,60
+"October 2, 2026",date of PREREG40 to 42 and of this revision,/home/aaron/jobs/v142p42/2026-10-02_v142_rowindex-erratum_RESULT.md,3
+PREREG42,latest study,/home/aaron/jobs/v142p42/2026-10-02_v142_rowindex-erratum_RESULT.md,1
+1.242,"field tag single QC anchor, fold A fit",/home/aaron/jobs/v142p38/2026-10-01_v142_qc-anchor-fieldtag-refit_RESULT.md,13
+1.053,fold B pooled predicted over observed height increment at 1.242,/home/aaron/jobs/v142p38/2026-10-01_v142_qc-anchor-fieldtag-refit_RESULT.md,14
+0.093,same at 0.111,/home/aaron/jobs/v142p38/2026-10-01_v142_qc-anchor-fieldtag-refit_RESULT.md,23
+0.04,"class bias bound at 1.242, m yr-1",/home/aaron/jobs/v142p38/2026-10-01_v142_qc-anchor-fieldtag-refit_RESULT.md,14
+0.994,dominant cohort t2 level at 1.242,/home/aaron/jobs/v142p38/2026-10-01_v142_qc-anchor-fieldtag-refit_RESULT.md,15
+0.898,dominant cohort t2 level at 0.111,/home/aaron/jobs/v142p38/2026-10-01_v142_qc-anchor-fieldtag-refit_RESULT.md,17
++16.21%,published TOPHT bias at 1.242,/home/aaron/jobs/v142p38/2026-10-01_v142_qc-anchor-fieldtag-refit_RESULT.md,15
++14.63%,"TOPHT limit, frozen 1.061 arm",/home/aaron/jobs/v142p38/2026-10-01_v142_qc-anchor-fieldtag-refit_RESULT.md,15
+60.6%,share of observed TOPHT heights from himp,/home/aaron/jobs/v142p39/2026-10-02_v142_topht-gate-decomposition_RESULT.md,15
+0.892,"himp over measured height, measured trees of the TOPHT set",/home/aaron/jobs/v142p39/2026-10-02_v142_topht-gate-decomposition_RESULT.md,16
+9.29,points carried by the observed height step at 1.242,/home/aaron/jobs/v142p39/2026-10-02_v142_topht-gate-decomposition_RESULT.md,13
+16.78,TOPHT minus dominant cohort gap at 1.242,/home/aaron/jobs/v142p39/2026-10-02_v142_topht-gate-decomposition_RESULT.md,12
+10%,"PREREG40 ceiling, FIA length MQO, unverified",/home/aaron/jobs/v142p40/2026-10-02_v142_topht-measured-gate_RESULT.md,13
++1.60%,B_M at 1.242,/home/aaron/jobs/v142p40/2026-10-02_v142_topht-measured-gate_RESULT.md,12
+-0.05 to 3.25,B_M interval at 1.242,/home/aaron/jobs/v142p40/2026-10-02_v142_topht-measured-gate_RESULT.md,13
+-8.45%,B_M at 0.111,/home/aaron/jobs/v142p40/2026-10-02_v142_topht-measured-gate_RESULT.md,23
++1.50%,matched tree B_MM at 1.242,/home/aaron/jobs/v142p41/2026-10-02_v142_bakuzis-qc-p38fit_RESULT.md,20
+-8.82%,matched tree B_MM at 0.111,/home/aaron/jobs/v142p41/2026-10-02_v142_bakuzis-qc-p38fit_RESULT.md,20
+1.490,"PREREG41 Reineke worst margin, 1.242",/home/aaron/jobs/v142p41/2026-10-02_v142_bakuzis-qc-p38fit_RESULT.md,15
+"1,000","seeded stems ha-1 at N0 1,000 start of ingrowth rise",/home/aaron/jobs/v142p41/2026-10-02_v142_bakuzis-qc-p38fit_RESULT.md,50
+"2,800",stems ha-1 after ingrowth,/home/aaron/jobs/v142p41/2026-10-02_v142_bakuzis-qc-p38fit_RESULT.md,51
+2.5 m,span of QC ESI levels,/home/aaron/jobs/v142p41/2026-10-02_v142_bakuzis-qc-p38fit_RESULT.md,49
+0.108,"PREREG23 25 cm class better than 0.111 under field tags, m yr-1",/home/aaron/jobs/v142p42/2026-10-02_v142_rowindex-gates_ERRATUM.md,33
+0.90,"dominant cohort t2 level at 0.111, rounded",/home/aaron/jobs/v142p42/2026-10-02_v142_qc-anchor_CLOSEOUT.md,54
+8 to 9%,measured top height deficit at 0.111,/home/aaron/jobs/v142p42/2026-10-02_v142_qc-anchor_CLOSEOUT.md,54
+"11,632","row index tag matches, 378 RUN_OK qc_c stands",/home/aaron/jobs/v142p42/2026-10-02_v142_rowindex-erratum_RESULT.md,16
+"1,569","same species with measured t2 height, row index",/home/aaron/jobs/v142p42/2026-10-02_v142_rowindex-erratum_RESULT.md,16
+378,qc_c stands with RUN_OK 1,/home/aaron/jobs/v142p42/2026-10-02_v142_rowindex-erratum_RESULT.md,16
+"10,226",field tag matches,/home/aaron/jobs/v142p42/2026-10-02_v142_rowindex-erratum_RESULT.md,17
+"2,299","same species with measured t2 height, field tags",/home/aaron/jobs/v142p42/2026-10-02_v142_rowindex-erratum_RESULT.md,17
+01998dd8,"commit, PREREG38 and 39",/home/aaron/jobs/gh_v142/push_v142_p38p39.log,178
+09c6bfa3,"commit, PREREG40",/home/aaron/jobs/gh_v142/push_v142_p40.log,54
+2693d895,"commit, PREREG41",/home/aaron/jobs/gh_v142/push_v142_p41.log,144
+a03a7702,"commit, PREREG42",/home/aaron/jobs/gh_v142/push_v142_p42.log,82

@@ -1,0 +1,14 @@
+58c58
+<     bias_m_yr = bg, bias_lo = apply(bb, 2, quantile, .025), bias_hi = apply(bb, 2, quantile, .975),
+---
+>     bias_m_yr = bg, bias_lo = apply(bb, 2, quantile, .025, na.rm = TRUE), bias_hi = apply(bb, 2, quantile, .975, na.rm = TRUE),
+81c81
+<     else sum(sapply(list(s25, !s25), function(s) (sum(w[s] * (d[s] - K$dho[s])) / sum(w[s]))^2)) }
+---
+>     else { v <- sum(sapply(list(s25, !s25), function(s) (sum(w[s] * (d[s] - K$dho[s])) / sum(w[s]))^2)); if (is.finite(v)) v else 1e6 } }
+85,86c85,86
+< TAP <- data.table(form = "taper", knot = 25, p1 = tp[1], p1_lo = quantile(tb[, 1], .025), p1_hi = quantile(tb[, 1], .975),
+<   p2 = tp[2], p2_lo = quantile(tb[, 2], .025), p2_hi = quantile(tb[, 2], .975), max_abs_cls5_bias = max(abs(r5)), rms_cls5_bias = sqrt(mean(r5^2)),
+---
+> TAP <- data.table(form = "taper", knot = 25, p1 = tp[1], p1_lo = quantile(tb[, 1], .025, na.rm = TRUE), p1_hi = quantile(tb[, 1], .975, na.rm = TRUE),
+>   p2 = tp[2], p2_lo = quantile(tb[, 2], .025, na.rm = TRUE), p2_hi = quantile(tb[, 2], .975, na.rm = TRUE), max_abs_cls5_bias = max(abs(r5)), rms_cls5_bias = sqrt(mean(r5^2)),

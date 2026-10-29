@@ -1,0 +1,70 @@
+fit md5 ok 1d11ab2345422e0fe5318d9234b54469 start=2026-10-28T06:25:59-04:00
+fold A stands run in all 13 grid arms: 446; with trace 446; H4 class agreement 1.0000 (n 446); floor domain share among them 1.0000; churn excluded 1
+      form  class delta n_stands       R
+    <char> <char> <num>    <int>   <num>
+ 1:      L     SF  -2.0      224  3.5330
+ 2:      L     SF  -1.5      224  3.8218
+ 3:      L     SF  -1.0      224  4.7817
+ 4:      L     SF  -0.5      224  6.9780
+ 5:      L     SF   0.0      224 10.2218
+ 6:      L     SF   0.5      224 14.0205
+ 7:      L     SF   1.0      224 17.8541
+ 8:      L    NSF  -2.0      221  1.6417
+ 9:      L    NSF  -1.5      221  1.8355
+10:      L    NSF  -1.0      221  2.4495
+11:      L    NSF  -0.5      221  3.6576
+12:      L    NSF   0.0      221  5.4345
+13:      L    NSF   0.5      221  7.6502
+14:      L    NSF   1.0      221 10.0366
+15:      S     SF  -2.0        7  1.2324
+16:      S     SF  -1.5        7  1.5439
+17:      S     SF  -1.0        7  1.9847
+18:      S     SF  -0.5        7  2.5989
+19:      S     SF   0.0        7  3.4206
+20:      S     SF   0.5        7  4.4378
+21:      S     SF   1.0        7  5.4898
+22:      S    NSF  -2.0       23  0.8961
+23:      S    NSF  -1.5       23  1.1244
+24:      S    NSF  -1.0       23  1.4392
+25:      S    NSF  -0.5       23  1.8658
+26:      S    NSF   0.0       23  2.4154
+27:      S    NSF   0.5       23  3.0605
+28:      S    NSF   1.0       23  3.6780
+      form  class delta n_stands       R
+    <char> <char> <num>    <int>   <num>
+Key: <form>
+     form  class n_stands n_sites     delta      lo95       hi95
+   <char> <char>    <int>   <int>     <num>     <num>      <num>
+1:      L     SF      224     224        NA        NA         NA
+2:      L    NSF      221     221        NA        NA         NA
+3:      S     SF        7       7        NA -1.947794 -0.3147466
+4:      S    NSF       23      23 -1.758279 -1.968513 -0.7457943
+   share_draws_outside_grid    R_at_0 monotone eligible_class eligible
+                      <num>     <num>   <lgcl>         <lgcl>   <lgcl>
+1:                    1.000 10.221765     TRUE          FALSE    FALSE
+2:                    1.000  5.434493     TRUE          FALSE    FALSE
+3:                    0.635  3.420639     TRUE          FALSE    FALSE
+4:                    0.373  2.415426     TRUE          FALSE    FALSE
+     gate   form  class   pass value
+   <char> <char> <char> <lgcl> <num>
+1:     H5      L     SF   TRUE    NA
+2:     H5      L    NSF   TRUE    NA
+3:     H5      S     SF   TRUE    NA
+4:     H5      S    NSF   TRUE    NA
+5:     H4    all    all   TRUE     1
+                                               note
+                                             <char>
+1: R non-decreasing in delta over the 7 grid points
+2: R non-decreasing in delta over the 7 grid points
+3: R non-decreasing in delta over the 7 grid points
+4: R non-decreasing in delta over the 7 grid points
+5:  t1 class equals overlay first call class, n 446
+eligible forms: 
+FIT_DONE
+# PREREG4 selection record, recorded 2026-10-28T06:26:05-0400 after v143p4_fit.R (md5 1d11ab2345422e0fe5318d9234b54469) and before any candidate run or fold B read.
+0e31af20f3b318fdb2a7abe27f5916cf  assembled/v143p4_selection_DATA_2026-10-28.csv
+86d8f3c2d11e61e71bf6e7b70f3e16fb  assembled/v143p4_fit_R_DATA_2026-10-28.csv
+31cb3d0f6f82f4407fd137af3eb49aca  assembled/v143p4_fit_harness_DATA_2026-10-28.csv
+absent  work/senft_coef_L.csv  (form not eligible)
+absent  work/senft_coef_S.csv  (form not eligible)
+FIT_RECORD_DONE

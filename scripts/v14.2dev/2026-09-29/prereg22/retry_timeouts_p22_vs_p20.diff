@@ -1,0 +1,10 @@
+2,3c2,3
+< # PREREG20: rerun, alone and BY NAME, every stand of arm $1 whose FAIL_REASON is the host time limit, up to three attempts.
+< # Copy of ~/jobs/v142p17/home/retry_timeouts_p17_rev2.sh with the retry driver renamed and the load gate added.
+---
+> # PREREG22: rerun, alone and BY NAME, every stand of arm $1 whose FAIL_REASON is the host time limit, up to three attempts.
+> # Copy of ~/jobs/v142p20/home/retry_timeouts_p20.sh with the retry driver renamed.
+17c17
+<     bash run_retry_p20.sh $COL $s "$st" $k >> $L 2>&1; echo "attempt $k $COL $s $st exit $? $(date -Is)" >> $L
+---
+>     bash run_retry_p22.sh $COL $s "$st" $k >> $L 2>&1; echo "attempt $k $COL $s $st exit $? $(date -Is)" >> $L

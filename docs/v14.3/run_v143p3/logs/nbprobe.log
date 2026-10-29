@@ -1,0 +1,4 @@
+sites by number of distinct meas years [(1, 8828), (2, 214)]
+tree_status [('L', 597716), ('DS', 81134)]
+plot_type [('L1_I', 499856), ('S1_I', 178994)]
+removed reasons [('C', 260)]

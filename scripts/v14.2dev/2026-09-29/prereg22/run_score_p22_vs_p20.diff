@@ -1,0 +1,28 @@
+2c2
+< # PREREG20 scoring of arm v141LTf (NS four) on firebreather. Copy of ~/jobs/v142p17/scripts/run_score_fb_rev2.sh with the arm,
+---
+> # PREREG22 scoring of arm v141LTfi (NS four); copy of ~/jobs/v142p20/scripts/run_score_p20.sh (md5 c13c8aee) with the arm, paths and tag changed. Originally: PREREG20 scoring on firebreather. Copy of ~/jobs/v142p17/scripts/run_score_fb_rev2.sh with the arm,
+8c8
+< J=/home/aaron/jobs/v142p20; H=$J/home; A=v141LTf
+---
+> J=/home/aaron/jobs/v142p22; H=$J/home; A=v141LTfi
+14c14
+<   n=$(awk -F, -v s=$s 'NR>1 && $2=="v141LTf" && $4==s' $H/work/p20_taskmap_DATA_2026-09-28.csv | wc -l)
+---
+>   n=$(awk -F, -v s=$s 'NR>1 && $2=="v141LTfi" && $4==s' $H/work/p22_taskmap_DATA_2026-09-29.csv | wc -l)
+26c26
+< PLAN=plan/p20_plan_fb.csv; [ -e $PLAN ] && { echo "REFUSE $PLAN"; exit 5; }
+---
+> PLAN=plan/p22_plan_fb.csv; [ -e $PLAN ] && { echo "REFUSE $PLAN"; exit 5; }
+29c29
+< export VC_OUT=$J/tables VC_PLAN=$J/$PLAN VC_REFDIR=$H/magplot/verify VC_SPLIT=$H/hw_formrisk_split.R VC_TAG=p20-fb
+---
+> export VC_OUT=$J/tables VC_PLAN=$J/$PLAN VC_REFDIR=$H/magplot/verify VC_SPLIT=$H/hw_formrisk_split.R VC_TAG=p22-fb
+32c32
+< P17_OUT=$J/tables P17_PLAN=$J/$PLAN P17_TAG=p20-fb Rscript scripts/2026-09-27_v142_p17_summ.R; rc=$?; echo "SUMM EXIT $rc"; [ $rc -eq 0 ] || exit $rc
+---
+> P17_OUT=$J/tables P17_PLAN=$J/$PLAN P17_TAG=p22-fb Rscript scripts/2026-09-27_v142_p17_summ.R; rc=$?; echo "SUMM EXIT $rc"; [ $rc -eq 0 ] || exit $rc
+34c34
+< echo P20_SCORE_DONE
+---
+> echo P22_SCORE_DONE

@@ -1,0 +1,177 @@
+item,arm,value
+ratio,p19_a0111,0.0931354071604215
+trees,p19_a0111,737
+sites,p19_a0111,136
+bias overall,p19_a0111,-0.153612131655188
+bias below 12.7,p19_a0111,-0.190335660900205
+trees below 12.7,p19_a0111,219
+bias 12.7 to 25,p19_a0111,-0.14096180952253
+trees 12.7 to 25,p19_a0111,446
+bias 25 and over,p19_a0111,-0.120273114523338
+trees 25 and over,p19_a0111,72
+dom level,p19_a0111,0.897912479576314
+trees dominant,p19_a0111,133
+ratio,p28_cand,0.97271120372088
+trees,p28_cand,737
+sites,p28_cand,136
+bias overall,p28_cand,-0.00462239919811422
+bias below 12.7,p28_cand,-0.0237296977984192
+trees below 12.7,p28_cand,219
+bias 12.7 to 25,p28_cand,0.0252762152587384
+trees 12.7 to 25,p28_cand,446
+bias 25 and over,p28_cand,-0.131709672174357
+trees 25 and over,p28_cand,72
+dom level,p28_cand,0.958145975125104
+trees dominant,p28_cand,133
+ratio,p33_dyn,0.942867415130899
+trees,p33_dyn,737
+sites,p33_dyn,136
+bias overall,p33_dyn,-0.00967758386203312
+bias below 12.7,p33_dyn,-0.0237297708137252
+trees below 12.7,p33_dyn,219
+bias 12.7 to 25,p33_dyn,0.0150764681346035
+trees 12.7 to 25,p33_dyn,446
+bias 25 and over,p33_dyn,-0.120273115085358
+trees 25 and over,p33_dyn,72
+dom level,p33_dyn,0.948793397977252
+trees dominant,p33_dyn,133
+rowidx ratio,p19_a0111,0.0855409107132791
+rowidx trees,p19_a0111,301
+rowidx sites,p19_a0111,108
+rowidx bias overall,p19_a0111,-0.169665802065401
+rowidx bias below 12.7,p19_a0111,-0.254476727697016
+rowidx trees below 12.7,p19_a0111,90
+rowidx bias 12.7 to 25,p19_a0111,-0.160547338053016
+rowidx trees 12.7 to 25,p19_a0111,170
+rowidx bias 25 and over,p19_a0111,-0.0213037429254028
+rowidx trees 25 and over,p19_a0111,41
+rowidx dom level,p19_a0111,0.921544202636896
+rowidx trees dominant,p19_a0111,78
+rowidx ratio,p28_cand,0.875258942532182
+rowidx trees,p28_cand,301
+rowidx sites,p28_cand,108
+rowidx bias overall,p28_cand,-0.0231440551181703
+rowidx bias below 12.7,p28_cand,-0.0840107442231672
+rowidx trees below 12.7,p28_cand,90
+rowidx bias 12.7 to 25,p28_cand,0.0111371980617554
+rowidx trees 12.7 to 25,p28_cand,170
+rowidx bias 25 and over,p28_cand,-0.031676031243479
+rowidx trees 25 and over,p28_cand,41
+rowidx dom level,p28_cand,0.982903375559138
+rowidx trees dominant,p28_cand,78
+rowidx ratio,p33_dyn,0.845798191350002
+rowidx trees,p33_dyn,301
+rowidx sites,p33_dyn,108
+rowidx bias overall,p33_dyn,-0.028610108260769
+rowidx bias below 12.7,p33_dyn,-0.0840109013879854
+rowidx trees below 12.7,p33_dyn,90
+rowidx bias 12.7 to 25,p33_dyn,-0.00104239834837071
+rowidx trees 12.7 to 25,p33_dyn,170
+rowidx bias 25 and over,p33_dyn,-0.0213037498134088
+rowidx trees 25 and over,p33_dyn,41
+rowidx dom level,p33_dyn,0.974506213519698
+rowidx trees dominant,p33_dyn,78
+H0,PREREG28,TRUE
+K1,PREREG28,TRUE
+HP,PREREG28,TRUE
+HC,PREREG28,TRUE
+TOP,PREREG28,TRUE
+TOP topht worse,PREREG28,FALSE
+TOP dom out,PREREG28,FALSE
+V2,PREREG28,TRUE
+B1,PREREG28,TRUE
+B2,PREREG28,TRUE
+verdict,PREREG28,Rule 6
+H0,PREREG33,TRUE
+K1,PREREG33,TRUE
+HP,PREREG33,TRUE
+HC,PREREG33,TRUE
+TOP,PREREG33,TRUE
+TOP topht worse,PREREG33,FALSE
+TOP dom out,PREREG33,FALSE
+V2,PREREG33,TRUE
+B1,PREREG33,TRUE
+B2,PREREG33,TRUE
+verdict,PREREG33,Rule 3
+rowidx H0,PREREG28,TRUE
+rowidx K1,PREREG28,TRUE
+rowidx HP,PREREG28,TRUE
+rowidx HC,PREREG28,TRUE
+rowidx TOP,PREREG28,TRUE
+rowidx TOP topht worse,PREREG28,FALSE
+rowidx TOP dom out,PREREG28,FALSE
+rowidx V2,PREREG28,TRUE
+rowidx B1,PREREG28,TRUE
+rowidx B2,PREREG28,TRUE
+rowidx verdict,PREREG28,Rule 6
+rowidx H0,PREREG33,TRUE
+rowidx K1,PREREG33,TRUE
+rowidx HP,PREREG33,TRUE
+rowidx HC,PREREG33,TRUE
+rowidx TOP,PREREG33,TRUE
+rowidx TOP topht worse,PREREG33,FALSE
+rowidx TOP dom out,PREREG33,FALSE
+rowidx V2,PREREG33,TRUE
+rowidx B1,PREREG33,TRUE
+rowidx B2,PREREG33,TRUE
+rowidx verdict,PREREG33,Rule 3
+matched,row index,57515
+subset,row index,4529
+matched,field tag,50434
+subset,field tag,9780
+partB scope all stands,row index,2200
+partB scope all matched,row index,57515
+partB scope all subset,row index,4529
+partB scope all sameSP,row index,36890
+partB scope all sameSP_H2,row index,9742
+partB scope all sameSP_H1,row index,8396
+partB scope all anyH2,row index,14515
+partB scope runok stands,row index,378
+partB scope runok matched,row index,11632
+partB scope runok subset,row index,646
+partB scope runok sameSP,row index,7224
+partB scope runok sameSP_H2,row index,1569
+partB scope runok sameSP_H1,row index,1391
+partB scope runok anyH2,row index,2489
+partB scope screened stands,row index,313
+partB scope screened matched,row index,9925
+partB scope screened subset,row index,565
+partB scope screened sameSP,row index,6330
+partB scope screened sameSP_H2,row index,1338
+partB scope screened sameSP_H1,row index,1196
+partB scope screened anyH2,row index,2065
+partB scope screenedB stands,row index,160
+partB scope screenedB matched,row index,4882
+partB scope screenedB subset,row index,301
+partB scope screenedB sameSP,row index,3041
+partB scope screenedB sameSP_H2,row index,676
+partB scope screenedB sameSP_H1,row index,598
+partB scope screenedB anyH2,row index,1063
+partB scope all stands,field tag,2200
+partB scope all matched,field tag,50434
+partB scope all subset,field tag,9780
+partB scope all sameSP,field tag,50434
+partB scope all sameSP_H2,field tag,13574
+partB scope all sameSP_H1,field tag,10894
+partB scope all anyH2,field tag,13574
+partB scope runok stands,field tag,378
+partB scope runok matched,field tag,10226
+partB scope runok subset,field tag,1665
+partB scope runok sameSP,field tag,10226
+partB scope runok sameSP_H2,field tag,2299
+partB scope runok sameSP_H1,field tag,1886
+partB scope runok anyH2,field tag,2299
+partB scope screened stands,field tag,313
+partB scope screened matched,field tag,8831
+partB scope screened subset,field tag,1435
+partB scope screened sameSP,field tag,8831
+partB scope screened sameSP_H2,field tag,1935
+partB scope screened sameSP_H1,field tag,1609
+partB scope screened anyH2,field tag,1935
+partB scope screenedB stands,field tag,160
+partB scope screenedB matched,field tag,4291
+partB scope screenedB subset,field tag,737
+partB scope screenedB sameSP,field tag,4291
+partB scope screenedB sameSP_H2,field tag,988
+partB scope screenedB sameSP_H1,field tag,829
+partB scope screenedB anyH2,field tag,988

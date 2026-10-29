@@ -1,0 +1,6 @@
+# PREREG26 LONG HORIZON DRIVER (2026-09-30), built by build_driver_p26.sh as: this header, then lines 1 to 419 of
+# ~/jobs/v142p22/home/runner_p20_fb.R (md5 65392afbbe67e2e80524855fea7a41da) byte for byte, then the PREREG26 block
+# (parts/p26_block.R), which replaces runner lines 420 to 491 (the PHASE D hooks, the one interval per stand loop and the
+# result writer). The model setup, ops, the 14.1 overlay, the height form htfx() and every switch are the runner's own
+# lines. The per stand projection is the runner's lines 431 to 440 moved into a function without the PHASE D recording
+# hooks and with a longer time limit. Diff against the runner in ../diffs/. No coordinates. No em dashes.

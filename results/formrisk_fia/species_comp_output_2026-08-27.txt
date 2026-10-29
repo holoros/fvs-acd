@@ -1,0 +1,14 @@
+WARNING: could not resolve PROV for nb_v2 tree_init; nb/qc rows skipped, see raw combined below
+cell                n_trees  n_stand     AB     WA     SM       AB%     WA%     SM%
+baxter                 5628       91     73     17     95     1.297   0.302   1.688
+ctrn                 122692     1086      4      2     15     0.003   0.002   0.012
+pef                  190722     2853    415    236     53     0.218   0.124   0.028
+silc_l                 1587       73     34      8     10     2.142   0.504   0.630
+mef                   37652      933    398    393    957     1.057   1.044   2.542
+memat                 84291     1760   2816   1291   4920     3.341   1.532   5.837
+medev                 78309     1760   1926   1011   1868     2.459   1.291   2.385
+ns_managed           109321     2500    321    443  10134     0.294   0.405   9.270
+ns_unmanaged          81314     2500   1404    347   2837     1.727   0.427   3.489
+ns_long_managed      151157     3267      0    963  26105     0.000   0.637  17.270
+ns_long_unmanaged    144723     4419   2610    675   4369     1.803   0.466   3.019
+nb_v2_combined_unresolved    79750     2424   1022    187   4800     1.282   0.234   6.019

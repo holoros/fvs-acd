@@ -1,0 +1,14 @@
+cell,gate,models_present,n_union,n_common,max_rel_obs_diff,n_dropped_nonfinite,note
+baxter,PASS,"v1211cand,v132plain,prod",91,91,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+ctrn,PASS,"v1211cand,v132plain,prod",1086,1086,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+pef,PASS,"v1211cand,v132plain,prod",2853,2853,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+silc_l,PASS,"v1211cand,v132plain,prod",120,120,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+mef,PASS,"v1211cand,v132plain,prod",918,918,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+nb,PASS,"v1211cand,v132plain,prod",339,339,0,"v1211cand=NA,v132plain=NA,prod=NA",identical basis
+qc,FAIL,"v1211cand,v132plain,prod",2061,2061,0,"v1211cand=NA,v132plain=NA,prod=NA",scoring populations agree; the post-filter sets differ only through non-finite predictions
+memat,PASS,"v1211cand,v132plain,prod",1757,1757,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+medev,PASS,"v1211cand,v132plain,prod",1759,1759,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+ns_managed,PASS,"v1211cand,v132plain,prod",2500,2500,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+ns_unmanaged,PASS,"v1211cand,v132plain,prod",2500,2500,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+ns_long_managed,PASS,"v1211cand,v132plain,prod",3267,3267,0,"v1211cand=0,v132plain=0,prod=0",identical basis
+ns_long_unmanaged,PASS,"v1211cand,v132plain,prod",4419,4419,0,"v1211cand=0,v132plain=0,prod=0",identical basis

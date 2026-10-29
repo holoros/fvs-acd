@@ -1,0 +1,7 @@
+gate,value,threshold,pass,source
+G0,gate=G0 stands=3 requested=3 columns=12 worst_scaled=0 worst_col=BA_p pass=TRUE,at or below 1e-9,TRUE,logs/s2_g0_result.csv
+G0b,gate=G0b cells_N6000=4 rows_new_N6000=404 rows_frozen_N6000=404 columns=19 frozen_md5=b10a03bb2be602196c18838afb2fc8aa whole_file_identical=TRUE rows_new=1212 rows_frozen=1212 pass=TRUE,identical,TRUE,logs/s2_g0b_result.csv
+G1 v141LT,36 of 36 trajectories complete with 101 rows,all,TRUE,out/s2/traj_v141LT_S<bin>.csv
+G1 v141LTfi,36 of 36 trajectories complete with 101 rows,all,TRUE,out/s2/traj_v141LTfi_S<bin>.csv
+G2 v141LT,worst scaled age 0 difference 3.49e-15 over 36 stands,"at or below 1e-6, every stand",TRUE,measured ns_c t1 tree list (md5 2963d8ee)
+G2 v141LTfi,worst scaled age 0 difference 3.49e-15 over 36 stands,"at or below 1e-6, every stand",TRUE,measured ns_c t1 tree list (md5 2963d8ee)

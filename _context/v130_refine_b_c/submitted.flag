@@ -1,0 +1,133 @@
+FVS-ACD v13.0 refine, Tracks B and C. Submitted 2026-08-11 22:10 EDT from the
+autonomous-ooda-manager run. Cardinal login04, user crsfaaron, account PUOM0008.
+
+JOB_REGATE=13425469   name v130_regate_v3   walltime 00:40:00
+  Re-scores every existing v13.0 candidate against cb_v12101_results.csv using the
+  CORRECTED gate v130_score_gate_v3.R on matched stand sets.
+  Tags scored: v130 v130c05 v130c07 v130b50 v130b70 v130b85 v130b100 v130h v130ba
+  Outputs (in ~/magplot/verify): v130_gate_verdict_<tag>_v3.csv,
+    v130_gate_delta_<tag>_v3.csv, scorecard_v130_<tag>_v3.csv
+  Log: ~/magplot/verify/v130_regate_v3_13425469.out   sentinel V130_REGATE_V3_DONE
+
+JOB_NULLCTL=13425475  name v130_nullctl     walltime 05:00:00
+  Null control plus the two-lever isolation. Three benched configs:
+    cb_v130null    height anchor c(1,0), BA_GAIN=0   must reproduce v12.10.1
+    cb_v130honly   settled co-fit coefs, BA_GAIN=0   height lever alone
+    cb_v130baonly  height anchor c(1,0), BA_GAIN=1   BA lever alone
+  Outputs: v130_gate_verdict_v130{null,honly,baonly}_v3.csv and matching deltas.
+  Log: ~/magplot/verify/v130_nullctl_13425475.out     sentinel V130_NULLCTL_DONE
+  Null assertion exits 6 if the null does not reproduce the baseline within
+  |dbias| < 0.25 percentage points and |dNSE| < 0.005 on BA, TOPHT and TOTVOL.
+
+GATE BASELINE: cb_v12101_results.csv (frozen v12.10.1). Not cb_v12102.
+GATE SCRIPT:   ~/magplot/verify/v130_score_gate_v3.R
+               repo copy scripts/phase2/v130_score_gate_v3.R
+
+WHY v3 EXISTS. v130_score_gate_v2.R applied attach_esi() to the candidate only
+(line 60) and not to the baseline (line 61). attach_esi merges on STAND against
+magp_qcnb_pairs.csv, which carries 126 duplicated STAND keys, so the candidate
+inflated from 733 rows to 789 (in-domain 492 -> 526) while the baseline stayed at
+733 / 492. Every v13.0 gate verdict from 10 July onward compared 526 duplicated
+candidate rows against 492 baseline rows. THIS DEFECT WAS REAL AND REMAINS FIXED
+IN v3. It is the one 11 August conclusion that survived the 12 August rebuild.
+
+NOTHING SHIPPED. No operational AcadianGY_*.r touched. v12.10.1 remains the
+shipped August version. Adoption stays a separate human decision by Aaron.
+FIA true coordinates stayed on the node; aggregates only.
+
+HARVEST: completed in-session 2026-08-12 05:55 EDT (13425469 in 7 s, 13425475 in
+44 min). See the superseded section below, then the 12 August rebuild.
+
+--- 2026-08-12 HARVEST RESULT (PARTIALLY SUPERSEDED, see the rebuild below) ---
+13425469 COMPLETED 0:0. Re-scored 9 candidates on matched stand sets (n=492 in-domain,
+  249/243 ESI tails, 246/246 QMD tails, identical on both sides). STILL VALID.
+  cb_v130h scored ADOPT_PENDING but is a FALSE POSITIVE: all 15 delta rows exactly zero.
+  A null-delta guard was added to the gate. STILL VALID.
+13425475 COMPLETED 0:0. NULL_ASSERT FAIL, reported as BA -9.81 vs -6.18 at POOLED
+  in-domain. SUPERSEDED. The cause recorded that day, a 12.10.1 to 12.10.2 base
+  conflation, is WRONG. See below.
+
+=========================================================================
+--- 2026-08-12 FROZEN-BASE REBUILD (authoritative; supersedes the cause above) ---
+Jobs 13434422 (A) 13434423 (B) 13434424 (C) 13434425 (D) 13434426 (E) 13434526 (F)
+13434535 (G) 13434431 (bakuzis NB) 13434432 (bakuzis QC). All COMPLETED 0:0.
+Narrative: repos/fvs-acd/20260812_v130_frozenbase_rebuild_results.md
+
+VERIFIED PROVENANCE
+  scripts/AcadianGY_12.10.1.r md5 027ad5e5532b801718f8ad0b22bada9d, matches the
+  10 July freeze note. Uploaded to ~/v130_rebuild/AcadianGY_12.10.1_REPOFROZEN.r
+  and md5 re-verified on the node. Differs from ~/_scripts/AcadianGY_12.10.1.r
+  (md5 4a372c3570c7e35d1a45eee1c244e58d) ONLY by the 23 line comment-only header.
+  CORRECTION: both 12.10.1 and 12.10.2 ARE on Cardinal, in ~/_scripts/. The
+  11 August "provenance break" was a search that never reached that directory.
+  Rebuild ~/v130_rebuild/AcadianGY_13.0_from12101.r md5 3f56b53498db4a80d938c4c2e93bf52c.
+
+NO VERSION CONFLATION EXISTS
+  12.10.1 vs 12.10.2 = 3 lines: the AcadianVersionTag string, plus a .afac read of
+  ops$esi.domht.afac and its use in .Aasym. Both numeric lines sit inside the block
+  gated by ops$use.esi.domht, which every bench harness sets FALSE. ops$esi.domht.afac
+  is assigned nowhere in the repo or on Cardinal, so .afac defaults to 1 regardless.
+  The base version difference is numerically ZERO under every benched configuration.
+  All three July v13.0 builds already carry AcadianVersionTag "AcadianV12.10.1".
+
+THE REAL CAUSE OF THE 11 AUGUST NULL FAILURE
+  cb_v130null_results.csv is BYTE IDENTICAL to cb_C_baonly_results.csv (BA_GAIN=1),
+  max|diff| = 0 across all 29 numeric columns and 733 stands. The 11 August null
+  never turned the BA lever off. bench_parity_v130_run.R does not assign
+  ops$ba.anchor.gain (only bench_parity_v130_bagain.R does), so BA_GAIN=0 was
+  silently ignored and the model's tryCatch default of 1 applied. The 3.63 point
+  "null failure" is simply the true size of the BA correction, read with the
+  candidate and baseline columns transposed.
+
+CONTROLS NOW PASS
+  A: frozen 12.10.1 through the v13.0 harness reproduces cb_v12101 exactly
+     (max|diff| = 0), gate NULL_CONTROL_OK on all 5 subsets.
+  B: rebuilt v13.0 with BA_GAIN=0 and identity anchor reproduces cb_v12101 exactly
+     (max|diff| = 0), gate NULL_CONTROL_OK on all 5 subsets.
+  E: joint candidate is byte identical to the July cb_v130b100 artifact (max|diff| = 0).
+
+LEVER EFFECTS, POOLED IN-DOMAIN n=492 (baseline BA -9.81%, TOPHT +4.38%, TOTVOL -2.23%)
+  C, BA lever alone      BA -6.18%  TOPHT +4.16%  TOTVOL +0.12%   3 of 5 subsets
+  D, height lever alone  BA -9.86%  TOPHT +3.90%  TOTVOL -2.64%   0 of 5 subsets
+  E, both levers         BA -6.23%  TOPHT +3.69%  TOTVOL -0.31%   4 of 5 subsets
+  C fails ESI_high and QMD_large on volume_held only; BA moves toward zero and RMSE
+  improves on ALL five subsets. D fails ba_toward0 on all five.
+
+BAKUZIS NOW EVALUABLE (blocker cleared)
+  bakuzis_allmodels.R hard-coded a missing AcadianGY_12.5.0.r. Rewired as
+  scripts/phase2/bakuzis_v130.R: model set is a table of (model file, gain, coef file),
+  levers carried through ops, region is a parameter. The old driver ran region ME where
+  the co-fit anchor is c(1,0) by construction, so the height lever was inert and the
+  test could not have detected it. Now run at NB and QC, ESI 12/16/20, to age 160.
+  base_12101   all five relations PASS
+  v130_baonly  all five PASS, no regression. Reineke -1.581 -> -1.619, Eichhorn CV
+               10.9 -> 10.4, BA plateau 36.0 -> 34.9 m2/ha with last-20 sd 0.30 -> 0.17
+  v130_honly   REGRESSION on SiteOrdering, both regions. QC: 157 height and 155 volume
+               inversions of 160 ages.
+  v130_both    REGRESSION on SiteOrdering, both regions, same QC magnitude.
+  MECHANISM: QC co-fit ascale = 0.0193 + 0.069534*esi and dht is divided by ascale.
+  ESI 12 -> ascale 0.854 (height growth up ~17%), ESI 20 -> ascale 1.410 (down ~29%).
+  The slope is steep enough to invert the site gradient. NB anchor is nearly flat
+  (1.10313 + 0.005844*esi) so NB shows only 1 to 2 inversions.
+
+VERDICT
+  BA net-increment anchor: REAL and defensible. Not a base-version artifact.
+  Height re-anchor as fitted: DO NOT ADOPT. Degrades BA on all five subsets and
+  breaks Bakuzis site ordering, catastrophically in QC.
+  Joint candidate passes 4 of 5 but inherits the QC site-ordering failure.
+  ADOPTION REMAINS AARON'S DECISION. Nothing shipped.
+
+CARRY-FORWARD
+  Height refit needs a monotonicity constraint on the site gradient (bound the QC slope
+  or add a site-ordering penalty to the objective) before it can be re-gated.
+  A tail-aware BA gain is the obvious next test for C's two volume failures at ESI_high
+  and QMD_large, where the model already over-predicts volume.
+  BA_GAIN above 1.0 is still inert: build_v130_baonly_v2.py clamps gain with
+  min(1, max(0, gain)) and the solved scale to [0.7, 1.5]. Widen the band, not the gain.
+  ME identity anchor c(1,0) still untested against data; 0 ME stands in MagPlot.
+  NB_AFAC/QC_AFAC matter enormously (config F: dropping them to 1.0 moves output by
+  2304 at the widest column and fails 4 of 5), so every future run must set them.
+  HARNESS DEFECT STILL OPEN: bench_parity_v130_run.R silently ignores BA_GAIN. Either
+  add the ops$ba.anchor.gain line to it or retire it in favour of
+  bench_parity_v130_ctl.R, which reads both BA_GAIN and COEF_FILE and echoes the model
+  md5 and full coefficient file into the log before every run.

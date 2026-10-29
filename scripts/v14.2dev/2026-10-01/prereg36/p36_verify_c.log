@@ -1,0 +1,85 @@
+v141LT plan rows: 19 
+baxter_c done: scored=91 t2_none=0 vo0_res=0 t1_none=0
+silc_l_c done: scored=120 t2_none=0 vo0_res=0 t1_none=0
+ctrn_c done: scored=1086 t2_none=0 vo0_res=0 t1_none=0
+ctrn_fl done: scored=175 t2_none=0 vo0_res=0 t1_none=0
+pef_c done: scored=2853 t2_none=0 vo0_res=0 t1_none=0
+pef_fl done: scored=654 t2_none=0 vo0_res=0 t1_none=0
+mefia_l_c done: scored=918 t2_none=2 vo0_res=2 t1_none=9
+memat_c done: scored=1760 t2_none=0 vo0_res=0 t1_none=0
+memat_fl done: scored=478 t2_none=0 vo0_res=0 t1_none=0
+medev_c done: scored=1760 t2_none=2 vo0_res=2 t1_none=2
+medev_fl done: scored=234 t2_none=0 vo0_res=0 t1_none=2
+mnap_tnc_frz done: scored=99 t2_none=0 vo0_res=0 t1_none=0
+nb_c done: scored=355 t2_none=33 vo0_res=33 t1_none=37
+qc_c done: scored=378 t2_none=0 vo0_res=0 t1_none=0
+qc_fl done: scored=19 t2_none=0 vo0_res=0 t1_none=0
+ns_c done: scored=5731 t2_none=0 vo0_res=0 t1_none=28
+ns_fl done: scored=1319 t2_none=0 vo0_res=0 t1_none=17
+ns_long_c done: scored=8549 t2_none=1 vo0_res=1 t1_none=64
+ns_long_fl done: scored=2319 t2_none=0 vo0_res=0 t1_none=63
+           label n_scored rep_scored_defect n_t2_no_live_stem n_vo0_results
+          <char>    <int>             <int>             <int>         <int>
+ 1:     baxter_c       91                91                 0             0
+ 2:     silc_l_c      120               120                 0             0
+ 3:       ctrn_c     1086              1086                 0             0
+ 4:      ctrn_fl      175               175                 0             0
+ 5:        pef_c     2853              2853                 0             0
+ 6:       pef_fl      654               654                 0             0
+ 7:    mefia_l_c      918               918                 2             2
+ 8:      memat_c     1760              1760                 0             0
+ 9:     memat_fl      478               478                 0             0
+10:      medev_c     1760              1760                 2             2
+11:     medev_fl      234               234                 0             0
+12: mnap_tnc_frz       99                99                 0             0
+13:         nb_c      355               355                33            33
+14:         qc_c      378               378                 0             0
+15:        qc_fl       19                19                 0             0
+16:         ns_c     5731              5731                 0             0
+17:        ns_fl     1319              1319                 0             0
+18:    ns_long_c     8549              8549                 1             1
+19:   ns_long_fl     2319              2319                 0             0
+    rep_vo_zero classD n_nostem_but_vo_pos t1_zero rep_t1_zero   t1_share
+          <int>  <int>               <int>   <int>       <int>      <num>
+ 1:           0      0                   0       0           0 0.00000000
+ 2:           0      0                   0       0           0 0.00000000
+ 3:           0      0                   0       0           0 0.00000000
+ 4:           0      0                   0       0           0 0.00000000
+ 5:           0      0                   0       0           0 0.00000000
+ 6:           0      0                   0       0           0 0.00000000
+ 7:           2      0                   0       9           9 0.00980392
+ 8:           0      0                   0       0           0 0.00000000
+ 9:           0      0                   0       0           0 0.00000000
+10:           2      0                   0       2           2 0.00113636
+11:           0      0                   0       2           2 0.00854701
+12:           0      0                   0       0           0 0.00000000
+13:          33      0                   0      37          37 0.10422500
+14:           0      0                   0       0           0 0.00000000
+15:           0      0                   0       0           0 0.00000000
+16:           0      0                   0      28          28 0.00488571
+17:           0      0                   0      17          17 0.01288860
+18:           1      0                   0      64          64 0.00748626
+19:           0      0                   0      63          63 0.02716690
+     fires rep_fires   PASS
+    <lgcl>    <lgcl> <lgcl>
+ 1:  FALSE     FALSE   TRUE
+ 2:  FALSE     FALSE   TRUE
+ 3:  FALSE     FALSE   TRUE
+ 4:  FALSE     FALSE   TRUE
+ 5:  FALSE     FALSE   TRUE
+ 6:  FALSE     FALSE   TRUE
+ 7:  FALSE     FALSE   TRUE
+ 8:  FALSE     FALSE   TRUE
+ 9:  FALSE     FALSE   TRUE
+10:  FALSE     FALSE   TRUE
+11:  FALSE     FALSE   TRUE
+12:  FALSE     FALSE   TRUE
+13:   TRUE      TRUE   TRUE
+14:  FALSE     FALSE   TRUE
+15:  FALSE     FALSE   TRUE
+16:  FALSE     FALSE   TRUE
+17:  FALSE     FALSE   TRUE
+18:  FALSE     FALSE   TRUE
+19:  FALSE     FALSE   TRUE
+rows: 19  PASS: 19  FAIL: 0 
+P36_VERIFY_C_DONE

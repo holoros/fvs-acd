@@ -1,0 +1,2 @@
+item,value,R_foldA,R_lo,R_hi,records,sites,source,source_md5,verifier_file,verifier_md5
+QC_AFAC_FIT,1.242,1.241887357579900,1.10588958074197,1.36719643326906,698,129,/home/aaron/jobs/v142p37/assembled/gyr142-p37-ratio-foldA_DATA_2026-10-01.csv,2315212d0cd4ef05f50e288f892a5ed8,/home/aaron/jobs/v142p37/verify_20261001/p37_verify_compare_DATA_2026-10-01.csv,e05a42263f21ba7fdc3a5713148b9020

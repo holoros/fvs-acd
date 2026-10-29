@@ -1,0 +1,61 @@
+arm,gate,gated,value,threshold,pass
+p38_fit,C offset removed,TRUE,"median 1.418, 31 of 36 over 1.175 (median offset 1.90 m)",median <= 1.175 and <= 3 over,FALSE
+p38_fit,C raw ceiling,TRUE,median 1.515; max 1.820; 34 of 36 over 1.175,median <= 1.285,FALSE
+p38_fit,CL credibility floor,TRUE,raw median 1.515,median >= 0.815,TRUE
+p38_fit,MG early top height growth,TRUE,median 0.1563 m/yr over 36 stands (years 1 to 21),median >= MG_LO -0.0247 m/yr,TRUE
+p38_fit,MGN early growth count,TRUE,36 of 36 stands at or above MG_LO,at least 23,TRUE
+p38_fit,LG late growth,TRUE,30 of 36 stands gain > 0.01 m in every window 21-41-61-81-100; median window gains 2.58 2.40 2.04 1.39 m,at least 27,TRUE
+p38_fit,F frontier,TRUE,0 stands above the frontier; worst log10 excess -0.019,no stand,TRUE
+p38_fit,M magnitude,TRUE,0 stands above 1; worst ratio 0.837,no stand,TRUE
+p38_fit,S Sukachev,TRUE,0 violations in 0 ESI bins,no violation,TRUE
+p38_fit,HM top height monotone,TRUE,worst five year fall 4.869 m; 11 stands over 0.01 m,worst <= F_HT 9.518 m; flagged <= S_HT 11,TRUE
+p38_fit,SO site ordering of HT gain,TRUE,"6 inversions of 6 (SDI bin x age 50, 100); dVOL 6 reported; levels HT 53, VOL 57 of 60 reported","zero inversions, strict (ties invert)",FALSE
+p38_fit,YD structural,TRUE,CV at 100 below CV at 30 failing in ESI bins: none,CV100 < CV30 in every ESI bin,TRUE
+p38_fit,R Reineke (reported),FALSE,median slope -1.267 over 21 evaluated; 11 stand flags,"median inside (-2.2, -1.2)",TRUE
+p38_fit,E Eichhorn (reported),FALSE,S1 0.163; S2 0.074; S3 0.112,below 0.15,FALSE
+p38_fit,YD 0.15 (reported),FALSE,E1 0.163; E2 0.091; E3 0.212; E4 0.174,below 0.15,FALSE
+qc141,C offset removed,TRUE,"median 0.837, 0 of 36 over 1.175 (median offset 1.90 m)",median <= 1.175 and <= 3 over,TRUE
+qc141,C raw ceiling,TRUE,median 0.916; max 1.126; 0 of 36 over 1.175,median <= 1.285,TRUE
+qc141,CL credibility floor,TRUE,raw median 0.916,median >= 0.815,TRUE
+qc141,MG early top height growth,TRUE,median 0.0094 m/yr over 36 stands (years 1 to 21),median >= MG_LO -0.0247 m/yr,TRUE
+qc141,MGN early growth count,TRUE,35 of 36 stands at or above MG_LO,at least 23,TRUE
+qc141,LG late growth,TRUE,"7 of 36 stands gain > 0.01 m in every window 21-41-61-81-100; median window gains -0.04 0.05 0.03 0.05 m (LGR flag: a window median below 0.5 m, reported)",at least 27,FALSE
+qc141,F frontier,TRUE,0 stands above the frontier; worst log10 excess -0.019,no stand,TRUE
+qc141,M magnitude,TRUE,0 stands above 1; worst ratio 0.837,no stand,TRUE
+qc141,S Sukachev,TRUE,0 violations in 0 ESI bins,no violation,TRUE
+qc141,HM top height monotone,TRUE,worst five year fall 1.043 m; 36 stands over 0.01 m,worst <= F_HT 9.518 m; flagged <= S_HT 11,FALSE
+qc141,SO site ordering of HT gain,TRUE,"3 inversions of 6 (SDI bin x age 50, 100); dVOL 6 reported; levels HT 58, VOL 60 of 60 reported","zero inversions, strict (ties invert)",FALSE
+qc141,YD structural,TRUE,CV at 100 below CV at 30 failing in ESI bins: none,CV100 < CV30 in every ESI bin,TRUE
+qc141,R Reineke (reported),FALSE,median slope -1.214 over 21 evaluated; 12 stand flags,"median inside (-2.2, -1.2)",TRUE
+qc141,E Eichhorn (reported),FALSE,S1 0.676; S2 0.280; S3 not evaluated,below 0.15,FALSE
+qc141,YD 0.15 (reported),FALSE,E1 0.190; E2 0.081; E3 0.016; E4 0.023,below 0.15,FALSE
+qc_lz,C offset removed,TRUE,"median 1.182, 19 of 36 over 1.175 (median offset 1.90 m)",median <= 1.175 and <= 3 over,FALSE
+qc_lz,C raw ceiling,TRUE,median 1.285; max 1.408; 32 of 36 over 1.175,median <= 1.285,FALSE
+qc_lz,CL credibility floor,TRUE,raw median 1.285,median >= 0.815,TRUE
+qc_lz,MG early top height growth,TRUE,median 0.1151 m/yr over 36 stands (years 1 to 21),median >= MG_LO -0.0247 m/yr,TRUE
+qc_lz,MGN early growth count,TRUE,36 of 36 stands at or above MG_LO,at least 23,TRUE
+qc_lz,LG late growth,TRUE,34 of 36 stands gain > 0.01 m in every window 21-41-61-81-100; median window gains 1.56 1.43 1.08 0.73 m,at least 27,TRUE
+qc_lz,F frontier,TRUE,0 stands above the frontier; worst log10 excess -0.019,no stand,TRUE
+qc_lz,M magnitude,TRUE,0 stands above 1; worst ratio 0.837,no stand,TRUE
+qc_lz,S Sukachev,TRUE,0 violations in 0 ESI bins,no violation,TRUE
+qc_lz,HM top height monotone,TRUE,worst five year fall 0.959 m; 8 stands over 0.01 m,worst <= F_HT 9.518 m; flagged <= S_HT 11,TRUE
+qc_lz,SO site ordering of HT gain,TRUE,"6 inversions of 6 (SDI bin x age 50, 100); dVOL 6 reported; levels HT 53, VOL 60 of 60 reported","zero inversions, strict (ties invert)",FALSE
+qc_lz,YD structural,TRUE,CV at 100 below CV at 30 failing in ESI bins: none,CV100 < CV30 in every ESI bin,TRUE
+qc_lz,R Reineke (reported),FALSE,median slope -1.242 over 21 evaluated; 11 stand flags,"median inside (-2.2, -1.2)",TRUE
+qc_lz,E Eichhorn (reported),FALSE,S1 0.103; S2 0.106; S3 0.113,below 0.15,TRUE
+qc_lz,YD 0.15 (reported),FALSE,E1 0.140; E2 0.013; E3 0.105; E4 0.074,below 0.15,TRUE
+qc_rh,C offset removed,TRUE,"median 1.205, 24 of 36 over 1.175 (median offset 1.90 m)",median <= 1.175 and <= 3 over,FALSE
+qc_rh,C raw ceiling,TRUE,median 1.309; max 1.478; 32 of 36 over 1.175,median <= 1.285,FALSE
+qc_rh,CL credibility floor,TRUE,raw median 1.309,median >= 0.815,TRUE
+qc_rh,MG early top height growth,TRUE,median 0.1141 m/yr over 36 stands (years 1 to 21),median >= MG_LO -0.0247 m/yr,TRUE
+qc_rh,MGN early growth count,TRUE,36 of 36 stands at or above MG_LO,at least 23,TRUE
+qc_rh,LG late growth,TRUE,34 of 36 stands gain > 0.01 m in every window 21-41-61-81-100; median window gains 1.67 1.54 1.25 0.99 m,at least 27,TRUE
+qc_rh,F frontier,TRUE,0 stands above the frontier; worst log10 excess -0.019,no stand,TRUE
+qc_rh,M magnitude,TRUE,0 stands above 1; worst ratio 0.837,no stand,TRUE
+qc_rh,S Sukachev,TRUE,0 violations in 0 ESI bins,no violation,TRUE
+qc_rh,HM top height monotone,TRUE,worst five year fall 0.920 m; 9 stands over 0.01 m,worst <= F_HT 9.518 m; flagged <= S_HT 11,TRUE
+qc_rh,SO site ordering of HT gain,TRUE,"6 inversions of 6 (SDI bin x age 50, 100); dVOL 6 reported; levels HT 55, VOL 60 of 60 reported","zero inversions, strict (ties invert)",FALSE
+qc_rh,YD structural,TRUE,CV at 100 below CV at 30 failing in ESI bins: none,CV100 < CV30 in every ESI bin,TRUE
+qc_rh,R Reineke (reported),FALSE,median slope -1.264 over 21 evaluated; 11 stand flags,"median inside (-2.2, -1.2)",TRUE
+qc_rh,E Eichhorn (reported),FALSE,S1 0.109; S2 0.101; S3 0.112,below 0.15,TRUE
+qc_rh,YD 0.15 (reported),FALSE,E1 0.134; E2 0.024; E3 0.120; E4 0.087,below 0.15,TRUE

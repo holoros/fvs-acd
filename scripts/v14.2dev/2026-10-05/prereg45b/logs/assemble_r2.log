@@ -1,0 +1,117 @@
+Index: <arm>
+      arm stands       obs       pred     ratio  ratio_lo  ratio_hi       bias
+   <char>  <int>     <num>      <num>     <num>     <num>     <num>      <num>
+1:  nb141     84 0.2825893 0.07927288 0.2805233 0.2079439 0.4340470 -0.2033164
+2: nb_one     84 0.2825893 0.13675642 0.4839406 0.3512383 0.7570107 -0.1458329
+3:  nb_rh     84 0.2825893 0.15707283 0.5558343 0.4025712 0.8353208 -0.1255165
+      arm       relb stands        obs       pred        bias
+   <char>     <fctr>  <int>      <num>      <num>       <num>
+1:  nb141 below 0.75     27 0.37098765 0.08857194 -0.28241571
+2:  nb141  0.75 to 1     28 0.38907738 0.07990568 -0.30917170
+3:  nb141 1 and over     29 0.09747126 0.07000414 -0.02746712
+4: nb_one below 0.75     27 0.37098765 0.15309762 -0.21789003
+5: nb_one  0.75 to 1     28 0.38907738 0.13778614 -0.25129124
+6: nb_one 1 and over     29 0.09747126 0.12054798  0.02307672
+7:  nb_rh below 0.75     27 0.37098765 0.26920832 -0.10177934
+8:  nb_rh  0.75 to 1     28 0.38907738 0.13657659 -0.25250079
+9:  nb_rh 1 and over     29 0.09747126 0.07246028 -0.02501098
+Index: <arm>
+      arm stands topht_bias_pct c0_rmse_pct   ba_pts stems_pts
+   <char>  <int>          <num>       <num>    <num>     <num>
+1:  nb141    172       1.043402    34.47953 2.643465  13.11548
+2: nb_one    172       3.447646    34.04912 2.510427  13.47877
+3:  nb_rh    172       9.491591    34.60899 2.112677  14.19410
+Key: <relation>
+          relation cand_flags ref_flags new_flags   cand_worst   ref_worst
+            <char>      <int>     <int>     <int>        <num>       <num>
+ 1:       Eichhorn          1         2         0  0.039089754  0.24911692
+ 2:       Frontier          1         1         0  0.043437456  0.09747771
+ 3:    HT_monotone         11        23         2  2.164679963  2.04779063
+ 4:      Magnitude          0         1         0  0.000000000  0.05466461
+ 5:        Reineke          1         3         0  0.310457814  0.17104403
+ 6: SiteOrder_BAPH          3         3         0 20.000000000 20.00000000
+ 7:   SiteOrder_HT          3         3         0 20.000000000 20.00000000
+ 8:  SiteOrder_VOL          3         3         0 20.000000000 20.00000000
+ 9:       Sukachev          3         3         0  2.000000000  2.00000000
+10:   YieldDensity          1         3         0  0.007352369  0.04035014
+     ni_ok
+    <lgcl>
+ 1:   TRUE
+ 2:   TRUE
+ 3:  FALSE
+ 4:   TRUE
+ 5:  FALSE
+ 6:   TRUE
+ 7:   TRUE
+ 8:   TRUE
+ 9:   TRUE
+10:   TRUE
+Key: <arm>
+      arm stands median_rel0 median_rel100 max_rel100 n_over share_over
+   <char>  <int>       <num>         <num>      <num>  <int>      <num>
+1:  nb141     36   0.4089085      1.037641   1.739409      1 0.02777778
+2:  nb_rh     36   0.4089085      1.230317   1.527951      1 0.02777778
+   mean_HT100 pass_C
+        <num> <lgcl>
+1:   18.94024   TRUE
+2:   22.42772   TRUE
+           gate
+         <char>
+ 1:         G0n
+ 2:         H0b
+ 3:          G0
+ 4:         G0b
+ 5:          K1
+ 6:          G1
+ 7:          G2
+ 8:      F9 fit
+ 9:          H1
+10:     H relht
+11:       TOPHT
+12:     V2 (C0)
+13:          B1
+14:          B2
+15:     C bound
+16: NI long run
+                                                                   detail
+                                                                   <char>
+ 1:                                        worst 1.85e-15 over 355 stands
+ 2:                                     results 0, trees 0 over 55 stands
+ 3:                                                                      
+ 4:                                                                      
+ 5:                                                              not ok 0
+ 6:                                                              72 of 72
+ 7:                                                        worst 2.63e-15
+ 8:                                    70 stands; a 189.000000 b 5.096402
+ 9:                 ratio 0.556 [0.403, 0.835]; nb141 0.281; nb_one 0.484
+10: below 0.75 -0.102 (27); 0.75 to 1 -0.253 (28); 1 and over -0.025 (29)
+11:                                  +9.49% vs nb141 +1.04% (limit 10.00)
+12:                                                        34.61 vs 34.48
+13:                                                          2.11 vs 2.64
+14:                                                        14.19 vs 13.12
+15:                                      median 1.230, 1 of 36 over 1.384
+16:                              new flags 2; failing HT_monotone,Reineke
+      pass
+    <lgcl>
+ 1:   TRUE
+ 2:   TRUE
+ 3:   TRUE
+ 4:   TRUE
+ 5:   TRUE
+ 6:   TRUE
+ 7:   TRUE
+ 8:   TRUE
+ 9:  FALSE
+10:  FALSE
+11:   TRUE
+12:   TRUE
+13:   TRUE
+14:   TRUE
+15:   TRUE
+16:  FALSE
+plan_md5=a0b8b166
+fit a=1.8672 b=-2.1924
+outcome=RULE2_NOT_ADOPTED_HEIGHT
+failing=H1;H relht;NI long run
+decision_weight=informs 14.3 only; 14.2 keeps NB_AFAC 0.579
+P45B_ASSEMBLE_DONE

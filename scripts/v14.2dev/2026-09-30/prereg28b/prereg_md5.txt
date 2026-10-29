@@ -1,0 +1,1 @@
+PREREG28b revision 1 md5 8934d0b54bde2f64f9414b08a4fa6aca recorded 2026-09-30T15:21:20-03:00 before chain launch; dry run (frozen stand ins) exit ok, logs/dry_assemble.txt

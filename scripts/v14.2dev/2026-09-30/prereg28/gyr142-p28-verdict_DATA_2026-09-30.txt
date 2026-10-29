@@ -1,0 +1,4 @@
+candidate=p28_cand
+reference=p19_a0111
+topht_comparator=p23_a1061
+verdict=Rule 6: every gate passes; the size dependent QC anchor (1.265 below 25 cm, 0.030 at and above) is the 14.2 QC candidate, a regional usage setting, pending a Bakuzis QC grid

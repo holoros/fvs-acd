@@ -1,0 +1,4 @@
+75887ed209c4f905d9dc36817acf3e4c  2026-10-28_v143_howland-decline-diagnostic_RESULT.md
+6496660b5e5f66320139eea30b7f6892  2026-10-28_v143_howland-decline-diagnostic_DEVIATIONS.md
+recorded 2026-10-28T06:15:22-04:00; first upload was a stale pre-edit copy (one number line), kept as _RESULT_PREV_20261028.md
+178d7d14878bc4c5822ef58cabda866f /users/PUOM0008/crsfaaron/howland_decline_20261028/2026-10-28_v143_howland-decline-diagnostic_RESULT.md

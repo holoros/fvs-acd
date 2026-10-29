@@ -1,0 +1,77 @@
+item,arm,mine,theirs,source,absdiff,agree
+tag_records_foldA,fieldtag,698,698,hinc trees fold A,0,TRUE
+tag_records_foldB,fieldtag,737,737,hinc trees fold B,0,TRUE
+tag_sites_foldB,fieldtag,136,136,hinc sites fold B,0,TRUE
+hinc_n_foldB,p38_fit,737,737,hinc,0,TRUE
+hinc_ratio,p38_fit,1.0525877429497537,1.0525877429497501,hinc,3.55e-15,TRUE
+hinc_bias_lt12.7,p38_fit,-0.027117190180325736,-0.027117190180325702,hinc,3.47e-17,TRUE
+hinc_bias_12.7to25,p38_fit,0.021947047371311219,0.021947047371311201,hinc,1.73e-17,TRUE
+hinc_bias_ge25,p38_fit,0.037712318699681849,0.037712318699681897,hinc,4.86e-17,TRUE
+dom_level,p38_fit,0.99432956467776534,0.99432956467776501,hinc,3.33e-16,TRUE
+dom_n,p38_fit,133,133,hinc,0,TRUE
+hinc_n_foldB,p19_a0111,737,737,hinc,0,TRUE
+hinc_ratio,p19_a0111,0.093135407160421499,0.093135407160421499,hinc,0,TRUE
+hinc_bias_lt12.7,p19_a0111,-0.19033566090020471,-0.19033566090020501,hinc,3.05e-16,TRUE
+hinc_bias_12.7to25,p19_a0111,-0.1409618095225301,-0.14096180952253001,hinc,8.33e-17,TRUE
+hinc_bias_ge25,p19_a0111,-0.12027311452333835,-0.120273114523338,hinc,3.47e-16,TRUE
+dom_level,p19_a0111,0.89791247957631359,0.89791247957631404,hinc,4.44e-16,TRUE
+dom_n,p19_a0111,133,133,hinc,0,TRUE
+hinc_n_foldB,p28b_small,737,737,hinc,0,TRUE
+hinc_ratio,p28b_small,0.97930775013777738,0.97930775013777704,hinc,3.33e-16,TRUE
+hinc_bias_lt12.7,p28b_small,-0.023729569445954595,-0.023729569445954599,hinc,3.47e-18,TRUE
+hinc_bias_12.7to25,p28b_small,0.02527631935202411,0.025276319352024099,hinc,1.04e-17,TRUE
+hinc_bias_ge25,p28b_small,-0.12027311317466685,-0.120273113174667,hinc,1.53e-16,TRUE
+dom_level,p28b_small,0.96068480303323933,0.960684803033239,hinc,3.33e-16,TRUE
+dom_n,p28b_small,133,133,hinc,0,TRUE
+hinc_n_foldB,p23_a1061,737,737,hinc,0,TRUE
+hinc_ratio,p23_a1061,0.89792743261955865,0.89792743261955899,hinc,3.33e-16,TRUE
+hinc_bias_lt12.7,p23_a1061,-0.053700541238587023,-0.053700541238587002,hinc,2.08e-17,TRUE
+hinc_bias_12.7to25,p23_a1061,-0.004244143395644156,-0.0042441433956441604,hinc,4.34e-18,TRUE
+hinc_bias_ge25,p23_a1061,0.01264807122928392,0.012648071229283899,hinc,2.08e-17,TRUE
+dom_level,p23_a1061,0.97886297027457592,0.97886297027457603,hinc,1.11e-16,TRUE
+dom_n,p23_a1061,133,133,hinc,0,TRUE
+stand_n_foldB,p38_fit,160,160,stands-summary,0,TRUE
+topht_bias_pct,p38_fit,16.212490953417646,16.2124909534176,stands-summary,4.62e-14,TRUE
+topht_bias_pct(gates),p38_fit,16.212490953417646,16.2124909534176,gates-all,4.62e-14,TRUE
+c1_rmse_pct,p38_fit,46.798236408221321,46.7982364082213,stands-summary,2.13e-14,TRUE
+c1_rmse_pct(gates),p38_fit,46.798236408221321,46.7982364082213,gates-all,2.13e-14,TRUE
+ba_ratio,p38_fit,1.002475699475134,1.00247569947513,stands-summary,4e-15,TRUE
+ba_pts(gates),p38_fit,0.24756994751340411,0.247569947513404,"gates-all, 100|r-1|",1.11e-16,TRUE
+stems_ratio,p38_fit,0.75342431916679931,0.75342431916679897,stands-summary,3.33e-16,TRUE
+stems_pts(gates),p38_fit,24.657568083320069,24.657568083320101,"gates-all, 100|r-1|",3.2e-14,TRUE
+stand_n_foldB,p19_a0111,160,160,stands-summary,0,TRUE
+topht_bias_pct,p19_a0111,6.2890428402375953,6.2890428402375997,stands-summary,4.44e-15,TRUE
+topht_bias_pct(gates),p19_a0111,6.2890428402375953,6.2890428402375997,gates-all,4.44e-15,TRUE
+c1_rmse_pct,p19_a0111,46.755638598574208,46.755638598574201,stands-summary,7.11e-15,TRUE
+c1_rmse_pct(gates),p19_a0111,46.755638598574208,46.755638598574201,gates-all,7.11e-15,TRUE
+ba_ratio,p19_a0111,0.99832888414833543,0.99832888414833498,stands-summary,4.44e-16,TRUE
+ba_pts(gates),p19_a0111,0.1671115851664573,0.16711158516645699,"gates-all, 100|r-1|",3.05e-16,TRUE
+stems_ratio,p19_a0111,0.75773850230913531,0.75773850230913498,stands-summary,3.33e-16,TRUE
+stems_pts(gates),p19_a0111,24.226149769086469,24.226149769086501,"gates-all, 100|r-1|",3.2e-14,TRUE
+stand_n_foldB,p23_a1061,160,160,stands-summary,0,TRUE
+topht_bias_pct,p23_a1061,14.625214645552292,14.625214645552299,stands-summary,7.11e-15,TRUE
+topht_bias_pct(gates),p23_a1061,14.625214645552292,14.625214645552299,gates-all,7.11e-15,TRUE
+c1_rmse_pct,p23_a1061,46.794983138383472,46.7949831383835,stands-summary,2.84e-14,TRUE
+c1_rmse_pct(gates),p23_a1061,46.794983138383472,46.7949831383835,gates-all,2.84e-14,TRUE
+ba_ratio,p23_a1061,1.0019358423090534,1.0019358423090501,stands-summary,3.33e-15,TRUE
+ba_pts(gates),p23_a1061,0.19358423090534149,0.19358423090534199,"gates-all, 100|r-1|",5e-16,TRUE
+stems_ratio,p23_a1061,0.75410775777925387,0.75410775777925398,stands-summary,1.11e-16,TRUE
+stems_pts(gates),p23_a1061,24.589224222074613,24.589224222074598,"gates-all, 100|r-1|",1.42e-14,TRUE
+K1_runok_not1_qc_c_all,p38_fit,0,0,K1,0,TRUE
+H0_stands,p38_one,77,77,H0,0,TRUE
+H0_trees,p38_one,11594,11594,H0,0,TRUE
+H0_worst_stand_scaled,p38_one,0,0,H0,0,TRUE
+H0_worst_tree_all,p38_one,0,0,H0,0,TRUE
+gate_class_worst_excess,p38_fit,-0.082560795823656496,-0.082560795823656496,gates-all,0,TRUE
+gate_V2_diff,p38_fit,-0.042597809647112683,-0.042597809647098472,gates-all rmse_ref-rmse,1.42e-14,TRUE
+gate_B1_excess_pts,p38_fit,0.08045836234694681,0.080458362346947004,gates-all,1.94e-16,TRUE
+gate_B2_excess_pts,p38_fit,0.43141831423360033,0.43141831423359989,gates-all,4.44e-16,TRUE
+gate_dom_excess,p38_fit,-0.11641708510145175,-0.11641708510145098,gates-all,7.77e-16,TRUE
+gate_pass_H1,p38_fit,1,1,gates-all,0,TRUE
+gate_pass_HC,p38_fit,1,1,gates-all,0,TRUE
+gate_pass_TOPHT_level,p38_fit,0,0,gates-all,0,TRUE
+gate_pass_TOPHT_dom,p38_fit,1,1,gates-all,0,TRUE
+gate_pass_V2,p38_fit,1,1,gates-all,0,TRUE
+gate_pass_B1,p38_fit,1,1,gates-all,0,TRUE
+gate_pass_B2,p38_fit,1,1,gates-all,0,TRUE
+verdict,p38_fit,not adopted (TOPHT),"Rule 4: TOPHT +16.21 percent against the +14.63 limit at 1.061, dominant cohort t2 level 0.994 against 0.898 for qc141; not adopted",verdict txt,,TRUE

@@ -1,0 +1,2 @@
+61ab907e7be70cac0e68264586e9ebec  plan/2026-10-26_v142_qc-stems-deficit_PREREG48.md  server copy recorded 2026-10-26T13:31:06-03:00 before any PREREG48 script runs; laptop registration line follows:
+61ab907e7be70cac0e68264586e9ebec  plan/2026-10-26_v142_qc-stems-deficit_PREREG48.md  PREREG48 revision 1 registered 2026-10-26T11:36:13-0400 (laptop copy)

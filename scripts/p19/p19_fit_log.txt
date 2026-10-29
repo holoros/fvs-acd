@@ -1,0 +1,390 @@
+=== pass 16 plot_ba_incr POOLED multi-source Acadian refit (revised) ===
+ 2026-08-18 21:21:46 
+
+model sourced (read-only, helper functions only) OK
+
+[build] mefia_long - tree rows: 37652  unmatched species: 0  ( 0 %)
+[build] mefia_long - plots after csi/rd join+filter: 933 
+[build] mefia_long - TRUE-IDENTITY pairs: 24520  sp agreement: 0.9791  crossers: 1418  backcrossers: 0 
+[build] mefia_long - mean stand dsf: naive-pair p16 estimator would have been inflated; true-pair split 11.027  hybrid 9.23 
+[build] ns_long - tree rows: 344300  unmatched species: 0  ( 0 %)
+[build] ns_long - plots after csi/rd join+filter: 5524 
+[build] ns_long - unique-key survivor matches: 184633  (t1 rows: 344300 , ambiguous/unmatched excluded from matching only)
+[build] ns_long - NOTE: 123 matched trees with E1 != E2 (single-frame source; E1 pricing kept, flagged)
+[build] ctrn - tree rows: 122692  unmatched species: 0  ( 0 %)
+[build] ctrn - plots after csi/rd join+filter: 1086 
+[build] ctrn - unique-key survivor matches: 117598  (t1 rows: 122692 , ambiguous/unmatched excluded from matching only)
+[build] pef - tree rows: 190722  unmatched species: 0  ( 0 %)
+[build] pef - plots after csi/rd join+filter: 2853 
+[build] pef - unique-key survivor matches: 99044  (t1 rows: 190722 , ambiguous/unmatched excluded from matching only)
+[build] pef - NOTE: 6649 matched trees with E1 != E2 (single-frame source; E1 pricing kept, flagged)
+[build] baxter - tree rows: 5628  unmatched species: 0  ( 0 %)
+[build] baxter - plots after csi/rd join+filter: 91 
+[build] baxter - survivor sums from p17_baxter_corrected_survivor_sums.csv : 91 stands
+[build] silc_l - tree rows: 2127  unmatched species: 0  ( 0 %)
+[build] silc_l - plots after csi/rd join+filter: 137 
+[build] silc_l - survivor sums from p17_silc_corrected_survivor_sums.csv : 137 stands
+
+[pool] total rows before fitting filters: 10624 
+
+[screen] DROPPING 27 rows with |raw annual survivor BA increment| > 3 m2/ha/yr (implausible; ceiling set a priori, well above any credible
+[screen] full-stand increment for this region). By source:
+    PROV  n
+1 BAXTER  1
+2   CTRN  3
+3     NS 23
+# A tibble: 15 × 8
+   STAND              PROV  dsf_annual      g ba.plot    rd   csi interval_years
+   <chr>              <chr>      <dbl>  <dbl>   <dbl> <dbl> <dbl>          <int>
+ 1 NS_RS_9611_2001_2… NS          6.03   3.67    60.6 1.94   14.0              5
+ 2 NS_RS_8345_2003_2… NS          6.00  13.7     44.6 1.16   19.7              2
+ 3 NS_RS_9917_1999_2… NS          5.78  15.1     24.0 0.888  14.0              5
+ 4 NS_RS_7940_1984_1… NS          5.63  13.2     46.0 2.27   13.1              5
+ 5 BAX_87_2000_2008   BAXT…       4.85  15.4     39.0 0.825  13                8
+ 6 NS_RS_8442_1998_1… NS          4.71 -32.5     88.2 1.70   35.2              1
+ 7 NS_RS_7940_1989_1… NS          4.69  -9.95    73.2 3.08   13.1              5
+ 8 NS_RS_115_2001_20… NS          4.68 -16.7     78.2 2.54   13.4              5
+ 9 NS_RS_7940_1979_1… NS          4.64  15.2     24.6 1.43   13.1             15
+10 NS_RS_7940_1979_1… NS          4.27  15.2     24.6 1.43   13.1              5
+11 NS_RS_9537_1995_2… NS          3.64 -33.0     88.5 3.58   14.1              5
+12 NS_RS_8512_1985_1… NS          3.56  15.8     36.7 2.15   13.2              5
+13 CTRN_DR_6_I2012_2… CTRN        3.52  16.0     34.5 0.793  14.3              1
+14 NS_RS_8345_2005_2… NS         -3.49  -1.84    66.3 1.58   19.7              1
+15 NS_RS_8908_1994_1… NS          3.45  14.0     20.6 0.726  16.6              5
+[screen] rows retained: 10597 of 10624 
+
+[pool] retained after fitting filters (matches p14's filter set): 9416 of 10597 
+
+=== per-source retained-sample summary ===
+     PROV n_rows n_sites csi_min csi_p25 csi_med csi_p75 csi_max  rd_min rd_med
+   BAXTER     90      90   13.00   13.00   13.00   13.00   13.00 0.07991 0.6163
+     CTRN   1082     166   11.47   15.10   16.60   17.62   21.00 0.07608 0.5565
+ ME_FIA_L    877     877   10.04   13.17   14.01   15.81   23.04 0.05018 0.4565
+       NS   4980    1845   11.40   17.84   19.90   22.23   35.20 0.03901 0.4697
+      PEF   2270     395   12.11   15.00   18.90   20.36   26.00 0.04250 0.4018
+   SILC_L    117     117   16.74   17.85   18.63   18.96   19.23 0.04568 0.1828
+ rd_max interval_min interval_max
+ 1.0152            8           13
+ 1.5036            1            5
+ 1.2909            4           25
+ 3.1654            1           40
+ 1.5658            2           20
+ 0.6078            5           15
+
+=== pooled csi vs Maine-only (10.0-23.0, IQR 13.2-15.9) ===
+pooled n_rows: 9416  n_sites: 3490   csi: min 10.04  p25 15.66  median 18.6  p75 20.98  max 35.2 
+
+=== rt_surv quantiles after dedup + plausibility screen (sanity check on the fix) ===
+      0%       1%       5%      25%      50%      75%      95%      99% 
+-0.09026  0.00000  0.00215  0.02434  0.03931  0.06343  0.13630  0.34238 
+    100% 
+ 1.51843 
+
+DONE part 1 (data assembly)
+ 2026-08-18 21:22:02 
+
+=== part 2: fixed-effects fit (Form A / Form B), mirrors p14 exactly ===
+
+=== response: rt_surv - primary: survivor BA growth, fixed EXPF, all trees  n = 9416  n_sites = 3490 ===
+  [mixed] fitting lme(random = ~1|PROV/SITE) for rt_surv ...
+  [mixed] elapsed: 1 s
+=== response: rt_net - sensitivity: net BA change (mortality+harvest+ingrowth net)  n = 9415  n_sites = 3489 ===
+  FIXED FIT FAILED for rt_net : step halving factor reduced below minimum in NLS step 
+=== response: rt_lg - sensitivity: survivor growth, DBH1>=12.7cm trees only  n = 9008  n_sites = 3387 ===
+  [mixed] fitting lme(random = ~1|PROV/SITE) for rt_lg ...
+  [mixed] elapsed: 1.2 s
+
+=== pass 17 arm 1: hybrid-estimator sensitivity (rt_surv_hyb, fixed Form A only) ===
+hybrid-estimator Form A coefficients (compare a2 with split-estimator rt_surv Form A):
+       Value Std.Error    t-value  p-value
+a0  0.134872  0.008876  15.195733 0.000000
+a1 -0.001293  0.000944  -1.368765 0.171105
+a2 -0.028120  0.003038  -9.255523 0.000000
+a3 -0.005646  0.000248 -22.733194 0.000000
+
+=== pass 17 arm 2: size-class interaction Form C (rt_surv, corrected data) ===
+Form C: rt_surv ~ a0 + a1*lrd + a2*lcsi + a3*lhw + a5*f_sm + a6*f_sm*lcsi
+f_sm summary (t1 BA share < 12.7 cm):
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0843  0.1876  0.2731  0.3759  1.0000 
+FIXED Form C coefficients:
+       Value Std.Error    t-value  p-value
+a0 -0.128205  0.012598 -10.176387 0.000000
+a1 -0.000219  0.000873  -0.251305 0.801584
+a2  0.051948  0.004259  12.198017 0.000000
+a3 -0.003419  0.000231 -14.777764 0.000000
+a5  0.577979  0.031697  18.234484 0.000000
+a6 -0.168089  0.011245 -14.947352 0.000000
+AIC: -23649.69  vs Form A AIC: -21668.52 
+LRT Form A vs Form C:
+                              Model df       AIC       BIC   logLik   Test
+fits_fixed[["rt_surv"]]$formA     1  5 -21668.52 -21632.77 10839.26       
+fit_C                             2  7 -23649.69 -23599.64 11831.84 1 vs 2
+                               L.Ratio p-value
+fits_fixed[["rt_surv"]]$formA                 
+fit_C                         1985.168  <.0001
+MIXED Form C (random = ~1|PROV/SITE) fixed effects:
+                Value Std.Error   DF    t-value p-value
+(Intercept) -0.182979  0.021665 5922  -8.445891       0
+lrd         -0.014833  0.001017 5922 -14.581477       0
+lcsi         0.070164  0.007179 3483   9.773451       0
+lhw         -0.002970  0.000361 5922  -8.224973       0
+f_sm         0.765487  0.039862 5922  19.203641       0
+lcsi:f_sm   -0.236808  0.014066 5922 -16.836061       0
+delta-AIC (mixed A minus mixed C), positive means C preferred: 1279.34 
+LRT MIXED Form A vs Form C:
+                               Model df       AIC       BIC   logLik   Test
+fits_mixed[["rt_surv"]]$mixedA     1  7 -25427.04 -25376.99 12720.52       
+mix_C                              2  9 -26706.38 -26642.03 13362.19 1 vs 2
+                                L.Ratio p-value
+fits_mixed[["rt_surv"]]$mixedA                 
+mix_C                          1283.335  <.0001
+
+--- rt_surv : FIXED Form A (no interaction) ---
+       Value Std.Error    t-value  p-value
+a0  0.166541  0.009017  18.470221 0.000000
+a1 -0.001540  0.000959  -1.604745 0.108584
+a2 -0.038664  0.003086 -12.527118 0.000000
+a3 -0.005446  0.000252 -21.582625 0.000000
+AIC: -21668.52  BIC: -21632.77  logLik: 10839.26 
+
+--- rt_surv : FIXED Form B (centered interaction) ---
+       Value Std.Error    t-value  p-value
+a0  0.163501  0.009028  18.111119 0.000000
+a1 -0.001615  0.000958  -1.685003 0.092021
+a2 -0.037751  0.003088 -12.223264 0.000000
+a3 -0.005294  0.000254 -20.847905 0.000000
+a4  0.022071  0.004547   4.854173 0.000001
+AIC: -21690.07  BIC: -21647.17  logLik: 10851.03 
+LRT FIXED Form A vs Form B:
+   Model df       AIC       BIC   logLik   Test  L.Ratio p-value
+fA     1  5 -21668.52 -21632.77 10839.26                        
+fB     2  6 -21690.07 -21647.17 10851.03 1 vs 2 23.54605  <.0001
+
+--- rt_surv : MIXED Form A (random = ~1|PROV/SITE) ---
+                Value Std.Error   DF    t-value p-value
+(Intercept)  0.182808  0.018615 5924   9.820471       0
+lrd         -0.017275  0.001076 5924 -16.050480       0
+lcsi        -0.052430  0.006221 3483  -8.427441       0
+lhw         -0.004545  0.000397 5924 -11.452238       0
+AIC: -25427.05  BIC: -25376.99  logLik: 12720.52 
+VarCorr:
+            Variance     StdDev    
+PROV =      pdLogChol(1)           
+(Intercept) 0.0002495325 0.01579660
+SITE =      pdLogChol(1)           
+(Intercept) 0.0026832580 0.05180017
+Residual    0.0136141102 0.11667952
+delta-AIC (fixed A minus mixed A), positive means mixed A preferred: 3758.52 
+
+--- rt_surv : MIXED Form B (random = ~1|PROV/SITE) ---
+                Value Std.Error   DF    t-value p-value
+(Intercept)  0.176424  0.018718 5923   9.425278       0
+lrd         -0.017486  0.001067 5923 -16.380918       0
+lcsi        -0.049986  0.006311 3483  -7.920837       0
+lhw         -0.004099  0.000401 5923 -10.231686       0
+c_int        0.077581  0.005129 5923  15.126758       0
+AIC: -25643.74  BIC: -25586.54  logLik: 12829.87 
+delta-AIC (fixed B minus mixed B), positive means mixed B preferred: 3953.67 
+LRT MIXED Form A vs Form B:
+   Model df       AIC       BIC   logLik   Test  L.Ratio p-value
+mA     1  7 -25427.04 -25376.99 12720.52                        
+mB     2  8 -25643.74 -25586.54 12829.87 1 vs 2 218.6915  <.0001
+
+--- rt_lg : FIXED Form A (no interaction) ---
+       Value Std.Error    t-value p-value
+a0  0.014498  0.003394   4.271971   2e-05
+a1  0.003139  0.000368   8.537728   0e+00
+a2  0.006779  0.001156   5.863024   0e+00
+a3 -0.001398  0.000096 -14.489557   0e+00
+AIC: -38848.45  BIC: -38812.92  logLik: 19429.23 
+
+--- rt_lg : FIXED Form B (centered interaction) ---
+       Value Std.Error    t-value p-value
+a0  0.015694  0.003391   4.627770   4e-06
+a1  0.003352  0.000368   9.100024   0e+00
+a2  0.006487  0.001155   5.618909   0e+00
+a3 -0.001469  0.000097 -15.165224   0e+00
+a4 -0.011513  0.001786  -6.445242   0e+00
+AIC: -38887.92  BIC: -38845.28  logLik: 19449.96 
+LRT FIXED Form A vs Form B:
+   Model df       AIC       BIC   logLik   Test  L.Ratio p-value
+fA     1  5 -38848.45 -38812.92 19429.23                        
+fB     2  6 -38887.92 -38845.28 19449.96 1 vs 2 41.46862  <.0001
+
+--- rt_lg : MIXED Form A (random = ~1|PROV/SITE) ---
+                Value Std.Error   DF   t-value  p-value
+(Intercept) -0.005134  0.008404 5619 -0.610869 0.541311
+lrd         -0.000776  0.000415 5619 -1.868578 0.061734
+lcsi         0.014141  0.002384 3380  5.932289 0.000000
+lhw         -0.001423  0.000149 5619 -9.579202 0.000000
+AIC: -42618.87  BIC: -42569.13  logLik: 21316.43 
+VarCorr:
+            Variance     StdDev    
+PROV =      pdLogChol(1)           
+(Intercept) 0.0001545593 0.01243219
+SITE =      pdLogChol(1)           
+(Intercept) 0.0003559604 0.01886691
+Residual    0.0017426000 0.04174446
+delta-AIC (fixed A minus mixed A), positive means mixed A preferred: 3770.42 
+
+--- rt_lg : MIXED Form B (random = ~1|PROV/SITE) ---
+                Value Std.Error   DF   t-value  p-value
+(Intercept) -0.004886  0.008386 5618 -0.582621 0.560172
+lrd         -0.000718  0.000416 5618 -1.726326 0.084344
+lcsi         0.014054  0.002380 3380  5.905504 0.000000
+lhw         -0.001438  0.000149 5618 -9.680509 0.000000
+c_int       -0.003706  0.002034 5618 -1.821606 0.068568
+AIC: -42620.16  BIC: -42563.31  logLik: 21318.08 
+delta-AIC (fixed B minus mixed B), positive means mixed B preferred: 3732.24 
+LRT MIXED Form A vs Form B:
+   Model df       AIC       BIC   logLik   Test  L.Ratio p-value
+mA     1  7 -42618.87 -42569.13 21316.43                        
+mB     2  8 -42620.16 -42563.31 21318.08 1 vs 2 3.292014  0.0696
+
+DONE part 2 (fixed + mixed fits)
+ 2026-08-18 21:22:06 
+
+=== part 3: stratified cluster bootstrap (resample SITE within PROV) ===
+
+
+[boot] rt_surv form A - 2000 reps, stratified cluster(SITE within PROV) resampling...
+  converged reps: 1862 / 2000   elapsed: 191 s
+  bootstrap percentile 95% CIs (2.5%, 50%, 97.5%):
+                    2.5%       50%     97.5%
+a1.a1           -0.00518  -0.00172   0.00225
+a2.a2           -0.04923  -0.03883  -0.02941
+a3.a3           -0.00659  -0.00545  -0.00438
+pct_dba_12to20 -39.63390 -33.83409 -27.82385
+
+[boot] rt_surv form B - 2000 reps, stratified cluster(SITE within PROV) resampling...
+  converged reps: 1854 / 2000   elapsed: 218.1 s
+  bootstrap percentile 95% CIs (2.5%, 50%, 97.5%):
+                    2.5%       50%     97.5%
+a1.a1           -0.00528  -0.00173   0.00200
+a2.a2           -0.04776  -0.03774  -0.02905
+a3.a3           -0.00638  -0.00532  -0.00425
+a4.a4            0.00404   0.02284   0.04342
+pct_dba_12to20 -37.33357 -31.84140 -26.09084
+
+[boot] rt_surv form C - 2000 reps, stratified cluster(SITE within PROV) resampling...
+  converged reps: 1815 / 2000   elapsed: 267.2 s
+  bootstrap percentile 95% CIs (2.5%, 50%, 97.5%):
+                          2.5%      50%    97.5%
+a1.a1                 -0.00392 -0.00041  0.00324
+a2.a2                  0.03931  0.05192  0.06585
+a3.a3                 -0.00427 -0.00342 -0.00264
+a5.a5                  0.42032  0.57600  0.75529
+a6.a6                 -0.22864 -0.16737 -0.11310
+site_slope_at_med_fsm  0.01438  0.02034  0.02613
+
+[boot] rt_lg form A - 2000 reps, stratified cluster(SITE within PROV) resampling...
+  converged reps: 2000 / 2000   elapsed: 124.5 s
+  bootstrap percentile 95% CIs (2.5%, 50%, 97.5%):
+                   2.5%      50%    97.5%
+a1.a1           0.00186  0.00317  0.00445
+a2.a2           0.00300  0.00683  0.01069
+a3.a3          -0.00178 -0.00139 -0.00103
+pct_dba_12to20  5.62467 13.69790 22.82975
+
+[boot] rt_lg form B - 2000 reps, stratified cluster(SITE within PROV) resampling...
+  converged reps: 1999 / 2000   elapsed: 139.5 s
+  bootstrap percentile 95% CIs (2.5%, 50%, 97.5%):
+                   2.5%      50%    97.5%
+a1.a1           0.00195  0.00324  0.00451
+a2.a2           0.00263  0.00635  0.01032
+a3.a3          -0.00183 -0.00147 -0.00112
+a4.a4          -0.01915 -0.01148 -0.00337
+pct_dba_12to20  2.81003 10.57539 20.17043
+
+=== FINAL FIXED-EFFECTS COEFFICIENT + STRATIFIED CLUSTER BOOTSTRAP CI TABLE ===
+ response form param     estimate  analytic_se boot_lo95 boot_hi95
+  rt_surv    A    a0  0.166540839 9.016721e-03        NA        NA
+  rt_surv    A    a1 -0.001539711 9.594742e-04        NA        NA
+  rt_surv    A    a2 -0.038664110 3.086433e-03        NA        NA
+  rt_surv    A    a3 -0.005445791 2.523229e-04        NA        NA
+  rt_surv    B    a0  0.163501297 9.027675e-03        NA        NA
+  rt_surv    B    a1 -0.001614994 9.584517e-04        NA        NA
+  rt_surv    B    a2 -0.037751201 3.088471e-03        NA        NA
+  rt_surv    B    a3 -0.005294262 2.539469e-04        NA        NA
+  rt_surv    B    a4  0.022070759 4.546760e-03        NA        NA
+    rt_lg    A    a0  0.014498495 3.393866e-03        NA        NA
+    rt_lg    A    a1  0.003139205 3.676862e-04        NA        NA
+    rt_lg    A    a2  0.006778962 1.156223e-03        NA        NA
+    rt_lg    A    a3 -0.001397709 9.646317e-05        NA        NA
+    rt_lg    B    a0  0.015694292 3.391330e-03        NA        NA
+    rt_lg    B    a1  0.003351929 3.683429e-04        NA        NA
+    rt_lg    B    a2  0.006487126 1.154517e-03        NA        NA
+    rt_lg    B    a3 -0.001469288 9.688535e-05        NA        NA
+    rt_lg    B    a4 -0.011513418 1.786344e-03        NA        NA
+
+=== MIXED Form A REML fixed effects + 95% CI, rt_surv ===
+                lower      est.     upper
+(Intercept)  0.145927  0.183001  0.220075
+lrd         -0.019405 -0.017295 -0.015184
+lcsi        -0.064781 -0.052560 -0.040338
+lhw         -0.005314 -0.004535 -0.003756
+attr(,"label")
+[1] "Fixed effects:"
+
+=== MIXED Form A REML fixed effects + 95% CI, rt_lg ===
+                lower      est.     upper
+(Intercept) -0.022256 -0.005160  0.011937
+lrd         -0.001594 -0.000780  0.000034
+lcsi         0.009470  0.014147  0.018823
+lhw         -0.001712 -0.001421 -0.001129
+attr(,"label")
+[1] "Fixed effects:"
+
+DONE part 3 (bootstrap + mixed REML)
+ 2026-08-18 21:37:47 
+
+=== part 4: Bakuzis-lite site-ordering check (proxy, see scope note in header) ===
+
+=== Bakuzis-lite: fitted survivor BA growth rate (rt_surv) vs csi, at median rd and hw ===
+ csi rt_formA_fixed rt_formB_fixed rt_formC_fsm0 rt_formC_fsmMed rt_formA_mixed
+  10      0.0656053      0.0639160  -0.016652590       0.0191605    0.064703116
+  12      0.0585560      0.0573902  -0.007181258       0.0228837    0.055144085
+  14      0.0525959      0.0518728   0.000826638       0.0260317    0.047062040
+  16      0.0474330      0.0470934   0.007763393       0.0287587    0.040061054
+  18      0.0428790      0.0428776   0.013882045       0.0311640    0.033885747
+  20      0.0388053      0.0391065   0.019355366       0.0333156    0.028361746
+  22      0.0351203      0.0356951   0.024306587       0.0352620    0.023364680
+  24      0.0317560      0.0325807   0.028826697       0.0370389    0.018802716
+  26      0.0286613      0.0297158   0.032984796       0.0386735    0.014606116
+  28      0.0257959      0.0270633   0.036834593       0.0401869    0.010720671
+  30      0.0231284      0.0245939   0.040418670       0.0415958    0.007103408
+  32      0.0206331      0.0222839   0.043771349       0.0429138    0.003719685
+  34      0.0182891      0.0201140   0.046920707       0.0441519    0.000541165
+ rt_formB_mixed
+     0.06105381
+     0.05319548
+     0.04655136
+     0.04079596
+     0.03571933
+     0.03117814
+     0.02707013
+     0.02331981
+     0.01986985
+     0.01667569
+     0.01370200
+     0.01092029
+     0.00830728
+[Bakuzis-lite] Form A, fixed-effects - FLAG: rt DECREASES monotonically with csi (inverted site ordering, the original sign problem)
+[Bakuzis-lite] Form B, fixed-effects - FLAG: rt DECREASES monotonically with csi (inverted site ordering, the original sign problem)
+[Bakuzis-lite] Form C, fixed, f_sm = 0 (pure large-tree stand) - PASS: rt increases monotonically with csi (correct site ordering)
+[Bakuzis-lite] Form C, fixed, f_sm = median - PASS: rt increases monotonically with csi (correct site ordering)
+[Bakuzis-lite] Form A, mixed (PROV/SITE random) - FLAG: rt DECREASES monotonically with csi (inverted site ordering, the original sign problem)
+[Bakuzis-lite] Form B, mixed (PROV/SITE random) - FLAG: rt DECREASES monotonically with csi (inverted site ordering, the original sign problem)
+
+=== HEADLINE: a2 (lcsi coefficient), rt_surv primary response ===
+FIXED Form A: a2 = -0.03866  analytic SE = 0.00309  boot 95% CI [ -0.04923 , -0.02941 ]
+MIXED  Form A: a2(lcsi) = -0.05243  SE = 0.00622  p = 5.101e-17 
+HYBRID-ESTIMATOR sensitivity Form A: a2 = -0.02812  SE = 0.00304 
+FORM C: a2 (site slope, f_sm = 0) = 0.05195  a6 (f_sm modifier) = -0.16809 
+  boot 95% CI a2 [ 0.03931 , 0.06585 ]  a6 [ -0.22864 , -0.1131 ]
+p14 (Maine-only, contaminated estimator) comparison: a2 = -0.126 (SE 0.047)
+p16 (pooled, contaminated estimator) comparison: a2 negative and significant, all four specs
+
+DONE ALL
+ 2026-08-18 21:37:47 

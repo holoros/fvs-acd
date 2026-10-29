@@ -1,0 +1,64 @@
+2,5c2,9
+< # PREREG19 firebreather driver: one task of work/p19_taskmap. Environment block is the bench141 v141LT array block verbatim
+< # (as rebased to this bundle in ~/jobs/v142p17/home/run_task_p17.sh), with the PREREG17 changes removed: no
+< # ING_MIN_FROM_SCORE, IMULT=2.5 (14.1 as shipped), HTFIX_B unset. The only per arm change is QC_AFAC (the QC dht.mult,
+< # runner line 425) or, for the smoke arms, USE_ANCHOR or QC_BREAK. Refuses to overwrite. No coordinates. No em dashes.
+---
+> # PREREG50 task driver (plan revision 1, md5 6ea850d4). Copy of PREREG19 run_task_p19.sh (md5 ac029e4e): its environment
+> # block (source lines 17 to 33: QC_AFAC 0.111, NB_AFAC 0.579, IMULT 2.5, LINKED L2, V141 overlay, md5 checks) is pasted
+> # verbatim by build_p50.sh. Changed: taskmap; arm case (g2 = qc141 exactly as frozen; e1 = ING_MIN_FROM_SCORE=1;
+> # s2 = ING_MIN_FROM_SCORE=1 and P50_ONESTEP=1); runner runner_p50_fb.R and its md5; output names carry _SERVERONLY; the G3
+> # trace file; a by name mode (stand file) for the dry run and the PREREG19 retry rule. Refuses to overwrite.
+> # Usage: HOME=<bundle home> bash run_task_p50.sh <task id>
+> #        HOME=<bundle home> OUTROOT=<dir> bash run_task_p50.sh keep <COL> <stand file> <name>
+> # No coordinates. No em dashes.
+7,9c11,17
+< T=$1; R1=$HOME; TM=$R1/work/p19_taskmap_DATA_2026-09-28.csv
+< ROW=$(awk -F, -v t="$T" 'NR>1 && $1==t {print $2","$3","$4","$5","$6}' "$TM"); [ -n "$ROW" ] || { echo "task $T not in $TM"; exit 2; }
+< IFS=, read -r COL CHUNK SET FROM TO <<< "$ROW"
+---
+> R1=$HOME; TM=$R1/work/p50_taskmap_DATA_2026-10-28.csv
+> if [ "$1" = keep ]; then
+>   COL=$2; SET=qc_c; KF=$3; NAME=$4; [ -s "$KF" ] || { echo "no stand file"; exit 2; }
+> else
+>   T=$1; ROW=$(awk -F, -v t="$T" 'NR>1 && $1==t {print $2","$3","$4","$5","$6}' "$TM"); [ -n "$ROW" ] || { echo "task $T not in $TM"; exit 2; }
+>   IFS=, read -r COL CHUNK SET FROM TO <<< "$ROW"; NAME=c$(printf %03d $CHUNK)
+> fi
+12c20
+< export CHUNK_FROM=$FROM CHUNK_TO=$TO
+---
+> if [ "$1" = keep ]; then unset CHUNK_FROM CHUNK_TO || true; export STAND_KEEP_FILE=$KF; else unset STAND_KEEP_FILE || true; export CHUNK_FROM=$FROM CHUNK_TO=$TO; fi
+14c22
+< mkdir -p $R1/$OUTROOT/$COL/$SET; export CONFIG_TAG=$R1/$OUTROOT/$COL/$SET/c$(printf %03d $CHUNK)
+---
+> mkdir -p $R1/$OUTROOT/$COL/$SET; export CONFIG_TAG=$R1/$OUTROOT/$COL/$SET/${NAME}_SERVERONLY
+34c42,43
+< unset HTFIX_B ING_MIN_FROM_SCORE || true
+---
+> [ "$SET" = qc_c ] || { echo "FATAL set $SET not in PREREG50"; exit 5; }
+> unset HTFIX_B ING_MIN_FROM_SCORE P50_ONESTEP P50_TRACE || true
+36,40c45,47
+<   p19_a*) A=${COL#p19_a}; export QC_AFAC=$(awk -v a="$A" 'BEGIN{printf "%.3f", a/1000}') ;;
+<   nbctl_a1000) export QC_AFAC=1.000 ;;
+<   smk_base) ;;
+<   smk_noanc) export USE_ANCHOR=FALSE ;;
+<   smk_qcbrk) export QC_BREAK=0.90 ;;
+---
+>   g2) ;;
+>   e1) export ING_MIN_FROM_SCORE=1 ;;
+>   s2) export ING_MIN_FROM_SCORE=1 P50_ONESTEP=1 ;;
+43,44c50,52
+< RUNNER=$HOME/runner_htfix_fb.R; chk $RUNNER 4e6a29971922b1f7a0397cc91ff56f84
+< export TREE_OUT=$CONFIG_TAG
+---
+> RUNNER=$HOME/runner_p50_fb.R; chk $RUNNER 7bd249b2e63ffc056600a62cc2345456
+> export TREE_OUT=$CONFIG_TAG P50_TRACE=${CONFIG_TAG}_ingmin_trace.csv
+> [ ! -e "$P50_TRACE" ] || { echo "REFUSE trace exists"; exit 3; }
+46c54
+< echo "[v142p19-fb] COL=$COL task=$T set=$SET chunk=$CHUNK rows=$FROM..$TO QC_AFAC=$QC_AFAC NB_AFAC=$NB_AFAC USE_ANCHOR=$USE_ANCHOR QC_BREAK=$QC_BREAK IMULT=$IMULT host=$(hostname) start=$(date -Is)"
+---
+> echo "[v142p50-fb] COL=$COL name=$NAME set=$SET QC_AFAC=$QC_AFAC NB_AFAC=$NB_AFAC USE_ANCHOR=$USE_ANCHOR QC_BREAK=$QC_BREAK IMULT=$IMULT ING_MIN_FROM_SCORE=${ING_MIN_FROM_SCORE:-unset} P50_ONESTEP=${P50_ONESTEP:-unset} host=$(hostname) start=$(date -Is)"
+48c56
+< echo "[v142p19-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"
+---
+> echo "[v142p50-fb] DONE ${CONFIG_TAG}_results.csv end=$(date -Is)"

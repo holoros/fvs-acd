@@ -1,0 +1,10 @@
+plan_md5=d93f3035 (revision 5; revisions 1 7f64d22c, 2 6a77fa5f, 3 21a36a30, 4 4fa7aea1)
+mode=reading
+harness_ok=TRUE
+F_HT=9.5176 S_HT=11 MG_LO=-0.0247
+outcome_qc141=RULE2_NOT_CREDIBLE_LONGRUN [post hoc (frozen arm, reported beside its registered verdict)]; failing=LG late growth; all_failing=LG late growth;HM;SO
+outcome_p38_fit=RULE2_NOT_CREDIBLE_LONGRUN [post hoc (frozen arm, reported beside its registered verdict)]; failing=C offset removed;C raw ceiling; all_failing=C offset removed;C raw ceiling;SO
+outcome_qc_rh=RULE2_NOT_CREDIBLE_LONGRUN [post hoc (frozen arm, reported beside its registered verdict)]; failing=C offset removed;C raw ceiling; all_failing=C offset removed;C raw ceiling;SO
+outcome_qc_lz=RULE2_NOT_CREDIBLE_LONGRUN [blind (trajectories created after PREREG47 registration, p47/logs/prereg_md5.txt)]; failing=C offset removed;C raw ceiling; all_failing=C offset removed;C raw ceiling;SO
+reported_not_gated=R median slope window, E 0.15, YD 0.15 (no external source in the records; PREREG47 choice 4a)
+decision_weight=reported beside each arm's registered verdict; informs 14.3 only; 14.2 keeps QC_AFAC 0.111; no 14.2 verdict reopened

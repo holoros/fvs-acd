@@ -1,0 +1,5 @@
+set,frame,records_R,records_M,same_multiset,same_order
+qc_c,init,65788,65788,TRUE,TRUE
+qc_c,t2,68584,68584,TRUE,TRUE
+qc_fl,init,2224,2224,TRUE,TRUE
+qc_fl,t2,2198,2198,TRUE,TRUE

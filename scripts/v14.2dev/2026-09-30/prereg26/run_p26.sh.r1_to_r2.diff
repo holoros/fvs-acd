@@ -1,0 +1,4 @@
+7a8
+> #   v141LTfi5 as v141LTfi with the synthetic scoring threshold P26_SMD forced to 5.0 (revision 2, reported only)
+19a21
+>   v141LTfi5) export P22_IMULT=1.5; p22_env v141LTfi ns_c; export P26_SMD=5.0 ;;

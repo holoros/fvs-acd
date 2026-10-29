@@ -1,0 +1,329 @@
+input md5s: 212 files
+R0d: frames agree on 7 columns other than TREE over 68584 rows: TRUE
+      group            form   term    estimate         se records stands
+     <char>          <char> <char>       <num>      <num>   <int>  <int>
+1: softwood three parameter      a 21.11754389 1.46319438     808    124
+2: softwood three parameter      b  0.06875614 0.01283895     808    124
+3: softwood three parameter      c  1.59623564 0.23082428     808    124
+4: hardwood three parameter      a 24.83924623 2.30838281     294     86
+5: hardwood three parameter      b  0.03850575 0.01184295     294     86
+6: hardwood three parameter      c  0.84839753 0.13001265     294     86
+        rse converged
+      <num>    <lgcl>
+1: 2.326255      TRUE
+2: 2.326255      TRUE
+3: 2.326255      TRUE
+4: 2.239255      TRUE
+5: 2.239255      TRUE
+6: 2.239255      TRUE
+p19_a0030: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 6.57e-14
+p19_a0060: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 7.64e-14
+p19_a0111: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 7.46e-14
+p19_a0250: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 7.64e-14
+p19_a0500: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 7.46e-14
+p19_a1000: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 5.68e-14
+p23_a1061: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 7.46e-14
+p23_a1250: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 7.28e-14
+p28b_small: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 6.39e-14
+p38_fit: 160 stands, 152 sites; R0a worst TOPHT_o 4.97e-14 TOPHT_p 7.46e-14
+           arm
+        <char>
+ 1:  p19_a0030
+ 2:  p19_a0030
+ 3:  p19_a0030
+ 4:  p19_a0030
+ 5:  p19_a0060
+ 6:  p19_a0060
+ 7:  p19_a0060
+ 8:  p19_a0060
+ 9:  p19_a0111
+10:  p19_a0111
+11:  p19_a0111
+12:  p19_a0111
+13:  p19_a0250
+14:  p19_a0250
+15:  p19_a0250
+16:  p19_a0250
+17:  p19_a0500
+18:  p19_a0500
+19:  p19_a0500
+20:  p19_a0500
+21:  p19_a1000
+22:  p19_a1000
+23:  p19_a1000
+24:  p19_a1000
+25:  p23_a1061
+26:  p23_a1061
+27:  p23_a1061
+28:  p23_a1061
+29:  p23_a1250
+30:  p23_a1250
+31:  p23_a1250
+32:  p23_a1250
+33: p28b_small
+34: p28b_small
+35: p28b_small
+36: p28b_small
+37:    p38_fit
+38:    p38_fit
+39:    p38_fit
+40:    p38_fit
+41:        all
+           arm
+        <char>
+                                                                  check
+                                                                 <char>
+ 1:                                             R0a stand TOPHT_o worst
+ 2:                                             R0a stand TOPHT_p worst
+ 3:                              R0b B against PREREG38 gates-all topht
+ 4:                          R0c stands against PREREG38 stands summary
+ 5:                                             R0a stand TOPHT_o worst
+ 6:                                             R0a stand TOPHT_p worst
+ 7:                              R0b B against PREREG38 gates-all topht
+ 8:                          R0c stands against PREREG38 stands summary
+ 9:                                             R0a stand TOPHT_o worst
+10:                                             R0a stand TOPHT_p worst
+11:                              R0b B against PREREG38 gates-all topht
+12:                          R0c stands against PREREG38 stands summary
+13:                                             R0a stand TOPHT_o worst
+14:                                             R0a stand TOPHT_p worst
+15:                              R0b B against PREREG38 gates-all topht
+16:                          R0c stands against PREREG38 stands summary
+17:                                             R0a stand TOPHT_o worst
+18:                                             R0a stand TOPHT_p worst
+19:                              R0b B against PREREG38 gates-all topht
+20:                          R0c stands against PREREG38 stands summary
+21:                                             R0a stand TOPHT_o worst
+22:                                             R0a stand TOPHT_p worst
+23:                              R0b B against PREREG38 gates-all topht
+24:                          R0c stands against PREREG38 stands summary
+25:                                             R0a stand TOPHT_o worst
+26:                                             R0a stand TOPHT_p worst
+27:                              R0b B against PREREG38 gates-all topht
+28:                          R0c stands against PREREG38 stands summary
+29:                                             R0a stand TOPHT_o worst
+30:                                             R0a stand TOPHT_p worst
+31:                              R0b B against PREREG38 gates-all topht
+32:                          R0c stands against PREREG38 stands summary
+33:                                             R0a stand TOPHT_o worst
+34:                                             R0a stand TOPHT_p worst
+35:                              R0b B against PREREG38 gates-all topht
+36:                          R0c stands against PREREG38 stands summary
+37:                                             R0a stand TOPHT_o worst
+38:                                             R0a stand TOPHT_p worst
+39:                              R0b B against PREREG38 gates-all topht
+40:                          R0c stands against PREREG38 stands summary
+41: R0d pass28qc t2 frame against run frame t2, columns other than TREE
+                                                                  check
+                                                                 <char>
+           worst   pass
+           <num> <lgcl>
+ 1: 4.973799e-14   TRUE
+ 2: 6.572520e-14   TRUE
+ 3: 8.881784e-16   TRUE
+ 4: 0.000000e+00   TRUE
+ 5: 4.973799e-14   TRUE
+ 6: 7.638334e-14   TRUE
+ 7: 2.486900e-14   TRUE
+ 8: 0.000000e+00   TRUE
+ 9: 4.973799e-14   TRUE
+10: 7.460699e-14   TRUE
+11: 2.042810e-14   TRUE
+12: 0.000000e+00   TRUE
+13: 4.973799e-14   TRUE
+14: 7.638334e-14   TRUE
+15: 2.309264e-14   TRUE
+16: 0.000000e+00   TRUE
+17: 4.973799e-14   TRUE
+18: 7.460699e-14   TRUE
+19: 2.486900e-14   TRUE
+20: 0.000000e+00   TRUE
+21: 4.973799e-14   TRUE
+22: 5.684342e-14   TRUE
+23: 6.394885e-14   TRUE
+24: 0.000000e+00   TRUE
+25: 4.973799e-14   TRUE
+26: 7.460699e-14   TRUE
+27: 4.440892e-14   TRUE
+28: 0.000000e+00   TRUE
+29: 4.973799e-14   TRUE
+30: 7.283063e-14   TRUE
+31: 3.197442e-14   TRUE
+32: 0.000000e+00   TRUE
+33: 4.973799e-14   TRUE
+34: 6.394885e-14   TRUE
+35: 3.907985e-14   TRUE
+36: 0.000000e+00   TRUE
+37: 4.973799e-14   TRUE
+38: 7.460699e-14   TRUE
+39: 7.460699e-14   TRUE
+40: 0.000000e+00   TRUE
+41: 0.000000e+00   TRUE
+           worst   pass
+           <num> <lgcl>
+R0a to R0d pass; variants read
+DECISION: Rule 3: T_M and T_H pass; p38_fit eligible for a Bakuzis QC grid under a separate pre-registration with T_M in place of the published TOPHT gate 
+     gate     arm    value          lo       hi limit
+   <char>  <char>    <num>       <num>    <num> <num>
+1:    T_M p38_fit 1.604448 -0.05418686 3.250612    10
+2:    T_H p38_fit 6.599258  4.79358845 8.412321    10
+                                                                                                                       provenance
+                                                                                                                           <char>
+1: FIA National Core Field Guide P2, total and actual length MQO, plus or minus 10 percent of true length [UNVERIFIED in session]
+2: FIA National Core Field Guide P2, total and actual length MQO, plus or minus 10 percent of true length [UNVERIFIED in session]
+     pass
+   <lgcl>
+1:   TRUE
+2:   TRUE
+Warning messages:
+1: `position_dodge()` requires non-overlapping x intervals. 
+2: `position_dodge()` requires non-overlapping x intervals. 
+3: `position_dodge()` requires non-overlapping x intervals. 
+Index: <variant__arm>
+           arm qc_afac   variant     value        lo      hi stands mean_P
+        <char>   <num>    <char>     <num>     <num>   <num>  <int>  <num>
+ 1:  p19_a0030   0.030 published  5.586126   3.40065  8.0178    160  16.18
+ 2:  p19_a0030   0.030         M -9.161684 -10.88990 -7.4868    154  13.85
+ 3:  p19_a0030   0.030         H -3.148082  -4.90038 -1.3043    160  16.18
+ 4:  p19_a0060   0.060 published  5.846068   3.67271  8.2639    160  16.22
+ 5:  p19_a0060   0.060         M -8.896418 -10.61265 -7.2153    154  13.89
+ 6:  p19_a0060   0.060         H -2.909642  -4.65834 -1.0666    160  16.22
+ 7:  p19_a0111   0.111 published  6.289043   4.11815  8.7085    160  16.29
+ 8:  p19_a0111   0.111         M -8.445228 -10.13793 -6.7617    154  13.96
+ 9:  p19_a0111   0.111         H -2.503311  -4.24341 -0.6549    160  16.29
+10:  p19_a0250   0.250 published  7.497242   5.35382  9.9073    160  16.48
+11:  p19_a0250   0.250         M -7.216165  -8.84346 -5.5285    154  14.14
+12:  p19_a0250   0.250         H -1.395055  -3.11348  0.4439    160  16.48
+13:  p19_a0500   0.500 published  9.685083   7.51914 12.0553    160  16.81
+14:  p19_a0500   0.500         M -5.006415  -6.55640 -3.3815    154  14.48
+15:  p19_a0500   0.500         H  0.611805  -1.07862  2.4263    160  16.81
+16:  p19_a1000   1.000 published 14.091190  11.93419 16.3820    160  17.49
+17:  p19_a1000   1.000         M -0.550320  -2.14520  1.0857    154  15.16
+18:  p19_a1000   1.000         H  4.653434   2.91121  6.4783    160  17.49
+19:  p23_a1061   1.061 published 14.625215  12.46747 16.9113    160  17.57
+20:  p23_a1061   1.061         M -0.004926  -1.61020  1.6388    154  15.24
+21:  p23_a1061   1.061         H  5.143283   3.38629  6.9621    160  17.57
+22:  p23_a1250   1.250 published 16.282501  14.12229 18.6061    160  17.82
+23:  p23_a1250   1.250         M  1.676070   0.02049  3.3261    154  15.50
+24:  p23_a1250   1.250         H  6.663477   4.85575  8.4766    160  17.82
+25: p28b_small      NA published 11.967628   9.92989 14.1342    160  17.16
+26: p28b_small      NA         M  0.165844  -1.42459  1.7803    154  15.27
+27: p28b_small      NA         H  2.705535   1.06045  4.4320    160  17.16
+28:    p38_fit   1.242 published 16.212491  14.05237 18.5343    160  17.81
+29:    p38_fit   1.242         M  1.604448  -0.05419  3.2506    154  15.49
+30:    p38_fit   1.242         H  6.599258   4.79359  8.4123    160  17.81
+           arm qc_afac   variant     value        lo      hi stands mean_P
+        <char>   <num>    <char>     <num>     <num>   <num>  <int>  <num>
+    mean_O within_limit
+     <num>       <lgcl>
+ 1:  15.33         TRUE
+ 2:  15.24         TRUE
+ 3:  16.71         TRUE
+ 4:  15.33         TRUE
+ 5:  15.24         TRUE
+ 6:  16.71         TRUE
+ 7:  15.33         TRUE
+ 8:  15.24         TRUE
+ 9:  16.71         TRUE
+10:  15.33         TRUE
+11:  15.24         TRUE
+12:  16.71         TRUE
+13:  15.33         TRUE
+14:  15.24         TRUE
+15:  16.71         TRUE
+16:  15.33        FALSE
+17:  15.24         TRUE
+18:  16.71         TRUE
+19:  15.33        FALSE
+20:  15.24         TRUE
+21:  16.71         TRUE
+22:  15.33        FALSE
+23:  15.24         TRUE
+24:  16.71         TRUE
+25:  15.33        FALSE
+26:  15.24         TRUE
+27:  16.71         TRUE
+28:  15.33        FALSE
+29:  15.24         TRUE
+30:  16.71         TRUE
+    mean_O within_limit
+     <num>       <lgcl>
+          arm
+       <char>
+ 1: p19_a0111
+ 2: p19_a0111
+ 3: p19_a0111
+ 4: p19_a0111
+ 5: p19_a0111
+ 6: p19_a0111
+ 7: p19_a0111
+ 8: p19_a0111
+ 9: p19_a0111
+10: p19_a0111
+11: p19_a0111
+12:   p38_fit
+13:   p38_fit
+14:   p38_fit
+15:   p38_fit
+16:   p38_fit
+17:   p38_fit
+18:   p38_fit
+19:   p38_fit
+20:   p38_fit
+21:   p38_fit
+22:   p38_fit
+          arm
+       <char>
+                                                                           item
+                                                                         <char>
+ 1:                               D1 published observed TOPHT set, share filled
+ 2:                                     D1 variant H observed set, share filled
+ 3:                                    D1 published observed TOPHT set, records
+ 4: D2 measured trees of the published observed set, sum himp over sum measured
+ 5:                                  D2 same, sum fold A fill over sum measured
+ 6:                                                                  D2 records
+ 7:    D3 published observed TOPHT records in the variant M observed set, share
+ 8:                              D4 non finite predicted ht, population records
+ 9:                                        M stands with a record on both sides
+10:                                                M observed records per stand
+11:                                               M predicted records per stand
+12:                               D1 published observed TOPHT set, share filled
+13:                                     D1 variant H observed set, share filled
+14:                                    D1 published observed TOPHT set, records
+15: D2 measured trees of the published observed set, sum himp over sum measured
+16:                                  D2 same, sum fold A fill over sum measured
+17:                                                                  D2 records
+18:    D3 published observed TOPHT records in the variant M observed set, share
+19:                              D4 non finite predicted ht, population records
+20:                                        M stands with a record on both sides
+21:                                                M observed records per stand
+22:                                               M predicted records per stand
+                                                                           item
+                                                                         <char>
+       value
+       <num>
+ 1:   0.6055
+ 2:   0.6055
+ 3: 649.0000
+ 4:   0.8919
+ 5:   1.0327
+ 6: 256.0000
+ 7:   0.3744
+ 8:   0.0000
+ 9: 154.0000
+10:   3.6494
+11:  13.5909
+12:   0.6055
+13:   0.6055
+14: 649.0000
+15:   0.8919
+16:   1.0327
+17: 256.0000
+18:   0.3744
+19:   0.0000
+20: 154.0000
+21:   3.6494
+22:  13.6494
+       value
+       <num>
+P40_ASSEMBLE_DONE

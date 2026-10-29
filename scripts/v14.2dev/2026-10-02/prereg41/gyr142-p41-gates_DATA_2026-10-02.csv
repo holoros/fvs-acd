@@ -1,0 +1,15 @@
+gate,value,threshold,pass,provenance
+G0,"worst scaled 0 over 3 stands, 12 columns",<= 1e-9,TRUE,"frozen p19_a0111 qc_c results, md5 979101be; logs/g0_result.csv"
+G0c,G0C_PASS,G0C_PASS,TRUE,stored v1402 report md5 7a04368c; logs/g0c_diff.txt
+G1,72 of 72 trajectories complete with 101 rows (arms qc141 p38_fit),all,TRUE,out/traj_<arm>_<mix>.csv
+G2,identical,identical,TRUE,dry qc141 MX_E19.8_N6000 against the grid cell
+NI Eichhorn,"flags p38_fit 0, qc141 1, new 0; worst margin p38_fit 0, qc141 0.02101",no new flag; candidate worst margin <= qc141 worst,TRUE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI Frontier,"flags p38_fit 0, qc141 10, new 0; worst margin p38_fit 0, qc141 0.05342",no new flag; candidate worst margin <= qc141 worst,TRUE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI HT_monotone,"flags p38_fit 0, qc141 31, new 0; worst margin p38_fit 0, qc141 2.798",no new flag; candidate worst margin <= qc141 worst,TRUE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI Magnitude,"flags p38_fit 0, qc141 1, new 0; worst margin p38_fit 0, qc141 7.013e-05",no new flag; candidate worst margin <= qc141 worst,TRUE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI Reineke,"flags p38_fit 36, qc141 36, new 0; worst margin p38_fit 1.49, qc141 1.266",no new flag; candidate worst margin <= qc141 worst,FALSE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI SiteOrder_BAPH,"flags p38_fit 9, qc141 6, new 3; worst margin p38_fit 14, qc141 13",no new flag; candidate worst margin <= qc141 worst,FALSE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI SiteOrder_HT,"flags p38_fit 1, qc141 7, new 0; worst margin p38_fit 1, qc141 7",no new flag; candidate worst margin <= qc141 worst,TRUE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI SiteOrder_VOL,"flags p38_fit 0, qc141 0, new 0; worst margin p38_fit 0, qc141 0",no new flag; candidate worst margin <= qc141 worst,TRUE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI Sukachev,"flags p38_fit 0, qc141 0, new 0; worst margin p38_fit 0, qc141 0",no new flag; candidate worst margin <= qc141 worst,TRUE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"
+NI YieldDensity,"flags p38_fit 0, qc141 8, new 0; worst margin p38_fit 0, qc141 0.02797",no new flag; candidate worst margin <= qc141 worst,TRUE,"PREREG31 relations (PREREG26 rules), QC thresholds in plan"

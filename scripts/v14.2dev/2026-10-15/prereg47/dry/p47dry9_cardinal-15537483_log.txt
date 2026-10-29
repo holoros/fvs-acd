@@ -1,0 +1,275 @@
+b157e8e5069f21607009c01181bc0387  v142p47_dry_bundle_r9.tgz
+Key: <arm>
+           arm files md5_ok md5_note  label cells complete cells_match_qc141
+        <char> <int> <lgcl>   <char> <char> <int>    <int>            <lgcl>
+1:     p38_fit     0   TRUE      DRY    dry    36       36              TRUE
+2:       qc141     0   TRUE      DRY    dry    36       36              TRUE
+3:       qc_rh     0   TRUE      DRY    dry    36       36              TRUE
+4:   syn_dense     0   TRUE      DRY    dry    36       36              TRUE
+5:    syn_fall     0   TRUE      DRY    dry    36       36              TRUE
+6:    syn_mask     0   TRUE      DRY    dry    36       36              TRUE
+7: syn_plateau     0   TRUE      DRY    dry    36       36              TRUE
+8:   syn_stall     0   TRUE      DRY    dry    36       36              TRUE
+   arm_ok
+   <lgcl>
+1:   TRUE
+2:   TRUE
+3:   TRUE
+4:   TRUE
+5:   TRUE
+6:   TRUE
+7:   TRUE
+8:   TRUE
+                                                              check
+                                                             <char>
+ 1:                                    md5 plan PREREG47 revision 5
+ 2:                  md5 plan PREREG47 revision 4 (superseded by 5)
+ 3:                       md5 plan PREREG47 revision 3 (superseded)
+ 4:                       md5 plan PREREG47 revision 2 (superseded)
+ 5:         md5 plan PREREG47 revision 1 (superseded for CL and SO)
+ 6:                        md5 assemble_p44_r2.R (relations source)
+ 7:                       md5 frontier_p45_DATA.csv (gate C bounds)
+ 8:                     md5 st2_offset.R (gate C offset definition)
+ 9:                                    md5 PREREG44 relations table
+10:                                    md5 PREREG45 relations table
+11:                                  md5 PREREG45 credibility table
+12:                                     md5 ST2 gate C offset table
+13:                      thresholds_p47 md5 recorded before reading
+14:                                     F_HT, S_HT and MG_LO finite
+15:                                   thresholds_p31 md5 (reported)
+16:      relations() reproduces PREREG44 relations (qc141, p38_fit)
+17:               relations() reproduces PREREG45 relations (qc_rh)
+18:                         gate C and CL bounds from frontier file
+19: raw HT/ESI at 100 reproduces PREREG45 credibility (frozen arms)
+                                                                                                                                                                                                                value
+                                                                                                                                                                                                               <char>
+ 1:                                                                                                                                                                                  d93f3035f8b9cb691c4c413bcc84bb1d
+ 2:                                                                                                                                                                                  4fa7aea184e53887d56b742417e58a72
+ 3:                                                                                                                                                                                  21a36a308728d16bc89fb7361e30e633
+ 4:                                                                                                                                                                                  6a77fa5fc0ff66d23aa863292f0e6b14
+ 5:                                                                                                                                                                                  7f64d22c3128de9d15e08f18bd4ba58d
+ 6:                                                                                                                                                                                  5ac535e67d10f3fa103a3617043efc50
+ 7:                                                                                                                                                                                  63826d67b93754b48aa0947d6cf072a9
+ 8:                                                                                                                                                                                                       DRY_SKIPPED
+ 9:                                                                                                                                                                                  6d3e0a380b6433c50b6bc9528dc63579
+10:                                                                                                                                                                                  050463b22371be301d9ed10774b6ef71
+11:                                                                                                                                                                                  3305d4e8f9ed2ad7fb9d4d9858f068ba
+12:                                                                                                                                                                                                       DRY_SKIPPED
+13:                                                                                                                                                                                                       DRY_SKIPPED
+14:                                                                                                                                                                          F_HT 1.0000 m, S_HT 5, MG_LO 0.0500 m/yr
+15:                                                                                                                                                                                  d37be740a5a42151d9fb9c7401051ae5
+16: 328 of 328 rows; Eichhorn 1.7e-16, Frontier 1.8e-05, HT_monotone 4.4e-15, Magnitude 2.4e-05, Reineke 3.1e-14, SiteOrder_BAPH 3.9e-16, SiteOrder_HT 5e-16, SiteOrder_VOL 4.4e-16, Sukachev 0, YieldDensity 4.7e-16
+17: 164 of 164 rows; Eichhorn 3.1e-16, Frontier 1.8e-05, HT_monotone 5e-16, Magnitude 2.1e-05, Reineke 2.5e-14, SiteOrder_BAPH 1.7e-16, SiteOrder_HT 2.5e-16, SiteOrder_VOL 4.4e-16, Sukachev 0, YieldDensity 1.4e-16
+18:                                                                                                                                                                               bound 1.175, max 1.2851, q50 0.8147
+19:                                                                                                                                                                                           worst 4e-15 over 3 arms
+                                                 expect   pass
+                                                 <char> <lgcl>
+ 1:                    d93f3035f8b9cb691c4c413bcc84bb1d   TRUE
+ 2:                    4fa7aea184e53887d56b742417e58a72   TRUE
+ 3:                    21a36a308728d16bc89fb7361e30e633   TRUE
+ 4:                    6a77fa5fc0ff66d23aa863292f0e6b14   TRUE
+ 5:                    7f64d22c3128de9d15e08f18bd4ba58d   TRUE
+ 6:                    5ac535e67d10f3fa103a3617043efc50   TRUE
+ 7:                    63826d67b93754b48aa0947d6cf072a9   TRUE
+ 8:                    567fa63daecf9bac5a6922d3c0be7ef8   TRUE
+ 9:                    6d3e0a380b6433c50b6bc9528dc63579   TRUE
+10:                    050463b22371be301d9ed10774b6ef71   TRUE
+11:                    3305d4e8f9ed2ad7fb9d4d9858f068ba   TRUE
+12:                    f7adf2fb35cab26c2f1d49135881e614   TRUE
+13:                                            recorded   TRUE
+14:                                              finite   TRUE
+15:                                            reported   TRUE
+16: 1e-9 (1e-3 for Frontier, Magnitude, Reineke in dry)   TRUE
+17: 1e-9 (1e-3 for Frontier, Magnitude, Reineke in dry)   TRUE
+18:                              1.175, 1.285 and 0.815   TRUE
+19:                                     <= 1e-9, 3 arms   TRUE
+                                             note
+                                           <char>
+ 1:                                              
+ 2:                                              
+ 3:                                              
+ 4:                                              
+ 5:                                              
+ 6:                                              
+ 7:                                              
+ 8:                 file not available in dry run
+ 9:                                              
+10:                                              
+11:                                              
+12:                 file not available in dry run
+13:                          synthetic thresholds
+14:                                              
+15: frontier a 5.0914 b -1.4690 BA 51.73 SDI 1178
+16:                                              
+17:                                              
+18:                                              
+19:                                              
+Key: <arm>
+           arm median_rel100_corr n_over_corr median_rel100   p_C1   p_C2
+        <char>              <num>       <int>         <num> <lgcl> <lgcl>
+1:     p38_fit             1.5150          34        1.5150  FALSE  FALSE
+2:       qc141             0.9161           0        0.9161   TRUE   TRUE
+3:       qc_rh             1.3088          32        1.3088  FALSE  FALSE
+4:   syn_dense             0.9161           0        0.9161   TRUE   TRUE
+5:    syn_fall             0.7775           0        0.7775   TRUE   TRUE
+6:    syn_mask             1.1304          15        1.1304  FALSE   TRUE
+7: syn_plateau             1.0460           6        1.0460  FALSE   TRUE
+8:   syn_stall             0.7844           0        0.7844   TRUE   TRUE
+   F_flags M_flags S_viol HM_worst_fall_m HM_stands_over_0.01   p_HM SO_inv_dHT
+     <int>   <int>  <num>           <num>               <int> <lgcl>      <int>
+1:       0       0      0          4.8693                  11  FALSE          6
+2:       0       0      0          1.0426                  36  FALSE          3
+3:       0       0      0          0.9203                   9  FALSE          6
+4:      33      13      0          1.0426                  36  FALSE          3
+5:       0       0      0          2.7926                  36  FALSE          3
+6:       0       0      0          0.5251                   4   TRUE          4
+7:       0       0      0          0.2066                   3   TRUE          4
+8:       0       0      0          0.0000                   0   TRUE          6
+     p_SO   p_YD R_median_slope E_below_015 YD_below_015
+   <lgcl> <lgcl>          <num>      <lgcl>       <lgcl>
+1:  FALSE   TRUE        -1.2666       FALSE        FALSE
+2:  FALSE   TRUE        -1.2137       FALSE        FALSE
+3:  FALSE   TRUE        -1.2637        TRUE         TRUE
+4:  FALSE   TRUE        -0.8412       FALSE        FALSE
+5:  FALSE   TRUE        -1.2137       FALSE        FALSE
+6:  FALSE   TRUE        -1.2637       FALSE         TRUE
+7:  FALSE   TRUE        -1.2637       FALSE         TRUE
+8:  FALSE   TRUE        -1.2137       FALSE        FALSE
+           arm  label                        outcome
+        <char> <char>                         <char>
+1:       qc141    dry DRY_RULE2_NOT_CREDIBLE_LONGRUN
+2:     p38_fit    dry DRY_RULE2_NOT_CREDIBLE_LONGRUN
+3:       qc_rh    dry DRY_RULE2_NOT_CREDIBLE_LONGRUN
+4:   syn_stall    dry DRY_RULE2_NOT_CREDIBLE_LONGRUN
+5:    syn_fall    dry DRY_RULE2_NOT_CREDIBLE_LONGRUN
+6:   syn_dense    dry DRY_RULE2_NOT_CREDIBLE_LONGRUN
+7: syn_plateau    dry DRY_RULE2_NOT_CREDIBLE_LONGRUN
+8:    syn_mask    dry DRY_RULE2_NOT_CREDIBLE_LONGRUN
+                                                          failing
+                                                           <char>
+1:          MG early growth;MGN early growth count;LG late growth
+2:                                 C offset removed;C raw ceiling
+3:                                 C offset removed;C raw ceiling
+4: CL floor;MG early growth;MGN early growth count;LG late growth
+5: CL floor;MG early growth;MGN early growth count;LG late growth
+6:          MG early growth;MGN early growth count;LG late growth
+7:                                C offset removed;LG late growth
+8:         C offset removed;MGN early growth count;LG late growth
+                                                            all_failing
+                                                                 <char>
+1:          MG early growth;MGN early growth count;LG late growth;HM;SO
+2:                                 C offset removed;C raw ceiling;HM;SO
+3:                                 C offset removed;C raw ceiling;HM;SO
+4:    CL floor;MG early growth;MGN early growth count;LG late growth;SO
+5: CL floor;MG early growth;MGN early growth count;LG late growth;HM;SO
+6:      MG early growth;MGN early growth count;LG late growth;F;M;HM;SO
+7:                                   C offset removed;LG late growth;SO
+8:            C offset removed;MGN early growth count;LG late growth;SO
+plan_md5=d93f3035 (revision 5; revisions 1 7f64d22c, 2 6a77fa5f, 3 21a36a30, 4 4fa7aea1)
+mode=DRY (synthetic or five year tables; not a reading)
+harness_ok=TRUE
+F_HT=1.0000 S_HT=5 MG_LO=0.0500
+outcome_qc141=DRY_RULE2_NOT_CREDIBLE_LONGRUN [dry]; failing=MG early growth;MGN early growth count;LG late growth; all_failing=MG early growth;MGN early growth count;LG late growth;HM;SO
+outcome_p38_fit=DRY_RULE2_NOT_CREDIBLE_LONGRUN [dry]; failing=C offset removed;C raw ceiling; all_failing=C offset removed;C raw ceiling;HM;SO
+outcome_qc_rh=DRY_RULE2_NOT_CREDIBLE_LONGRUN [dry]; failing=C offset removed;C raw ceiling; all_failing=C offset removed;C raw ceiling;HM;SO
+outcome_syn_stall=DRY_RULE2_NOT_CREDIBLE_LONGRUN [dry]; failing=CL floor;MG early growth;MGN early growth count;LG late growth; all_failing=CL floor;MG early growth;MGN early growth count;LG late growth;SO
+outcome_syn_fall=DRY_RULE2_NOT_CREDIBLE_LONGRUN [dry]; failing=CL floor;MG early growth;MGN early growth count;LG late growth; all_failing=CL floor;MG early growth;MGN early growth count;LG late growth;HM;SO
+outcome_syn_dense=DRY_RULE2_NOT_CREDIBLE_LONGRUN [dry]; failing=MG early growth;MGN early growth count;LG late growth; all_failing=MG early growth;MGN early growth count;LG late growth;F;M;HM;SO
+outcome_syn_plateau=DRY_RULE2_NOT_CREDIBLE_LONGRUN [dry]; failing=C offset removed;LG late growth; all_failing=C offset removed;LG late growth;SO
+outcome_syn_mask=DRY_RULE2_NOT_CREDIBLE_LONGRUN [dry]; failing=C offset removed;MGN early growth count;LG late growth; all_failing=C offset removed;MGN early growth count;LG late growth;SO
+reported_not_gated=R median slope window, E 0.15, YD 0.15 (no external source in the records; PREREG47 choice 4a)
+decision_weight=reported beside each arm's registered verdict; informs 14.3 only; 14.2 keeps QC_AFAC 0.111; no 14.2 verdict reopened
+P47_ASSEMBLE_DONE
+ASSEMBLE EXIT 0
+/users/PUOM0008/crsfaaron/v142p47_dry9/dry/scratch/assembled_dry:
+total 1976
+drwxr-xr-x 2 crsfaaron PUOM0008    4096 Oct 15 12:08 .
+drwxr-xr-x 7 crsfaaron PUOM0008    4096 Oct 15 12:08 ..
+-rw-r--r-- 1 crsfaaron PUOM0008     390 Oct 15 12:08 gyr142-p47-arm-inputs_DATA_2026-10-11.csv
+-rw-r--r-- 1 crsfaaron PUOM0008    1621 Oct 15 12:08 gyr142-p47-credibility_DATA_2026-10-11.csv
+-rw-r--r-- 1 crsfaaron PUOM0008    1197 Oct 15 12:08 gyr142-p47-decision_DATA_2026-10-11.csv
+-rw-r--r-- 1 crsfaaron PUOM0008    5511 Oct 15 12:08 gyr142-p47-gates-all_DATA_2026-10-11.csv
+-rw-r--r-- 1 crsfaaron PUOM0008   13412 Oct 15 12:08 gyr142-p47-gates_DATA_2026-10-11.csv
+-rw-r--r-- 1 crsfaaron PUOM0008    2574 Oct 15 12:08 gyr142-p47-harness_DATA_2026-10-11.csv
+-rw-r--r-- 1 crsfaaron PUOM0008   89990 Oct 15 12:08 gyr142-p47-relations_DATA_2026-10-11.csv
+-rw-r--r-- 1 crsfaaron PUOM0008 1865980 Oct 15 12:08 gyr142-p47-traj-5yr_DATA_2026-10-11.csv
+-rw-r--r-- 1 crsfaaron PUOM0008    1855 Oct 15 12:08 gyr142-p47-verdict_DATA_2026-10-11.txt
+
+/users/PUOM0008/crsfaaron/v142p47_dry9/dry/scratch/figs_dry:
+total 184
+drwxr-xr-x 2 crsfaaron PUOM0008   4096 Oct 15 12:08 .
+drwxr-xr-x 7 crsfaaron PUOM0008   4096 Oct 15 12:08 ..
+-rw-r--r-- 1 crsfaaron PUOM0008 151638 Oct 15 12:08 gyr142-p47-gates_2026-10-11.png
+-rw-r--r-- 1 crsfaaron PUOM0008  17631 Oct 15 12:08 gyr142-p47-gates_DATA_2026-10-11.csv
+20,21d19
+< if (md5(PLAN) != "d93f3035f8b9cb691c4c413bcc84bb1d") stop("plan md5 differs (revision 5)")
+< if (md5(SRC) != "979101bedafe16c090ce84d1e5e46a07") stop("source md5 differs from the frozen record 979101be")
+55c53
+<   if (md5(FI) != "521d6468861b66b8f73864fb9a6bf0fc" || md5(FG) != "7fd42665dccd3c3e9e188ee0ad9ca5d0") stop("pass28qc frame md5 differs from the PREREG40 record")
+---
+>   NULL
+interval column used: interval_years 
+                                quantity       value
+                                  <char>       <num>
+ 1:                               F_HT_m   1.1255316
+ 2:                          S_HT_stands   6.0000000
+ 3:                      admitted_stands 378.0000000
+ 4:                    stands_both_topht 378.0000000
+ 5:                 stands_with_decrease  56.0000000
+ 6:            stands_decrease_over_0.01  56.0000000
+ 7:             share_decrease_over_0.01   0.1481481
+ 8:                       decrease_q50_m   0.2899933
+ 9:                       decrease_q90_m   0.8851385
+10:                       decrease_q95_m   0.9045403
+11:                       decrease_q99_m   1.1255316
+12:                       decrease_max_m   1.2578416
+13:                      interval_min_yr   4.5055106
+14:                      interval_q10_yr   4.8343497
+15:                      interval_q50_yr   6.0193179
+16:                      interval_q90_yr   7.2463463
+17:                      interval_max_yr   7.4878964
+18:        interval_median_decreasing_yr   5.8177298
+19:      REPORTED_F_HT_M_measured_only_m   0.3658746
+20: REPORTED_S_HT_M_measured_only_stands   1.0000000
+21:                    REPORTED_stands_M 378.0000000
+22:     REPORTED_himp_share_top_trees_t1   0.3007937
+23:     REPORTED_himp_share_top_trees_t2   0.3000000
+24:                           MG_LO_m_yr   0.0333160
+25:                           inc_stands 378.0000000
+26:                         inc_q10_m_yr  -0.0326116
+27:                         inc_q50_m_yr   0.1294835
+28:                         inc_q90_m_yr   0.2883559
+                                quantity       value
+                                  <char>       <num>
+735a7746481218c2d22c5f69d246d84f  plan/thresholds_p47_DATA.csv  written by thresholds_p47.R (md5 NA) at 2026-10-15T12:08:17-0400, before any PREREG47 reading
+P47_THRESHOLDS_DONE
+THRESHOLDS EXIT 0
+quantity,value,variant_M_note,interval_column,grid_stands,md5_input,source,procedure
+F_HT_m,1.12553159858404,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (type 7) o
+S_HT_stands,6,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (type 7) of t1 minus
+admitted_stands,378,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (type 7) of t1
+stands_both_topht,378,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (type 7) of 
+stands_with_decrease,56,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (type 7) o
+stands_decrease_over_0.01,56,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (type
+share_decrease_over_0.01,0.148148148148148,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",
+decrease_q50_m,0.289993268565949,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (
+decrease_q90_m,0.885138486458445,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (
+decrease_q95_m,0.904540347527176,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (
+decrease_q99_m,1.12553159858404,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (t
+decrease_max_m,1.2578415867352,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (ty
+interval_min_yr,4.50551057467237,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (
+interval_q10_yr,4.83434967119247,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (
+interval_q50_yr,6.01931793987751,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (
+interval_q90_yr,7.24634634156246,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (
+interval_max_yr,7.4878964361269,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (t
+interval_median_decreasing_yr,5.81772976485081,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above
+REPORTED_F_HT_M_measured_only_m,0.365874640418134,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and ab
+REPORTED_S_HT_M_measured_only_stands,1,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT
+REPORTED_stands_M,378,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (type 7) of 
+REPORTED_himp_share_top_trees_t1,0.300793650793651,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and a
+REPORTED_himp_share_top_trees_t2,0.3,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q
+MG_LO_m_yr,0.0333159878822904,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (typ
+inc_stands,378,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (type 7) of t1 minu
+inc_q10_m_yr,-0.0326115935844677,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (
+inc_q50_m_yr,0.12948347408806,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (typ
+inc_q90_m_yr,0.288355943398554,computed,interval_years,36,1aec056b6d054450c2443ce85fca2cf0,"frozen p19_a0111 qc_c results, observed TOPHT_t1 and TOPHT_o, admitted esi8 finite and above 2",F_HT q99 (ty

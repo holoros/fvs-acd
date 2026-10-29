@@ -1,0 +1,82 @@
+[p41] ARM=qc141 MODE=grid IMULT=2.5 QC_AFAC=0.111 SMALL=unset LARGE=unset KNOT=unset SMD=9.1 ELEV=385 NYR=100 start=2026-10-02T13:54:26-03:00
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:data.table’:
+
+    between, first, last
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘purrr’
+
+The following object is masked _by_ ‘.GlobalEnv’:
+
+    %||%
+
+The following object is masked from ‘package:data.table’:
+
+    transpose
+
+PATCHED ddbh: b0= -1.883655  b1= 0.497878  b2= -0.02934259 
+AcadianGY 14.0.4 loaded over /home/aaron/jobs/v142p28b/home/magplot/verify/p4e/model_b0b1b2.r  (linked mortality lever OFF by default)
+species        peak_DBH(cm)  maxRatio(%)   |  A.10 DBH  A.10 max
+paper birch        44.8        70.1    |    46.1     71.1
+red maple          45.0        71.2    |    46.3     72.2
+red oak            45.1        71.7    |    46.3     72.7
+sugar maple        45.3        72.6    |    46.5     73.6
+white ash          47.1        81.5    |    48.3     82.5
+yellow birch       45.5        73.9    |    46.8     75.0
+
+Expected: peak DBH ~46 to 48 cm, max ratio ~71 to 83%, white ash highest. 
+input rows: 4  -> split rows: 24 
+stems conserved by species:
+  sp expf
+1 BF   60
+2 RM   50
+3 RO   40
+4 WA   30
+
+RM sub-records:
+ sp     expf form risk
+ RM 9.635580   F1   R1
+ RM 4.786418   F2   R1
+ RM 9.510093   F8   R1
+ RM 8.319967   F1   R2
+ RM 4.132895   F2   R2
+ RM 8.211614   F8   R2
+ RM 2.719424   F1   R3
+ RM 2.684008   F8   R3
+BF passthrough:
+ sp expf form risk
+ BF   60 <NA> <NA>
+PASS21: V132=0, running plain MODEL_FILE with no v13.2 overlay (bench_p9.R-equivalent)
+AcadianGY 14.1 r2 loaded over 14.0.4 on /home/aaron/jobs/v142p28b/home/magplot/verify/p4e/model_b0b1b2.r  (both option 3 gates OFF by default)
+v141: overlay /home/aaron/jobs/v142p28b/home/v14_1_20260923/AcadianGY_14.1.r md5 0bf27dde81240e6bdf59c9a90f0051bd
+v141: LSDG_V141=1 THIN_V141=1 V141_COEF=/home/aaron/jobs/v142p28b/home/magplot/verify/gydbreg20260916/v141_20260923/work/v141_option3_offline_coefs_r5_2026-09-23.rds V141_RELCAP=2.9848
+gydbreg OLD_STAND alias: 378 of 378 stands aliased into the brms SDImax map; ecobucket keyed on OLD_STAND where present (378 hits)
+gydbreg threshold: per-pair SCORE_MINDBH_OBS
+P9 LEVER 3b ON: hi=0.4500 lo=0.3500 qmin=18.0000
+P6 config: IMULT=2.5000 NOCON= NOSDI=
+v13.1 posterior switches: use.hier.ingrowth=FALSE use.hier.mortality=FALSE hier.postdir=/home/aaron/jobs/v142p28b/home/v13_kickoff
+p23 stand.managed: per-stand MANAGED column, 378 of 378 stands managed
+v141 stand.tst: source-level SRC_TST=UNKNOWN, 0 known, 0 never thinned, 378 unknown, of 378 stands
+v141 WARNING: THIN_V141=1 and no stand has a known years since thinning, so T is the identity everywhere in this run and this run does not test T
+PREREG11 HTFIX_B=unset
+p31: mode=grid arm=qc141 IMULT=2.5 QC_AFAC=0.111 QC_AFAC_SMALL=unset QC_AFAC_LARGE=unset QC_AFAC_KNOT=unset ING_MIN_FROM_SCORE=unset HTFIX_B=unset
+p31 cell MX_E19.8_N6000 done ok=TRUE rows=101 secs=54
+p31 grid WROTE /home/aaron/jobs/v142p41/dry/dry_qc141_MX_E19.8_N6000.csv 
+v141 overlay counters:
+  level_term_calls thinning_term_calls thinning_skipped_no_tst
+1            57750                   0                   57750
+  thinning_calls_at_cap max_rel_dq_seen
+1                     0            -Inf
+DONE
+[p41] DONE /home/aaron/jobs/v142p41/dry/dry_qc141_MX_E19.8_N6000.csv end=2026-10-02T13:55:22-03:00

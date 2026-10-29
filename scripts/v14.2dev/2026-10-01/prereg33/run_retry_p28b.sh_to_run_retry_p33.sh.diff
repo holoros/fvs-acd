@@ -1,0 +1,21 @@
+--- /home/aaron/jobs/v142p28b/home/run_retry_p28b.sh	2026-09-30 14:48:49.763638925 -0300
++++ /home/aaron/jobs/v142p33/home/run_retry_p33.sh	2026-10-01 06:55:40.189858673 -0300
+@@ -1,10 +1,10 @@
+ #!/bin/bash
+-# PREREG28 retry driver (copy of PREREG23 run_retry_p23.sh, itself a copy of PREREG19 run_retry_p19.sh): one stand, selected BY NAME (STAND_KEEP_FILE), after a host time limit failure. The environment is
++# PREREG33 retry driver (copy of PREREG28b run_retry_p28b.sh; driver name, md5 and tag only). PREREG28 retry driver (copy of PREREG23 run_retry_p23.sh, itself a copy of PREREG19 run_retry_p19.sh): one stand, selected BY NAME (STAND_KEEP_FILE), after a host time limit failure. The environment is
+ # run_task_p23.sh (itself a copy of run_task_p19.sh md5 ac029e4e) verbatim, sourced through a copy with the taskmap and chunk lines replaced. Never by pairs
+ # row. Usage: HOME=<bundle home> bash run_retry_p19.sh <COL> <SET> <STAND> <attempt>. No coordinates. No em dashes.
+ set -euo pipefail
+ COL=$1; SET=$2; ST=$3; K=$4; R1=$HOME; ID=$(printf %s "$ST" | cksum | cut -d' ' -f1)
+-D=$R1/../scripts/run_task_p28b.sh; echo "3969483d65cc4587dc72634e26c9d8d3  $D" | md5sum -c --quiet - || { echo "FATAL driver md5"; exit 4; }
++D=$R1/../scripts/run_task_p33.sh; echo "d9a408ab7ef8fc245c50f01ff5e8bcdf  $D" | md5sum -c --quiet - || { echo "FATAL driver md5"; exit 4; }
+ mkdir -p $R1/work/retry_keep; KF=$R1/work/retry_keep/${COL}_${SET}_${ID}.csv; printf 'STAND\n%s\n' "$ST" > $KF
+ TMP=$R1/work/retry_keep/drv_${COL}_${SET}_${ID}_a$K.sh
+ ## replace the taskmap lookup with the arguments, drop the chunk rows, keep the stand file, and name the output by stand id
+@@ -15,4 +15,4 @@
+ CT=$R1/out_retry_a$K/$COL/$SET/c$ID
+ got=$(sed -n 2p ${CT}_results.csv | cut -d, -f1 | tr -d '"')
+ [ "$got" = "$ST" ] || { for f in ${CT}_*; do mv "$f" "${f}_BADSTAND"; done; echo "FATAL retry ran $got, wanted $ST"; exit 9; }
+-echo "[v142p28-retry] DONE ${CT}_results.csv attempt=$K end=$(date -Is)"
++echo "[v142p33-retry] DONE ${CT}_results.csv attempt=$K end=$(date -Is)"

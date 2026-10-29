@@ -1,0 +1,4 @@
+Error in data.table(set = sx, own_match = nrow(own[STAND %chin% rf$STAND]),  : 
+  key argument of data.table() must be character
+Calls: data.table -> stopf -> raise_condition -> signal
+Execution halted

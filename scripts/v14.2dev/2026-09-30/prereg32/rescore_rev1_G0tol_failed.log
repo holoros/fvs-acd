@@ -1,0 +1,24 @@
+md5 d600f398 /home/aaron/jobs/v142p18/in/cardinal/gyr142-volconv-stands_DATA_2026-09-27.csv
+md5 a3ed3b76 /home/aaron/jobs/v142vc/cardinal/tables_r1/gyr142-volconv-scores_DATA_2026-09-27.csv
+md5 97ac93f0 /home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_nb_c_results.csv
+md5 e475736f /home/aaron/jobs/v142p20/results/v141LTf/gyr_v141LTf_ns_long_c_results.csv
+md5 59176541 /home/aaron/jobs/v142p19/results/nbctl_a1000/gyr_nbctl_a1000_nb_c_results.csv
+md5 eef09653 /home/aaron/jobs/v142p19/in/siteidx_nb_c.rds
+       label empty_t2     D     H     L     R     U
+      <char>    <int> <int> <int> <int> <int> <int>
+1: mefia_l_c        2     0     0     0     2     0
+2:   medev_c        2     0     0     0     2     0
+3:      nb_c       33     0     0     0    33     0
+4: ns_long_c        1     0     0     0     1     0
+       label   conv stands pub_stands       d_ratio        d_bias        d_rmse   pass
+      <char> <char>  <int>      <int>         <num>         <num>         <num> <lgcl>
+1:      nb_c     C0    355        355 -2.417948e-10 -2.417953e-08  3.892075e-08  FALSE
+2:      nb_c     C1    355        355 -2.000025e-10 -2.000020e-08  2.755546e-08  FALSE
+3:   medev_c     C0   1760       1760  5.578227e-11  5.578261e-09  3.265750e-09  FALSE
+4:   medev_c     C1   1760       1760 -1.506373e-10 -1.506377e-08 -2.487229e-08  FALSE
+5: mefia_l_c     C0    918        918  1.369171e-11  1.369171e-09 -1.618460e-09  FALSE
+6: mefia_l_c     C1    918        918 -7.906753e-11 -7.906745e-09  4.790778e-09  FALSE
+7: ns_long_c     C0   8549       8549  3.184941e-11  3.184763e-09  2.528452e-09  FALSE
+8: ns_long_c     C1   8549       8549 -1.052225e-11 -1.052259e-09 -6.618311e-09  FALSE
+Error: G0 failed: A0 does not reproduce the published PREREG16 values
+Execution halted

@@ -42,3 +42,35 @@
   casing bug in the ingrowth data prep; (2) reparameterize the mortality fit (raise adapt_delta, raise
   max_treedepth, tighten or rescale priors, or revisit the non-centered z terms) before any rerun. A blind
   resubmit at 24 h would reproduce the same non-convergence. Full narrative in the results md 10 July update.
+
+## v131refit_v4 (jobid 12410391): STILL RUNNING at 2026-07-20 harvest, no verdict. Rescheduled 12h.
+
+- Not a failure yet. RUNNING on c0010, started 2026-07-17 10:08:12, 72h wall. At harvest 2026-07-20 08:01 ET:
+  elapsed 2-21:52, TIME_LEFT 2:07:08 (wall ~2026-07-20 10:08 ET).
+- Mortality fit 4 chains x 2000 iter (1000 warmup / 1000 sampling). Only Chain 3 finished (245624 s, ~68.2 h).
+  Trailing at harvest: Chain 1 ~1300/2000, Chain 2 ~1600/2000, Chain 4 ~1200/2000. Ingrowth NOT started.
+- No gate inputs yet (v131r_mort_convergence.csv, v131r_ingrowth_convergence.csv, v131r_status.txt all absent).
+  Gate correctly NOT run. Only .err content is the benign non-centered init notice (z_1/z_2/z_3), as before.
+- ACTION TAKEN: NOT resubmitted (standing rule). Harvest rescheduled to 2026-07-20 20:05 ET (~12h out) to catch
+  COMPLETED or TIMEOUT.
+- STRUCTURAL FLAG: one chain alone burned ~68 of 72 wall hours; mortality (4x2000) + ingrowth cannot fit a 72h wall.
+  Likely TIMEOUT before ingrowth at next harvest. If so, fix is NOT a longer wall alone: cut iterations, add
+  within-chain reduce_sum threading, or split mortality and ingrowth into two jobs. Science unchanged: no mgmt
+  hazard term (management = growth release), region + composition random effects only.
+- Verdict this pass: PARK (in progress, nothing to gate). v12.10.1 stays shipped. FIA true coords stayed on node.
+
+## v131refit_v4 (jobid 12410391): SLURM TIMEOUT at 72h. Harvested 2026-07-20 (Aaron present).
+
+- State TIMEOUT, elapsed 3-00:00:14, batch step CANCELLED signal 15 at 2026-07-20T10:08:26 on c0010. Exactly the wall.
+- v4 produced NO new outputs beyond v131r_scaling.csv (Jul 17 10:08). The v131r_mort_*.csv on disk are STALE from
+  12275867 (Jul 9); do not attribute them to v4. Only 1 of 4 mortality chains finished (Chain 3, 245624 s ~68.2 h);
+  ingrowth never started; no v131r_status.txt. Gate not runnable, not run.
+- ROOT CAUSE = sampler settings, not resources. Resources were correct (16 cpus = 4 chains x threading(4)).
+  v3 script raised adapt_delta 0.95->0.99 and max_treedepth 12->15. Treedepth 15 allows 2^15 leapfrog steps/iter
+  (8x deeper than 12), so per-chain time went ~11.8 h (v2, finished) to ~68 h+ (v4), blowing the 72 h wall.
+- REAL DISEASE (from the 12275867 varcomp on disk): the `eco` random-intercept sd funnels to the boundary
+  (sd_est 0.328, sd_l95 1.28e-07). That funnel drives the 566 divergences + treedepth hits (max Rhat 3.64,
+  min bulk ESS 5.4). `region` (sd 0.173) and `fortype` (sd 0.479) are well identified. Cranking adapt_delta/
+  treedepth crawls through the funnel instead of removing it. Fixed effects are clean and sensible.
+- Verdict: PARK. v12.10.1 stays shipped. NOT auto-resubmitted (standing rule); moving forward with Aaron on a v5
+  structural fix (see results md 20 Jul TIMEOUT section). FIA true coords stayed on the node.

@@ -1,0 +1,3 @@
+set,t1_tags,t2_tags,matched_R,matched_M,S_R,S_M,S_both,agreement,rule_A
+qc_c,65788,68584,57515,50434,9742,13574,3764,0.386368302196674,tag defect
+qc_fl,2224,2198,1648,1107,257,376,40,0.155642023346304,tag defect

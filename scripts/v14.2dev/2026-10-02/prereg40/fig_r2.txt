@@ -1,0 +1,19 @@
+         curve    group   DBH     HT
+        <char>   <char> <num>  <num>
+ 1:       himp softwood    10  8.298
+ 2:       himp softwood    20 13.482
+ 3:       himp softwood    30 17.323
+ 4:       himp softwood    50 22.275
+ 5:       himp hardwood    10  7.405
+ 6:       himp hardwood    20 12.020
+ 7:       himp hardwood    30 15.507
+ 8:       himp hardwood    50 20.135
+ 9: fold A fit softwood    10  8.222
+10: fold A fit softwood    20 14.562
+11: fold A fit softwood    30 18.298
+12: fold A fit softwood    50 21.345
+13: fold A fit hardwood    10 10.737
+14: fold A fit hardwood    20 15.958
+15: fold A fit hardwood    30 19.319
+16: fold A fit hardwood    50 23.030
+P40_FIG_R2_DONE

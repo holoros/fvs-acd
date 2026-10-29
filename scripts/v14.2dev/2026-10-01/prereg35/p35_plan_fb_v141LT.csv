@@ -1,0 +1,4 @@
+label,set,arm,res,tree_dirs,fr,tagfr,c2,idx,v0_hard
+nb_c,nb_c,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_nb_c_results.csv,/home/aaron/jobs/v142p14/in/v141LT/nb_c,/home/aaron/jobs/v142p14/in/frames,,FALSE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_nb_c.rds,TRUE
+qc_c,qc_c,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_c_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_c,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/pass28qc,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_c.rds,TRUE
+qc_fl,qc_fl,v141LT,/home/aaron/jobs/v142p19/in/xfer/v142_20260925/bench141/results/v141LT/gyr_v141LT_qc_fl_results.csv,/home/aaron/jobs/v142p14/in/v141LT/qc_fl,/home/aaron/jobs/v142p14/in/frames,/home/aaron/jobs/v142p14/in/pass28qc,TRUE,/home/aaron/jobs/v142p19/in/xfer/score/work/siteidx_qc_fl.rds,TRUE

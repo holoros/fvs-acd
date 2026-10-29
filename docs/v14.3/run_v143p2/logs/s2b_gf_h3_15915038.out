@@ -1,0 +1,57 @@
+md5 ok /users/PUOM0008/crsfaaron/v143p2/scripts/v143p2_gf.R 88fc668f2bdee63a7edaab69025777b5
+md5 ok /users/PUOM0008/crsfaaron/v143p2/scripts/v143p2_gates.R e00aed5eb460a302aadbb2be9ebed8a8
+     gate    arm       set heavy_stands heavy_plots  heavy_gap        lo
+   <char> <char>    <char>        <int>       <int>      <num>     <num>
+1:    G-F     A0 nhvt_ph_c           16          16 -0.4631036 -1.054522
+          hi     tol25 within_tol25 closes_at_15 closes_at_25 closes_at_35
+       <num>     <num>       <lgcl>       <lgcl>       <lgcl>       <lgcl>
+1: 0.1397235 0.4795884         TRUE         TRUE        FALSE        FALSE
+0a06a732d2b676b8bccfa2d5c33d699a  /users/PUOM0008/crsfaaron/v143p2/out/gf_sealed_A0_heavy_gap_DATA.csv
+02ed9ab149fb82e9c2c8ddb098147613  /users/PUOM0008/crsfaaron/v143p2/out/gf_sealed_counts_DATA.csv
+GF_DONE
+     gate               unit files identical_md5 identical_data max_abs_diff
+   <char>             <char> <int>        <lgcl>         <lgcl>        <num>
+1:     H3 ctrn_c 500 records   500            NA           TRUE 4.884981e-15
+   n_new_missing
+           <int>
+1:             0
+     gate               unit files identical_md5 identical_data max_abs_diff
+   <char>             <char> <int>        <lgcl>         <lgcl>        <num>
+1:     H3 ctrn_c 500 records   500            NA           TRUE 4.884981e-15
+   n_new_missing
+           <int>
+1:             0
+71d8e01f8fedaf2fa4d68f07582508cc  /users/PUOM0008/crsfaaron/v143p2/out/gates_h3_DATA.csv
+GATES_DONE
+# 14.3 PREREG2 step 2 md5 record, 2026-10-27T06:24:56-04:00, before any fit (plan md5 b7562e8b)
+a382ee8e970ff899e84e08127a20d7ce  work/fitframe_SERVERONLY.rds
+d8ebd8e326bdc5a297777db70d9835e2  work/h3_sample_SERVERONLY.csv
+ab4b52789ce9424e8ea16a6f12f9090e  work/decomp_mefia_ph_c_SERVERONLY.rds
+13fac450ffd870c7c45761331bf22233  out/frame_ctrn_tst_check_DATA.csv
+8e7a4068cf3affe35421d41d693c7e8f  out/frame_engine_map_check_DATA.csv
+f0120c6579925067af2344e70d317623  out/frame_fitset_support_DATA.csv
+72356d1bbe6a5ab0165ddd85d68dd5ea  out/frame_mefia_l_c_check_DATA.csv
+a6d9e942768e6edbd2d5ef5c703f1ba5  out/frame_pef_cut_type_DATA.csv
+3d7de70bbc12c94a4eba1d900c097972  out/frame_pef_link_test_DATA.csv
+d53176159b30433f7644d14711c48841  out/frame_pef_summary_DATA.csv
+30ccbcf781eeafdcfcdb62bdb6934329  out/frame_r5_dq_reconfirm_DATA.csv
+fabb0de1844fb5710075643aad25f704  out/frame_size_floor_14_1_DATA.csv
+ba3793a6f739cc032e52b8acb03ed331  out/decomp_attribution_DATA.csv
+0ffa20dcf3aed4a32189854888699ffc  out/decomp_fates_DATA.csv
+1822177ec3abf02b54b41fa6d76dd5b0  out/decomp_identity_DATA.csv
+a0706cad8114c4b88bade83fc79be531  out/decomp_restatement_DATA.csv
+2abb653c5c776ddc95f0b07f2a9501c2  out/decomp_restate_scorer_gaps_DATA.csv
+be67779cb2e56c85295ab030aeac14b2  out/decomp_summary_DATA.csv
+2c910caf44ba3f325d9223413ae3fd15  sealed_SERVERONLY/bench_gyr_nhvt_ph_c_pairs.csv
+182e3830c45af531a2d0a6c0c08a3c8d  sealed_SERVERONLY/bench_gyr_nhvt_ph_c_site_esi.csv
+362454f174db7faef6b701e7a0d1ee68  sealed_SERVERONLY/bench_gyr_nhvt_ph_c_tree_init.csv
+b7c905b3b63ccd4eb664a165961b2b3a  sealed_SERVERONLY/bench_gyr_nhvt_ph_c_tree_t2.csv
+a5fe53e47610e6376fa4728d4594d3b8  sealed_SERVERONLY/nhvt_ph_build_checks_DATA.csv
+70ce570279bf632d3ff24e4ce4bd620b  sealed_SERVERONLY/nhvt_ph_class_SERVERONLY.csv
+49fe9f84d183d598cfc2fa35fbcb95d0  sealed_SERVERONLY/nhvt_ph_exclusions_DATA.csv
+d5af55ec07c3a609322e149cd609c49e  sealed_SERVERONLY/nhvt_ph_tst_SERVERONLY.csv
+0a06a732d2b676b8bccfa2d5c33d699a  out/gf_sealed_A0_heavy_gap_DATA.csv
+02ed9ab149fb82e9c2c8ddb098147613  out/gf_sealed_counts_DATA.csv
+71d8e01f8fedaf2fa4d68f07582508cc  out/gates_h3_DATA.csv
+75372946c41020a3c3d10523d47c32ac  logs/h6_allowlist_reads.log
+S2B_DONE 2026-10-27T06:24:57-04:00

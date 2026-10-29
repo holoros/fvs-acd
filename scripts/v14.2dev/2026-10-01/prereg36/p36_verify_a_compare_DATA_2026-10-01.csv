@@ -1,0 +1,57 @@
+set,item,main,verifier,diff,pass
+qc_c,A1 multiset init,1,1,0,TRUE
+qc_c,A1 order init,1,1,0,TRUE
+qc_c,A1 multiset t2,1,1,0,TRUE
+qc_c,A1 order t2,1,1,0,TRUE
+qc_c,t1 tags,65788,65788,0,TRUE
+qc_c,t2 tags,68584,68584,0,TRUE
+qc_c,matched R,57515,57515,0,TRUE
+qc_c,matched M,50434,50434,0,TRUE
+qc_c,S_R,9742,9742,0,TRUE
+qc_c,S_M,13574,13574,0,TRUE
+qc_c,S both,3764,3764,0,TRUE
+qc_c,agreement,0.386368302196674,0.386368302196674,0,TRUE
+qc_c,rule A defect,1,1,0,TRUE
+qc_c,S_R_only n,5978,5978,0,TRUE
+qc_c,S_R_only n both HT,1673,1673,0,TRUE
+qc_c,S_R_only DBH shrink,0.287554366008699,0.287554366008699,0,TRUE
+qc_c,S_R_only HT shrink,0.205618649133293,0.205618649133293,0,TRUE
+qc_c,S_R_only median dDBH,1.5,1.5,0,TRUE
+qc_c,intersection n,3764,3764,0,TRUE
+qc_c,intersection n both HT,2856,2856,0,TRUE
+qc_c,intersection DBH shrink,0.00239107332624867,0.00239107332624867,0,TRUE
+qc_c,intersection HT shrink,0.015406162464986,0.015406162464986,0,TRUE
+qc_c,intersection median dDBH,1.8,1.8,0,TRUE
+qc_c,S_M_only n,9810,9810,0,TRUE
+qc_c,S_M_only n both HT,6924,6924,0,TRUE
+qc_c,S_M_only DBH shrink,0.00254841997961264,0.00254841997961264,0,TRUE
+qc_c,S_M_only HT shrink,0.0197862507221259,0.0197862507221259,0,TRUE
+qc_c,S_M_only median dDBH,1.9,1.9,0,TRUE
+qc_fl,A1 multiset init,1,1,0,TRUE
+qc_fl,A1 order init,1,1,0,TRUE
+qc_fl,A1 multiset t2,1,1,0,TRUE
+qc_fl,A1 order t2,1,1,0,TRUE
+qc_fl,t1 tags,2224,2224,0,TRUE
+qc_fl,t2 tags,2198,2198,0,TRUE
+qc_fl,matched R,1648,1648,0,TRUE
+qc_fl,matched M,1107,1107,0,TRUE
+qc_fl,S_R,257,257,0,TRUE
+qc_fl,S_M,376,376,0,TRUE
+qc_fl,S both,40,40,0,TRUE
+qc_fl,agreement,0.155642023346304,0.155642023346304,0,TRUE
+qc_fl,rule A defect,1,1,0,TRUE
+qc_fl,S_R_only n,217,217,0,TRUE
+qc_fl,S_R_only n both HT,60,60,0,TRUE
+qc_fl,S_R_only DBH shrink,0.262672811059908,0.262672811059908,0,TRUE
+qc_fl,S_R_only HT shrink,0.166666666666667,0.166666666666667,0,TRUE
+qc_fl,S_R_only median dDBH,3.3,3.3,0,TRUE
+qc_fl,intersection n,40,40,0,TRUE
+qc_fl,intersection n both HT,21,21,0,TRUE
+qc_fl,intersection DBH shrink,0,0,0,TRUE
+qc_fl,intersection HT shrink,0,0,0,TRUE
+qc_fl,intersection median dDBH,3.75,3.75,0,TRUE
+qc_fl,S_M_only n,336,336,0,TRUE
+qc_fl,S_M_only n both HT,173,173,0,TRUE
+qc_fl,S_M_only DBH shrink,0,0,0,TRUE
+qc_fl,S_M_only HT shrink,0.0115606936416185,0.0115606936416185,0,TRUE
+qc_fl,S_M_only median dDBH,4.2,4.2,0,TRUE

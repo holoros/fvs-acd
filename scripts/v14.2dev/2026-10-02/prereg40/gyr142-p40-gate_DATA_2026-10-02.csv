@@ -1,0 +1,3 @@
+gate,arm,value,lo,hi,limit,provenance,pass
+T_M,p38_fit,1.60444833906242,-0.0541868561757493,3.25061171665676,10,"FIA National Core Field Guide P2, total and actual length MQO, plus or minus 10 percent of true length [UNVERIFIED in session]",TRUE
+T_H,p38_fit,6.59925822729953,4.79358845019225,8.41232108411418,10,"FIA National Core Field Guide P2, total and actual length MQO, plus or minus 10 percent of true length [UNVERIFIED in session]",TRUE

@@ -1,0 +1,41 @@
+2,6c2,7
+< # PREREG28 chain (pattern of PREREG23 chain_p23.sh): refuses unless the pre-registration md5 line exists; launches tasks 1 to 40
+< # (p28_g0 and p28_cand, at most 2 at once, load gate 12), waits for ALL_DONE, retries host time limit stands by name for both
+< # arms (up to three attempts), scores (run_score_p28.sh), checks the height key helper md5, then assembles
+< # (2026-09-30_v142_p28_assemble.R, which refuses to overwrite assembled/). Stops at the first failure; nothing is overwritten.
+< # Usage: cd ~/jobs/v142p28 && setsid nohup bash scripts/chain_p28.sh > logs/chain_nohup.log 2>&1 < /dev/null &
+---
+> # PREREG28b chain (copy of PREREG28 chain_p28.sh with the arm list, job root and the PREREG28 wait added): refuses unless the
+> # pre-registration md5 line exists; launches tasks 1 to 20 (p28b_small, at most 2 at once, load gate 12), waits for ALL_DONE,
+> # retries host time limit stands by name (up to three attempts), scores p28b_small, then waits for PREREG28 scoring
+> # ("score exit 0" in ~/jobs/v142p28/logs/chain.txt; H0 and the p28_cand comparator are read from there), checks the height
+> # key helper md5 and assembles. Stops at the first failure; nothing is overwritten. No em dashes.
+> # Usage: cd ~/jobs/v142p28b && setsid nohup bash scripts/chain_p28b.sh > logs/chain_nohup.log 2>&1 < /dev/null &
+8c9
+< J=/home/aaron/jobs/v142p28; H=$J/home; LOG=$J/logs/chain.txt
+---
+> J=/home/aaron/jobs/v142p28b; H=$J/home; LOG=$J/logs/chain.txt; P28LOG=/home/aaron/jobs/v142p28/logs/chain.txt
+10c11
+< grep -q "PREREG28 revision" $J/logs/prereg_md5.txt 2>/dev/null || { echo "REFUSE no pre-registration md5 line" >> $LOG; exit 4; }
+---
+> grep -q "PREREG28b revision" $J/logs/prereg_md5.txt 2>/dev/null || { echo "REFUSE no pre-registration md5 line" >> $LOG; exit 4; }
+12c13
+< HOME=$H bash $J/scripts/launch_p28.sh $H/work/p28_grid_ids.txt grid >> $J/logs/launch_grid.log 2>&1
+---
+> HOME=$H bash $J/scripts/launch_p28b.sh $H/work/p28b_grid_ids.txt grid >> $J/logs/launch_grid.log 2>&1
+16,17c17
+< for A in p28_g0 p28_cand; do
+<   HOME=$H bash $H/retry_timeouts_p28.sh $A; echo "retry $A done $(date -Is): $(tail -1 $H/logs/retry_$A.log 2>/dev/null)" >> $LOG; done
+---
+> HOME=$H bash $H/retry_timeouts_p28b.sh p28b_small; echo "retry p28b_small done $(date -Is): $(tail -1 $H/logs/retry_p28b_small.log 2>/dev/null)" >> $LOG
+19c19,21
+< bash scripts/run_score_p28.sh > $J/logs/score.txt 2>&1; rc=$?; echo "score exit $rc $(date -Is)" >> $LOG; [ $rc -eq 0 ] || exit $rc
+---
+> bash scripts/run_score_p28b.sh > $J/logs/score.txt 2>&1; rc=$?; echo "score exit $rc $(date -Is)" >> $LOG; [ $rc -eq 0 ] || exit $rc
+> until grep -q "score exit 0" $P28LOG 2>/dev/null; do grep -qE "^STOP|^REFUSE|score exit [1-9]" $P28LOG && { echo "STOP PREREG28 chain stopped before scoring; no verdict" >> $LOG; exit 9; }; sleep 60; done
+> echo "PREREG28 scoring seen $(date -Is)" >> $LOG
+21,22c23
+< echo "height key helper md5 ok $(date -Is)" >> $LOG
+< Rscript scripts/2026-09-30_v142_p28_assemble.R > $J/logs/assemble.txt 2>&1; rc=$?; echo "assemble exit $rc $(date -Is)" >> $LOG; [ $rc -eq 0 ] || exit $rc
+---
+> Rscript scripts/2026-09-30_v142_p28b_assemble.R > $J/logs/assemble.txt 2>&1; rc=$?; echo "assemble exit $rc $(date -Is)" >> $LOG; [ $rc -eq 0 ] || exit $rc

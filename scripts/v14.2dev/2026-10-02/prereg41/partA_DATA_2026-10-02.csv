@@ -1,0 +1,64 @@
+item,arm,value
+G1 complete,both,72
+G2 identical,qc141,1
+Reineke flags,qc141,36
+Reineke flags,p38_fit,36
+Reineke worst,qc141,1.26574155296881
+Reineke worst,p38_fit,1.49039718043099
+Reineke new_flags,p38_fit,0
+Reineke ni_ok,p38_fit,0
+Frontier flags,qc141,10
+Frontier flags,p38_fit,0
+Frontier worst,qc141,0.0534184162332863
+Frontier worst,p38_fit,-0.00419704347047345
+Frontier new_flags,p38_fit,0
+Frontier ni_ok,p38_fit,1
+Eichhorn flags,qc141,1
+Eichhorn flags,p38_fit,0
+Eichhorn worst,qc141,0.0210106787801298
+Eichhorn worst,p38_fit,-0.139738452618839
+Eichhorn new_flags,p38_fit,0
+Eichhorn ni_ok,p38_fit,1
+Site ordering HT flags,qc141,7
+Site ordering HT flags,p38_fit,1
+Site ordering HT worst,qc141,17
+Site ordering HT worst,p38_fit,1
+Site ordering HT new_flags,p38_fit,0
+Site ordering HT ni_ok,p38_fit,1
+Site ordering VOL flags,qc141,0
+Site ordering VOL flags,p38_fit,0
+Site ordering VOL worst,qc141,0
+Site ordering VOL worst,p38_fit,0
+Site ordering VOL new_flags,p38_fit,0
+Site ordering VOL ni_ok,p38_fit,1
+Site ordering BA flags,qc141,6
+Site ordering BA flags,p38_fit,9
+Site ordering BA worst,qc141,36
+Site ordering BA worst,p38_fit,54
+Site ordering BA new_flags,p38_fit,3
+Site ordering BA ni_ok,p38_fit,0
+Sukachev flags,qc141,0
+Sukachev flags,p38_fit,0
+Sukachev worst,qc141,0
+Sukachev worst,p38_fit,0
+Sukachev new_flags,p38_fit,0
+Sukachev ni_ok,p38_fit,1
+Yield density flags,qc141,8
+Yield density flags,p38_fit,0
+Yield density worst,qc141,0.0279674412173083
+Yield density worst,p38_fit,-0.0391718237946123
+Yield density new_flags,p38_fit,0
+Yield density ni_ok,p38_fit,1
+Magnitude flags,qc141,1
+Magnitude flags,p38_fit,0
+Magnitude worst,qc141,7.01315243571976e-05
+Magnitude worst,p38_fit,-0.147661805714162
+Magnitude new_flags,p38_fit,0
+Magnitude ni_ok,p38_fit,1
+HT monotone flags,qc141,31
+HT monotone flags,p38_fit,0
+HT monotone worst,qc141,2.7982418760338
+HT monotone worst,p38_fit,-0.12588722106862
+HT monotone new_flags,p38_fit,0
+HT monotone ni_ok,p38_fit,1
+decisionA,p38_fit,2

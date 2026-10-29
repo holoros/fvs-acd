@@ -1,0 +1,10 @@
+     gate stands stands_matched frozen_stands result_columns worst_results
+   <char>  <int>          <int>         <int>          <int>         <num>
+1:     H0    100            100           100             13             0
+   worst_results_col tree_rows tree_rows_frozen tree_rows_matched worst_trees
+              <char>     <int>            <int>             <int>       <num>
+1:              BA_p      8774             8774              8774           0
+   worst_trees_col   pass
+            <char> <lgcl>
+1:             dbh   TRUE
+H0_PASS

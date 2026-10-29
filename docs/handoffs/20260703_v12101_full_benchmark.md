@@ -170,6 +170,8 @@ v12.9.x, behind OSM eight.
 
 ## Bakuzis relations (seeded 160-year projections across an ESI gradient)
 
+The Bakuzis assessment summarizes the pass and flag results below across an ESI productivity gradient (ESI 12, 16, and 20 seeded to age 160), scoring each model against the named law-like relations on the modified Bakuzis matrix.
+
 | relation | v12.5.0 | v12.7.0 | v12.9.x | v12.10.1 | OSM |
 |---|---|---|---|---|---|
 | Eichhorn (V ~ f height) | pass | pass | pass | pass | pass |
@@ -181,7 +183,7 @@ v12.9.x, behind OSM eight.
 v12.10.1 inherits the v12.9.x self-thinning machinery and passes all five relations. With the management
 modifier on, a seeded 160-year projection of a planted softwood stand still plateaus at every amplitude
 tested (standard deviation of basal area over the last 20 years about 0.21, flat), and the ceiling rises
-smoothly with amplitude (36.3, 41.6, 43.6, 45.6, 47.3 m2/ha at amplitudes 1.0, 1.6, 2.0, 2.5, 3.0) because
+smoothly with amplitude (36.3, 41.6, 43.6, 45.6, 47.3 m² ha⁻¹ at amplitudes 1.0, 1.6, 2.0, 2.5, 3.0) because
 basal area at the Reineke limit rises with tree size; the operational engine amplitude is set to 2.0. The
 modifier accelerates the approach and lifts the ceiling to a productive planted conifer level without
 breaking self-thinning. v12.5.0 still fails self-thinning outright; OSM does not plateau over the tested
@@ -195,6 +197,42 @@ leave one installation out mean absolute bias 1.33 versus OSM 8.33 and v12.9.x 1
 area -3.2, PCT +0.3, managed -1.0). The five-way pooled and by-cut scorecard was regenerated from Wfull.rds
 with the identical single-keyed-merge scorer (scorecard_five_v1210.csv), all five models scored on the same
 705 keyed stands.
+
+## Ingrowth validation (predicted versus observed)
+
+Recruitment across the tag threshold is a disclosed limit rather than a scored win. The direction is correct but the absolute level is low. In New Brunswick the shipped expected-value ingrowth hurdle predicts 17.9 stems ha⁻¹ yr⁻¹ against 39.8 observed, a ratio of about 0.45, roughly 45 percent of observed. In Quebec it predicts 11.7 against 19.7 observed, a ratio of about 0.59, roughly 59 percent. The important part is that recruitment responds in the correct direction to density and management. Planted and PCT stands carry lower residual density and recruit more than unmanaged stands, so the density-released ingrowth term is behaving as intended and the v12.10.1 additive management release does not distort recruitment.
+
+**Table.** Predicted versus observed ingrowth (stems ha⁻¹ yr⁻¹) by province and management class, with the all-class ratio.
+
+| province | class | predicted (stems ha⁻¹ yr⁻¹) | observed | ratio |
+|---|---|---|---|---|
+| New Brunswick | all | 17.9 | 39.8 | 0.45 |
+| New Brunswick | unmanaged (NONE) | 16.2 | | |
+| New Brunswick | PCT | 19.5 | | |
+| New Brunswick | planted | 21.5 | | |
+| Quebec | all | 11.7 | 19.7 | 0.59 |
+| Quebec | unmanaged (NONE) | 10.6 | | |
+| Quebec | PCT | 14.5 | | |
+| Quebec | planted | 15.9 | | |
+
+This is neither the 2018 near-zero failure that made recruitment too infrequent nor an inflated recruitment. It is a real, moderate under-prediction that belongs on the biological-realism slide as a disclosed limit and is a target for the v13 ingrowth refit. It does not change the shipped version and does not touch the managed-cell scorecard, which is a volume and basal-area result on the tag threshold.
+
+## Pooled parity: top-height lever tested and deferred to v13.0
+
+A top-height anchor-level correction was tested this cycle as a reach for at-or-near pooled parity with OSM on the unmanaged and pooled domain, and it is deferred to v13.0. In the shipped configuration FVS-ACD total volume is near-unbiased on the unmanaged core through an error cancellation: a top-height over-prediction of about +9 percent offsets a basal-area under-prediction of about -8 percent. Correcting top height alone removes the offsetting term and drives volume negative. Under the correction the pooled total volume bias flips from +2.1 to -3.6 percent and the New Brunswick core falls to -8.8 percent, so the pooled and unmanaged mean absolute bias gap to OSM widens rather than closes.
+
+**Table.** Pooled scorecard before and after the top-height anchor correction, versus OSM.
+
+| subset | metric | v12.10.1 baseline | v12.10.2 corrected | OSM |
+|---|---|---|---|---|
+| pooled (733) | mean abs bias | 4.46 | 5.02 | 3.2 |
+| pooled | top height bias | +9.2 | +4.0 | +4.4 |
+| pooled | total volume bias | +2.1 | -3.6 | |
+| pooled | TOST equivalence | 6 of 9 | 7 of 9 | |
+| New Brunswick (355) | total volume bias | | -8.8 | |
+| Quebec (378) | modeling efficiency | | 0.134 | |
+
+The correction does make top height essentially unbiased. Pooled top-height bias falls from +9.2 to +4.0, landing right at OSM at +4.4, and it gains one TOST equivalence, from six to seven of nine. But pooled mean absolute bias gets worse, from 4.46 to 5.02 against OSM at 3.2, and Quebec modeling efficiency collapses to 0.134 because freezing the Quebec height increment to a tenth of its value degrades the stand-by-stand fit even as it flattens the mean. True parity needs a joint re-anchor of dominant height and basal area together, recorded as the v13.0 domain-plus-increment refit rather than a one-sided anchor scale. The gated v12.10.2 lever exists, with the neutral factor reproducing v12.10.1 exactly, but it is not adopted for August.
 
 ## Honest limits
 

@@ -1,0 +1,47 @@
+a1aa4b3532f0b3ac9ec30e63a3f7fcec  /home/aaron/jobs/v142p41/plan/2026-10-02_v142_bakuzis-qc-p38fit_PREREG41.md
+p19_a0030: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -9.553015
+p19_a0060: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -9.281555
+p19_a0111: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -8.819775
+p19_a0250: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -7.559353
+p19_a0500: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -5.286092
+p19_a1000: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -0.718612
+p23_a1061: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -0.159722
+p23_a1250: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM 1.573902
+p28b_small: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM -0.004583
+p38_fit: pop 160, p40 rows 160, OM NA pattern match TRUE, O_M repro worst 3.55e-14; stands_MM 154, selected 562, dropped 0, B_MM 1.500463
+PART_B_DONE
+G1: 72 of 72 (qc141 cells 36, p38_fit cells 36)
+G2: identical on 23 numeric columns over 101 rows: TRUE
+SDI form check on 4 cm columns, worst rel diff 1.1e-14
+Reineke units with < 3 points: 0; site ordering inverted ages total qc141 60 p38_fit 72
+                  rel n_units flags_qc141 flags_p38_fit     worst_qc141
+               <char>   <int>       <int>         <int>           <num>
+ 1:           Reineke      36          36            36 1.265741553e+00
+ 2:          Frontier      36          10             0 5.341841623e-02
+ 3:          Eichhorn       9           1             0 2.101067878e-02
+ 4:  Site ordering HT       9           7             1 1.700000000e+01
+ 5: Site ordering VOL       9           0             0 0.000000000e+00
+ 6:  Site ordering BA       9           6             9 3.600000000e+01
+ 7:          Sukachev      12           0             0 0.000000000e+00
+ 8:     Yield density      12           8             0 2.796744122e-02
+ 9:         Magnitude      36           1             0 7.013152436e-05
+10:       HT monotone      36          31             0 2.798241876e+00
+     worst_p38_fit new_flags    okA    okB  ni_ok
+             <num>     <int> <lgcl> <lgcl> <lgcl>
+ 1:  1.49039718043         0   TRUE  FALSE  FALSE
+ 2: -0.00419704347         0   TRUE   TRUE   TRUE
+ 3: -0.13973845262         0   TRUE   TRUE   TRUE
+ 4:  1.00000000000         0   TRUE   TRUE   TRUE
+ 5:  0.00000000000         0   TRUE   TRUE   TRUE
+ 6: 54.00000000000         3  FALSE  FALSE  FALSE
+ 7:  0.00000000000         0   TRUE   TRUE   TRUE
+ 8: -0.03917182379         0   TRUE   TRUE   TRUE
+ 9: -0.14766180571         0   TRUE   TRUE   TRUE
+10: -0.12588722107         0   TRUE   TRUE   TRUE
+new flags Site ordering BA: BF_N1500 BF_N3000 SM_N1500
+decisionA: rule 2 (harness TRUE, NI FALSE)
+HT ratio p38_fit/qc141 at 50: 1.1235 to 2.8016; at 100: 1.1308 to 4.4983
+PART_A_DONE
+Reineke reading exploration: explore_reineke.log
+A 0.8919 B 1.2657 C 1.3362 all 1.2657 TPH_all 0.7459
+P41_VERIFY_DONE

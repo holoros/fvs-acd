@@ -1,0 +1,8 @@
+5c40ed0add307253e171fd540220ba27  /home/aaron/jobs/v142p31/out/traj_qc141_BF.csv
+ec6e5e76fe9e63b4c3ec9803e8ebe1d8  /home/aaron/jobs/v142p31/out/traj_qc141_MX.csv
+234b3706da2d5d7a1623c4953abee6c5  /home/aaron/jobs/v142p31/out/traj_qc141_SM.csv
+467fb5188a868ed4be4cba9e5a53a3dc  /home/aaron/jobs/v142p31/scripts/driver_p31.R
+e1136ad2d006642daebcb02a05e337e6  /home/aaron/jobs/v142p31/plan/cells_BF.csv
+d804b76afb824f987605c4e57818ebfd  /home/aaron/jobs/v142p31/plan/cells_dry.csv
+a9768bfce5f120d5c8cb11ab2ab2a01f  /home/aaron/jobs/v142p31/plan/cells_MX.csv
+b59367e77b831ffc74b3ffa153807ba4  /home/aaron/jobs/v142p31/plan/cells_SM.csv

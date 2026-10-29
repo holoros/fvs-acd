@@ -1,0 +1,14 @@
+file,md5
+/home/aaron/jobs/v142p20/in/key/p20_htkey_ns_long_c.csv,fd8ab6d5e0643ccc26f5f0fa97b3707f
+/home/aaron/jobs/v142p20/in/key/p20_htkey_ns_long_fl.csv,dce396925f8d38addd86ebc7852690a1
+/home/aaron/jobs/v142p20/results/v141LTf/gyr_v141LTf_ns_long_c_results.csv,e475736fafbf2201fbd1b11de5ead7f6
+/home/aaron/jobs/v142p20/results/v141LTf/gyr_v141LTf_ns_long_fl_results.csv,f9b72f152003140ddb38a07b1e55c95a
+/home/aaron/jobs/v142p20/in/siteidx_ns_long_c.rds,f1cb30430c59dd5b597fae592f679310
+/home/aaron/jobs/v142p20/in/siteidx_ns_long_fl.rds,7def79abbb3055d4f5a88c4fc5981700
+/home/aaron/jobs/v142p30/assembled/gyr142-p30-height_DATA_2026-09-30.csv,80fa9d88fefab9b64ee5d76b7861a3be
+/home/aaron/jobs/v142p20/home/magplot/verify/gydbreg20260916/frames/bench_gyr_ns_long_c_pairs.csv,cc0857c617396634fd67541b01babd89
+/home/aaron/jobs/v142p20/home/magplot/verify/gydbreg20260916/frames/bench_gyr_ns_long_c_tree_init.csv,dcf0d54b7490394b9da4ac68b30798ee
+/home/aaron/jobs/v142p20/home/magplot/verify/gydbreg20260916/frames/bench_gyr_ns_long_c_tree_t2.csv,180263843d284b8d56b8b7316532ffad
+/home/aaron/jobs/v142p20/home/magplot/verify/gydbreg20260916/frames/bench_gyr_ns_long_fl_pairs.csv,425fe331bf0a46b135f447b018937864
+/home/aaron/jobs/v142p20/home/magplot/verify/gydbreg20260916/frames/bench_gyr_ns_long_fl_tree_init.csv,c78848fa1ecfbd5f700a44bcf04b6b22
+/home/aaron/jobs/v142p20/home/magplot/verify/gydbreg20260916/frames/bench_gyr_ns_long_fl_tree_t2.csv,5ad755cc1e49dbaf3bfcefed18be99dd

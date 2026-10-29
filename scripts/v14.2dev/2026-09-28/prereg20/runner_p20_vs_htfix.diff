@@ -1,0 +1,17 @@
+410,414c410,419
+< ## PREREG11: NS size dependent height increment multiplier, identity unless HTFIX_B is set. dht.mult for NS stands is 1 in
+< ## the frozen configuration, so m(D) replaces it; every other province is untouched.
+< HTFIX_B <- suppressWarnings(as.numeric(Sys.getenv("HTFIX_B", "")))
+< htfx <- function(x, p) { if (!is.finite(HTFIX_B) || p$PROV != "NS") return(x); x$dht.mult <- exp(-HTFIX_B * pmax(0, x$dbh - 12.7)); x }
+< cat(sprintf("PREREG11 HTFIX_B=%s\n", if (is.finite(HTFIX_B)) format(HTFIX_B) else "unset"))
+---
+> ## PREREG20: NS two segment height increment multiplier, identity unless HTFIX_B1 is set. dht.mult for NS stands is 1 in
+> ## the frozen configuration, so m(D) replaces it; every other province is untouched. m(D) = exp(-b1 * (min(D, K) - 12.7)+
+> ## - b2 * (D - K)+), K = 25 cm, 0 <= b2 <= b1 (b2 = b1 is the PREREG11 form). The PREREG11 variable HTFIX_B is refused.
+> if (nzchar(Sys.getenv("HTFIX_B", ""))) stop("PREREG20 runner: HTFIX_B is the PREREG11 switch and is refused here; use HTFIX_B1 and HTFIX_B2")
+> HTFIX_B1 <- suppressWarnings(as.numeric(Sys.getenv("HTFIX_B1", ""))); HTFIX_B2 <- suppressWarnings(as.numeric(Sys.getenv("HTFIX_B2", "")))
+> HTFIX_K <- 25
+> if (is.finite(HTFIX_B1) && !(is.finite(HTFIX_B2) && HTFIX_B2 >= 0 && HTFIX_B2 <= HTFIX_B1)) stop("PREREG20 runner: need 0 <= HTFIX_B2 <= HTFIX_B1")
+> htfx <- function(x, p) { if (!is.finite(HTFIX_B1) || p$PROV != "NS") return(x)
+>   x$dht.mult <- exp(-HTFIX_B1 * pmax(0, pmin(x$dbh, HTFIX_K) - 12.7) - HTFIX_B2 * pmax(0, x$dbh - HTFIX_K)); x }
+> cat(sprintf("PREREG20 HTFIX_B1=%s HTFIX_B2=%s K=%g\n", if (is.finite(HTFIX_B1)) format(HTFIX_B1) else "unset", if (is.finite(HTFIX_B2)) format(HTFIX_B2) else "unset", HTFIX_K))

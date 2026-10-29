@@ -1,0 +1,4 @@
+label,arm,scored,t1_zero,t1_zero_share,threshold,fires,stands_no_t1_rows,established
+nb_c,v141LT,355,37,0.104225352112676,0.05,TRUE,0,318
+qc_c,v141LT,378,0,0,0.05,FALSE,0,378
+qc_fl,v141LT,19,0,0,0.05,FALSE,0,19

@@ -1,0 +1,12 @@
+2c2
+< # PREREG23 retry driver (copy of PREREG19 run_retry_p19.sh): one stand, selected BY NAME (STAND_KEEP_FILE), after a host time limit failure. The environment is
+---
+> # PREREG28 retry driver (copy of PREREG23 run_retry_p23.sh, itself a copy of PREREG19 run_retry_p19.sh): one stand, selected BY NAME (STAND_KEEP_FILE), after a host time limit failure. The environment is
+7c7
+< D=$R1/../scripts/run_task_p23.sh; echo "0524be9ca1c793a49cd22230f06d5b80  $D" | md5sum -c --quiet - || { echo "FATAL driver md5"; exit 4; }
+---
+> D=$R1/../scripts/run_task_p28.sh; echo "ad1fb91831030e8d2c1067b61517e76c  $D" | md5sum -c --quiet - || { echo "FATAL driver md5"; exit 4; }
+18c18
+< echo "[v142p23-retry] DONE ${CT}_results.csv attempt=$K end=$(date -Is)"
+---
+> echo "[v142p28-retry] DONE ${CT}_results.csv attempt=$K end=$(date -Is)"

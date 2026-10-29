@@ -1,0 +1,89 @@
+14.3 PREREG3 selection record, variant ctrnonly, 2026-10-28T19:58:47-0400
+plan md5 20364c4b065615317ea7feccb87f5919
+fit frame md5 8f1db5a79ba640eed81dee99bfcbbb2e
+records 55492 (CTRN 46521, FIA 8971), draws 200
+VERDICT: H0: no eligible form beats T0c by more than one SE of the paired pooled CV difference 
+LABELS:  
+
+Full data fits
+     form
+   <char>
+1:    T0c
+2:     T1
+3:     T2
+4:     T4
+5:     T3
+6:     TL
+                                                                          params
+                                                                          <char>
+1:                                               alpha=0.5476876 beta=0.06235765
+2:                     alpha=0.64579247 beta=0.060022456 delta=2 gmin=0.60699191
+3:                   alpha=0.64358238 beta=0.061247141 rm=1.0829005 s=0.28296782
+4:                              alpha=0.77482625 beta=0.060160699 kappa=1.754721
+5: alpha=0.61520247 beta=0.060514581 c1=0 c2=0.4229888 c4=0.770774 c5=0.64551579
+6:                                        alpha=0.5476876 beta=0.06235765 kfia=0
+     rlo   rhi    rd objective
+   <num> <num> <num>     <num>
+1:   0.5  1.00    NA 0.1493604
+2:   0.6  1.00  1.15 0.1488418
+3:    NA    NA    NA 0.1491450
+4:   0.5  1.15  1.00 0.1489262
+5:    NA    NA    NA 0.1492294
+6:   0.5  1.00    NA 0.1493604
+
+CV (pooled, per source) and SE
+Index: <form>
+     form         CV          SE   CV_CTRN    SE_CTRN     CV_FIA      SE_FIA
+   <char>      <num>       <num>     <num>      <num>      <num>       <num>
+1:    T0f 0.11130278 0.006175065 0.1529217 0.01211163 0.06968385 0.002415406
+2:    T0c 0.09789194 0.005784538 0.1516695 0.01137156 0.04411440 0.002128623
+3:     T1 0.09748563 0.005676889 0.1513790 0.01114909 0.04359223 0.002146178
+4:     T2 0.09741191 0.005676787 0.1517115 0.01114931 0.04311236 0.002143953
+5:     T4 0.09723943 0.005708468 0.1513849 0.01121318 0.04309395 0.002147335
+6:     T3 0.09759293 0.005691053 0.1517924 0.01118277 0.04339345 0.002120844
+7:     TL 0.09789194 0.005784538 0.1516695 0.01137156 0.04411440 0.002128623
+
+Paired differences against T0c
+Index: <form>
+     form    ref          diff      se_diff     diff_CTRN      se_CTRN
+   <char> <char>         <num>        <num>         <num>        <num>
+1:    T0f    T0c  0.0134108411 0.0008705892  1.252235e-03 0.0012021863
+2:    T0c    T0c  0.0000000000 0.0000000000  0.000000e+00 0.0000000000
+3:     T1    T0c -0.0004063106 0.0002539321 -2.904533e-04 0.0004939560
+4:     T2    T0c -0.0004800330 0.0003438567  4.197701e-05 0.0006347074
+5:     T4    T0c -0.0006525073 0.0002688821 -2.845632e-04 0.0005022694
+6:     T3    T0c -0.0002990116 0.0002184003  1.229240e-04 0.0004186950
+7:     TL    T0c  0.0000000000 0.0000000000  0.000000e+00 0.0000000000
+        diff_FIA       se_FIA
+           <num>        <num>
+1:  0.0255694467 0.0012595437
+2:  0.0000000000 0.0000000000
+3: -0.0005221678 0.0001180404
+4: -0.0010020430 0.0002647568
+5: -0.0010204515 0.0001921347
+6: -0.0007209471 0.0001244556
+7:  0.0000000000 0.0000000000
+
+Selection table
+Key: <form>
+Index: <eligible>
+     form         CV          SE   CV_CTRN    SE_CTRN     CV_FIA      SE_FIA
+   <char>      <num>       <num>     <num>      <num>      <num>       <num>
+1:     T1 0.09748563 0.005676889 0.1513790 0.01114909 0.04359223 0.002146178
+2:     T2 0.09741191 0.005676787 0.1517115 0.01114931 0.04311236 0.002143953
+3:     T4 0.09723943 0.005708468 0.1513849 0.01121318 0.04309395 0.002147335
+            diff      se_diff class_gate_CTRN class_gate_FIA class_gate
+           <num>        <num>          <lgcl>         <lgcl>     <lgcl>
+1: -0.0004063106 0.0002539321            TRUE          FALSE      FALSE
+2: -0.0004800330 0.0003438567           FALSE          FALSE      FALSE
+3: -0.0006525073 0.0002688821            TRUE          FALSE      FALSE
+   bound_ok beats_T0c eligible  npar   ord
+     <lgcl>    <lgcl>   <lgcl> <num> <int>
+1:    FALSE      TRUE    FALSE     7     3
+2:     TRUE      TRUE    FALSE     4     1
+3:     TRUE      TRUE    FALSE     6     2
+
+HV2 (TL against the selected form)
+   TL_minus_selected    se TL_beats_selected
+               <num> <num>            <lgcl>
+1:                NA    NA                NA

@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, please cite it as below."
+title: "FVS-ACD v12.11 benchmark: six Acadian growth and yield model generations against OSM-ACD v2.26.1, with a measured-height coverage census"
+version: "12.11.0"
+date-released: "2026-08-04"
+license: CC-BY-4.0
+# doi and url are added after the concept DOI mints; see RUNBOOK.md 'After it mints'.
+type: dataset
+authors:
+  - family-names: Weiskittel
+    given-names: Aaron
+    orcid: "https://orcid.org/0000-0003-2534-4478"
+    affiliation: "Center for Research on Sustainable Forests, University of Maine"
+  - family-names: Rice
+    given-names: Ben
+    affiliation: "Midgard Natural Resources"
+abstract: >-
+  An independent benchmark of FVS-ACD, the Acadian variant of the Forest
+  Vegetation Simulator, covering six model generations against OSM-ACD v2.26.1
+  on the FIA National Scale Volume and Biomass system. Includes the benchmark
+  report, the variant overview GTR, every scorecard behind the reported
+  numbers, and a measured-height coverage census across all eleven staged
+  benchmark sources. Aggregates only; no FIA true plot coordinates.
+keywords:
+  - forestry
+  - growth and yield
+  - Forest Vegetation Simulator
+  - Acadian
+  - FIA
+  - NSVB

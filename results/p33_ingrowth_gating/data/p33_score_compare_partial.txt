@@ -1,0 +1,17 @@
+[baxter] observed-basis gate PASS (n=91 stands)
+[ctrn] observed-basis gate PASS (n=1086 stands)
+[nb] SKIP: h1=TRUE matgate=FALSE
+[ns_managed] SKIP: h1=TRUE matgate=FALSE
+[ns_unmanaged] SKIP: h1=TRUE matgate=FALSE
+
+=== Short-interval TOTVOL regression check, h1_v132_mortgate vs h2_matgate ===
+   source     n rmse_h1 rmse_mg d_rmse bias_h1 bias_mg d_bias slope_h1 slope_mg
+   <char> <num>   <num>   <num>  <num>   <num>   <num>  <num>    <num>    <num>
+1: baxter    91  25.725  24.860 -0.865  -0.224   3.226  3.450    1.087    1.044
+2:   ctrn  1086  17.760  17.757 -0.003  -1.536  -1.582 -0.046    1.005    1.004
+
+d_rmse negative = the gate improves RMSE. Adoption gate: no source may regress by more
+than 0.5 RMSE points against the pass 31 production default.
+
+Worst regression: ctrn, d_rmse = -0.003 points
+wrote /users/PUOM0008/crsfaaron/magplot/verify/p33/p33_shortinterval_comparison.csv

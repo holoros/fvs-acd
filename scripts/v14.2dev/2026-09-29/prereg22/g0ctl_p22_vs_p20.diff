@@ -1,0 +1,16 @@
+1,2c1,2
+< ## PREREG20 G0 and Maine control. G0: g0_off (runner_p20_fb.R, correction switched off, v141LT environment) on ns_c admitted
+< ## rows 1 to 100 against the frozen Cardinal v141LT ns_c chunk 1 (same stands). Control: ctl_memat (correction ON, arm
+---
+> ## PREREG22 G0 and Maine control (copy of 2026-09-28_v142_p20_g0ctl.R, md5 78bfbf9b; paths, names and the control wording changed). G0: g0_off (runner_p20_fb.R, correction switched off, v141LT environment) on ns_c admitted
+> ## rows 1 to 100 against the frozen Cardinal v141LT ns_c chunk 1 (same stands). Control: ctl_memat (height correction ON, arm
+8c8
+< J <- "/home/aaron/jobs/v142p20"; H <- file.path(J, "home"); dir.create(file.path(J, "tables"), showWarnings = FALSE)
+---
+> J <- "/home/aaron/jobs/v142p22"; H <- file.path(J, "home"); dir.create(file.path(J, "tables"), showWarnings = FALSE)
+24,25c24,25
+<            cmp("Maine control, correction on, memat_c unchanged", "ctl_memat", "memat_c", "c002_results.csv", "cardinal_v141LT_memat_c_c002_results.csv"))
+< print(R); f <- file.path(J, "tables/gyr142-p20-G0-control_DATA_2026-09-28.csv"); if (file.exists(f)) stop("REFUSE ", f); fwrite(R, f)
+---
+>            cmp("Maine control, height correction on, NS ingrowth setting never set, memat_c unchanged", "ctl_memat", "memat_c", "c002_results.csv", "cardinal_v141LT_memat_c_c002_results.csv"))
+> print(R); f <- file.path(J, "tables/gyr142-p22-G0-control_DATA_2026-09-29.csv"); if (file.exists(f)) stop("REFUSE ", f); fwrite(R, f)

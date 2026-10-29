@@ -1,0 +1,11 @@
+arm,check,stands,worst,na_mismatch,pass
+p19_a0030,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p19_a0060,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p19_a0111,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p19_a0250,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p19_a0500,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p19_a1000,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p23_a1061,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p23_a1250,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p28b_small,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE
+p38_fit,O_M against PREREG40 stands file,160,3.5527136788005e-14,0,TRUE

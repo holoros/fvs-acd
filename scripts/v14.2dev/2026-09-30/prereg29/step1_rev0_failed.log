@@ -1,0 +1,7 @@
+key fold A: ns_c NS_OP 40667; ns_c NS_RS 7198; ns_long_c NS_OP 55951; ns_long_c NS_RS 12631
+Reproduction PREREG25 fold A: 30 cells, worst 4.88e-15
+stands fold A 7069, with key trees 5875
+Error in `[.data.table`(ST, , .(var = v, stands = sum(is.finite(get(v))),  : 
+  Column 5 of result for group 4 is type 'integer' but expecting type 'double'. Column types must be consistent for each group.
+Calls: rbindlist -> lapply -> FUN -> [ -> [.data.table
+Execution halted

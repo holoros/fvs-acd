@@ -1,0 +1,56 @@
+--- /home/aaron/jobs/v142p28b/home/work/p28b_taskmap_DATA_2026-09-30.csv	2026-09-30 14:47:31.789629590 -0300
++++ /home/aaron/jobs/v142p33/home/work/p33_taskmap_DATA_2026-10-01.csv	2026-10-01 06:55:40.189858673 -0300
+@@ -1,21 +1,33 @@
+ task,COL,CHUNK,SET,FROM,TO
+-1,p28b_small,1,qc_c,1,20
+-2,p28b_small,2,qc_c,21,40
+-3,p28b_small,3,qc_c,41,60
+-4,p28b_small,4,qc_c,61,80
+-5,p28b_small,5,qc_c,81,100
+-6,p28b_small,6,qc_c,101,120
+-7,p28b_small,7,qc_c,121,140
+-8,p28b_small,8,qc_c,141,160
+-9,p28b_small,9,qc_c,161,180
+-10,p28b_small,10,qc_c,181,200
+-11,p28b_small,11,qc_c,201,220
+-12,p28b_small,12,qc_c,221,240
+-13,p28b_small,13,qc_c,241,260
+-14,p28b_small,14,qc_c,261,280
+-15,p28b_small,15,qc_c,281,300
+-16,p28b_small,16,qc_c,301,320
+-17,p28b_small,17,qc_c,321,340
+-18,p28b_small,18,qc_c,341,360
+-19,p28b_small,19,qc_c,361,380
+-20,p28b_small,1,qc_fl,1,19
++1,p33_dyn,1,qc_c,1,20
++2,p33_dyn,2,qc_c,21,40
++3,p33_dyn,3,qc_c,41,60
++4,p33_dyn,4,qc_c,61,80
++5,p33_dyn,5,qc_c,81,100
++6,p33_dyn,6,qc_c,101,120
++7,p33_dyn,7,qc_c,121,140
++8,p33_dyn,8,qc_c,141,160
++9,p33_dyn,9,qc_c,161,180
++10,p33_dyn,10,qc_c,181,200
++11,p33_dyn,11,qc_c,201,220
++12,p33_dyn,12,qc_c,221,240
++13,p33_dyn,13,qc_c,241,260
++14,p33_dyn,14,qc_c,261,280
++15,p33_dyn,15,qc_c,281,300
++16,p33_dyn,16,qc_c,301,320
++17,p33_dyn,17,qc_c,321,340
++18,p33_dyn,18,qc_c,341,360
++19,p33_dyn,19,qc_c,361,380
++20,p33_dyn,1,qc_fl,1,19
++21,p33_g0a,1,qc_c,1,20
++22,p33_g0a,10,qc_c,181,200
++23,p33_g0a,19,qc_c,361,380
++24,p33_g0a,1,qc_fl,1,19
++25,p33_g0b,1,qc_c,1,20
++26,p33_g0b,10,qc_c,181,200
++27,p33_g0b,19,qc_c,361,380
++28,p33_g0b,1,qc_fl,1,19
++29,p33_g0b1,1,qc_c,1,20
++30,p33_g0b1,10,qc_c,181,200
++31,p33_g0b1,19,qc_c,361,380
++32,p33_g0b1,1,qc_fl,1,19

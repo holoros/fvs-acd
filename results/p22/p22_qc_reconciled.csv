@@ -1,0 +1,2 @@
+source,n,rmse_base,bias_base,rmse_cand,bias_cand,rmse_ship18,bias_ship18,slope_ship18,rmse_v132,bias_v132,slope_v132,rmse_v132_lo,rmse_v132_hi,bias_v132_lo,bias_v132_hi,d_rmse_v132_minus_ship18,d_bias_v132_minus_ship18,note
+QC MagPlot,378,59.34,1.23,58.5,9.46,59.84,3.98,0.5154,58.58,3.43,0.5383,50.16,67.88,-2.73,10.06,-1.26,-0.54,reduced: OSM never scored QC (g4_osm_score_nb_results.csv is NB-only)

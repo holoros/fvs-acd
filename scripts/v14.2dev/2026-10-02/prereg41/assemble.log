@@ -1,0 +1,128 @@
+                 gate
+               <char>
+ 1:                G0
+ 2:               G0c
+ 3:                G1
+ 4:                G2
+ 5:       NI Eichhorn
+ 6:       NI Frontier
+ 7:    NI HT_monotone
+ 8:      NI Magnitude
+ 9:        NI Reineke
+10: NI SiteOrder_BAPH
+11:   NI SiteOrder_HT
+12:  NI SiteOrder_VOL
+13:       NI Sukachev
+14:   NI YieldDensity
+                                                                        value
+                                                                       <char>
+ 1:                                  worst scaled 0 over 3 stands, 12 columns
+ 2:                                                                  G0C_PASS
+ 3:         72 of 72 trajectories complete with 101 rows (arms qc141 p38_fit)
+ 4:                                                                 identical
+ 5:    flags p38_fit 0, qc141 1, new 0; worst margin p38_fit 0, qc141 0.02101
+ 6:   flags p38_fit 0, qc141 10, new 0; worst margin p38_fit 0, qc141 0.05342
+ 7:     flags p38_fit 0, qc141 31, new 0; worst margin p38_fit 0, qc141 2.798
+ 8:  flags p38_fit 0, qc141 1, new 0; worst margin p38_fit 0, qc141 7.013e-05
+ 9: flags p38_fit 36, qc141 36, new 0; worst margin p38_fit 1.49, qc141 1.266
+10:        flags p38_fit 9, qc141 6, new 3; worst margin p38_fit 14, qc141 13
+11:          flags p38_fit 1, qc141 7, new 0; worst margin p38_fit 1, qc141 7
+12:          flags p38_fit 0, qc141 0, new 0; worst margin p38_fit 0, qc141 0
+13:          flags p38_fit 0, qc141 0, new 0; worst margin p38_fit 0, qc141 0
+14:    flags p38_fit 0, qc141 8, new 0; worst margin p38_fit 0, qc141 0.02797
+                                             threshold   pass
+                                                <char> <lgcl>
+ 1:                                            <= 1e-9   TRUE
+ 2:                                           G0C_PASS   TRUE
+ 3:                                                all   TRUE
+ 4:                                          identical   TRUE
+ 5: no new flag; candidate worst margin <= qc141 worst   TRUE
+ 6: no new flag; candidate worst margin <= qc141 worst   TRUE
+ 7: no new flag; candidate worst margin <= qc141 worst   TRUE
+ 8: no new flag; candidate worst margin <= qc141 worst   TRUE
+ 9: no new flag; candidate worst margin <= qc141 worst  FALSE
+10: no new flag; candidate worst margin <= qc141 worst  FALSE
+11: no new flag; candidate worst margin <= qc141 worst   TRUE
+12: no new flag; candidate worst margin <= qc141 worst   TRUE
+13: no new flag; candidate worst margin <= qc141 worst   TRUE
+14: no new flag; candidate worst margin <= qc141 worst   TRUE
+                                                         provenance
+                                                             <char>
+ 1: frozen p19_a0111 qc_c results, md5 979101be; logs/g0_result.csv
+ 2:             stored v1402 report md5 7a04368c; logs/g0c_diff.txt
+ 3:                                        out/traj_<arm>_<mix>.csv
+ 4:                  dry qc141 MX_E19.8_N6000 against the grid cell
+ 5:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+ 6:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+ 7:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+ 8:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+ 9:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+10:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+11:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+12:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+13:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+14:      PREREG31 relations (PREREG26 rules), QC thresholds in plan
+Key: <relation>
+Index: <marginB_ok>
+          relation cand_flags ref_flags new_flags cand_worst    ref_worst
+            <char>      <int>     <int>     <int>      <num>        <num>
+ 1:       Eichhorn          0         1         0   0.000000 2.101068e-02
+ 2:       Frontier          0        10         0   0.000000 5.341842e-02
+ 3:    HT_monotone          0        31         0   0.000000 2.798242e+00
+ 4:      Magnitude          0         1         0   0.000000 7.013152e-05
+ 5:        Reineke         36        36         0   1.490397 1.265742e+00
+ 6: SiteOrder_BAPH          9         6         3  14.000000 1.300000e+01
+ 7:   SiteOrder_HT          1         7         0   1.000000 7.000000e+00
+ 8:  SiteOrder_VOL          0         0         0   0.000000 0.000000e+00
+ 9:       Sukachev          0         0         0   0.000000 0.000000e+00
+10:   YieldDensity          0         8         0   0.000000 2.796744e-02
+    marginB_ok  ni_ok
+        <lgcl> <lgcl>
+ 1:       TRUE   TRUE
+ 2:       TRUE   TRUE
+ 3:       TRUE   TRUE
+ 4:       TRUE   TRUE
+ 5:      FALSE  FALSE
+ 6:      FALSE  FALSE
+ 7:       TRUE   TRUE
+ 8:       TRUE   TRUE
+ 9:       TRUE   TRUE
+10:       TRUE   TRUE
+        arm   age DHTM_cohort_min DHTM_cohort_max DHTM_ing_min DHTM_ing_max
+     <char> <int>           <num>           <num>        <num>        <num>
+ 1:   qc141     0           0.111           0.111          Inf         -Inf
+ 2:   qc141     1           0.111           0.111            1            1
+ 3:   qc141    25           0.111           0.111            1            1
+ 4:   qc141    50           0.111           0.111            1            1
+ 5:   qc141    75           0.111           0.111            1            1
+ 6:   qc141   100           0.111           0.111            1            1
+ 7: p38_fit     0           1.242           1.242          Inf         -Inf
+ 8: p38_fit     1           1.242           1.242            1            1
+ 9: p38_fit    25           1.242           1.242            1            1
+10: p38_fit    50           1.242           1.242            1            1
+11: p38_fit    75           1.242           1.242            1            1
+12: p38_fit   100           1.242           1.242            1            1
+    cohort_ge25_max cohort_ge25_share_max DHTM_ge25_min DHTM_ge25_max
+              <num>                 <num>         <num>         <num>
+ 1:         0.00000            0.00000000           Inf          -Inf
+ 2:         0.00000            0.00000000           Inf          -Inf
+ 3:         0.00000            0.00000000           Inf          -Inf
+ 4:        48.77013            0.03347799         0.111         0.111
+ 5:       168.75352            0.11175998         0.111         0.111
+ 6:       247.82553            0.24833608         0.111         0.111
+ 7:         0.00000            0.00000000           Inf          -Inf
+ 8:         0.00000            0.00000000           Inf          -Inf
+ 9:         0.00000            0.00000000           Inf          -Inf
+10:       101.59217            0.06346699         1.242         1.242
+11:       233.09507            0.52017389         1.242         1.242
+12:       325.96015            0.86382419         1.242         1.242
+plan_md5=a1aa4b3532f0b3ac9ec30e63a3f7fcec
+outcome=RULE2_NOT_CLEARED
+harness_ok=TRUE NI_ok=FALSE
+new_flags=3
+new_flag_units=SiteOrder_BAPH:BF_N1500;SiteOrder_BAPH:BF_N3000;SiteOrder_BAPH:SM_N1500
+marginB_fail_relations=Reineke;SiteOrder_BAPH
+realism_low_rows=23 (qc141 below 0.85 ESI at 50: 36)
+realism_high_rows=72 (qc141 above 1.15 ESI at 50: 0)
+HT_ratio_range=1.1235..4.4983 TPH100_ratio_range=0.488..1.056 VOL100_ratio_range=1.291..2.225
+ASSEMBLY_DONE

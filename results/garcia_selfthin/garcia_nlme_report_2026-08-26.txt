@@ -1,0 +1,66 @@
+=== SUMMARY ===
+Nonlinear mixed-effects model fit by maximum likelihood
+  Model: logS2 ~ garcia_pred(S1, H1, H2, alpha, beta, gamma) 
+  Data: d 
+        AIC       BIC   logLik
+  -678.7523 -648.7421 344.3761
+
+Random effects:
+ Formula: beta ~ 1 | source
+                beta  Residual
+StdDev: 1.334082e-06 0.2156216
+
+Fixed effects:  list(alpha ~ 1, beta ~ 1, gamma ~ 1) 
+         Value Std.Error   DF  t-value p-value
+alpha 3.222059 0.4293486 2982  7.50453       0
+beta  0.068077 0.0034347 2982 19.82035       0
+gamma 5.688335 0.7512140 2982  7.57219       0
+ Correlation: 
+      alpha  beta  
+beta   0.542       
+gamma  0.720 -0.118
+
+Standardized Within-Group Residuals:
+       Min         Q1        Med         Q3        Max 
+-2.7494030  0.1080543  0.2278651  0.5629970  6.8494338 
+
+Number of Observations: 2987
+Number of Groups: 3 
+
+=== VarCorr (random effect variance) ===
+source = pdLogChol(list(beta ~ 1)) 
+         Variance     StdDev      
+beta     1.779774e-12 1.334082e-06
+Residual 4.649268e-02 2.156216e-01
+
+=== fixef ===
+     alpha       beta      gamma 
+3.22205915 0.06807698 5.68833514 
+
+=== ranef ===
+                    beta
+mefia_subp  3.306414e-10
+ns         -1.552217e-09
+ns_long     1.221576e-09
+
+=== intervals ===
+Approximate 95% confidence intervals
+
+ Fixed effects:
+           lower       est.      upper
+alpha 2.38063259 3.22205915 4.06348572
+beta  0.06134574 0.06807698 0.07480822
+gamma 4.21612477 5.68833514 7.16054552
+
+ Random Effects:
+  Level: source 
+                lower         est.        upper
+sd(beta) 2.673285e-58 1.334082e-06 6.657631e+45
+
+ Within-group standard error:
+    lower      est.     upper 
+0.2102226 0.2156216 0.2211593 
+
+=== AIC/logLik ===
+[1] -678.7523
+'log Lik.' 344.3761 (df=5)

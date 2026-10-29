@@ -1,0 +1,4 @@
+4c4
+< H <- path.expand("~/jobs/v142p15"); RES <- file.path(H, "results/v141LT"); FR <- file.path(H, "home/magplot/verify/gydbreg20260916/frames")
+---
+> H <- path.expand("~/jobs/v142p15"); RES <- file.path(H, "results_r1/v141LT"); FR <- file.path(H, "home/magplot/verify/gydbreg20260916/frames")

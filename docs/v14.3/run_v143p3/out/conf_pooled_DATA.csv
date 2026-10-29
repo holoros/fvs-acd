@@ -1,0 +1,8 @@
+pool,stands,heavy_stands,esi_coverage,gated_v1_classes_30,floor_heavy_30,floor_esi_080,floor_classes_3,all_floors_met
+"sources 1 and 2 (passing sources, choice 5 a)",37,10,0.945946,3,False,True,True,False
+sensitivity: plus the 5 NB NFI ground plot stands counted as heavy and ESI covered (upper bound),42,15,0.952381,3,False,True,True,False
+"survivor trees, sources 1 and 2, heavy and intermediate, class [0,0.6)",,,,17,,,,
+"survivor trees, sources 1 and 2, heavy and intermediate, class [0.6,0.85)",,,,14,,,,
+"survivor trees, sources 1 and 2, heavy and intermediate, class [0.85,1.15)",,,,38,,,,
+"survivor trees, sources 1 and 2, heavy and intermediate, class [1.15,1.5)",,,,54,,,,
+"survivor trees, sources 1 and 2, heavy and intermediate, class [1.5,Inf)",,,,112,,,,

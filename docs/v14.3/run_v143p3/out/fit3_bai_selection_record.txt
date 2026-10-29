@@ -1,0 +1,98 @@
+14.3 PREREG3 selection record, variant bai, 2026-10-28T19:09:03-0400
+plan md5 20364c4b065615317ea7feccb87f5919
+fit frame md5 8f1db5a79ba640eed81dee99bfcbbb2e
+records 55492 (CTRN 46521, FIA 8971), draws 200
+VERDICT: H0: no eligible form beats T0c by more than one SE of the paired pooled CV difference 
+LABELS:  
+
+Full data fits
+     form
+   <char>
+1:    T0c
+2:     T1
+3:     T2
+4:     T4
+5:     T3
+6:     TL
+                                                                        params
+                                                                        <char>
+1:                                           alpha=0.54999995 beta=0.059999932
+2:                        alpha=0.60000008 beta=0.059999832 delta=0.5 gmin=0.3
+3:                       alpha=0.6 beta=0.059999903 rm=0.99999999 s=0.59999999
+4:                                 alpha=0.99999998 beta=0.059999752 kappa=2.5
+5: alpha=0.59999995 beta=0.059999975 c1=0.3 c2=0.8 c4=0.99999999 c5=0.79999997
+6:                       alpha=0.54999995 beta=0.059999932 kfia=-1.2496554e-07
+     rlo   rhi    rd    objective
+   <num> <num> <num>        <num>
+1:   0.4  0.85    NA 7.621110e-07
+2:   0.4  1.00     1 7.497983e-07
+3:    NA    NA    NA 7.497346e-07
+4:   0.4  1.15     1 7.489261e-07
+5:    NA    NA    NA 7.577132e-07
+6:   0.4  0.85    NA 7.621110e-07
+
+CV (pooled, per source) and SE
+Index: <form>
+     form           CV           SE      CV_CTRN      SE_CTRN       CV_FIA
+   <char>        <num>        <num>        <num>        <num>        <num>
+1:    T0f 1.127175e-06 8.545006e-08 1.355470e-06 1.651536e-07 8.988799e-07
+2:    T0c 7.637891e-07 8.190067e-08 1.310366e-06 1.633826e-07 2.172123e-07
+3:     T1 7.533438e-07 8.311798e-08 1.314402e-06 1.659320e-07 1.922853e-07
+4:     T2 7.497346e-07 8.228120e-08 1.307538e-06 1.642441e-07 1.919308e-07
+5:     T4 7.608717e-07 8.392752e-08 1.329321e-06 1.675519e-07 1.924224e-07
+6:     T3 7.577132e-07 8.043983e-08 1.305472e-06 1.604823e-07 2.099549e-07
+7:     TL 7.637891e-07 8.190067e-08 1.310366e-06 1.633826e-07 2.172122e-07
+         SE_FIA
+          <num>
+1: 4.394461e-08
+2: 1.170436e-08
+3: 1.004848e-08
+4: 1.023022e-08
+5: 1.008345e-08
+6: 1.130077e-08
+7: 1.170435e-08
+
+Paired differences against T0c
+Index: <form>
+     form    ref          diff      se_diff     diff_CTRN      se_CTRN
+   <char> <char>         <num>        <num>         <num>        <num>
+1:    T0f    T0c  3.633860e-07 2.024190e-08  4.510436e-08 1.600375e-08
+2:    T0c    T0c  0.000000e+00 0.000000e+00  0.000000e+00 0.000000e+00
+3:     T1    T0c -1.044534e-08 3.465484e-09  4.036270e-09 5.835201e-09
+4:     T2    T0c -1.405445e-08 4.202272e-09 -2.827445e-09 7.394905e-09
+5:     T4    T0c -2.917355e-09 7.819504e-09  1.895518e-08 1.496879e-08
+6:     T3    T0c -6.075853e-09 2.920982e-09 -4.894324e-09 5.789121e-09
+7:     TL    T0c -1.542336e-14 1.608911e-15  0.000000e+00 0.000000e+00
+        diff_FIA       se_FIA
+           <num>        <num>
+1:  6.816676e-07 3.718627e-08
+2:  0.000000e+00 0.000000e+00
+3: -2.492695e-08 3.740153e-09
+4: -2.528145e-08 3.993962e-09
+5: -2.478989e-08 4.529236e-09
+6: -7.257382e-09 7.839698e-10
+7: -3.084672e-14 3.217823e-15
+
+Selection table
+Key: <form>
+Index: <eligible>
+     form           CV           SE      CV_CTRN      SE_CTRN       CV_FIA
+   <char>        <num>        <num>        <num>        <num>        <num>
+1:     T1 7.533438e-07 8.311798e-08 1.314402e-06 1.659320e-07 1.922853e-07
+2:     T2 7.497346e-07 8.228120e-08 1.307538e-06 1.642441e-07 1.919308e-07
+3:     T4 7.608717e-07 8.392752e-08 1.329321e-06 1.675519e-07 1.924224e-07
+         SE_FIA          diff      se_diff class_gate_CTRN class_gate_FIA
+          <num>         <num>        <num>          <lgcl>         <lgcl>
+1: 1.004848e-08 -1.044534e-08 3.465484e-09           FALSE          FALSE
+2: 1.023022e-08 -1.405445e-08 4.202272e-09           FALSE          FALSE
+3: 1.008345e-08 -2.917355e-09 7.819504e-09           FALSE          FALSE
+   class_gate bound_ok beats_T0c eligible  npar   ord
+       <lgcl>   <lgcl>    <lgcl>   <lgcl> <num> <int>
+1:      FALSE     TRUE      TRUE    FALSE     7     3
+2:      FALSE     TRUE      TRUE    FALSE     4     1
+3:      FALSE     TRUE     FALSE    FALSE     6     2
+
+HV2 (TL against the selected form)
+   TL_minus_selected    se TL_beats_selected
+               <num> <num>            <lgcl>
+1:                NA    NA                NA

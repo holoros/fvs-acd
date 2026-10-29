@@ -1,0 +1,103 @@
+chain start 2026-10-26T13:36:57-03:00 out=/home/aaron/jobs/v142p48/dryrun mode=dry
+split start 2026-10-26T13:36:57-03:00 load 0.15
+stands 26 (screened A 12, screened B 12, cut 2) DRY SUBSET
+     fold records stands prereg37   pass
+   <char>   <int>  <int>    <int> <lgcl>
+1:      A      41     10      698  FALSE
+2:      B      56     10      737  FALSE
+qc141 predicted split done
+qc_rh predicted split done
+wrote p48-stands_SERVERONLY.csv 52 rows
+wrote p48-T0.csv 2 rows
+wrote p48-T1-coverage.csv 4 rows
+      cut   fold stands t1_fail t1_worst_scaled t1_worst_scaled_kept
+   <lgcl> <char>  <int>   <int>           <num>                <num>
+1:  FALSE      A     12       0               0                    0
+2:  FALSE      B     12       0               0                    0
+3:   TRUE      A      1       0               0                    0
+4:   TRUE      B      1       0               0                    0
+   align_t1_fail align_t2_fail map_fail covered t2_field_vs_run_maxrel
+           <int>         <int>    <int>   <int>                  <num>
+1:             0             0        0      12                      0
+2:             0             0        0      12                      0
+3:             0             0        0       1                      0
+4:             0             0        0       1                      0
+wrote p48-input-md5.csv 8 rows
+P48_SPLIT_DONE
+boot start 2026-10-26T13:36:59-03:00 load 0.22
+wrote p48-shares.csv 8 rows
+wrote p48-p27-tables.csv 16 rows
+wrote p48-gates.csv 14 rows
+Index: <gate>
+                      gate                                    arm
+                    <char>                                 <char>
+ 1:                     T0                             field tags
+ 2:                     T1                                 frames
+ 3:                     T2                                  qc141
+ 4:                     T3                                  qc141
+ 5:                     T3                                  qc_rh
+ 6:                     T4                                  qc141
+ 7:                    A_S                                  qc141
+ 8:                    A_I                                  qc141
+ 9:                     SR                                  qc141
+10:                    A_S                                  qc_rh
+11:                    A_I                                  qc_rh
+12:                     SR                                  qc_rh
+13:                     AR qc_rh minus qc141, all screened fold B
+14: AR (covered, reported)      qc_rh minus qc141, covered fold B
+                                                                                         value
+                                                                                        <char>
+ 1:                                                                       fold A 41, fold B 56
+ 2: 0 of 12 screened fold B stands fail (worst kept 0); 0 fail the split map check; 12 covered
+ 3:                                                             42.2689 points (42.27 rounded)
+ 4:                                                                                     0.0000
+ 5:                                                                                     0.0000
+ 6:                                                                                     1.0000
+ 7:                                                                 0.0494 (-0.0729 to 0.1803)
+ 8:                                                                  0.9506 (0.8197 to 1.0729)
+ 9:                                                                  0.9650 (0.9048 to 1.0538)
+10:                                                                 0.0576 (-0.0639 to 0.1934)
+11:                                                                  0.9424 (0.8066 to 1.0639)
+12:                                                                  0.9587 (0.8968 to 1.0506)
+13:                                                                              0.3728 points
+14:                                                                              0.3728 points
+                                                                        threshold
+                                                                           <char>
+ 1:                                               698 fold A, 737 fold B, exactly
+ 2: worst scaled difference at or below 1e-6; failing stands excluded and counted
+ 3:                                        24.23 points to the published rounding
+ 4:                                          R over D at or below 0.10 (absolute)
+ 5:                                          R over D at or below 0.10 (absolute)
+ 6:                                                                  at least 0.5
+ 7:                                        at or above 2/3, lower limit above 0.5
+ 8:                                        at or above 2/3, lower limit above 0.5
+ 9:                                              outside 0.90 to 1.10 is material
+10:                                        at or above 2/3, lower limit above 0.5
+11:                                        at or above 2/3, lower limit above 0.5
+12:                                              outside 0.90 to 1.10 is material
+13:                                                             within 2.0 points
+14:                                                             within 2.0 points
+      pass                note
+    <lgcl>              <char>
+ 1:  FALSE                <NA>
+ 2:   TRUE                <NA>
+ 3:  FALSE                <NA>
+ 4:   TRUE                <NA>
+ 5:   TRUE                <NA>
+ 6:   TRUE                <NA>
+ 7:  FALSE                <NA>
+ 8:   TRUE                <NA>
+ 9:  FALSE pass means material
+10:  FALSE                <NA>
+11:   TRUE                <NA>
+12:  FALSE pass means material
+13:   TRUE                <NA>
+14:   TRUE                <NA>
+wrote p48-T2-crosscheck.csv 2 rows
+      arm stands dev_results_pts dev_tree_pts dev_runframe_pts
+   <char>  <int>           <num>        <num>            <num>
+1:  qc141     12        42.26894     42.26894         42.26894
+2:  qc_rh     12        42.64170     42.64170         42.64170
+wrote p48-floor.csv 10 rows
+P48_BOOT_DONE
+CHAIN_DONE 2026-10-26T13:37:00-03:00

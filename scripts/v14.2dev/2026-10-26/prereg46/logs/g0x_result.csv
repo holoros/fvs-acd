@@ -1,0 +1,2 @@
+gate,rows,rows_ref,same_columns,worst_scaled,na_mismatch,pass
+G0x,1212,1212,TRUE,0,0,TRUE

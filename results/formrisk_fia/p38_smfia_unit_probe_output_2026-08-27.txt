@@ -1,0 +1,21 @@
+=== T1  lookup reproduction, all cells x reference survivals x NHRI aliases ===
+  evaluations: 288   worst |post - lookup|: 7.772e-16
+  T1 all lookup values reproduced to 1e-12                             PASS
+  T1 clamp_active rows sit exactly at the 0.60 floor                   PASS
+=== T2  gate semantics ===
+  T2 every non-SM species returns exactly 1 at the worst cell          PASS
+  T2 NA/invalid sp, form, risk, surv.tree all return 1                 PASS
+  T2 SM at the reference cell returns exactly 1                        PASS
+=== T3  vectorised call-site path on a 400-row mixed table ===
+  T3 pmap path runs without error, softwood NA rows included           PASS
+  T3 vectorised path identical() to the scalar loop                    PASS
+  T3 all non-SM rows exactly 1                                         PASS
+  T3 every gated SM row in (0.60, 1), monotone side correct            PASS
+=== T4  OFF-state identity ===
+  T4 gate condition FALSE for both explicit FALSE and absent flag      PASS
+  T4 all six neighbouring functions byte-identical pre vs post         PASS
+  T4 new function exists only post-patch                               PASS
+=== T5  repo vs deployed wiring ===
+  T5 tsurv_hw_mod_fia identical() between deployed and repo engines    PASS
+
+PROBE COMPLETE: 0 failure(s)

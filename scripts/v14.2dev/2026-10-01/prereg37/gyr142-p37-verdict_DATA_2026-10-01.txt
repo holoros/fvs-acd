@@ -1,0 +1,1 @@
+PREREG37 verdict (fold B): size pattern: none of H1 to H3, row index pairing artifact; G0 NOT REPRODUCED; H3 dominant level named; stall: unanchored equation also stalls
