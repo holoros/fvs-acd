@@ -103,6 +103,9 @@ are described in `VERSION_HISTORY.md` Era 8; PREREG2 revision 5 is in `docs/v14.
 | 49 | plan | NS survival over multi year steps and the v141LTfi Bakuzis question, for 14.3: preregistration 49 (revision 1, registered) | `scripts/v14.2dev/2026-10-27/prereg49/plan/2026-10-26_v142_ns-survival-step_PREREG49.md` |
 | 49 | result | NS survival over multi year steps and the v141LTfi Bakuzis question: PREREG49 result | `scripts/v14.2dev/2026-10-27/prereg49/2026-10-27_v142_ns-survival-step_RESULT.md` |
 | 50 | draft (not registered) | QC ingrowth entry size and scoring floor handling, for 14.3: preregistration 50 | `scripts/v14.2dev/2026-10-27/drafts/2026-10-27_v142_qc-ingrowth-entry-floor_PREREG50_DRAFT.md` |
+| 50 | plan | QC ingrowth entry size and scoring floor handling, for 14.3: preregistration 50 (revision 1, registered) | `scripts/v14.2dev/2026-10-28/prereg50/plan/2026-10-28_v142_qc-ingrowth-entry-floor_PREREG50.md` |
+| 50 | result | QC ingrowth entry size and scoring floor handling: PREREG50 result (revision r1, after an independent verification; earlier text `_PREV_20261028b`) | `scripts/v14.2dev/2026-10-28/prereg50/2026-10-28_v142_qc-ingrowth-entry-floor_RESULT.md` |
+| 50 | deviations | PREREG50: deviations | `scripts/v14.2dev/2026-10-28/prereg50/2026-10-28_v142_qc-ingrowth-entry-floor_DEVIATIONS.md` |
 
 ## 14.3
 
@@ -117,3 +120,11 @@ are described in `VERSION_HISTORY.md` Era 8; PREREG2 revision 5 is in `docs/v14.
 | 2 | result | The form of the 14.1 thinning release term T, for 14.3: result of pre-registration 2 | `docs/v14.3/run_v143p2/2026-10-27_v143_T-form-reestimation_RESULT.md` |
 | 2 | deviations | 14.3 pre-registration 2: deviations and implementation notes | `docs/v14.3/run_v143p2/2026-10-27_v143-prereg2_DEVIATIONS.md` |
 | 3 | draft (not registered) | A T form with a class varying shape, beyond the PREREG2 family, for 14.3: pre-registration 3 | `docs/v14.3/prereg3_draft/2026-10-27_v143_T-form-class-shape_PREREG3_DRAFT.md` |
+| 3 | plan | A T form with a class varying shape, beyond the PREREG2 family, for 14.3: pre-registration 3 (revision 1, registered) | `docs/v14.3/run_v143p3/plan/2026-10-28_v143_T-form-class-shape_PREREG3.md` |
+| 3 | result | The form of the 14.1 thinning release term T beyond the PREREG2 family: result of pre-registration 3 (revision r1, after an independent verification; earlier text `_PREV_20261028b`) | `docs/v14.3/run_v143p3/2026-10-28_v143_T-form-class-shape_RESULT.md` |
+| 3 | deviations | 14.3 pre-registration 3: deviations and implementation notes | `docs/v14.3/run_v143p3/2026-10-28_v143-prereg3_DEVIATIONS.md` |
+| 4 | plan | Senescence conditioned on forest type, for 14.3: pre-registration 4 (revision 1, registered) | `docs/v14.3/run_v143p4/plan/2026-10-28_v143_senescence-forest-type_PREREG4.md` |
+| 4 | result | Senescence conditioned on forest type: result of pre-registration 4 (revision r1, after an independent verification; earlier text `_PREV_20261028b`; deviations D1 to D9 are a section of this file) | `docs/v14.3/run_v143p4/2026-10-28_v143_senescence-forest-type_RESULT.md` |
+| Howland | plan | Howland decline diagnostic, for 14.3 (registered; diagnostic arms, not candidates) | `docs/v14.3/run_howland_decline/2026-10-28_v143_howland-decline-diagnostic_PREREG.md` |
+| Howland | result | Howland decline diagnostic: RESULT (revision r1, after an independent verification; earlier text `_PREV_20261028b`) | `docs/v14.3/run_howland_decline/2026-10-28_v143_howland-decline-diagnostic_RESULT.md` |
+| Howland | deviations | Howland decline diagnostic: deviations | `docs/v14.3/run_howland_decline/2026-10-28_v143_howland-decline-diagnostic_DEVIATIONS.md` |

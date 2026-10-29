@@ -18,8 +18,9 @@ Start with `../README.md`. This page lists everything else by what a reader is t
 |:--|:--|
 | `../VERSION_HISTORY.md` | every engine version from 12.3.6 to 14.1, with status, gates and stated limitations, in nine eras |
 | `history.md` | the dated status sections the README carried from June to October 16, 2026 |
-| [`v14.3/`](v14.3/) | 14.3 pre-registration 1 (registered October 18, 2026, md5 7f3e67c2), its registration log, change log and the five red team reviews in `review/`; the run of October 18 to 19 in `run_v143p1/` (`result/` holds the RESULT, deviations and tables; `explore/` the post hoc stress test); the PREREG2 drafts in `prereg2_draft/` and its registered revision 5 (October 26, md5 b7562e8b) at the top of `v14.3/` |
-| [`preregistrations.md`](preregistrations.md) | index of the 14.2 refinement pre-registrations and results, PREREG13b to PREREG49, and of the 14.3 pre-registrations |
+| [`v14.3/`](v14.3/) | 14.3 pre-registration 1 (registered October 18, 2026, md5 7f3e67c2), its registration log, change log and the five red team reviews in `review/`; the run of October 18 to 19 in `run_v143p1/` (`result/` holds the RESULT, deviations and tables; `explore/` the post hoc stress test); the PREREG2 drafts in `prereg2_draft/` and its registered revision 5 (October 26, md5 b7562e8b) at the top of `v14.3/`; the October 28 runs in `run_v143p3/` (pre-registration 3, T form beyond the PREREG2 family), `run_v143p4/` (pre-registration 4, senescence by forest type) and `run_howland_decline/` (the Howland decline diagnostic) |
+| [`preregistrations.md`](preregistrations.md) | index of the 14.2 refinement pre-registrations and results, PREREG13b to PREREG50, and of the 14.3 pre-registrations |
+| `../scripts/v14.2dev/2026-10-28/release-notes/2026-10-28_fvs-acd-v14.2_release-notes_DRAFT.md` | 14.2 release notes, revision h (October 28); revision g is in `../scripts/v14.2dev/2026-10-27/release-notes/`; PREREG50 is in `../scripts/v14.2dev/2026-10-28/prereg50/` |
 | `../scripts/v14.2dev/2026-10-26/release-notes/2026-10-26_fvs-acd-v14.2_release-notes_DRAFT.md` | 14.2 release notes, revision f (October 26); revision e is in `../scripts/v14.2dev/2026-10-16/release-notes/` |
 | `GY_model_evaluation_scorecard.md` | the multi-dimensional growth and yield evaluation framework the benchmarks score against |
 | `../CHARTER.md`, `HANDOFF_FVS-ACD.md` | the June 2026 site driver modernization charter and its handoff |
@@ -57,7 +58,7 @@ The repository holds several lines of work that have not been merged into `main`
 | `v143-prereg1-run-20261019` | the 14.3 PREREG1 run and RESULT, the T form diagnostics and the PREREG2 draft | draft PR #13, stacked on PR #12 |
 | `engine-frozen-cardinal-20261019` | the frozen Cardinal engine copies with an md5 manifest | no pull request yet; off PR #12's branch |
 | `v142-p46p47-docs-20261026` | the October 26 runs (PREREG46, the PREREG47 reading, the acdx arms, Zenodo 1.9.0 scripts) and the October 26 documentation update | draft PR #14, stacked on `v143-prereg1-run-20261019` |
-| `v142-autopilot-20261026` | PREREG2 (14.3) and PREREG48 registration, release notes f and g, the Howland cross-version projections, the PREREG48 and PREREG49 runs, the Zenodo 1.10.0 drivers and this documentation update | draft PR #15, stacked on PR #14 |
+| `v142-autopilot-20261026` | PREREG2 (14.3) and PREREG48 registration, release notes f and g, the Howland cross-version projections, the PREREG48 and PREREG49 runs, the Zenodo 1.10.0 drivers, the October 28 records (PREREG50, 14.3 PREREG3 and PREREG4, the Howland decline diagnostic), release notes h and this documentation update | draft PR #15, stacked on PR #14 |
 | `mortality-shutoff-repairs-20260908` | mortality shutoff diagnosis and Bakuzis three way comparison | PR #7 into `hardwood-formrisk-wip` |
 | `rescue/dc5df3d` | v12.11 benchmark of August 4, 2026 (height coverage census, rescores, Zenodo deposit package) | kept as a recovery branch; not merged into `main` |
 | `hardwood-formrisk-wip` | 13.1 passes 9 to 11 (August 2026) | diverged from `main`; base of PR #7 |

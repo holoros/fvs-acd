@@ -448,6 +448,10 @@ alternatives too tall (`scripts/v14.2dev/2026-10-26/`). PREREG48 placed the QC s
 PREREG49 (October 26 to 27) did not adopt its NS survival step (annual survival by interval and two PREREG22 gates fail) and did
 not clear v141LTfi on measured stand lists, whose median 100 year top height loss against v141LT is 15.6%. Release notes
 revision g carries both (`scripts/v14.2dev/2026-10-27/release-notes/`).
+PREREG50 (October 28) matched the engine's ingrowth threshold to the QC inventory floor, which takes the qc_c fold B stems
+deviation from 24.2 points low to 1.8 points high (rule 3, a benchmark and runner convention for 14.3, not an ingrowth
+coefficient; labels "previously inspected population" and "threshold support unknown"; the ungated fold A replication reads
+rule 4), and release notes revision h carries it (`scripts/v14.2dev/2026-10-28/`).
 
 A cross-version benchmark on October 16, 2026 compared 13.1h, 14.0.4 L2 and 14.1 on the 19 frozen
 benchmark sets, 827 post-harvest Maine FIA stands and 200 yr no-harvest projections of 918 unmanaged
@@ -460,11 +464,11 @@ as both change only the Quebec height path (`scripts/v14.2dev/2026-10-26/acdx_ar
 response limited to partial removals, senescence conditioned on forest type, and the diameter growth
 shortfall common to every version.
 
-## Era 10: 14.3 studies (October 17 to 27, 2026)
+## Era 10: 14.3 studies (October 17 to 28, 2026)
 
 | Version | Dates | Engine file | Status |
 |:--|:--|:--|:--|
-| none | 17 Oct to 27 Oct | none | no engine file added, 14.1 remains the release |
+| none | 17 Oct to 28 Oct | none | no engine file added, 14.1 remains the release |
 
 Era 10 adds no `AcadianGY_*.r` file. 14.3 pre-registration 1 (the 14.1 thinning response limited to partial removals, md5
 7f3e67c2) was registered on October 18, 2026 after five red team rounds and run on OSC Cardinal on October 18 to 19. No
@@ -474,6 +478,20 @@ of what 14.1 predicts, whichever way the removal moved Dq. Two read only diagnos
 (re-estimating the form of T) was drafted through four plan red team rounds and registered on October 26, 2026 (revision 5). It ran on Cardinal on October 27, 2026: the registered selection picked C2, which passed every harness gate but failed the survivor gate on mefia_ph_c, so it is not adopted (rule 3) and 14.3 keeps the 14.1 T; the sealed NH and VT confirmation is open, with 68 of 108 stands on climate site index (`docs/v14.3/run_v143p2/`). The QC height results of
 PREREG46 and PREREG47 (Era 9, October 26) also inform 14.3. The record is in `docs/v14.3/`, with the run in
 `docs/v14.3/run_v143p1/`.
+
+On October 28, 2026 three more 14.3 studies ran on Cardinal, each RESULT revised once after an independent verification.
+Pre-registration 3 (a T form beyond the PREREG2 family) selected T4 on the fit set (pooled CV 0.09692 against 0.09740 for the
+refit C2 form, about 1.2 SE) but is open under rule 5: every stress variant reselects H0 and the confirmation set has 10 heavy
+stands against a floor of 30, so T4 is not adopted and 14.3 keeps the 14.1 T (`docs/v14.3/run_v143p3/`). Pre-registration 4
+(senescence conditioned on forest type) gives no verdict under rule 1, since harness gate H3 failed (stand counts match on 12 of
+19 sets against a floor of 15); its fit found no eligible form, on an observed mortality measure that is not valid because
+mefia_l_c TREE ids do not reliably pair the same tree across visits, and its diagnostic arm D1 (floor hazard removed in non
+spruce-fir stands) cuts the share of stands declining by year 200 from 0.741 to 0.840 to 0 to 0.333 but overshoots, at 2.06 to
+2.91 times the FIA biomass curves at year 100 (`docs/v14.3/run_v143p4/`). The Howland decline diagnostic, not a candidate
+study, found the Howland hindcast not scoreable (the t2 file is a copy of t1), attributed the 14.1 decline at ESI 15 to
+mortality (share 1.477 of the net difference from 13.1h) and to the linked mortality lever (share 2.545 of the decline removed
+when it is off, at the cost of a -15.84% first cycle shock at year 5), and found that the L2 floor hazard supplies most of the
+14.1 mortality there (`docs/v14.3/run_howland_decline/`).
 
 ## What this document does not cover
 

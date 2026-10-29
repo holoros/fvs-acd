@@ -11,13 +11,13 @@ The canonical model is maintained with Ben Rice (Midgard Natural Resources), and
 implementation of the variant is in Midgard's fork of the Forest Vegetation Simulator. Changes made
 here are coordinated with both.
 
-## Status (October 27, 2026)
+## Status (October 28, 2026)
 
 | Version | State | Where |
 |:--|:--|:--|
 | **14.1** | **current release**, shipped September 24, 2026: 14.0.4 plus two diameter increment terms, L (large stem level) and T (thinning release), both off by default; one named standing gate failure, GT1 | engine files on branch `engines-14.1-20260924`, PR #9 |
-| 14.2 | refinement in progress; no engine file, coefficient or default of 14.1 changed so far; PREREG46 to PREREG49 ran in October | record in `scripts/v14.2dev/` (PREREG46, the PREREG47 reading and PREREG48 in `scripts/v14.2dev/2026-10-26/`, PREREG49 in `scripts/v14.2dev/2026-10-27/prereg49/`), release notes revision g (`scripts/v14.2dev/2026-10-27/release-notes/`) |
-| 14.3 | in study; pre-registration 1 (the 14.1 thinning response limited to partial removals) ran October 18 to 19, 2026: no eligibility rule adopted, and large residual trees after removals grow about two thirds of what 14.1 predicts; pre-registration 2 (re-estimating the form of T) was registered on October 26, 2026 and ran on October 27, 2026: the selected form C2 is not adopted (rule 3, it fails the survivor gate on mefia_ph_c), so 14.3 keeps the 14.1 T, and the sealed NH and VT confirmation is open | [`docs/v14.3/`](docs/v14.3/), result in [`docs/v14.3/run_v143p1/result/`](docs/v14.3/run_v143p1/result/) |
+| 14.2 | refinement in progress; no engine file, coefficient or default of 14.1 changed so far; PREREG46 to PREREG50 ran in October | record in `scripts/v14.2dev/` (PREREG46, the PREREG47 reading and PREREG48 in `scripts/v14.2dev/2026-10-26/`, PREREG49 in `scripts/v14.2dev/2026-10-27/prereg49/`, PREREG50 in `scripts/v14.2dev/2026-10-28/prereg50/`), release notes revision h (`scripts/v14.2dev/2026-10-28/release-notes/`; revision g in `scripts/v14.2dev/2026-10-27/release-notes/`) |
+| 14.3 | in study; pre-registration 1 (the 14.1 thinning response limited to partial removals) ran October 18 to 19, 2026: no eligibility rule adopted, and large residual trees after removals grow about two thirds of what 14.1 predicts; pre-registration 2 (re-estimating the form of T) was registered on October 26, 2026 and ran on October 27, 2026: the selected form C2 is not adopted (rule 3, it fails the survivor gate on mefia_ph_c), so 14.3 keeps the 14.1 T, and the sealed NH and VT confirmation is open; pre-registration 3 (a T form beyond the PREREG2 family, October 28) is open under rule 5: T4 is the documented best form on the fit set but is not adopted, as every stress variant reselects H0 and the confirmation set has 10 heavy stands against a floor of 30, so 14.3 keeps the 14.1 T; pre-registration 4 (senescence conditioned on forest type, October 28) gives no verdict under rule 1, since harness gate H3 failed (stand counts match on 12 of 19 sets against a floor of 15) | [`docs/v14.3/`](docs/v14.3/), result in [`docs/v14.3/run_v143p1/result/`](docs/v14.3/run_v143p1/result/); pre-registrations 2 to 4 and the Howland decline diagnostic in `docs/v14.3/run_v143p2/`, `run_v143p3/`, `run_v143p4/` and `run_howland_decline/` |
 | 13.1 | model of record and the base every 14.x file sources | the benchmarked copy (md5 5894df60) is on Cardinal only; `scripts/AcadianGY_13.1.r` here is an older copy (md5 5140bf9b), see `docs/reference/running-14.1.md` |
 | 12.10.1 | frozen August 2026 operational baseline, packaged for deposit | `zenodo_v12101/` |
 
@@ -68,6 +68,34 @@ and is reachable again; the work queued on it ran:
   shows the sustained gain that repeat ALS reports there (`results/howland_20261026/`).
 - Zenodo version 1.10.0 (10.5281/zenodo.23670727) was published on October 27, 2026 with the cross-version benchmark,
   PREREG46 to PREREG49, the 14.2 arms and release notes revision g.
+
+October 28, 2026. Four more studies ran, all on aggregates and none changing 14.1 or 14.2. Each RESULT was revised once after
+an independent read only check recomputed every headline value; the earlier text is kept beside it as `_PREV_20261028b`.
+
+- PREREG50 matched the engine's ingrowth threshold to the QC inventory floor. On the 160 screened qc_c fold B stands the stems
+  deviation goes from 24.2 points low under frozen 14.1 to 1.8 points high under E1 (signed deviation -1.759, 95% interval -8.065
+  to 3.727), so the PREREG48 deficit is mostly a floor handling artifact. Rule 3 fires: the 14.3 track is a benchmark and runner
+  convention, not an ingrowth coefficient, with the labels "previously inspected population" and "threshold support unknown".
+  The open loop S2 convention runs 7.18 points high, and the ungated fold A replication reads rule 4 (S2 just past the overshoot
+  bound). The survivor ratio of about 1.09 is unchanged (`scripts/v14.2dev/2026-10-28/prereg50/`).
+- 14.3 PREREG3 tested T forms beyond the PREREG2 family on CTRN and mefia_ph_c survivors. The fit set selects T4, a release that
+  rises to about r 1.0 and then falls as roughly r^−1.6 (pooled CV 0.09692 against 0.09740 for the refit C2 form, about 1.2 SE),
+  but every stress variant reselects H0, the engine no harm gates were not evaluated, and the confirmation set has 10 heavy stands
+  against a floor of 30, so the verdict is open (rule 5). T4 is not adopted and 14.3 keeps the 14.1 T (`docs/v14.3/run_v143p3/`).
+- 14.3 PREREG4 (senescence conditioned on forest type) gives no verdict (rule 1): harness gate H3 failed, because stand counts
+  match the frozen score table on 12 of 19 sets against a registered floor of 15. The fit found no eligible form, and a post
+  selection diagnostic shows its observed mortality measure is not valid, since mefia_l_c TREE ids do not reliably pair the same
+  tree across visits, so the question is open. The registered diagnostic arm D1 (floor hazard removed in non spruce-fir stands)
+  cuts the share of fold B stands declining by year 200 from 0.741 to 0.840 under 14.1 to 0 to 0.333 in the five non spruce-fir
+  types, but overshoots, at 2.06 to 2.91 times the FIA biomass curves at year 100 (`docs/v14.3/run_v143p4/`).
+- Howland decline diagnostic: the harness reproduced the frozen runs (210 of 210 files md5 identical) and flux closure held, but
+  the hindcast is not scoreable, since `howland_tree_t2.csv` is a copy of the initial tree list and the DBH columns from 2010 to
+  2026 are a reconstruction, not repeat measurements. At ESI 15, mortality carries 1.477 (95% interval 1.344 to 1.660) of the
+  14.1 minus 13.1h difference in net change by year 50. Turning the linked mortality lever off removes 2.545 (1.690 to 5.635) of
+  the 14.1 decline but brings back the first cycle shock (-15.84% at year 5), and the L1 arm shows that the L2 floor hazard
+  supplies most of the 14.1 mortality at Howland. The repeat ALS source located on Cardinal is ORNL DAAC 2490 version 2
+  (doi:10.3334/ORNLDAAC/2490): 1.148 Mg C ha⁻¹ yr⁻¹ from 2012 to 2025 from map means (trend 0.903), not confirmed as the
+  source of the October 23 README statement (`docs/v14.3/run_howland_decline/`).
 
 ## Quick start
 
@@ -131,7 +159,9 @@ industry data is used under its owners' terms and only aggregates leave the host
 and go to Zenodo at release, as in the other holoros data repositories. The cross-version benchmark
 package documents a screen of its files for plot and stand identifier columns and coordinate fields,
 and a file that carries one is refused. The PREREG46 and PREREG47 records were screened the same way
-on October 17, 2026; earlier 14.2 refinement folders carry no record of a screen.
+on October 17, 2026; earlier 14.2 refinement folders carry no record of a screen. The PREREG50, 14.3 PREREG3, 14.3 PREREG4
+and Howland decline records added on October 28, 2026 were screened against the stand and site identifiers of their server only
+files and for key and coordinate columns, and no file was refused (`scripts/v14.2dev/2026-10-28/docs_h/`).
 
 ## Citation
 
