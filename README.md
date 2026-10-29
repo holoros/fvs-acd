@@ -18,7 +18,7 @@ here are coordinated with both.
 | **14.1** | **current release**, shipped September 24, 2026: 14.0.4 plus two diameter increment terms, L (large stem level) and T (thinning release), both off by default; one named standing gate failure, GT1 | engine files on branch `engines-14.1-20260924`, PR #9 |
 | 14.2 | refinement in progress; no engine file, coefficient or default of 14.1 changed so far; PREREG46 to PREREG50 ran in October | record in `scripts/v14.2dev/` (PREREG46, the PREREG47 reading and PREREG48 in `scripts/v14.2dev/2026-10-26/`, PREREG49 in `scripts/v14.2dev/2026-10-27/prereg49/`, PREREG50 in `scripts/v14.2dev/2026-10-28/prereg50/`), release notes revision h (`scripts/v14.2dev/2026-10-28/release-notes/`; revision g in `scripts/v14.2dev/2026-10-27/release-notes/`) |
 | 14.3 | in study; pre-registration 1 (the 14.1 thinning response limited to partial removals) ran October 18 to 19, 2026: no eligibility rule adopted, and large residual trees after removals grow about two thirds of what 14.1 predicts; pre-registration 2 (re-estimating the form of T) was registered on October 26, 2026 and ran on October 27, 2026: the selected form C2 is not adopted (rule 3, it fails the survivor gate on mefia_ph_c), so 14.3 keeps the 14.1 T, and the sealed NH and VT confirmation is open; pre-registration 3 (a T form beyond the PREREG2 family, October 28) is open under rule 5: T4 is the documented best form on the fit set but is not adopted, as every stress variant reselects H0 and the confirmation set has 10 heavy stands against a floor of 30, so 14.3 keeps the 14.1 T; pre-registration 4 (senescence conditioned on forest type, October 28) gives no verdict under rule 1, since harness gate H3 failed (stand counts match on 12 of 19 sets against a floor of 15) | [`docs/v14.3/`](docs/v14.3/), result in [`docs/v14.3/run_v143p1/result/`](docs/v14.3/run_v143p1/result/); pre-registrations 2 to 4 and the Howland decline diagnostic in `docs/v14.3/run_v143p2/`, `run_v143p3/`, `run_v143p4/` and `run_howland_decline/` |
-| 13.1 | model of record and the base every 14.x file sources | the benchmarked copy (md5 5894df60) is on Cardinal only; `scripts/AcadianGY_13.1.r` here is an older copy (md5 5140bf9b), see `docs/reference/running-14.1.md` |
+| 13.1 | model of record and the base every 14.x file sources | the benchmarked copy (md5 5894df60) is on Cardinal only; `scripts/AcadianGY_13.1.r` on `main` is now the engine branch copy (the Cardinal file with its version tag changed to AcadianV13.2, md5 6ec18236); the older copy (md5 5140bf9b) is in the history, see `docs/reference/running-14.1.md` |
 | 12.10.1 | frozen August 2026 operational baseline, packaged for deposit | `zenodo_v12101/` |
 
 What the October 16, 2026 cross-version benchmark found
@@ -149,8 +149,9 @@ kept with the plan.
 | `_context/` | standing prompts and specifications |
 | `CHARTER.md` | the June 2026 site driver modernization charter |
 
-Several lines of work sit on branches not yet merged into `main`, and the 14.x engine files and the
-14.2 record are on different branches. `docs/index.md` maps them.
+On October 28, 2026 every line of work (the 13.1 to 14.1 engine branches, the hardwood and mortality branches, the 14.2
+refinement, the cross-version benchmark, the 14.3 studies and the documentation stack) was merged into `main` through one
+integration branch. `docs/index.md` lists the branches and how the merge conflicts were resolved.
 
 ## Data policy
 

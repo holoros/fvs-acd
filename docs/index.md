@@ -41,8 +41,12 @@ header and version tag mismatches. Paths there are frozen; nothing is moved.
 
 ## Branches
 
-The repository holds several lines of work that have not been merged into `main`. As of October 26,
-2026 (all pull requests listed are drafts; none is merged):
+On October 28, 2026 every branch below was merged into `main` through the branch `integrate-20261028`, by Aaron's decision of
+that day. Conflicts were resolved by one declared rule: the 12.11 and 13.1 draft engine files keep the main lineage copy at their
+paths, and the hardwood branch copies are kept beside them as `scripts/AcadianGY_12.11_hardwood-branch-20260908.r` and
+`scripts/AcadianGY_13.1_DRAFT_hardwood-branch-20260908.r`; eight archive decks deleted on the hardwood branch were kept; the
+documentation is that of the latest documentation branch. Nothing was deleted. The table is the branch map as it stood before
+the merge, as of October 26, 2026:
 
 | Branch | Holds | Relation |
 |:--|:--|:--|

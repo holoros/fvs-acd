@@ -21,8 +21,8 @@ the layer below unmodified.
 | 4. Overlay (terms L and T) | `AcadianGY_14.1.r` | 0bf27dde81240e6bdf59c9a90f0051bd | `scripts/` on branch `engines-14.1-20260924` (PR #9) |
 
 No branch of this repository holds the 13.1 file the benchmarks ran. `scripts/AcadianGY_13.1.r` on
-`main` and the refinement branches is an older copy (md5 5140bf9b), and the engine branches hold the
-Cardinal copy with its version tag changed to AcadianV13.2 (md5 6ec18236, commit e9527d7). Check the
+`main` (since the merge of October 28, 2026) and the engine branches hold the
+Cardinal copy with its version tag changed to AcadianV13.2 (md5 6ec18236, commit e9527d7); the refinement branches carried an older copy (md5 5140bf9b). Check the
 md5 of whatever 13.1 you source against the value in the table. The 14.0.4 file also still carries the
 version tag AcadianV14.0.2; its md5, not its tag, identifies it.
 
