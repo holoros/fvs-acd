@@ -1,9 +1,0 @@
-check,rows,worst,pass
-R1 PREREG23 height table (row index),120,4.88498130835069e-15,TRUE
-R2 PREREG19 grid,48,4.83169060316868e-13,TRUE
-R2 PREREG23 stands summary,16,3.97903932025656e-13,TRUE
-R2 PREREG28b stands summary,8,2.55795384873636e-13,TRUE
-R3 field tag counts A,1,0,TRUE
-R3 field tag counts B,1,0,TRUE
-R4 r2 against frozen p19 stands,397,0,TRUE
-R5 fit value,1,0,TRUE

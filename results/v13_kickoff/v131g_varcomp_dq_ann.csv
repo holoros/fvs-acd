@@ -1,6 +1,0 @@
-grp,var1,sdcor
-fortype,(Intercept),0.0356
-eco,(Intercept),0.0377
-region,mgd,0.0201
-region.1,(Intercept),0.0088
-Residual,,0.0869

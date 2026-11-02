@@ -1,5 +1,0 @@
-form,class,n_stands,n_sites,delta,lo95,hi95,share_draws_outside_grid,R_at_0,monotone,eligible_class,eligible
-L,SF,2,2,,,,1,10.2602890447464,TRUE,FALSE,FALSE
-L,NSF,1,1,-0.148513768148693,-0.148513768148693,-0.148513768148693,0.314,1.130269662403,TRUE,FALSE,FALSE
-S,SF,0,0,,,,1,,,FALSE,FALSE
-S,NSF,0,0,,,,1,,,FALSE,FALSE

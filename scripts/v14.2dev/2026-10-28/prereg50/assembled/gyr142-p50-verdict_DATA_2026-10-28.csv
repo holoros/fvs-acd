@@ -1,6 +1,0 @@
-item,value
-mode,full
-verdict,rule 3: artifact (HA); 14.3 track is a benchmark and runner convention (ingrowth threshold matched to the inventory floor)
-labels,previously inspected population; threshold support unknown
-survivor ratio note,"E1 survivor ratio 1.0943 (1.0489 to 1.1472), inside 0.90 to 1.10"
-L2,"L2 threshold support: not found. No record of the threshold range in the fit data of the engine's ingrowth equations (Li, Weiskittel and Kershaw 2011 GNLS parameters, ENG lines 2774 to 2779) was found on firebreather."

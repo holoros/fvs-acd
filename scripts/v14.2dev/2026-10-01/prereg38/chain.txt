@@ -1,9 +1,0 @@
-chain start 2026-10-01T21:57:51-03:00 pid=1361006
-fit exit 0 2026-10-01T21:57:52-03:00
-fit md5 e782957cc297e60f1f22744aea96d529  /home/aaron/jobs/v142p38/fit/gyr142-p38-qcafac-fit_DATA_2026-10-01.csv value 1.242
-main done 2026-10-01T22:23:41-03:00: 24 exit 0, 0 nonzero
-retry p38_fit done 2026-10-01T22:23:41-03:00: RETRY_DONE p38_fit remaining: 0
-retry p38_one done 2026-10-01T22:23:41-03:00: RETRY_DONE p38_one remaining: 0
-score exit 0 2026-10-01T22:23:47-03:00
-assemble exit 0 2026-10-01T22:24:05-03:00
-CHAIN_DONE 2026-10-01T22:24:05-03:00

@@ -1,2 +1,0 @@
-n_plots,n_plots_with_more_than_one_measurement_year,measurement_years,dbh_series_columns,share_rows_complete_dbh_series,share_rows_nondecreasing_dbh_series,t2_rows_equal_t1,t2_equals_t1_except_year,t2_year_values,gate_pass,verdict
-93,0,2024 2025 2026,12,1,1,TRUE,TRUE,2075,FALSE,NOT SCOREABLE

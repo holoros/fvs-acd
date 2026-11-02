@@ -1,7 +1,0 @@
-plan_md5=c218808858938c889ac771b0de5db531
-outcome=RULE2_NOT_ADOPTED
-fis_enters_stage2=FALSE
-harness_ok=TRUE fit_ok=TRUE H0=TRUE TR=TRUE K1=TRUE
-M=M1:TRUE M2:TRUE M3:FALSE M4:FALSE M5:FALSE
-failing=M3;M4 E3;M4 E6b;M5
-decision_weight=informs 14.3 only; 14.2 is unchanged

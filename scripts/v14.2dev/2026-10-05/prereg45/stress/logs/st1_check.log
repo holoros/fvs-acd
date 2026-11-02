@@ -1,4 +1,0 @@
-Error in fread("/home/aaron/jobs/v142p45st/out/st1_trace_SERVERONLY.csv",  : 
-  File '/home/aaron/jobs/v142p45st/out/st1_trace_SERVERONLY.csv' does not exist or is non-readable. getwd()=='/home/aaron/jobs'
-Calls: fread -> stopf -> raise_condition -> signal
-Execution halted

@@ -1,3 +1,0 @@
-13aef41dada731a5406e5729f3a65255  p39_compare_r2.R
-426071e63c7d77ff7655bf8cf01e1bd0  p39_compare_r2.log
-222ce323dde9c00b00e9752e85914a8e  p39_verify_compare_r2_DATA_2026-10-02.csv

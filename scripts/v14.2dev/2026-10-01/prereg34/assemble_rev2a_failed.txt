@@ -1,7 +1,0 @@
-           used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  1001039 53.5    1635730  87.4  1635730  87.4
-Vcells 11295546 86.2   30775014 234.8 30770107 234.8
-Error in `[.data.table`(Z, eval(parse(text = u[3]))) : 
-  'sib' is not found in calling scope, but it is a column of type logical. If you wish to select rows where that column contains TRUE, or perhaps that column contains row numbers of itself to select, try DT[(col)], DT[DT$col], or DT[col==TRUE] is particularly clear and is optimized. When the first argument inside DT[...] is a single symbol (e.g. DT[var]), data.table looks for var in calling scope.
-Calls: stat ... [ -> [.data.table -> stopf -> raise_condition -> signal
-Execution halted

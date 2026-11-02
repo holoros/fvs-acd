@@ -1,6 +1,0 @@
-fold A screened: 153 stands on 147 sites
-tag trees 264 on 103 sites; dominant 76
-Error in quantile.default(newX[, i], ...) : 
-  missing values and NaN's not allowed if 'na.rm' is FALSE
-Calls: rbindlist ... FUN -> data.table -> apply -> FUN -> quantile.default
-Execution halted

@@ -1,5 +1,0 @@
-# PREREG44 DRIVER (2026-10-05), built by build_driver_p44.sh from the PREREG31 driver driver_p31.R (md5 467fb518) with
-# exactly two edits, both checked to match once: (1) the mode check admits slgrid beside g0 and grid; (2) a new slgrid
-# branch (parts/slgrid_branch.R) is inserted before the g0 branch, whose line becomes "} else if (P31_MODE == "g0") {".
-# Every other line, including the g0 and grid modes, the runner lines 1 to 419 and the dht.mult expression, is driver_p31.R
-# byte for byte; gates G0 and G0b test that the existing modes are unchanged. Diff in ../diffs/. No coordinates. No em dashes.

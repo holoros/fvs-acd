@@ -1,2 +1,0 @@
-gate,arm,a,b,zero_r,calls,rows,worst_abs_diff,ingrowth_rows,ingrowth_m1_not_expected,rows_at_or_above_zero,rows_at_or_above_zero_m_not0,m_min,m_max,ingrowth_exercised,zero_exercised,pass
-TR,qc_lz,2.2292,-1.3631,1.63538992003521,8,362,8.21565038222616e-15,18,0,0,0,0.785831411054797,1.87337282281467,TRUE,FALSE,TRUE

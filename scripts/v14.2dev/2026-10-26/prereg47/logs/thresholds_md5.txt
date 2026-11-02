@@ -1,1 +1,0 @@
-e9609cfb551390ddc168e52a7ea57419  plan/thresholds_p47_DATA.csv  written by thresholds_p47.R (md5 ce7b6d2f1f9cbed51347b3aa70275b4a) at 2026-10-26T09:06:12-0300, before any PREREG47 reading

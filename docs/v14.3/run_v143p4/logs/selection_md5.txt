@@ -1,6 +1,0 @@
-# PREREG4 selection record, recorded 2026-10-28T06:26:05-0400 after v143p4_fit.R (md5 1d11ab2345422e0fe5318d9234b54469) and before any candidate run or fold B read.
-0e31af20f3b318fdb2a7abe27f5916cf  assembled/v143p4_selection_DATA_2026-10-28.csv
-86d8f3c2d11e61e71bf6e7b70f3e16fb  assembled/v143p4_fit_R_DATA_2026-10-28.csv
-31cb3d0f6f82f4407fd137af3eb49aca  assembled/v143p4_fit_harness_DATA_2026-10-28.csv
-absent  work/senft_coef_L.csv  (form not eligible)
-absent  work/senft_coef_S.csv  (form not eligible)

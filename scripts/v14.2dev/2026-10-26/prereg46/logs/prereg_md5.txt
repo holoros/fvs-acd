@@ -1,1 +1,0 @@
-eb4b753d5ff58f8246cf89e8e2fc5c96  plan/2026-10-11_v142_qc-relht-zero-form_PREREG46.md  PREREG46 revision 1 registered 2026-10-11T16:23:15-03:00 before any fit or run (registered on the laptop copy; firebreather unreachable at registration)

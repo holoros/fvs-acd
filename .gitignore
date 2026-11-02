@@ -1,42 +1,23 @@
-# Coordinate data and raw inputs stay on Cardinal/Zenodo (not in git)
-results/seven_islands/silc_plot_coords.csv
-results/seven_islands/silc_plot_si.csv
-results/seven_islands/silc_plot_si2.csv
+# Plot coordinates, keyed tree lists, and proprietary inventories never enter this repository.
+*coords*
+*_SERVERSIDE*
+*RESTRICTED*
 *.sqlite
 *.tif
 *.RData
+# Coefficient bundles are tracked only under engine/coef/.
 *.rds
-.Rhistory
-results/seven_islands/pid_coords.csv
-node_modules/
-figures/_data/
-*.~lock*
-.~lock.*
-_context/.gh-holoros/
-_context/.ssh-cardinal/
-*token*
-*.zenodo_token
-FVS-ACD_Hennigar_Aug2026.pdf
-*_backup_*.pptx
-*.pdf#
-__pycache__/
-*.pyc
-*.tmp
-
-# ---- Added 2026-07-25 (v12.11 candidate preservation) ----
-# Category 2: dated churn snapshots. The current file is the source of truth;
-# _PREV*/_backup* copies are local history only and stay out of git.
+!engine/coef/*.rds
+# Local copies and scratch.
 *_PREV*
 *_backup*
-
-# Category 3: build and run artifacts (regenerable, never hand edited).
-# unzipped pptx tree from deck QA
-unpacked/
-# scratch scripts and scratch markdown
 _tmp_*
 _scratch_*
-_deck_check.md
-# rendered deck slides for visual QA
-qa-slide-*.jpg
-# LibreOffice / python-pptx temp export, random-named pptx
-ziihoSdB
+.Rhistory
+.Rproj.user/
+*.~lock*
+# Credentials.
+*token*
+*.pem
+*.key
+id_rsa*

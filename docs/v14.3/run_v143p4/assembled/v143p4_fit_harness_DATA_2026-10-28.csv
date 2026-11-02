@@ -1,6 +1,0 @@
-gate,form,class,pass,value,note
-H5,L,SF,TRUE,,R non-decreasing in delta over the 7 grid points
-H5,L,NSF,TRUE,,R non-decreasing in delta over the 7 grid points
-H5,S,SF,TRUE,,R non-decreasing in delta over the 7 grid points
-H5,S,NSF,TRUE,,R non-decreasing in delta over the 7 grid points
-H4,all,all,TRUE,1,"t1 class equals overlay first call class, n 446"

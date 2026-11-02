@@ -1,9 +1,0 @@
-label,kind,files,rows,cols,worst_abs,n_diff,char_mismatch,note
-H1a_ctrn_fl,completeness,,175,,,,,stands in arm 175; frozen RUN_OK 175; arm RUN_OK 175; frozen RUN_OK also RUN_OK in arm 175
-H1a_ctrn_fl,results,1,175,57,0,0,0,""
-H1a_ctrn_fl,pred_t2_tree,1,28775,6,0,0,0,""
-H1a_ctrn_fl,pred_yr1_tree,1,24808,6,0,0,0,""
-H1a_ctrn_fl,pd_t1,1,24241,5,0,0,0,""
-H1a_ctrn_fl,pd_t2,1,28775,5,0,0,0,""
-H1a_ctrn_fl,t1_split_tree,1,24241,4,0,0,0,""
-H1a_ctrn_fl,traj,1,561,29,0,0,0,""

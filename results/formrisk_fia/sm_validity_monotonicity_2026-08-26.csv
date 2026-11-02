@@ -1,6 +1,0 @@
-test,observed_pass,model_pass,observed_values,model_hr_values,min_cell_n,cell_ns
-mortality rises R1 < R2 < R3 within form F1,TRUE,TRUE,0.00359 < 0.01007 < 0.02191,1.000 < 2.762 < 8.023,105,"12920, 1381, 105"
-mortality rises R1 < R2 < R3 within form F2,TRUE,TRUE,0.00729 < 0.01109 < 0.04205,1.979 < 5.466 < 15.877,130,"920, 425, 130"
-mortality rises F1 < F2 within risk R1,TRUE,TRUE,0.00359 < 0.00729,1.000 < 1.979,920,"12920, 920"
-mortality rises F1 < F2 within risk R2,TRUE,TRUE,0.01007 < 0.01109,2.762 < 5.466,425,"1381, 425"
-mortality rises F1 < F2 within risk R3,TRUE,TRUE,0.02191 < 0.04205,8.023 < 15.877,105,"105, 130"

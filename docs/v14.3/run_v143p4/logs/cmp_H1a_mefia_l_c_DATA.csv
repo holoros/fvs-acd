@@ -1,9 +1,0 @@
-label,kind,files,rows,cols,worst_abs,n_diff,char_mismatch,note
-H1a_mefia_l_c,completeness,,918,,,,,stands in arm 918; frozen RUN_OK 918; arm RUN_OK 918; frozen RUN_OK also RUN_OK in arm 918
-H1a_mefia_l_c,results,4,918,53,0,0,0,""
-H1a_mefia_l_c,pred_t2_tree,4,211135,6,0,0,0,""
-H1a_mefia_l_c,pred_yr1_tree,4,115872,6,0,0,0,""
-H1a_mefia_l_c,pd_t1,4,110955,5,0,0,0,""
-H1a_mefia_l_c,pd_t2,4,211135,5,0,0,0,""
-H1a_mefia_l_c,t1_split_tree,4,110955,4,0,0,0,""
-H1a_mefia_l_c,traj,4,4687,29,0,0,0,""

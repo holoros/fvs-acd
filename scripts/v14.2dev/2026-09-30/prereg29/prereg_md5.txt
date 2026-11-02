@@ -1,2 +1,0 @@
-PREREG29 f8caf05adbea3b5598fb02a0fbb8df0b  prereg/2026-09-30_v142_nsrs-state-and-nsop-refit_PREREG29.md  recorded 2026-09-30T08:57:55-03:00  (before any fold B read)
-confirm script 2a55589483d3ff7e97279598ab7b3076  scripts/2026-09-30_v142_p29_confirm.R

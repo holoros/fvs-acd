@@ -1,8 +1,0 @@
-7c7
-< D=$R1/../scripts/run_task_p45.sh; echo "ba24284a2c6d573a80700011314b8b13  $D" | md5sum -c --quiet - || { echo "FATAL driver md5"; exit 4; }
----
-> D=$R1/../scripts/run_task_p45b.sh; echo "c7bf52916cc4bdd8de83d81cb3795957  $D" | md5sum -c --quiet - || { echo "FATAL driver md5"; exit 4; }
-18c18
-< echo "[v142p45-retry] DONE ${CT}_results.csv attempt=$K end=$(date -Is)"
----
-> echo "[v142p45b-retry] DONE ${CT}_results.csv attempt=$K end=$(date -Is)"

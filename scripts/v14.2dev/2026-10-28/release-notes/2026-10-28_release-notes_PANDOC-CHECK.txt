@@ -1,7 +1,0 @@
-Pandoc parse check of revision h (28 October 2026), OSC Cardinal. A syntax check only; no PDF was rendered because LibreOffice is not available on Cardinal.
-pandoc: pandoc 2.14.0.3
-exit status: 0
-html tables: 3
-html h2 headings: 13
-lines beginning "| PREREG" or "| Cross-version": 38
-source md5: 0bec4e79e47ed74578aa02d3f236f9b0

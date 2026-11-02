@@ -1,5 +1,0 @@
-plan_md5=ba0a48ec6d28cba30bb86d4e67f4465c
-outcome_p38_fit=dominant source G2 (observed height handling), 9.29 points of a 16.78 point gap (share 0.553, interval 7.28 to 11.33)
-outcome_qc141=dominant source G2 (observed height handling), 9.04 points of a 16.50 point gap (share 0.548, interval 7.16 to 11.21)
-consistent_across_arms=TRUE
-consequence=acted on only through a separate pre-registration; 14.1 keeps 0.111; no PREREG38 verdict changes

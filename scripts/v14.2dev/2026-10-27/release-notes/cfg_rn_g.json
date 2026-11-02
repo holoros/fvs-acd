@@ -1,7 +1,0 @@
-{
- "p2_bottom": "14.3 PREREG2, which re-estimated the form of the thinning term T, ran on October 27: the selected form C2 passed every harness gate but failed the survivor gate on mefia_ph_c, so it is not adopted and 14.3 keeps the 14.1 T.",
- "p2_open": "ran on October 27, 2026: the selected form C2 is not adopted (rule 3; survivor ratio 0.867 above d/Dq 1.5 on mefia_ph_c), so the T form remains open, and the sealed NH and VT confirmation is open (16 heavy stands, 68 of 108 on climate site index).",
- "zen_repro": "Version 1.10.0, which adds the cross-version benchmark, PREREG46, the PREREG47 reading, the 14.2 arms, PREREG48, PREREG49 and this revision g, was published on October 27, 2026 as 10.5281/zenodo.23670727.",
- "zen_doi_line": "1.10.0 DOI: 10.5281/zenodo.23670727",
- "commit_note": "revision g is in the commit after c2d79edd on the same branch."
-}

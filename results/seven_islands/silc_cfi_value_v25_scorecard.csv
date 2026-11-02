@@ -1,8 +1,0 @@
-"model","n","totvol_bias","saw_bias","stud_bias","pallet_bias","pulp_bias","value_bias","value_R2","mean_val"
-"AcadianGY v8.35 (byPlot)",65,41,108.9,-27,62.6,-24.3,71,-2.447,662
-"OSM-ACD",63,-7.2,31.4,-40.4,-3,-50,3.8,-0.286,400
-"FVS-NE default",65,0.6,28.1,-11.9,12.6,-45.5,10.7,-0.335,429
-"FVS-ACD default (v16-v22 vintage)",65,1.1,28.5,-10.6,11.9,-44.7,11.1,-0.337,430
-"FVS-ACD v12.11 (full137 rerun, tree-level)",65,8.2,47.8,-17.4,12.5,-41.2,20,-0.31,464
-"FVS-ACD v13.1 (full137 rerun, tree-level)",65,9.8,50.6,-16.4,13.2,-40.4,21.8,-0.36,471
-"FVS-ACD v13.1 ship18 (full137 rerun, tree-level)",65,8.3,47.6,-17.2,13.3,-41,20.2,-0.343,465

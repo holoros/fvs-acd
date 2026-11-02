@@ -1,1 +1,0 @@
-PREREG42 revision 1 55b7b4614dbb5b2e7a560f4fdb8e3251  plan/2026-10-02_v142_rowindex-erratum_PREREG42.md recorded 2026-10-02T16:45:37-03:00 before any PREREG42 output

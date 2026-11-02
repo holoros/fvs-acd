@@ -1,3 +1,0 @@
-PREREG43 revision 1 e3326190b1c8dd00d0ea6bdd261023c8  plan/2026-10-05_v142_qc-anchor-0111-provenance_PREREG43.md recorded 2026-10-05T12:08:22-03:00 before the search
-6bb3203ef5b5957197e3ed641925f30f  plan/2026-10-05_v142_qc-anchor-0111-provenance_PREREG43_addendum1.md
-addendum1 recorded 2026-10-05T12:18:54-03:00 before Cardinal is read

@@ -1,6 +1,0 @@
-0a1
-> # HD COPY (2026-10-28) of /users/PUOM0008/crsfaaron/acdx_20261016/long200/scripts/2026-10-16_acdx_long200_runner.R (md5 3d05cbad) for the Howland decline diagnostic. One change only: the PHASE D hooks line sources /users/PUOM0008/crsfaaron/howland_
-411c412
-< source("/users/PUOM0008/crsfaaron/acdx_20261016/long200/scripts/2026-10-16_acdx_long200_trajhooks.R")  # PHASE D hooks
----
-> source("/users/PUOM0008/crsfaaron/howland_decline_20261028/scripts/2026-10-28_hd_trajhooks_fx.R")  # PHASE D hooks plus the HD FX flux block, 2026-10-28

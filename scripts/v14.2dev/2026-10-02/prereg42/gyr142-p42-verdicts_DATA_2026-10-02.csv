@@ -1,5 +1,0 @@
-study,cand,verdict_row_index,verdict_field_tag,changed
-PREREG23,p23_a1061,Rule 3: class 25 and over worse by more than 0.03,"Rule 6: every gate passes (V2, B1, B2 cited as passed)",TRUE
-PREREG28,p28_cand,"Rule 6: every gate passes (V2, B1, B2 cited as passed)","Rule 6: every gate passes (V2, B1, B2 cited as passed)",FALSE
-PREREG28b,p28b_small,"Rule 6: every gate passes (V2, B1, B2 cited as passed)","Rule 6: every gate passes (V2, B1, B2 cited as passed)",FALSE
-PREREG33,p33_dyn,"Rule 3: benchmark passes, Bakuzis non inferiority fails (cited, unchanged)","Rule 3: benchmark passes, Bakuzis non inferiority fails (cited, unchanged)",FALSE

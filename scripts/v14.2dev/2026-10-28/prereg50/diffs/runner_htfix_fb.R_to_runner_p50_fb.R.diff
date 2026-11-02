@@ -1,6 +1,0 @@
-433a434
->     if (nzchar(Sys.getenv("P50_TRACE"))) cat(sprintf("\"%s\",%.17g,%.17g\n", sid, ops$ingrowth.min.dbh, GYR_smd(p)), file = Sys.getenv("P50_TRACE"), append = TRUE)  # PREREG50 G3 trace
-437c438
-<     cur<-htfx(cur,p); PD_init(cur,p); for(yr in seq_len(iv)){ops$stand.tst<-if(is.na(.tst0)) NA_real_ else .tst0+(yr-1L); nx<-AcadianGYOneStand(tree=cur,stand=stand,ops=ops); if(is.null(nx)||nrow(nx)==0)stop("empty"); PD_step(cur,nx,yr); cur<-htfx(bf(nx),p); if(nzchar(TREE_OUT) && yr==1L) y1cap<<-cur; PD_snap(cur,yr,iv)}
----
->     cur<-htfx(cur,p); PD_init(cur,p); for(yr in seq_len(if (identical(Sys.getenv("P50_ONESTEP", "0"), "1")) 1L else iv)){ops$stand.tst<-if(is.na(.tst0)) NA_real_ else .tst0+(yr-1L); nx<-AcadianGYOneStand(tree=cur,stand=stand,ops=ops); if(is.null(nx)||nrow(nx)==0)stop("empty"); PD_step(cur,nx,yr); cur<-htfx(bf(nx),p); if(nzchar(TREE_OUT) && yr==1L) y1cap<<-cur; PD_snap(cur,yr,iv)}

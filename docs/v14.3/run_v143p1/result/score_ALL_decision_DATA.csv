@@ -1,4 +1,0 @@
-arm,verdict,failing,chosen,tol_sensitive
-A1,"not adopted, uninformative class",intermediate light,FALSE,FALSE
-A2,"not adopted, uninformative class",heavy light,FALSE,FALSE
-A3,"not adopted, uninformative class",heavy,FALSE,FALSE

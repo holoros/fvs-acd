@@ -1,4 +1,0 @@
-13c13
-<     out <- rbind(out[!(STAND %chin% x$STAND)], x) }
----
->     out <- if (nrow(out)) rbind(out[!(STAND %chin% x$STAND)], x) else x }

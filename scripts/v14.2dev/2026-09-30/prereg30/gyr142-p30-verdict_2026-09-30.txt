@@ -1,2 +1,0 @@
-PREREG30 prereg PREREG30 revision 1 md5 2f40784499b950bf655f039d5bbee1c0 recorded 2026-09-30T20:22:12-03:00 before any fold B read
-Rule 3: L1 to L5 pass; the long interval data support the height form, and the PREREG26 top height loss is read as a synthetic start artifact

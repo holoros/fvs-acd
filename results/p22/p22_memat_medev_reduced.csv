@@ -1,3 +1,0 @@
-source,n,rmse_base,bias_base,rmse_ship18,bias_ship18,slope_ship18,rmse_v132,bias_v132,slope_v132,rmse_v132_lo,rmse_v132_hi,bias_v132_lo,bias_v132_hi,d_rmse_v132_minus_ship18,d_bias_v132_minus_ship18,note
-memat,1757,18.14,-7.38,17.77,-5.77,1.1549,18.47,-6.83,1.1827,17.54,19.37,-7.54,-6.11,0.7,-1.05,reduced: no candidate v12.11 or OSM run exists for this source
-medev,1759,21.37,-5.9,21.02,-4.5,1.0667,20.77,-4.05,1.0608,19.24,22.42,-4.93,-3.15,-0.26,0.45,reduced: no candidate v12.11 or OSM run exists for this source

@@ -1,4 +1,0 @@
-17c17
-<     bash run_retry_p38.sh $COL $s "$st" $k >> $L 2>&1; echo "attempt $k $COL $s $st exit $? $(date -Is)" >> $L
----
->     bash run_retry_p45.sh $COL $s "$st" $k >> $L 2>&1; echo "attempt $k $COL $s $st exit $? $(date -Is)" >> $L

@@ -1,9 +1,0 @@
-gate,detail,pass
-H0 harness,"p28_g0 against frozen p19_a0111: qc_c results 0.00e+00, trees 0.00e+00; qc_fl results 0.00e+00, trees 0.00e+00; stands over 1e-9: 0",TRUE
-K1 failures,"RUN_OK other than 1 for p28b_small after retries: qc_c 0, qc_fl 0",TRUE
-H_inc pooled,"fold B ratio 0.883 [0.742, 1.113] for p28b_small against 0.086 at 0.111 (|dev| 0.117 against 0.914); 301 trees on 108 sites",TRUE
-H_inc classes,below 12.7: bias -0.084 against -0.254 m/yr (worse by -0.170); 12.7 to 25: bias +0.011 against -0.161 m/yr (worse by -0.149); 25 and over: bias -0.021 against -0.021 m/yr (worse by +0.000),TRUE
-TOPHT reading,"published TOPHT bias +11.97 percent for p28b_small against +14.63 at 1.061 (not worse) and +6.29 at 0.111; dominant cohort t2 level 0.986 against 0.922 at 0.111 (within margin, margin 0.02)",TRUE
-V2 %RMSE,"fold B C1 %RMSE 46.91 against 46.76, d -0.16",TRUE
-B1 basal area,fold B |BA - 1| 0.40 against 0.17 points,TRUE
-B2 stems,fold B |stems - 1| 24.52 against 24.23 points,TRUE

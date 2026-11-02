@@ -1,9 +1,0 @@
-task,arm,chunk,set,from,to
-1,p38_fit,1,mefia_l_c,1,223
-2,p38_fit,2,mefia_l_c,224,475
-3,p38_fit,3,mefia_l_c,476,728
-4,p38_fit,4,mefia_l_c,729,918
-5,qc_rh,1,mefia_l_c,1,223
-6,qc_rh,2,mefia_l_c,224,475
-7,qc_rh,3,mefia_l_c,476,728
-8,qc_rh,4,mefia_l_c,729,918

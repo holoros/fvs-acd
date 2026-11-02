@@ -1,9 +1,0 @@
-label,kind,files,rows,cols,worst_abs,n_diff,char_mismatch,note
-H1a_baxter_c,completeness,,91,,,,,stands in arm 91; frozen RUN_OK 91; arm RUN_OK 91; frozen RUN_OK also RUN_OK in arm 91
-H1a_baxter_c,results,1,91,58,0,0,0,""
-H1a_baxter_c,pred_t2_tree,1,20704,6,0,0,0,""
-H1a_baxter_c,pred_yr1_tree,1,14890,6,0,0,0,""
-H1a_baxter_c,pd_t1,1,14307,5,0,0,0,""
-H1a_baxter_c,pd_t2,1,20704,5,0,0,0,""
-H1a_baxter_c,t1_split_tree,1,14307,4,0,0,0,""
-H1a_baxter_c,traj,1,331,29,0,0,0,""
