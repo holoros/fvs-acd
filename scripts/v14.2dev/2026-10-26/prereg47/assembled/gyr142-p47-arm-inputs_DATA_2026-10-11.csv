@@ -1,5 +1,0 @@
-arm,files,md5_ok,md5_note,label,cells,complete,cells_match_qc141,arm_ok
-p38_fit,3,TRUE,md5 equal to launch_md5s.txt,"post hoc (frozen arm, reported beside its registered verdict)",36,36,TRUE,TRUE
-qc141,3,TRUE,md5 equal to launch_md5s.txt,"post hoc (frozen arm, reported beside its registered verdict)",36,36,TRUE,TRUE
-qc_lz,3,TRUE,md5 equal to launch_md5s.txt,"blind (trajectories created after PREREG47 registration, p47/logs/prereg_md5.txt)",36,36,TRUE,TRUE
-qc_rh,3,TRUE,md5 equal to launch_md5s.txt,"post hoc (frozen arm, reported beside its registered verdict)",36,36,TRUE,TRUE

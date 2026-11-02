@@ -1,5 +1,0 @@
-gate,arm,reference,set,stands,not_ok,trees,recruits,worst_results,worst_col,worst_trees,worst_trees_seeded,stands_over_1e9,pass,gated
-G0a,p33_g0a,p28b_small,qc_c,58,0,7950,1889,0,BA_p,0,0,0,TRUE,TRUE
-G0b,p33_g0b,p19_a0111,qc_c,58,0,7950,1889,0,BA_p,0,0,0,TRUE,TRUE
-G0a,p33_g0a,p28b_small,qc_fl,19,0,3644,1494,0,BA_p,0,0,0,TRUE,TRUE
-G0b,p33_g0b,p19_a0111,qc_fl,19,0,3644,1494,0,BA_p,0,0,0,TRUE,TRUE

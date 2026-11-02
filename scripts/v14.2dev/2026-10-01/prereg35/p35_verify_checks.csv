@@ -1,5 +1,0 @@
-label,scored,identity_vs_results,vo_zero,defect,t1_zero_vol,t1_zero_stems,share,r2_vo_zero,r2_defect,r2_t1_zero,r2_fires,match
-nb_c,355,6.91870581227302e-15,33,0,37,37,0.104225352112676,33,0,37,TRUE,TRUE
-qc_c,378,6.3270712659958e-15,0,0,0,0,0,0,0,0,FALSE,TRUE
-qc_fl,19,3.9883720184122e-15,0,0,0,0,0,0,0,0,FALSE,TRUE
-mnap_c_state,348,5.58091731246671e-15,0,0,0,0,0,0,0,0,FALSE,TRUE

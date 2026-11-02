@@ -1,9 +1,0 @@
-"config","horizon","n","BA_bias"
-"MORTCAL_off","ALL",65,11.1
-"MORTCAL_off","5-7yr",12,-11.3
-"MORTCAL_off","8-11yr",32,17.6
-"MORTCAL_off","12-15yr",21,15.8
-"MORTCAL_on","ALL",65,-1.3
-"MORTCAL_on","5-7yr",12,-17.2
-"MORTCAL_on","8-11yr",32,4.8
-"MORTCAL_on","12-15yr",21,0

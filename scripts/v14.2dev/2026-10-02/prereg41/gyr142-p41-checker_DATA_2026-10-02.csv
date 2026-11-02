@@ -1,7 +1,0 @@
-arm,mix,summary,reineke_flags,eichhorn_flags,tph_nonmono
-qc141,BF,"FLAGS: 39   [Reineke: 12 trajectories evaluated, 0 not evaluated, 12 flagged; age step 5 yr]",12,1,12
-qc141,SM,"FLAGS: 33   [Reineke: 12 trajectories evaluated, 0 not evaluated, 12 flagged; age step 5 yr]",12,0,12
-qc141,MX,"FLAGS: 39   [Reineke: 12 trajectories evaluated, 0 not evaluated, 12 flagged; age step 5 yr]",12,0,12
-p38_fit,BF,"FLAGS: 25   [Reineke: 12 trajectories evaluated, 0 not evaluated, 12 flagged; age step 5 yr]",12,0,12
-p38_fit,SM,"FLAGS: 24   [Reineke: 12 trajectories evaluated, 0 not evaluated, 12 flagged; age step 5 yr]",12,0,12
-p38_fit,MX,"FLAGS: 24   [Reineke: 12 trajectories evaluated, 0 not evaluated, 12 flagged; age step 5 yr]",12,0,12

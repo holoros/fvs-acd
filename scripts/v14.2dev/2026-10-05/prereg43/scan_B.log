@@ -1,4 +1,0 @@
-files: 42671
-raw hit lines: 73567
-DONE
-raw_hits_B.txt, hits_with_meta_B.tsv, qc_relevant_B.tsv removed after classification (they held raw CSV data lines); regenerate with scan_b.sh then prep_b.py

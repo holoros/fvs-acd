@@ -1,6 +1,0 @@
-candidate=p38_fit
-qc_afac_fit=1.242
-reference=p19_a0111
-topht_comparator=p23_a1061
-verdict=Rule 4: TOPHT +16.21 percent against the +14.63 limit at 1.061, dominant cohort t2 level 0.994 against 0.898 for qc141; not adopted
-eligible_frozen_single_value_arms=none

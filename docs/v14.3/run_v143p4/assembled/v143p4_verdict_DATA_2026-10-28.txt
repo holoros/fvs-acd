@@ -1,3 +1,0 @@
-harness_pass=FALSE
-harness_fail=H3_bridge v141LT frozen
-outcome=RULE1_NO_VERDICT

@@ -1,6 +1,0 @@
-label,kind,files,files_frozen,rows,cols,worst_abs,n_diff,char_mismatch,note
-b141_p38_fit,_results.csv$,4,4,918,53,0,0,0,""
-b141_p38_fit,_pred_t2_tree.csv$,4,4,211135,6,0,0,0,""
-b141_p38_fit,_pd_t1.csv$,4,4,110955,5,0,0,0,""
-b141_p38_fit,_pd_t2.csv$,4,4,211135,5,0,0,0,""
-b141_p38_fit,_traj.*csv$,4,4,4687,29,0,0,0,""

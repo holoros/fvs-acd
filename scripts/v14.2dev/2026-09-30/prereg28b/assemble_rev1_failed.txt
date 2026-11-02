@@ -1,9 +1,0 @@
-margins from /home/aaron/jobs/v142p23/scripts/2026-09-29_v142_p23_assemble.R (md5 429f441e5522b644a011d267193fd3db): M_CLS 0.030 M_DOM 0.020 B1 1.0 B2 2.0 V2 -0.5
-      set stands trees worst_results worst_trees stands_over_1e9   pass
-   <char>  <int> <int>         <num>       <num>           <int> <lgcl>
-1:   qc_c    378 51551             0           0               0   TRUE
-2:  qc_fl     19  3644             0           0               0   TRUE
-Error in fread(x$stands) : 
-  File '/home/aaron/jobs/v142p28/tables/gyr142-p28b-fb-stands_DATA_2026-09-27.csv' does not exist or is non-readable. getwd()=='/home/aaron/jobs/v142p28b'
-Calls: rbindlist ... lapply -> FUN -> fread -> stopf -> raise_condition -> signal
-Execution halted

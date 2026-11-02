@@ -1,4 +1,0 @@
-82c82
-<       TPH = sum(x$expf[live]), BA = mm[["BA"]], QMD = mm[["QMD"]], TOPHT = mm[["TOPHT"]], TOTVOL = mm[["TOTVOL"]], SDI = mm[["SDI"]],
----
->       TPH = sum(x$expf[live]), BA = mm[["BA"]], QMD = mm[["QMD"]], TOPHT = mm[["TOPHT"]], TOTVOL = mm[["TOTVOL"]], SDI = mm[["SDI"]], BIOMASS = mm[["BIOMASS"]], MERCHVOL = mm[["MERCHVOL"]],

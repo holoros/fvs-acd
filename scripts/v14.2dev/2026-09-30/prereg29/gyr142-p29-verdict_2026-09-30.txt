@@ -1,5 +1,0 @@
-PREREG29 md5 f8caf05adbea3b5598fb02a0fbb8df0b
-Reproduction worst 4.88e-15, 5.55e-16, 4.44e-15
-material TRUE (M1 TRUE, M2 TRUE); A1 to A3 FALSE; B1 and B2 TRUE
-(a) fail: material but fails at least one of A1 to A3 offline; the pooled PREREG20 form stays in the 14.2 candidate
-(b) not material: no production stand state variable explains the NS_RS deficit at matched state on held out sites; the deficit stays a program effect and no state term is proposed

@@ -1,4 +1,0 @@
-plan_md5=a1aa4b3532f0b3ac9ec30e63a3f7fcec
-B_MM_p38_fit=1.5005 within_limit=TRUE
-PREREG40_rule3_reading=robust to selection
-reported, not gated; limit unverified (PREREG40)

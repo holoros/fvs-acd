@@ -1,9 +1,0 @@
-gate,value,threshold,pass
-G0,"dev 24.22615 points, D 37465, I_o 47607, I_p 65.4935","24.22615, 37465, 47607, 65.4935 to the published rounding",TRUE
-G1,"min 5.0 cm, median 5.67 cm, 7 of 6042 records at the floor, all sizes 51728","5.0, 5.67, 7 of 6042, 51728 to the published rounding",TRUE
-G2,results 313 of 313 identical (header TRUE); pred_t2_tree 313 of 313 identical (header TRUE); t1_split_tree 313 of 313 identical (header TRUE); pred_yr1_tree 313 of 313 identical (header TRUE),identical text on every screened stand,TRUE
-G3,"E1 378 of 378 traced, max differences 0, 0, 0; 1461 year 1 records, max entry DBH minus floor 0; S2 378 of 378 traced, max differences 0, 0, 0; 1461 year 1 records, max entry DBH minus floor 0",at or below 1e-9,TRUE
-G4,"20 stands: max relative difference total 0, shares 0, species mismatches 0","at or below 1e-9, no species mismatch",TRUE
-G5,E1 378 of 378 RUN_OK; S2 378 of 378 RUN_OK,0 failures,TRUE
-G6,378 stands; stand_frame against fold_of 0 differ; fold_of against the PREREG22 rule 0 differ,identical,TRUE
-G7,29 files contain ING_MIN_FROM_SCORE=1; 0 also name a QC set,label only,TRUE

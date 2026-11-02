@@ -1,7 +1,0 @@
-st start 2026-10-05T17:23:16-03:00
-p45b chain finished, st proceeds 2026-10-05T18:21:16-03:00
-st1 run exit 1 2026-10-05T18:21:16-03:00
-st1 check Execution halted 2026-10-05T18:21:17-03:00
-fix 2026-10-05T18:58:54-03:00: run_st1.sh and run_st4.sh pointed fit_md5 at v142p45st/logs by an over broad path replace; corrected to v142p45/logs (PREV kept). ST1 to be rerun after ST3.
-ST_DONE 2026-10-05T19:20:49-03:00
-ST4_DONE 2026-10-05T19:51:19-03:00

@@ -1,8 +1,0 @@
-label,arm,source,stands,floor_matched,vo_zero,vo_zero_with_source_stem,vo_pos_without_live_stem,defect_pass,t1_zero,t1_zero_share,fires
-ns_c,v141LT,frozen stands table and firebreather frames,5731,5731,0,0,0,TRUE,28,0.00488570930029663,FALSE
-ns_fl,v141LT,frozen stands table and firebreather frames,1319,1319,0,0,0,TRUE,17,0.0128885519332828,FALSE
-ns_long_c,v141LT,frozen stands table and firebreather frames,8549,8549,1,0,0,TRUE,64,0.00748625570242134,FALSE
-ns_long_fl,v141LT,frozen stands table and firebreather frames,2319,2319,0,0,0,TRUE,63,0.0271668822768435,FALSE
-baxter_c,v141LT,frozen stands table and firebreather frames,91,91,0,0,0,TRUE,0,0,FALSE
-medev_c,v141LT,frozen stands table only (frames on Cardinal),1760,,2,,,,,,
-mefia_l_c,v141LT,frozen stands table only (frames on Cardinal),918,,2,,,,,,

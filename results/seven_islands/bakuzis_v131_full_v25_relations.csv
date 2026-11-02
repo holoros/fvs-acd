@@ -1,4 +1,0 @@
-model,Eichhorn,eich_cv,Reineke,reineke_slope,SiteOrdering,inv_ht,inv_vol,YieldDensity_plateau,BAmax,BA160,Sukachev
-base,PASS,11,PASS,-1.59,PASS,0,0,PASS,36.1,36.1,PASS
-candidate_unmanaged,PASS,11.2,PASS,-1.77,PASS,0,0,PASS,35.2,34.8,PASS
-candidate_managed,PASS,11.2,PASS,-1.77,PASS,0,0,PASS,35.2,34.8,PASS

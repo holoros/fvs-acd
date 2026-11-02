@@ -1,1 +1,0 @@
-LOOKUPS_DONE 2026-10-28T07:11:13-03:00 L2 candidates 71 G7 files 29 of which QC 0

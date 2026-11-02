@@ -1,6 +1,0 @@
-95,96c95,96
-<         topht_bias_pct = 100 * (mean(Y[[paste0("p_", a)]]) - mean(Y$TOPHT_o)) / mean(Y$TOPHT_o), topht_bias_lo = quantile(pb, .025), topht_bias_hi = quantile(pb, .975),
-<         stand_bias_m = mean(Y[[paste0("p_", a)]] - Y$TOPHT_o), stand_bias_lo = quantile(mb, .025), stand_bias_hi = quantile(mb, .975),
----
->         topht_bias_pct = 100 * (mean(Y[[paste0("p_", a)]]) - mean(Y$TOPHT_o)) / mean(Y$TOPHT_o), topht_bias_lo = quantile(pb, .025, na.rm = TRUE), topht_bias_hi = quantile(pb, .975, na.rm = TRUE),
->         stand_bias_m = mean(Y[[paste0("p_", a)]] - Y$TOPHT_o), stand_bias_lo = quantile(mb, .025, na.rm = TRUE), stand_bias_hi = quantile(mb, .975, na.rm = TRUE),

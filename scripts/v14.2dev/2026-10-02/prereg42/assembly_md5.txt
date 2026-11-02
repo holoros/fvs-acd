@@ -1,4 +1,0 @@
-1e0c790f238f24d03dc8d5d8756656ea  scripts/assemble_p42.R
-recorded 2026-10-02T16:46:55-03:00 before verifier launch and before the run
-f74eb057787d67dfd6b8769ab4159e6c  scripts/assemble_p42_r2.R
-r2 recorded 2026-10-02T16:52:30-03:00, after the verifier finished (16:51) and after r1 stopped

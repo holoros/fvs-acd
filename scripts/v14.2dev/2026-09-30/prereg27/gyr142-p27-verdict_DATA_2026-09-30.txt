@@ -1,3 +1,0 @@
-prereg_md5=8ef3d6e37641f4dd1637c0c2de43386b
-failing=
-verdict=Rule 2: confirmed

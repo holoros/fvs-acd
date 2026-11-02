@@ -1,6 +1,0 @@
-# PREREG33 LONG HORIZON DRIVER (2026-10-01), built by build_driver_p33.sh exactly as PREREG31 built driver_p31.R: this
-# header, then lines 1 to 433 of ~/jobs/v142p33/home/runner_p33_fb.R byte for byte (runner_p28_fb.R lines 1 to 419 plus the
-# 14 line PREREG33 QC_AFAC_DYNAMIC block), then parts/p33_block.R, which is the PREREG31 block (parts/p31_block.R) with the
-# runner's two qcdyn calls added to the per year loop. The QC dht.mult expression is the runner's initial list line,
-# copied by the build script from the runner text. QC_AFAC_DYNAMIC unset is the PREREG31 driver in behavior. Diffs in
-# ../diffs/. No coordinates. No em dashes.

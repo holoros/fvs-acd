@@ -1,3 +1,0 @@
-model,n,incr_bias,incr_ratio,rmse,ef
-M1_linear_incr,13894,1e-04,1.001,0.3367,0.027
-M2_monomol_anchor,13894,-0.0058,0.967,0.3367,0.027

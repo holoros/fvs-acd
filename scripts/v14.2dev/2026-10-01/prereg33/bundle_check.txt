@@ -1,2 +1,0 @@
-bundle md5 identical to the PREREG28b bundle: 47 files
-and identical to the list PREREG28b recorded (logs/bundle_md5_p28b.txt)

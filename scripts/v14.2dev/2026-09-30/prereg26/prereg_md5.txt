@@ -1,2 +1,0 @@
-ad80d05934fdea56e55746753cfe206c  2026-09-30_v142_bakuzis-ns-v141LTfi_PREREG26.md 2026-09-30T07:47:41-03:00
-291bb1ecedaf59bbb13f53408077d20e  2026-09-30_v142_bakuzis-ns-v141LTfi_PREREG26.md 2026-09-30T07:55:28-03:00 revision 2 (r1 kept as _r1.md, md5 ad80d059)

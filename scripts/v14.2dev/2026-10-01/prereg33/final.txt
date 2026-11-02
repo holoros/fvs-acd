@@ -1,2 +1,0 @@
-Rule 3: benchmark passes and non inferiority fails; not cleared. new_flag_units=SiteOrder_BAPH:BF_N1500;SiteOrder_BAPH:BF_N3000;SiteOrder_BAPH:SM_N1500 marginB_fail_relations=Reineke;SiteOrder_BAPH 
-P33_FINAL_DONE

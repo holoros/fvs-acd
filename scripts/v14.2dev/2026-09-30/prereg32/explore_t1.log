@@ -1,4 +1,0 @@
-nb_c stands 355 ; TOTVOL_t1 == 0: 37 ; of those V_o == 0: 24 ; V_o == 0 with TOTVOL_t1 > 0: 9 
-A0 stands 355 | volume C0 ratio 0.9874 bias -1.26 rmse 38.23 | C1 ratio 0.9562 bias -4.38 rmse 37.27 | BA ratio 0.9944 bias -0.56 rmse 33.02 | stems ratio 1.1872 bias 18.72 rmse 67.38 
-A3 stands 318 | volume C0 ratio 0.9861 bias -1.39 rmse 36.20 | C1 ratio 0.9548 bias -4.52 rmse 35.30 | BA ratio 0.9882 bias -1.18 rmse 31.24 | stems ratio 1.1541 bias 15.41 rmse 63.04 
-P32_EXPLORE_DONE

@@ -1,6 +1,0 @@
-candidate=p33_dyn
-reference=p19_a0111
-topht_comparator=p23_a1061
-verdict=Benchmark gates pass; the PREREG33 verdict reads the grid next (rule 3 or 4)
-bench_pass=TRUE
-harness_ok=TRUE

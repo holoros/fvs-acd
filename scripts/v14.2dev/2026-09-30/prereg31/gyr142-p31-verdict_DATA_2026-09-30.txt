@@ -1,9 +1,0 @@
-plan_md5=3461fc7585b137464dc42c7dd9307654
-outcome=RULE2_NOT_CLEARED
-harness_ok=TRUE NI_ok=FALSE
-new_flags=4
-new_flag_units=SiteOrder_BAPH:BF_N1500;SiteOrder_BAPH:BF_N3000;SiteOrder_BAPH:SM_N1500;SiteOrder_VOL:MX_N3000
-marginB_fail_relations=Reineke;SiteOrder_BAPH;SiteOrder_VOL
-realism_low_rows=22 (qc141 below 0.85 ESI at 50: 36)
-realism_high_rows=72 (qc141 above 1.15 ESI at 50: 0)
-HT_ratio_range=1.1347..4.5843 TPH100_ratio_range=0.488..1.070 VOL100_ratio_range=1.287..2.240

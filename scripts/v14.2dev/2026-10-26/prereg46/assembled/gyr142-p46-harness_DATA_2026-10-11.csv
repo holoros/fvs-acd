@@ -1,7 +1,0 @@
-arm,gate,detail,pass
-all,G0,driver_p46 g0 vs frozen p19_a0111,TRUE
-all,G0b,driver_p46 grid vs PREREG31 dry,TRUE
-all,G0x,"driver_p46 qc_rh form exp vs PREREG45 traj_qc_rh_S1: worst 0.00e+00, rows 1212 of 1212",TRUE
-qc_lz,TR,"worst 8.22e-15 over 362 rows, 8 calls; ingrowth 18, m 1 unexpected 0; at or above zero 0, m not 0 0",TRUE
-qc_lz,G1,36 of 36 with 101 rows,TRUE
-qc_lz,G2,worst 2.56e-15 over 36,TRUE

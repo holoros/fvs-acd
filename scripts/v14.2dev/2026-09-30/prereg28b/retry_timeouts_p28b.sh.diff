@@ -1,8 +1,0 @@
-2c2
-< # PREREG28 (copy of PREREG23 retry_timeouts_p23.sh, itself a copy of PREREG19 retry_timeouts_p19.sh): rerun, alone and BY NAME, every stand of arm $1 whose FAIL_REASON is the host time limit, up to three attempts.
----
-> # PREREG28b (copy of PREREG28 retry_timeouts_p28.sh). PREREG28 (copy of PREREG23 retry_timeouts_p23.sh, itself a copy of PREREG19 retry_timeouts_p19.sh): rerun, alone and BY NAME, every stand of arm $1 whose FAIL_REASON is the host time limit, up to three attempts.
-17c17
-<     bash run_retry_p28.sh $COL $s "$st" $k >> $L 2>&1; echo "attempt $k $COL $s $st exit $? $(date -Is)" >> $L
----
->     bash run_retry_p28b.sh $COL $s "$st" $k >> $L 2>&1; echo "attempt $k $COL $s $st exit $? $(date -Is)" >> $L

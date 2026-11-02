@@ -1,9 +1,0 @@
-source,n,n_equal_all_models,rmse_base,bias_base,rmse_cand,bias_cand,rmse_ship18,bias_ship18,rmse_v132,bias_v132,slope_ship18,slope_v132,rmse_osm,bias_osm,best_rmse_model
-"Baxter (mature, held-out)",91,TRUE,28.72,13.56,28.47,11.28,28.8,13.53,25.72,-0.22,0.8454,1.0874,32.22,16.85,v13.2 site-fsm (pass 20)
-CFRU CTRN (managed),1086,FALSE,24.81,-9.78,18.06,-2.24,24.95,-9.54,24.6,-9.12,1.2298,1.205,20.51,-4.81,CANDIDATE v12.11
-Maine FIA whole-plot (= 20-yr long),918,TRUE,38.67,-16.6,38.56,-16.13,36.98,-12.47,38.21,-12.92,1.0697,1.1088,31.93,-6.29,OSM-ACD v2.26.1
-PEF (developing),2853,TRUE,18.03,1.23,17.91,1.37,18.48,2.83,18.81,3.37,0.9336,0.9179,14.65,0.26,OSM-ACD v2.26.1
-"SILC/Seven Islands (calibration, managed)",73,FALSE,65.01,-6.34,64.24,-5.65,64.45,-4.35,63.9,-5.29,0.5567,0.5796,62.99,-18.07,OSM-ACD v2.26.1
-NB MagPlot (managed),355,TRUE,48.88,-11.84,41.85,-5.96,48.52,-10.91,48.8,-11.13,1.1752,1.1813,43.77,-8.07,CANDIDATE v12.11
-NS (overall) [NS scenario],4504,FALSE,182.44,-41.28,156.69,-30.61,182.35,-40.63,182.38,-41.54,0.1241,0.1202,153.05,-29.22,OSM-ACD v2.26.1
-NS (overall) [NS-long scenario],5348,FALSE,153.97,-39.75,127.35,-30.41,153.82,-38.75,153.67,-38.34,0.2041,0.2198,128.34,-31.99,CANDIDATE v12.11

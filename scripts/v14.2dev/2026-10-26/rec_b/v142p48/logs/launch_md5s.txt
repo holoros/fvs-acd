@@ -1,8 +1,0 @@
-# PREREG48 script md5s recorded 2026-10-26T13:38:34-03:00 before the chain starts (assembly md5 recorded separately before it runs)
-b8829fa5d37097e024b3733d2e48d30c  scripts/p48_split.R
-8c7a865c7723de443d0c35fa973497aa  scripts/p48_boot.R
-5d4cb0586c773111e122db2682787155  scripts/chain_p48.sh
-1fb642b19fc0c7ce68754e8c5c677402  scripts/p48_assemble.R
-59196106afe20e57ca1bc7b4894495f1  /home/aaron/jobs/v142p45/scripts/2026-09-29_v142_p23_hkey.R
-b020a9ffe985226e8a51a9ab9d744e42  scripts/p48_framecheck.R
-  (p48_framecheck.R added post hoc after the chain, before it ran; see DEVIATIONS)

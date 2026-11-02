@@ -1,5 +1,0 @@
-new_v2_2025_or_later,triples,heavy,intermediate,light,low_volume,known_tst,esi_covered,heavy_esi_covered,same_plots_new_interval,v2_year_min,v2_year_max,state,esi_coverage,source
-TRUE,31,10,4,6,11,31,31,10,9,2025,2025,ME,1,"1 Maine FIA, v2 after the mefia_ph_c frame"
-FALSE,827,221,191,146,269,762,0,0,0,2008,2024,ME,,"1 Maine FIA, v2 after the mefia_ph_c frame"
-FALSE,67,12,20,27,8,58,0,0,0,2013,2024,NH,,"2 New Hampshire FIA, visits after the PREREG2 set"
-TRUE,6,0,1,5,0,5,4,0,0,2025,2025,NH,0.666666666666667,"2 New Hampshire FIA, visits after the PREREG2 set"

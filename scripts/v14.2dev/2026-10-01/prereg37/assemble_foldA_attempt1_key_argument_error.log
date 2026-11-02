@@ -1,4 +1,0 @@
-Error in setkeyv(ans, key) : 
-  some columns are not in the data.table: [field tag]
-Calls: rbindlist ... data.table -> setkeyv -> stopf -> raise_condition -> signal
-Execution halted

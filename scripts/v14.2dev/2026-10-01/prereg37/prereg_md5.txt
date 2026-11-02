@@ -1,3 +1,0 @@
-c7f1244d62dfc6c2d1070a4690be385d  plan/2026-10-01_v142_qc-height-structure_PREREG37.md
-server_time 2026-10-01T11:31:35-03:00 ; no PREREG37 output exists: 3 entries in tables/assembled/figs
-clarification 2026-10-01T11:31:44-03:00: the 3 counted entries above are the ls directory headers; file count in tables/assembled/figs = 0

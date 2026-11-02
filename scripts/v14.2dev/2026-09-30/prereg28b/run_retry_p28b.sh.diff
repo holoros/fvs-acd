@@ -1,4 +1,0 @@
-7c7
-< D=$R1/../scripts/run_task_p28.sh; echo "ad1fb91831030e8d2c1067b61517e76c  $D" | md5sum -c --quiet - || { echo "FATAL driver md5"; exit 4; }
----
-> D=$R1/../scripts/run_task_p28b.sh; echo "3969483d65cc4587dc72634e26c9d8d3  $D" | md5sum -c --quiet - || { echo "FATAL driver md5"; exit 4; }

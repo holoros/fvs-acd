@@ -1,9 +1,0 @@
-label,kind,files,rows,cols,worst_abs,n_diff,char_mismatch,note
-H1a_silc_l_c,completeness,,120,,,,,stands in arm 120; frozen RUN_OK 120; arm RUN_OK 120; frozen RUN_OK also RUN_OK in arm 120
-H1a_silc_l_c,results,1,120,53,0,0,0,""
-H1a_silc_l_c,pred_t2_tree,1,9870,6,0,0,0,""
-H1a_silc_l_c,pred_yr1_tree,1,6166,6,0,0,0,""
-H1a_silc_l_c,pd_t1,1,5762,5,0,0,0,""
-H1a_silc_l_c,pd_t2,1,9870,5,0,0,0,""
-H1a_silc_l_c,t1_split_tree,1,5762,4,0,0,0,""
-H1a_silc_l_c,traj,1,378,29,0,0,0,""

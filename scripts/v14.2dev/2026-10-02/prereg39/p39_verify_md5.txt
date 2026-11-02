@@ -1,4 +1,0 @@
-1201874f6bf744e37651ccf433ff7a25  p39_verify.R
-8177b19e3d01e89aacb1e8a8facf2542  p39_verify.log
-eb819ed82304f93ce26bfca4da6b526f  p39_verify_DATA_2026-10-02.csv
-09dd98843bb5302dab223f4b14868276  p39_verify_outcome_2026-10-02.txt

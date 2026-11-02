@@ -1,9 +1,0 @@
-plan_md5=37cde199f4a6c499c5c9fb4982baf271
-outcome=RULE2_NOT_CLEARED
-harness_ok=TRUE NI_ok=FALSE
-stands=36 new_flags=5
-new_flag_units=Reineke:E1_S2_2;Reineke:E2_S2_3;Reineke:E4_S1_1;YieldDensity:E3;YieldDensity:E4
-marginB_fail_relations=HT_monotone;Reineke;YieldDensity
-reineke_not_evaluated qc141=15 p38_fit=15 of 36
-HT_ratio_50=1.116..2.099 HT_ratio_100=1.049..2.833 VOL_ratio_100=0.948..1.700
-decision_weight=informs 14.3 only; cannot reopen the 14.2 QC decision (Aaron, 5 October 2026)

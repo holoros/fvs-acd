@@ -1,6 +1,0 @@
-plan_md5=63692615e60cf1287f0eb03512ceeeda
-T_M_p38_fit=1.6044 pass=TRUE
-T_H_p38_fit=6.5993 pass=TRUE
-decision=Rule 3: T_M and T_H pass; p38_fit eligible for a Bakuzis QC grid under a separate pre-registration with T_M in place of the published TOPHT gate
-limit=10 percent, FIA MQO provenance unverified in session; Aaron confirms before carry forward
-consequence=14.1 keeps 0.111; no PREREG38 verdict changes; nothing adopted

@@ -1,9 +1,0 @@
-model,source,n,rmse_pct,bias_pct,slope_obs_on_pred
-h1_v132_mortgate,NB,355,41.86,-5.84,1.0816
-v13.2 baseline,NB,355,48.8,-11.13,1.1813
-h1_v132_mortgate,QC,2192,57.95,15.55,0.6838
-v13.2 baseline,QC,2192,61.03,10.83,0.6572
-h1_v132_mortgate,NS,5000,152.32,-28.55,1.8382
-v13.2 baseline,NS,5000,177.77,-38.79,0.2027
-h1_v132_mortgate,NS_LONG,5929,130.64,-30.68,2.0418
-v13.2 baseline,NS_LONG,5929,158.38,-40.91,0.0746

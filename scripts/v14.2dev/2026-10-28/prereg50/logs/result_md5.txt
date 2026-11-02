@@ -1,4 +1,0 @@
-# PREREG50 RESULT md5 recorded 2026-10-28T20:02:14-03:00
-756eeaaaaddd142944e7c2a9a4b5b79d  2026-10-28_v142_qc-ingrowth-entry-floor_RESULT.md
-c6ec007042c02dc30cd8bd58fcb55032  2026-10-28_v142_qc-ingrowth-entry-floor_DEVIATIONS.md
-e3c62336ba5eeb1d077056f9eab3bb35 2026-10-28_v142_qc-ingrowth-entry-floor_RESULT.md

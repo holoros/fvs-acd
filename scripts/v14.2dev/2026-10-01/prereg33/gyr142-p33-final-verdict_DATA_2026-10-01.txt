@@ -1,3 +1,0 @@
-bench_verdict=Benchmark gates pass; the PREREG33 verdict reads the grid next (rule 3 or 4)
-grid_outcome=NI_FAIL
-final=Rule 3: benchmark passes and non inferiority fails; not cleared. new_flag_units=SiteOrder_BAPH:BF_N1500;SiteOrder_BAPH:BF_N3000;SiteOrder_BAPH:SM_N1500 marginB_fail_relations=Reineke;SiteOrder_BAPH

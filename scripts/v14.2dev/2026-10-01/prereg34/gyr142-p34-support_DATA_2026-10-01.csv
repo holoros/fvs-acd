@@ -1,5 +1,0 @@
-explanation,supported,material_subsets,comp_share,note
-a,TRUE,NS_OP; plot 400 m2 (EXPF 25); observed floor 9.1 cm and over; all t1 heights measured,0.556281287820153,""
-b,FALSE,"",0.0400153459333816,verified match coverage in fold B bin 0.378
-c,TRUE,NLINKS 1; ESI cov30m,0.320537989046421,frame contrast supported FALSE
-d,FALSE,Y1 before 1975,-0.0425155191448574,""

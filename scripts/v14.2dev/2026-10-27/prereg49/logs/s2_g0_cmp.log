@@ -1,4 +1,0 @@
-     gate stands requested columns worst_scaled worst_col   pass
-   <char>  <int>     <int>   <int>        <num>    <char> <lgcl>
-1:     G0      3         3      12            0      BA_p   TRUE
-G0_PASS

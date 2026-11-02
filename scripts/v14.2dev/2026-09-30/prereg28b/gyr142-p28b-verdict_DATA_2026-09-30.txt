@@ -1,4 +1,0 @@
-candidate=p28b_small
-reference=p19_a0111
-topht_comparator=p23_a1061
-verdict=Rule 6: every gate passes; the small tree only QC anchor (1.265 below 25 cm, 0.111 at and above) is a 14.2 QC candidate, a regional usage setting, pending a Bakuzis QC grid; the choice against PREREG28 follows the PREREG28b TOPHT rule

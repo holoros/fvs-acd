@@ -1,9 +1,0 @@
-gate,detail,pass
-H0 harness,"p38_one against frozen p19_a1000 (subset): qc_c 58 stands, results 0.00e+00, trees 0.00e+00; qc_fl 19 stands, results 0.00e+00, trees 0.00e+00",TRUE
-K1 failures,"RUN_OK other than 1 for p38_fit after retries: qc_c 0, qc_fl 0",TRUE
-H1 level,"fold B field tag pooled ratio 1.053 [0.930, 1.213] (window 0.90 to 1.10); qc141 0.093; 737 trees on 136 sites",TRUE
-H classes,"bias below 12.7 -0.027, 12.7 to 25 +0.022, 25 and over +0.038 m/yr; qc141 -0.190, -0.141, -0.120; worst worse by -0.083 (25 and over), margin 0.03",TRUE
-TOPHT,"TOPHT bias +16.21 percent against limit +14.63 at 1.061 (over); dominant cohort t2 level 0.994 against 0.898 for qc141, margin 0.02 (within)",FALSE
-V2 %RMSE,"C1 %RMSE 46.80 against 46.76, d -0.04",TRUE
-B1 basal area,|BA - 1| 0.25 against 0.17 points,TRUE
-B2 stems,|stems - 1| 24.66 against 24.23 points,TRUE

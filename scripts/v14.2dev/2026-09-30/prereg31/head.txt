@@ -1,7 +1,0 @@
-# PREREG31 LONG HORIZON DRIVER (2026-09-30), built by build_driver_p31.sh as: this header, then lines 1 to 419 of
-# ~/jobs/v142p28b/home/runner_p28_fb.R (md5 0a2b27421ee7b25eaab7f4591ce3af97) byte for byte, then the PREREG31 block
-# (parts/p31_block.R), which replaces runner lines 420 to 486 (the PHASE D hooks, the one interval per stand loop and the
-# result writer). The model setup, ops, the 14.1 overlay and every switch are the runner's own lines. The per stand
-# projection is the runner's lines 426 to 437 moved into a function without the PHASE D recording hooks and with a longer
-# time limit, as in PREREG26 driver_p26.R. The QC dht.mult expression is runner line 425's, copied by the build script
-# from the runner text (placeholder in parts/p31_block.R). Diff against the runner in ../diffs/. No coordinates. No em dashes.

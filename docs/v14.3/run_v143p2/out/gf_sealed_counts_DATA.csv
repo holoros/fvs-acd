@@ -1,9 +1,0 @@
-HARVEST_TYPE,ESI_SRC,stands,run_ok
-heavy,cov30m,7,7
-heavy,csi_fallback,9,9
-intermediate,cov30m,13,13
-intermediate,csi_fallback,19,19
-light,cov30m,13,13
-light,csi_fallback,35,35
-low_volume,cov30m,7,7
-low_volume,csi_fallback,5,5

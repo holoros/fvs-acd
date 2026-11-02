@@ -1,4 +1,0 @@
-Error in `[.data.table`(TR, age %in% c(0, 1, 25, 50, 75, 100), .(DHTM_cohort_min = min(DHTM_cohort,  : 
-  Column 3 of result for group 2 is type 'integer' but expecting type 'double'. Column types must be consistent for each group.
-Calls: [ -> [.data.table
-Execution halted

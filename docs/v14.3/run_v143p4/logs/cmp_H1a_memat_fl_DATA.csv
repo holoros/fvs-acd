@@ -1,9 +1,0 @@
-label,kind,files,rows,cols,worst_abs,n_diff,char_mismatch,note
-H1a_memat_fl,completeness,,478,,,,,stands in arm 478; frozen RUN_OK 478; arm RUN_OK 478; frozen RUN_OK also RUN_OK in arm 478
-H1a_memat_fl,results,2,478,53,0,0,0,""
-H1a_memat_fl,pred_t2_tree,2,121562,6,0,0,0,""
-H1a_memat_fl,pred_yr1_tree,2,80518,6,0,0,0,""
-H1a_memat_fl,pd_t1,2,77465,5,0,0,0,""
-H1a_memat_fl,pd_t2,2,121562,5,0,0,0,""
-H1a_memat_fl,t1_split_tree,2,77465,4,0,0,0,""
-H1a_memat_fl,traj,2,1864,29,0,0,0,""

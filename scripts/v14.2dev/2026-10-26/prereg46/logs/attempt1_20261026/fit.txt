@@ -1,4 +1,0 @@
-reproduction: trees 698, R 1.2418873575799
-PREREG45 reproduced: a 0.959501664684 b -1.123941116111
-Error: FIT STOP: b not negative, form ez
-Execution halted
