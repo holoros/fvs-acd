@@ -13,7 +13,7 @@ The official USDA build of FVS currently ships 12.5.0. Version 12.5.1 is on Midg
 
 ## Running the production model
 
-FVS loads `AcadianGY.R` and `customRun_fvsRunAcadian.R` from `fvsOL/inst/extdata/`, and the runner calls the R model at FVS stop points to impute missing heights and crown ratios and to replace diameter growth, height growth, mortality, ingrowth, and optionally merchantable volume. To use these files, copy them into that folder of an FVS interface installation.
+FVS loads `AcadianGY.R` and `customRun_fvsRunAcadian.R` from `fvsOL/inst/extdata/`, and the runner calls the R model at FVS stop points to impute missing heights and crown ratios and to replace diameter growth, height growth, mortality, ingrowth, and optionally merchantable volume. To use these files, copy them into that folder of an FVS interface installation. `docs/production/` documents the model and how to run it in FVS.
 
 ## Running the 14.1 research release
 
@@ -31,6 +31,7 @@ The loader checks every engine file by md5 and sources the stack in order. `exam
 | Path | Contents |
 |:--|:--|
 | `production/` | the 12.5.1 production model and its FVS runner |
+| `docs/production/` | Ben Rice's overview of the production model (components, sources, and R functions) and the FVS-ACD user guide for running the variant in FVS |
 | `engine/` | the four 14.1 engine files, their two coefficient bundles, and the loader |
 | `examples/` | a ten year projection of one stand under 14.1 |
 | `docs/user-guide.md` | the 14.1 user guide: inputs, switches, outputs, and the domain of use |
