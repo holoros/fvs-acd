@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use FVS-ACD (AcadianGY), please cite the Zenodo concept DOI below, which resolves to the latest deposited version, and state the release (AcadianGY 14.1)."
+message: "If you use FVS-ACD (AcadianGY), please cite the Zenodo concept DOI below, which resolves to the latest deposited version, and state the version used (for example AcadianGY 12.5.1)."
 title: "FVS-ACD (AcadianGY): Acadian variant of the Forest Vegetation Simulator"
 type: software
 doi: "10.5281/zenodo.22996790"
