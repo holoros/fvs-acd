@@ -5,17 +5,12 @@
 *.sqlite
 *.tif
 *.RData
-# Coefficient bundles are tracked only under engine/coef/.
 *.rds
-!engine/coef/*.rds
 # Local copies and scratch.
 *_PREV*
 *_backup*
-_tmp_*
-_scratch_*
 .Rhistory
 .Rproj.user/
-*.~lock*
 # Credentials.
 *token*
 *.pem
