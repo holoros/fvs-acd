@@ -1,6 +1,6 @@
 # Production model, AcadianGY 12.5.2
 
-These two files are the production FVS-ACD model maintained by Ben Rice (Midgard Natural Resources). They are byte copies of `fvsOL/inst/extdata/` on the `main` branch of MidgardNaturalResources/ForestVegetationSimulator-Interface at commit 1d3b116 (November 6, 2026), the head of pull request #3 (https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface/pull/3).
+These two files are the production FVS-ACD model maintained by Ben Rice (Midgard Natural Resources). `AcadianGY.R` is a byte copy of `fvsOL/inst/extdata/AcadianGY.R` in pull request #3 to the `main` branch of MidgardNaturalResources/ForestVegetationSimulator-Interface (https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface/pull/3, head commit 1d3b116, November 6, 2026). `customRun_fvsRunAcadian.R` is a byte copy from that `main` branch at commit 0f3b3dda (November 3, 2026); pull request #3 does not change it.
 
 | File | md5 | Role |
 |:--|:--|:--|
