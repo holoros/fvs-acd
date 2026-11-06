@@ -4,7 +4,7 @@ AcadianGY is the R implementation of the Acadian variant of the Forest Vegetatio
 
 ## Production model
 
-The production model is version 12.5.1, maintained by Ben Rice on the `main` branch of https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface. `production/` holds byte copies of its two files, taken from commit 0f3b3dda (November 3, 2026). The official USDA build of FVS ships the earlier 12.5.0.
+The production model is version 12.5.2, maintained by Ben Rice on the `main` branch of https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface. `production/` holds byte copies of its two files, taken from commit 1d3b116 (November 6, 2026), the head of pull request #3 on that repository. The official USDA build of FVS ships the earlier 12.5.0.
 
 FVS-ACD runs with three files: `AcadianGY.R`, `customRun_fvsRunAcadian.R`, and the FVS-NE shared library (`.dll` on Windows, `.so` on Linux). In R it also needs the `fvsOL` and `rFVS` packages, both built from the FVS interface repository. FVS loads the two R files from `fvsOL/inst/extdata/`, and the runner calls the model at FVS stop points to impute missing heights and crown ratios and to replace diameter growth, height growth, mortality, ingrowth, and optionally merchantable volume.
 
@@ -18,7 +18,7 @@ Research versions from 12.11 to 14.1 (September 24, 2026) tested new mortality, 
 
 | Path | Contents |
 |:--|:--|
-| `production/` | the 12.5.1 model and its FVS runner |
+| `production/` | the 12.5.2 model and its FVS runner |
 | `docs/production/` | the model overview and the FVS-ACD user guide |
 | `CLAUDE.md` | rules for AI assistants working on this code |
 | `CHANGELOG.md` | releases with file checksums, and where to find each |

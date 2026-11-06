@@ -4,6 +4,7 @@
 
 | Version | Date | Changes | md5 of `AcadianGY.R` |
 |:--|:--|:--|:--|
+| 12.5.2 | November 6, 2026 | Diameter growth returned to FVS inside bark: `make_fvs_tree()` multiplies it by the FVS-NE bark ratio (BKRAT) of each species, since FVS adds DG/BRATIO to DBH. On 12.5.1 FVS grew every AcadianGY tree too fast by 1/BKRAT (3.7% to 13.6% across FVS-NE species, 5.3% to 11.1% in the tested stands). Stops if not run on the 108 FVS-NE species. Tested through `customRun_fvsRunAcadian.R` on FVS-NE in eight stands; details in https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface/pull/3. In `production/`. | 65ff4cbfb12d3ab5080b4e5a771f687a |
 | 12.5.1 | October 24, 2026, revised November 3, 2026 | 17 further FVS-NE species codes mapped to the other hardwood (OH) or other softwood (OS) attributes; duplicate pin cherry row removed (PC, kept as PR); thinning modifiers take basal area removed in percent, which is what the runner passes; summary values guarded against missing values; species calibration multipliers joined into the tree list. In `production/`. | acdcb964b2bf75da965b39ec212423f7 |
 | 12.5.0 | June 6, 2026 | Rewrite of 12.3.5 with standardized names, one calculation function per model component, and no plyr dependency. The version in the official USDA build of FVS. | 3489f6b8cb68507c1530bce429683b55 |
 
