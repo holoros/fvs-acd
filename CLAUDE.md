@@ -10,7 +10,7 @@ The production files are self-contained. They cannot load external data or other
 
 The production code uses annual time steps only.
 
-The production version is the one on the `main` branch of https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface (`fvsOL/inst/extdata/`), currently 12.5.2. Its documentation is `docs/production/AcadianModelOverview.html` in this repository. Pull and read both before proposing any change.
+The production version is the one on the `main` branch of https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface (`fvsOL/inst/extdata/`), currently 12.5.1, with 12.5.2 in pull request #3 (https://github.com/MidgardNaturalResources/ForestVegetationSimulator-Interface/pull/3). Its documentation is `docs/production/AcadianModelOverview.html` in this repository. Pull and read both before proposing any change.
 
 ## Changing the code
 
