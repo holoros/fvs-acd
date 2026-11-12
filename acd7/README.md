@@ -65,7 +65,7 @@ These were found while porting. By default the port reproduces each one, so that
 | 10 | survival probability is not bounded | with modifiers, survival can exceed 1 and add trees | bounded to [0, 1] (`clamp_survival = TRUE`) |
 | 11 | the R component file Greg circulated in September 2024 (`gpj_acd7.5.r`) differs from the C++: its `survival_prob()` reads the crown recession table and its `dHCB()` computes `hcb / b5^b2` rather than `(hcb / b5)^b2` | anyone using that file gets wrong survival and crown recession | the port follows the C++, which is correct on both points |
 
-Defects 2, 3 and 8 are coding errors unrelated to the model's design. Defect 1 changes height growth for every conifer and needs a refit check before it is adopted, since the coefficients were estimated with the code as written.
+Defects 2, 3 and 8 are coding errors unrelated to the model's design. Defect 1 changes height growth for every conifer and should not be adopted without a refit: the 100-year runs below show it pushes top height past what these stands reach.
 
 ## Results
 
@@ -81,8 +81,11 @@ Results as of 12 November 2026. Runs used firebreather (R 4.5.1) with acdR 0.75 
 | post | 1,192 | −0.049 | 0.371 | −34.2 | 83.6 | 0.006 | 0.021 |
 | pre | 476 | 0.039 | 0.454 | −46.6 | 111.4 | 0.009 | 0.021 |
 
-The negative trees per acre bias reflects the absence of ingrowth in this run. Runs with ingrowth and with the corrected options are in progress.
+With the Li et al. (2011) ingrowth model switched on, the errors barely change (trees per acre bias −4.5, −33.3 and −46.1 ac⁻¹ yr⁻¹ for none, post and pre; basal area bias 0.063, −0.037 and 0.045 ft² ac⁻¹ yr⁻¹), so the trees per acre shortfall comes from small stems in the observed lists, not from missing ingrowth. A 60-plot rerun of the equivalence test after all corrections matched the compiled engine on every plot under the default options, apart from 2 budworm crashes.
 
 **FVS-ACD 14.2 regional benchmark.** ACD7 was also scored as an arm of the FVS-ACD 14.2 comparisons on the 6,558 remeasured stand pairs of the regional set (Maine, New Brunswick, Nova Scotia and Quebec), from the same tree lists and site values the production keyfiles used. On the composite score (lower is better), production 12.5.1 scored 0.954, ACD7 as compiled 0.977, ACD7 with all corrections 0.978, and ACD7 with site index passed directly as CSI 0.985. The two 14.2 candidates scored 0.971 and 0.974. ACD7 was the best of all runs in New Brunswick (1.000 against 1.116 for production), and its three runs were the worst in Quebec (0.881 to 0.899 against 0.762). The corrections changed regional scores by 0.003 or less.
 
-Long-term (100-year) runs and the ingrowth and corrected-option benchmarks will be added when complete.
+On the 2,567 stand pairs from New Hampshire and Vermont, ACD7 was the best of all runs: 0.463 as compiled and 0.464 corrected, against 0.553 for production and 0.489 for the better 14.2 candidate. The 95% interval of the difference from production was −0.110 to −0.070. Scores did not change when the stand order was shuffled (largest difference 4e-16).
+
+**Long-term behaviour.** `tests/run_longterm.R` grew 299 randomly drawn start stands for 100 years with ingrowth on. As compiled, median basal area rises from 24.5 to 52.6 m² ha⁻¹ and median top height from 18.0 to 29.2 m. The 90th percentile of basal area at year 100 is 65.7 m² ha⁻¹ and the largest is 91.0. Metric Reineke SDI exceeds 1,000 on 61% of stands, and basal area is still rising between years 90 and 100 on every stand. With all corrections, which switches conifer height growth to the documented crown ratio exponent (defect 1), median top height at year 100 reaches 35.3 m (37.9 m where CSI exceeds 20 m) and median basal area 58.5 m² ha⁻¹. That exceeds what Acadian spruce–fir stands reach. The coefficients were estimated with the code as written, so the defect 1 correction should not be used without a refit; `acd7_options_corrected()` keeps it only so that it can be tested.
+
