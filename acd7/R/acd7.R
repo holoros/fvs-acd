@@ -16,13 +16,27 @@ acd7_options <- function(
     reset_ingrowth_maps = FALSE,          # TRUE: clear the species BA maps before each ingrowth year (C++ never clears them)
     expand_threshold    = 50,             # tph above which a record is split (STAND::initialize)
     ac_ha               = 2.47,           # acres per hectare used by acd_r.cpp for imperial input (exact value 2.4710538)
-    hcb_re_alignment    = c("as_compiled", "as_intended")  # see acd7_hcb_re_compiled below
+    hcb_re_alignment    = c("as_compiled", "as_intended"), # see acd7_hcb_re_compiled below
+    gate_modifiers      = FALSE,          # TRUE: dDBH budworm/hardwood and growth thinning modifiers obey use_sbw/use_hw/use_thin
+    sbw_softwood_mean   = c("as_coded", "corrected"),     # mean softwood dbh >= 10 cm: divided by all-softwood tph (as coded) or by tph of those trees; "corrected" also returns 1 when no such tree exists (the C++ divides by zero and aborts)
+    surv_thin_direction = c("as_coded", "corrected"),     # as coded the thinning survival modifier is inverted twice and raises survival
+    clamp_survival      = FALSE           # TRUE: keep annual survival probability within [0, 1]
 ) {
   list(dht_cr_exponent = match.arg(dht_cr_exponent),
        reset_ingrowth_maps = reset_ingrowth_maps,
        expand_threshold = expand_threshold,
        ac_ha = ac_ha,
-       hcb_re_alignment = match.arg(hcb_re_alignment))
+       hcb_re_alignment = match.arg(hcb_re_alignment),
+       gate_modifiers = gate_modifiers,
+       sbw_softwood_mean = match.arg(sbw_softwood_mean),
+       surv_thin_direction = match.arg(surv_thin_direction),
+       clamp_survival = clamp_survival)
+}
+
+# All corrections listed in acd7/README.md applied together.
+acd7_options_corrected <- function() {
+  acd7_options(dht_cr_exponent = "b3", reset_ingrowth_maps = TRUE, ac_ha = 2.4710538, hcb_re_alignment = "as_intended",
+               gate_modifiers = TRUE, sbw_softwood_mean = "corrected", surv_thin_direction = "corrected", clamp_survival = TRUE)
 }
 
 # parameters.cpp omits the comma after the "SY" entry of hcb_parms, so the compiler reads
@@ -161,6 +175,10 @@ acd7_tree_stats <- function(tr, st) {  # STAND::compute_tree_statistics (fields 
   sw <- tr$softwood
   t_sw <- sum(tr$tph[sw]); t_hw <- sum(tr$tph[!sw])
   st$average_dbh_10_sw <- if (t_sw > 0) sum((tr$dbh * tr$tph)[sw & tr$dbh >= 10]) / t_sw else 0  # divides by all-softwood tph, as coded
+  if (!is.null(st$opt) && st$opt$sbw_softwood_mean == "corrected") {
+    t10 <- sum(tr$tph[sw & tr$dbh >= 10])
+    st$average_dbh_10_sw <- if (t10 > 0) sum((tr$dbh * tr$tph)[sw & tr$dbh >= 10]) / t10 else NA
+  }
   st$average_height_sw <- if (t_sw > 0) sum((tr$ht * tr$tph)[sw]) / t_sw else 0
   st$average_height_hw <- if (t_hw > 0) sum((tr$ht * tr$tph)[!sw]) / t_hw else 0
   st
@@ -263,7 +281,55 @@ acd7_ddbh <- function(tr, st) {  # TREE::dDBH (Johnson 2024-02-21) with modifier
   tdbh <- pmax(tr$dbh, 1)
   g <- exp(tr$dg_b0 + tr$dg_b1 * log(tdbh + 1) + tr$dg_b2 * tdbh + tr$dg_b3 * log(tr$cr) +
            tr$dg_b4 * tr$bal / log(tdbh + 1) + tr$dg_b5 * log(st$csi))
-  g * acd7_ddbh_sbw(tr, st) * acd7_ddbh_hw_form_risk(tr)   # thinning modifier is inert: thin_year is never set by the interface
+  gate <- isTRUE(st$opt$gate_modifiers)
+  m_sbw  <- if (!gate || st$use_sbw)  acd7_ddbh_sbw(tr, st) else 1
+  m_hw   <- if (!gate || st$use_hw)   acd7_ddbh_hw_form_risk(tr) else 1
+  m_thin <- if (!gate || st$use_thin) acd7_ddbh_thin(tr, st) else 1
+  g * m_thin * m_sbw * m_hw
+}
+
+.tst <- function(st) st$thin_year >= 0 && st$thin_year <= st$year
+acd7_ddbh_thin <- function(tr, st) {  # TREE::dDBH_thin (Kuehne et al.)
+  mod <- rep(1, nrow(tr))
+  if (!(.tst(st) && st$percent_ba_removed > 0 && st$qmd_ratio > 0 && st$ba_pre_thin > 0)) return(mod)
+  tst <- st$year - st$thin_year; x <- 100 * st$percent_ba_removed * st$qmd_ratio + 0.01
+  f <- function(y0, y1, y2, y3) 1 + exp(y0 + y1 / x) * y2^tst * tst^y3
+  mod[tr$spp == 12] <- f(-0.2566, -22.7609, 0.7745, 1.0511)
+  mod[tr$spp == 97] <- f(-0.5010, -20.1147, 0.8067, 1.1905)
+  pmax(0.75, pmin(mod, 1.25))
+}
+acd7_dht_thin <- function(tr, st) {  # TREE::dHT_thin
+  mod <- rep(1, nrow(tr))
+  if (!(.tst(st) && (st$year - st$thin_year) < 5)) return(mod)
+  tst <- st$year - st$thin_year; x <- 100 * st$percent_ba_removed + 0.01
+  f <- function(y0, y1, y2, y3) 1 - exp(y0 + y1 / x) * y2^tst * tst^y3
+  mod[tr$spp == 12] <- f(-1.8443, 5.2969, 1.0532, 0)
+  mod[tr$spp == 97] <- f(-1.8426, 6.2781, 1.1596, 0)
+  pmax(0.75, pmin(mod, 1.25))
+}
+acd7_dhcb_thin <- function(tr, st) {  # TREE::dHCB_thin
+  mod <- rep(1, nrow(tr))
+  if (!.tst(st)) return(mod)
+  tst <- st$year - st$thin_year; x <- 100 * st$percent_ba_removed * st$qmd_ratio + 0.01
+  f <- function(y0, y1, y2, y3) 1 - exp(y0 + y1 / x) * y2^tst * tst^y3
+  mod[tr$spp == 12] <- f(-0.4208, -17.0998, 0.7986, 0.0521)
+  mod[tr$spp == 97] <- f(-1.0778, -14.7694, 0.7758, 1.1164)
+  sel <- tr$spp %in% c(12, 97); mod[sel] <- pmin(abs(mod[sel]), 1)
+  mod
+}
+acd7_surv_thin <- function(tr, st) {  # TREE::surv_thin, returns min(1 / modifier, 1)
+  mod <- rep(1, nrow(tr))
+  if (!(.tst(st) && st$percent_ba_removed > 0 && st$qmd_ratio > 0 && st$ba_pre_thin > 0)) return(mod)
+  tst <- st$year - st$thin_year
+  bf <- 1 + exp(1.7414 + 7.0805 / ((100 * st$percent_ba_removed + st$ba_pre_thin) * st$qmd_ratio + 0.01)) * 0.6677^tst * tst^0.8474
+  rs <- 1 + exp(10.5057 - 650.8260 / ((100 * st$percent_ba_removed + st$ba_pre_thin) + 0.01)) * 0.6948^tst * tst^0.6429
+  mod[tr$spp == 12] <- bf; mod[tr$spp == 97] <- rs
+  pmin(1 / mod, 1)
+}
+acd7_mort_thin <- function(st) {  # STAND::mort_thin
+  if (!(.tst(st) && st$percent_ba_removed > 0 && st$qmd_ratio > 0 && st$ba_pre_thin > 0)) return(1)
+  tst <- st$year - st$thin_year
+  1 + exp(8.3385 - 601.3096 / ((100 * st$percent_ba_removed + st$ba_pre_thin) + 0.01)) * 0.5507^tst * tst^1.5798
 }
 
 acd7_ddbh_sbw <- function(tr, st) {  # TREE::dDBH_sbw (Chen et al.), applied whenever CDEF >= 0
@@ -281,6 +347,7 @@ acd7_ddbh_sbw <- function(tr, st) {  # TREE::dDBH_sbw (Chen et al.), applied whe
   x <- tr[sel, ]
   base <- b2 * x$bal_hw + b3 * x$bal_sw + b4 * st$topht + b5 * x$cr + b6 * (x$dbh / st$average_dbh_10_sw)
   mod[sel] <- (b1 * x$dbh * exp(base + b7 * st$CDEF)) / (b1 * x$dbh * exp(base))
+  mod[is.na(mod) & is.na(st$average_dbh_10_sw)] <- 1
   mod
 }
 
@@ -301,7 +368,8 @@ acd7_dht <- function(tr, st, opt) {  # TREE::dHT (Johnson 2024-02-26)
   cr_exp <- if (opt$dht_cr_exponent == "b5") tr$hg_b5 else tr$hg_b3
   g <- tr$hg_b0 * tr$hg_b1 * tr$hg_b2 * tr$cr^cr_exp * (st$csi / 30)^tr$hg_b5 *
        exp(-tr$hg_b1 * tr$ht - tr$hg_b4 * (tr$ccfl / 100)) * (1 - exp(-tr$hg_b1 * tr$ht))^(tr$hg_b2 - 1)
-  g * acd7_dht_sbw(tr, st)
+  gate <- isTRUE(st$opt$gate_modifiers)
+  g * (if (!gate || st$use_sbw) acd7_dht_sbw(tr, st) else 1) * (if (!gate || st$use_thin) acd7_dht_thin(tr, st) else 1)
 }
 
 acd7_dht_sbw <- function(tr, st) {  # TREE::dHT_sbw
@@ -315,19 +383,23 @@ acd7_dht_sbw <- function(tr, st) {  # TREE::dHT_sbw
   b6 <- ifelse(sp == 12, -0.0017, ifelse(sp == 94, 0.0001, -0.0014))
   base <- -0.0011 * x$dbh^2 + 0.0316 * st$topht + 2.4512 * x$cr + b5 * (x$dbh / st$average_dbh_10_sw)
   mod[sel] <- exp(base + b6 * st$CDEF) / exp(base)
+  mod[is.na(mod) & is.na(st$average_dbh_10_sw)] <- 1
   mod
 }
 
 acd7_dhcb <- function(tr, st, dht) {  # TREE::dHCB (Johnson 2024-07), uses stand CCF
+  gate <- isTRUE(st$opt$gate_modifiers)
   tr$cb_b0 * (tr$hcb / tr$cb_b5)^tr$cb_b2 * ((tr$ht - tr$hcb) + dht^tr$cb_b1) *
-    (1 - exp(-tr$cb_b3 * (st$ccf + 1)))^tr$cb_b4
+    (1 - exp(-tr$cb_b3 * (st$ccf + 1)))^tr$cb_b4 * (if (!gate || st$use_thin) acd7_dhcb_thin(tr, st) else 1)
 }
 
 acd7_survival <- function(tr, st) {  # TREE::survival_prob + STAND::survival
   p <- 1 - exp(-exp(-tr$mo_b0 + tr$mo_b1 * (tr$dbh^tr$mo_b2 / (tr$bal + 1))))
   if (st$use_sbw) p <- p * acd7_surv_sbw(tr, st)
   if (st$use_hw)  p <- p * acd7_surv_hw(tr, st)
-  stand_mod <- if (st$use_sbw) acd7_mort_sbw(st) else 1   # mort_thin is inert: thin_year never set
+  if (st$use_thin) { m <- acd7_surv_thin(tr, st); p <- if (st$opt$surv_thin_direction == "as_coded") p * (1 / m) else p * m }
+  if (isTRUE(st$opt$clamp_survival)) p <- pmin(pmax(p, 0), 1)
+  stand_mod <- (if (st$use_sbw) acd7_mort_sbw(st) else 1) * (if (st$use_thin) acd7_mort_thin(st) else 1)
   tr$tph * (1 - p) * stand_mod
 }
 
@@ -439,8 +511,13 @@ acd7_initialize <- function(tr, st, opt) {
   list(tr = tr, st = st)
 }
 
-acd7_grow_metric <- function(tr, st, n_years, opt = acd7_options()) {
+acd7_grow_metric <- function(tr, st, n_years, opt = acd7_options(), trace_every = 0) {
+  st$opt <- opt
   x <- acd7_initialize(tr, st, opt); tr <- x$tr; st <- x$st
+  trace <- list()
+  snap <- function(yr) data.frame(year = yr, ba = st$ba, tph = st$tph, qmd = st$qmd,
+                                  sdi = st$tph * (st$qmd / 25.4)^1.605, topht = st$topht)
+  if (trace_every > 0) trace[[1]] <- snap(0)
   maps <- list(ba_spp = list(), ba_grp = list(), plot_spp = list())
   for (yr in seq_len(n_years)) {
     if (st$use_ingrowth) {
@@ -461,22 +538,31 @@ acd7_grow_metric <- function(tr, st, n_years, opt = acd7_options()) {
     tr <- acd7_tree_attributes(tr)
     x <- acd7_refresh(tr, st); tr <- x$tr; st <- x$st
     st$year <- st$year + 1
+    if (trace_every > 0 && yr %% trace_every == 0) trace[[length(trace) + 1]] <- snap(yr)
   }
-  acd7_unexpand(tr)
+  out <- acd7_unexpand(tr)
+  if (trace_every > 0) attr(out, "trace") <- do.call(rbind, trace)
+  out
 }
 
 # Interface matching acdR::grow_acd() (acd_r.cpp), including its unit handling.
 grow_acd7 <- function(periods, Region, year, units, csi, elev, cdef, use_sbw, use_hw, use_thin,
                       use_ingrowth, cut_point, MinDBH, plot_id, tree_id, spp, dbh, ht, expf, cr, form, risk,
-                      opt = acd7_options()) {
+                      opt = acd7_options(), thin_year = -1, percent_ba_removed = 0, ba_pre_thin = 0, qmd_ratio = 0,
+                      trace_every = 0) {
+  # thin_year (same scale as year), percent_ba_removed (fraction), ba_pre_thin (m2/ha), qmd_ratio (after/before):
+  # the C++ STAND has these fields but no interface sets them; here they reach the thinning modifiers.
   if (!(Region %in% c("ME", "NB"))) stop("Invalid Region")
   ft_m <- if (units == 0) 1 else 0.3048; in_cm <- if (units == 0) 1 else 2.54; ac_ha <- if (units == 0) 1 else opt$ac_ha
   if (csi * ft_m <= 0) stop("Invalid CSI")
   st <- list(Region = Region, year = year, csi = csi * ft_m, elevation = elev * ft_m, CDEF = cdef,
              use_sbw = as.logical(use_sbw), use_hw = as.logical(use_hw), use_thin = as.logical(use_thin),
-             use_ingrowth = as.logical(use_ingrowth), cut_point = cut_point, MinDBH = MinDBH * in_cm)
+             use_ingrowth = as.logical(use_ingrowth), cut_point = cut_point, MinDBH = MinDBH * in_cm,
+             thin_year = thin_year, percent_ba_removed = percent_ba_removed, ba_pre_thin = ba_pre_thin, qmd_ratio = qmd_ratio)
   tr <- acd7_new_trees(plot_id, tree_id, spp, dbh * in_cm, ht * ft_m, expf * ac_ha, cr, form, risk, opt)
-  g <- acd7_grow_metric(tr, st, periods, opt)
-  data.frame(plot.id = g$plot_id, tree.id = g$tree_id, species = g$spp, dbh = g$dbh / in_cm,
-             ht = g$ht / ft_m, expf = g$tph / ac_ha, cr = g$cr)
+  g <- acd7_grow_metric(tr, st, periods, opt, trace_every)
+  out <- data.frame(plot.id = g$plot_id, tree.id = g$tree_id, species = g$spp, dbh = g$dbh / in_cm,
+                    ht = g$ht / ft_m, expf = g$tph / ac_ha, cr = g$cr)
+  attr(out, "trace") <- attr(g, "trace")   # stand metric summaries (m2/ha, trees/ha, cm, Reineke SDI, top height m)
+  out
 }
