@@ -62,3 +62,20 @@ Amendment 3a (2026-11-14 07:45 AST, Aaron 06:18 "all three in order", before any
 arms also run on the regional set (6,558 pairs, QC, NS, NB and Maine frames) and are scored as reg_cmp beside every earlier regional
 arm. OSM runs on the Maine frames only (2,001 pairs; the BGI lookup covers Maine), with BGI from plot coordinates where the frame key
 links to a GYDB2 plot (1,855 pairs) and the Maine median otherwise; scored as reg_cmp_me, which restricts every arm to those pairs.
+
+## Amendment 4 (2026-11-15 08:30 ET, Aaron 07:55 "resolve all open items and recommendations on autopilot", before any gy3 projection)
+New sets gy3 and gy3L, built by gy3_build.py with the gy2 rules from the programs added to GYDB2 on 14 and 15 November 2026: SUNY ESF
+CFI, Bartlett cruise, density and NACP plots, Hubbard Brook valley, bird area, watershed and MELNHE plots, and the Harvard Forest
+megaplot, Lyford, hemlock, Tom Swamp, Pisgah, EMS and plantation plots. None was used in fitting 14.2 or ACD7. Dartmouth (placeholder
+locations) and the Weymouth Point WPO plots (no coordinates) are excluded. Site: ESI v9na Acadian 30 m does not reach these plots
+(its west edge is 71.08 W), so ESI v7 CONUS 30 m is quantile-matched to v9na on 4,000 Maine and New Brunswick plots (correlation of
+the two products on those plots is about 0.58, so site carries more error here than on gy2). Arms: prod_fix, x142 (x142_gseq),
+acd7c, acd7x and acd7xSI, native FVS-NE, FVS-NE with the regional calibration keywords and fvs-conus, run exactly as on gy2. OSM is
+not run: its growth index lookup covers Maine only. Metrics, stratified bootstrap (strata cuts fixed in strata_cuts.json), compact
+letter display and decision rule are unchanged; results are reported per program, and the Harvard Forest megaplot is also reported
+on its own because its 875 quadrats sit in one 35 ha stand.
+
+## Amendment 4a (2026-11-15 13:30 ET, before any gy3 score): sets capped at 150 pairs per program
+firebreather is shared with other jobs (load about 20 on 8 cores) and ran the production bridge at about 2.7 pairs per minute, so the
+full sets would take more than two days per arm. gy3_cap.py keeps at most 150 pairs per program (seed 20261115): gy3 1,157 of 3,248
+pairs, gy3L 743 of 1,593. The full sets are kept (gy3full, gy3Lfull) for a later run; the partial production run was set aside unscored.

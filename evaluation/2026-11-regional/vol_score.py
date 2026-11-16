@@ -40,7 +40,7 @@ def nsvb(spcd, dbh_cm, ht_m, resp):
     return np.exp(c[f"{resp}_a"].to_numpy() + c[f"{resp}_b"].to_numpy() * X) * c[f"{resp}_sm"].to_numpy()
 # ---- observed tree lists (t1, t2) per pair_id
 def obs_trees():
-    if st in ("gy2", "gy2L"):
+    if st in ("gy2", "gy2L", "gy3", "gy3L"):
         c = sqlite3.connect(H / "gydb2/release/all/GYDB2_ALL.sqlite")
         k = P.t1_id.str.split("__"); P["gplot"] = k.str[0]; yy = k.str[1].str.split("_"); P["Y1"] = yy.str[0].astype(int); P["Y2"] = yy.str[1].astype(int)
         v = pd.read_sql("select gplot, gvisit, YR from visits", c); v = v[v.gplot.isin(set(P.gplot))].drop_duplicates(["gplot", "YR"])

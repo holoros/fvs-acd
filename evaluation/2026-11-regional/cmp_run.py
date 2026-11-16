@@ -31,6 +31,8 @@ HA = 2.4710538; FT = 0.3048
 SETS = {  # pairs, trees, production base keyfiles
     "gy2": (S / "r0e/gy2_pairs.csv", S / "r0e/gy2_trees.csv", S / "batch/gyp_gy2/all"),
     "gy2L": (S / "r0e/gy2L_pairs.csv", S / "r0e/gy2L_trees.csv", S / "batch/gyp_gy2L/all"),
+    "gy3": (S / "r0e/gy3_pairs.csv", S / "r0e/gy3_trees.csv", S / "batch/gyp_gy3/all"),
+    "gy3L": (S / "r0e/gy3L_pairs.csv", S / "r0e/gy3L_trees.csv", S / "batch/gyp_gy3L/all"),
     "t14H": (S / "t14/g2_pairs.csv", S / "t14/g2_trees.csv", S / "batch/t14H_prod_fix/all"),
     "bakz": (S / "r0e/bakz_pairs.csv", S / "r0e/bakz_trees.csv", S / "batch/bkp/all"),
     "reg": (S / "r0e/reg_pairs.csv", S / "r0e/reg_trees.csv", S / "batch/r0e_reg_prod_fix/all"),
