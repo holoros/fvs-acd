@@ -81,7 +81,8 @@ def fvs_key(base, R, setname, calkw):
 def fvs_one(job):
     sid, R, setname, arm, base, outdir, calkw = job
     d = Path(outdir) / f"P{sid}"
-    if (d / "DONE").exists():
+    expected_years = len(cycles(R, setname)) + 1
+    if (d / "DONE").exists() and (d / "DONE").read_text().strip() in (f"rc 0 years {expected_years}", f"rc 10 years {expected_years}") and (d / "fvsout.db").exists():
         return sid, "skip"
     d.mkdir(parents=True, exist_ok=True)
     for f in d.iterdir():
@@ -90,9 +91,15 @@ def fvs_one(job):
     env = os.environ.copy(); env.update(ENV[arm])
     try:
         r = subprocess.run([str(FVSNE), "--keywordfile=s.key"], cwd=d, env=env, capture_output=True, text=True, timeout=300)
+        # FVS-NE returns 10 after a normal completed projection.
+        if r.returncode not in (0, 10):
+            return sid, f"rc {r.returncode}: {r.stderr[-160:]}"
+        if not (d / "fvsout.db").exists():
+            return sid, "error missing fvsout.db"
         con = sqlite3.connect(str(d / "fvsout.db")); n = con.execute("select count(distinct Year) from FVS_TreeList").fetchone()[0]; con.close()
-        ok = n == len(cycles(R, setname)) + 1
-        (d / "DONE").write_text(f"rc {r.returncode} years {n}\n")
+        ok = n == expected_years
+        if ok:
+            (d / "DONE").write_text(f"rc {r.returncode} years {n}\n")
         for f in ("fort.13",):
             (d / f).unlink(missing_ok=True)
         return sid, ("ok" if ok else f"years {n}")
@@ -159,6 +166,7 @@ def osm_chunk(job):
         got, bad, rc = OE.run_osm(str(OSM), work, br, R + ypc, ypc, (0, ck))
         for i, r in enumerate(rows):
             d = Path(outdir) / f"P{r['sid']}"; d.mkdir(parents=True, exist_ok=True)
+            (d / "DONE").unlink(missing_ok=True)
             if r["recs"] and not got.get(i + 1):
                 res.append((r["sid"], f"no rows rc {rc} bad {bad}")); continue
             parts = []
@@ -169,7 +177,11 @@ def osm_chunk(job):
                                            "SpeciesFIA": [f"{rev.get(s, 998):03d}" for s in tl.sp]}))
             df = pd.concat(parts, ignore_index=True)
             con = sqlite3.connect(str(d / "fvsout.db")); df.to_sql("FVS_TreeList", con, if_exists="replace", index=False); con.close()
-            (d / "DONE").write_text(f"rc {rc} bad {bad} trees {len(df)} bgi {r['bgi']}\n"); res.append((r["sid"], "ok"))
+            if rc == 0 and bad == 0:
+                (d / "DONE").write_text(f"rc 0 bad 0 trees {len(df)} bgi {r['bgi']}\n")
+                res.append((r["sid"], "ok"))
+            else:
+                res.append((r["sid"], f"rc {rc} bad {bad}"))
     except Exception as e:
         res += [(r["sid"], f"error {type(e).__name__}: {e}"[:200]) for r in rows]
     finally:
@@ -206,7 +218,8 @@ def main():
                 t = t[(t.DIA > 0) & (t.TPA_UNADJ > 0)]
                 recs = [(OE.osm_species(int(s), fw), d * 2.54, (h * FT if h > 0 else None), tp * HA)
                         for s, d, h, tp in zip(t.SPCD, t.DIA, t.HT.fillna(0), t.TPA_UNADJ)]
-            if (outdir / f"P{r.pair_id}" / "DONE").exists():
+            done = outdir / f"P{r.pair_id}" / "DONE"
+            if done.exists() and done.read_text().startswith("rc 0 bad 0 ") and (done.parent / "fvsout.db").exists():
                 stat.append((r.pair_id, "skip")); continue
             rows.append(dict(sid=r.pair_id, R=int(round(r.REMPER)), y0=int(r.INVYR1), bgi=int(bg), recs=recs))
         jobs = []

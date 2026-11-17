@@ -18,9 +18,11 @@ Scripts
 Inputs (md5)
 - gy3 run (15 and 16 November): GYDB2_ALL.sqlite 666f37dc5b1560c8a2f7e204896a9d69, gy3_pairs 756d77c2..., gy3L_pairs 2e12bb6d...;
   ESI_v7_CONUS_30m.tif (CONUS ESI v7, 48050023950 bytes)
-- GYDB2_ALL.sqlite 201c4902d383b692ed5991e5dff4c958
+- Earlier gy2/gy2L, Bakuzis, and regional runs: GYDB2_ALL.sqlite 201c4902d383b692ed5991e5dff4c958. This is a distinct database snapshot from the gy3 run above; the run-specific meta.json records the comparator inputs.
 - gy2_pairs 412d39c3..., gy2L_pairs 23c49924..., bakz_pairs b4ef52ad..., reg_pairs c49f52f7...
 - FVSne (fvs-modern build 9c99ff1) ba9d0fa463c3bcc8d2e7e57d84310965; OSM.ConsoleApp 6ae5235b50019dd80fa253ed284b27c9
 - fvs-conus coefficient files and the NE calibrated keyword set copied from Cardinal; md5 recorded in each run's meta.json.
+
+Comparator completion checks: FVS-NE normally exits with code 10 after a completed projection; codes 0 and 10 are accepted only when the expected number of years and final projection year are present. OSM requires code 0 and zero bad stands. Incomplete runs are rerun and excluded from volume scoring; a database file alone is not evidence of a valid projection.
 
 Zenodo: not applicable for this intermediate evaluation; the results feed the recommendations document and the 14.3 calibration.

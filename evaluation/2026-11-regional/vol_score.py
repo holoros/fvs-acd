@@ -20,7 +20,7 @@ points fixed in strata_cuts.json from all evaluation sets pooled), and statistic
 pooled; pairwise tests and model groups use the overall (pooled) score only. Model groups: runs ranked by each statistic; runs share a letter when no pairwise interval excludes zero (compact letter
 display, a = best). Pooled values only.
 usage: vol_score.py SET BASE RUN[,RUN..] TAG"""
-import sys, glob, json, sqlite3, numpy as np, pandas as pd
+import sys, glob, json, math, sqlite3, numpy as np, pandas as pd
 from pathlib import Path
 H = Path.home(); S = H / "fvsacd142/state"; HA = 2.4710538; FT = 0.3048
 st, base, cands, tag = sys.argv[1], sys.argv[2], sys.argv[3].split(","), sys.argv[4]; runs = [base] + cands
@@ -88,17 +88,35 @@ CUT = json.loads((Path(__file__).with_name("strata_cuts.json")).read_text())["es
 esi = (P.set_index("pair_id").SICOND_FVS / 3.2808399).reindex(o1.index)
 SC_ = pd.Series(np.where(esi < CUT[0], "low", np.where(esi < CUT[1], "mid", "high")), index=o1.index)
 def pred(run):
-    dirs = {Path(p).name: Path(p) for p in glob.glob(str(S / f"restricted/batch/{run}/*/P*")) if Path(p, "fvsout.db").exists()}
+    root = S / "restricted/batch" / run
+    meta_path = root / "meta.json"
+    meta = json.loads(meta_path.read_text()) if meta_path.exists() else {}
+    comparator = meta.get("arm") in ("fvs_base", "fvs_regional", "conus_spdep", "osm")
+    dirs = {Path(p).name: Path(p) for p in glob.glob(str(root / "*" / "P*")) if Path(p, "fvsout.db").exists()}
     rows = []; ran = set()
     for r in P.itertuples():
         d = dirs.get(r.sid)
         if d is None: continue
-        ran.add(r.pair_id)
+        if comparator:
+            done = d / "DONE"
+            if not done.exists(): continue
+            status = done.read_text().split()
+            if meta["arm"] == "osm":
+                if status[:4] != ["rc", "0", "bad", "0"]: continue
+            else:
+                R = int(round(r.REMPER))
+                L = max(1, math.ceil(R / 40))
+                expected = math.ceil(R / 5) + 1 if meta.get("set") == "bakz" else math.ceil(R / L) + 1
+                if len(status) < 4 or status[:1] != ["rc"] or status[1] not in ("0", "10") or status[2:] != ["years", str(expected)]: continue
         con = sqlite3.connect(str(d / "fvsout.db")); cols = [x[1] for x in con.execute("pragma table_info(FVS_TreeList)")]
         q = "select Year, TPA, DBH" + (", Ht, SpeciesFIA" if "Ht" in cols else ", NULL as Ht, 998 as SpeciesFIA") + " from FVS_TreeList"
         tl = pd.read_sql(q, con); con.close()
+        if comparator and meta["arm"] != "osm" and (tl.empty or tl.Year.nunique() != expected or tl.Year.max() != int(r.INVYR1) + R): continue
+        ran.add(r.pair_id)
         tl = tl[tl.Year == tl.Year.max()]; tl = tl[tl.DBH * 2.54 >= r.fl]
         rows.append(pd.DataFrame({"pair_id": r.pair_id, "spcd": pd.to_numeric(tl.SpeciesFIA, errors="coerce").fillna(998).astype(int), "dbh": tl.DBH * 2.54, "ht": tl.Ht * FT, "tph": tl.TPA * HA}))
+    if not rows:
+        return pd.DataFrame(index=P.pair_id, columns=["BA", "SDI", "VOL", "BIO"], dtype=float)
     d = pd.concat(rows, ignore_index=True); noht = d.ht.isna().all(); d = d[d.ht.isna() | (d.ht > 1.37)]
     x = stand(d, d.ht.fillna(10.0)).reindex(P.pair_id)
     x.loc[x.index.isin(ran)] = x.loc[x.index.isin(ran)].fillna(0.0)   # run but no tree above the floor: 0; never run: stays NaN
