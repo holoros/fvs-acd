@@ -99,6 +99,8 @@ The plot tree lists use the supplied 20 ft²/ac prism expansion for trees at lea
 
 All 525 native plots and all 117 sampled research plots have 21 outputs, no duplicate plot-years, no negative or nonfinite basal area, and year-zero basal area and tree density matching independent tree expansion to rounding precision. These gates check location/coverage, value range, total starting magnitude, and consistency across model inputs. They do not establish biological accuracy at year 100. The strongest next validation is a regeneration-controlled rerun followed by comparison with independent remeasurement or external long-term plots.
 
+The companion [modified Bakuzis assessment](Seven_Islands_Bakuzis_assessment.md) screens height, density, diameter, basal area, and a common standing-volume proxy across all seven arms. It reports relation-specific flags and not-evaluated counts, seven site-class matrices, and component checks. Comparable total volume production is unavailable, so Eichhorn's production relation remains not evaluated.
+
 GitHub sources refreshed 17 November: [fvs-acd evaluation branch](https://github.com/holoros/fvs-acd/tree/7b6f016e76e8a4fde2bf478ee01488df0e1c578d) and [fvs-modern main](https://github.com/advanced-forestry-systems/fvs-modern/tree/d0ff5bc35bc4ae6fe8204d6c4125c8c62f7b66ab). The latest changes add comparator-completion checks and inventory species-resolution/driver guards, respectively; they do not alter the pinned research source or existing native executables used here. Executable and research source checksums, exact lever settings, and input hashes are in the companion run record. The per-plot trajectories and coordinates remain in firebreather's restricted project directory.
 ''')
 text=''.join(parts)
