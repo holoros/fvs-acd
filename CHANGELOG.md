@@ -4,7 +4,8 @@
 
 | Version | Date | Changes | md5 of `AcadianGY.R` |
 |:--|:--|:--|:--|
-| 12.5.1 | October 24, 2026, revised November 3, 2026 | 17 further FVS-NE species codes mapped to the other hardwood (OH) or other softwood (OS) attributes; duplicate pin cherry row removed (PC, kept as PR); thinning modifiers take basal area removed in percent, which is what the runner passes; summary values guarded against missing values; species calibration multipliers joined into the tree list. In `production/`. | acdcb964b2bf75da965b39ec212423f7 |
+| 12.5.1 | October 24, 2026, revised November 20, 2026 | November 20 revision by Ben Rice (Midgard commit a8036ef3): diameter growth passed to FVS inside bark using FVS-NE bark ratios; taper and dib fixes; ingrowth tree IDs no longer collide with FVS tree IDs; runner calls fvsGetTreeAttrs() at the correct step. In `production/`. | 285ae5fd2cca0314efbf6f996c70f0e0 |
+| 12.5.1 | October 24, 2026, revised November 3, 2026 | 17 further FVS-NE species codes mapped to the other hardwood (OH) or other softwood (OS) attributes; duplicate pin cherry row removed (PC, kept as PR); thinning modifiers take basal area removed in percent, which is what the runner passes; summary values guarded against missing values; species calibration multipliers joined into the tree list. | acdcb964b2bf75da965b39ec212423f7 |
 | 12.5.0 | June 6, 2026 | Rewrite of 12.3.5 with standardized names, one calculation function per model component, and no plyr dependency. The version in the official USDA build of FVS. | 3489f6b8cb68507c1530bce429683b55 |
 
 Ben Rice's notes at the top of `production/AcadianGY.R` list the changes back to 12.3.0.
